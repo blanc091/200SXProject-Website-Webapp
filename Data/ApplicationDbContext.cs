@@ -18,7 +18,7 @@ namespace _200SXContact.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			base.OnModelCreating(modelBuilder); // Ensure Identity-related tables are created
+			base.OnModelCreating(modelBuilder);
 
 			modelBuilder.Entity<Item>()
 				.HasOne(i => i.User)

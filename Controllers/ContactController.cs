@@ -51,10 +51,7 @@ namespace _200SXContact.Controllers
 				}
 				catch (Exception ex)
 				{
-					// Log the error
 					LogEmailError(model, ex);
-
-					// Set error state
 					TempData["IsFormSubmitted"] = true;
 					TempData["IsFormSuccess"] = false;
 					ViewData["IsFormSubmitted"] = true;
@@ -62,7 +59,6 @@ namespace _200SXContact.Controllers
 					TempData["Message"] = $"Error: {ex.Message}";
 				}
 			}
-			// On failure, return to the original view with the form model
 			TempData["IsFormSubmitted"] = true;
 			TempData["IsFormSuccess"] = false;
 			ViewData["IsFormSubmitted"] = true;
@@ -70,7 +66,6 @@ namespace _200SXContact.Controllers
 			string viewPathFail = $"~/Views/{ViewName}.cshtml";
 			return View(viewPathFail, model);
 		}
-
 		private void LogEmailError(ContactForm model, Exception ex)
 		{
 			var emailLog = new EmailLog
@@ -83,11 +78,9 @@ namespace _200SXContact.Controllers
 				Status = "Failed",
 				ErrorMessage = ex.Message
 			};
-
 			_context.EmailLogs.Add(emailLog);
 			_context.SaveChanges();
 		}
-
 		private void SendEmailToAdmin(ContactForm model)
         {
             try
@@ -120,7 +113,6 @@ namespace _200SXContact.Controllers
                 var errorMessage = $"SMTP Error: {ex.Message}\n" +
                                    $"StatusCode: {ex.StatusCode}\n" +
                                    $"InnerException: {ex.InnerException?.Message}";
-
                 throw new Exception("Failed to send email to the admin. Please try again later.", ex);
             }
             catch (Exception ex)

@@ -18,17 +18,14 @@ namespace _200SXContact.Controllers
 			_context = context;
 			_userManager = userManager;
 		}
-
 		public async Task<IActionResult> Dashboard()
 		{			
-			// Check if the user is authenticated
 			if (!User.Identity.IsAuthenticated)
 			{
 				Console.WriteLine("User is not authenticated");
 				return RedirectToAction("Login", "LoginRegister");
 			}
 
-			// Get the current user using UserManager
 			var user = await _userManager.GetUserAsync(User);
 
 			if (user == null)
@@ -37,7 +34,6 @@ namespace _200SXContact.Controllers
 				return NotFound("User not found");
 			}
 
-			// Load related items for the user
 			var userWithItems = await _context.Users
 											  .Include(u => u.Items)
 											  .FirstOrDefaultAsync(u => u.Id == user.Id);
@@ -45,20 +41,16 @@ namespace _200SXContact.Controllers
 			if (userWithItems == null || !userWithItems.Items.Any())
 			{
 				Console.WriteLine("No items found for this user");
-				//return NotFound("No items found for the user.");
 			}
 
 			var items = userWithItems.Items.ToList();
-
-			// Return the dashboard view with the user's items
 			return View("~/Views/Account/Dashboard.cshtml", items);
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> CreateEntry(string entryTitle, string entryDescription, string dueDate)
 		{
-			// Log the received date
-			Console.WriteLine("Received Due Date: " + dueDate); // Output to console or debug log
+			Console.WriteLine("Received Due Date: " + dueDate);
 
 			var userEmail = User.FindFirstValue(ClaimTypes.Email);
 			var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
@@ -101,13 +93,10 @@ namespace _200SXContact.Controllers
 				var existingItem = _context.Items.FirstOrDefault(i => i.Id == updatedItem.Id);
 				if (existingItem != null)
 				{
-					// Update the fields
 					existingItem.EntryItem = updatedItem.EntryItem;
 					existingItem.EntryDescription = updatedItem.EntryDescription;
 					existingItem.DueDate = updatedItem.DueDate;
 					existingItem.UpdatedAt = DateTime.Now;
-
-					// Save the changes to the database
 					_context.SaveChanges();
 
 					return Json(new { success = true });
@@ -119,7 +108,6 @@ namespace _200SXContact.Controllers
 			}
 			catch (Exception ex)
 			{
-				// Log the exception (optional)
 				return Json(new { success = false, message = ex.Message });
 			}
 		}
@@ -137,6 +125,5 @@ namespace _200SXContact.Controllers
 		{
 			return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 		}
-
 	}
 }

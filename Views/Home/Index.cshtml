@@ -125,9 +125,6 @@
 					<header class="major">
 						<span class="date"></span>
 						<h2>Welcome</h2>
-					<p>Current User: @User.Identity.Name</p>
-					<p>Is Admin: @User.IsInRole("Admin")</p>
-					<p>Roles: @string.Join(", ", User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value))</p>
 						<p>You can scroll below for build & project updates, with pictures and a short description of each component.</p>
 					</header>
 					<div class="image main"><img src="~/images/thumbs/pic01g.gif" alt="" /></div>

@@ -1,9 +1,11 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     var logoutLink = document.getElementById("logoutLink");
+    console.log('DOM fully loaded and parsed');
 
-    if (logoutLink) { 
+    if (logoutLink) {
         logoutLink.addEventListener("click", function (event) {
-            event.preventDefault(); 
+            console.log('Logout link clicked'); 
+            event.preventDefault();
 
             fetch('/LoginRegister/Logout', {
                 method: 'POST',
@@ -12,6 +14,7 @@
                 }
             }).then(response => {
                 if (response.ok) {
+                    console.log('Logout successful');
                     window.location.href = '/';
                 } else {
                     console.error("Logout failed");

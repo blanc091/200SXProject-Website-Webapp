@@ -1,18 +1,16 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using _200SXContact.Data;
+using _200SXContact.Models;
 using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Net;
-using System.Web.Mvc;
-using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+
 
 namespace _200SXContact.Controllers
 {
-	public class NewsletterController : Microsoft.AspNetCore.Mvc.Controller
+	public class NewsletterController : Controller
 	{
 		private readonly ApplicationDbContext _context;
 
@@ -20,12 +18,95 @@ namespace _200SXContact.Controllers
 		{
 			_context = context;
 		}
-		[Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")] 
+		[Authorize(Roles = "Admin")] 
 		public IActionResult CreateNewsletter()
 		{
-			return View("~/Views/Newsletter/CreateNewsletter.cshtml");
+			var model = new NewsletterViewModel
+			{
+				Body = @"<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <style>
+                        body {
+                            font-family: 'Helvetica', 'Roboto', sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #2c2c2c; 
+                            color: #ffffff;
+                        }
+                        .container {
+                            width: 100%;
+                            max-width: 600px;
+                            margin: 0 auto;
+                            padding: 20px;
+                            background-color: #3c3c3c;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                        }
+                        .header {
+                            text-align: center;
+                        }
+                        .header img {
+                            max-width: 100%;
+                            height: auto;
+                            border-radius: 8px;
+                        }
+                        h1 {
+                            color: #f5f5f5;
+                            font-size: 24px;
+                            margin: 20px 0;
+                        }
+                        p {
+                            line-height: 1.6;
+                            margin: 10px 0;
+                            color: #f5f5f5;
+                        }
+                        .button {
+                            display: inline-block;
+                            padding: 10px 20px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            color: #ffffff;
+                            background-color: #d0bed1;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            transition: background-color 0.3s ease;
+                        }
+                        .button:hover {
+                            background-color: #966b91;
+                        }
+                        .footer {
+                            text-align: center;
+                            margin-top: 20px;
+                            font-size: 12px;
+                            color: #b0b0b0;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
+                        </div>
+                        <h1>Account Recovery</h1>
+                        <p>Hi there,</p>
+                        <p>Click the link below to reset and assign a new password for <b>MaintenApp</b>:</p>
+                        <p>
+                            <a href='' class='button'>Recover Your Account</a>
+                        </p>
+                        <p>If you did not request this, you can safely ignore this email.</p>
+                        <p>Thank you !</p>
+                        <div class='footer'>
+                            <p>© 2024 200SX Project. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>"
+			};
+			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);
 		}
-
 		[HttpPost]
 		public IActionResult Subscribe(string email)
 		{
@@ -119,7 +200,7 @@ namespace _200SXContact.Controllers
 		[Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 		public IActionResult SendNewsletter()
 		{
-			return View(new NewsletterViewModel());
+			return View("~/Views/Newsletter/CreateNewsletter.cshtml", new NewsletterViewModel());
 		}
 		[Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
 		private void SendEmailToSubscriber(string email, string subject, string body)

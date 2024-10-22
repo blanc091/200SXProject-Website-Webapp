@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\favicon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Views\Shared\5-0-ignite-trigger-kit.html" />
     <Content Include="Views\Shared\a-bigger-lot-is-here.html" />
     <Content Include="Views\Shared\alternator-rebuild.html" />
@@ -120,6 +124,7 @@
     <None Include="wwwroot\assets\webfonts\fa-solid-900.ttf" />
     <None Include="wwwroot\assets\webfonts\fa-solid-900.woff" />
     <None Include="wwwroot\assets\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\favicon.png" />
     <None Include="wwwroot\images\5-0-ignite-trigger-kit.jpg" />
     <None Include="wwwroot\images\a-bigger-lot-is-here-2.jpg" />
     <None Include="wwwroot\images\a-bigger-lot-is-here-3.jpg" />

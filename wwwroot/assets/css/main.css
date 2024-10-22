@@ -38,6 +38,10 @@ p {
 .datepicker {
 	z-index: 1050;
 }
+.validation-summary-valid ul::marker,
+.validation-summary-errors ul::marker {
+	content: none !important;
+}
 .btn-dashboard {
 	background-color: #d3d3d3;
 	color: #000;

@@ -43,7 +43,20 @@
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
+	<style>
+		/* Target the validation summary list to remove bullet points */
+		.validation-summary-valid ul,
+		.validation-summary-errors ul {
+			list-style-type: none;
+			padding-left: 0;
+		}
 
+			.validation-summary-valid ul li,
+			.validation-summary-errors ul li {
+				margin-left: 0;
+				padding-left: 0;
+			}
+	</style>
 </head>
 <body class="is-preload">
 

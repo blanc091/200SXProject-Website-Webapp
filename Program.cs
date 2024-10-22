@@ -23,12 +23,10 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 		var roleExist = await roleManager.RoleExistsAsync(roleName);
 		if (!roleExist)
 		{
-			// Create the roles if they do not exist
 			roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
 		}
 	}
 
-	// Create an admin user if not already created
 	var adminUser = await userManager.FindByEmailAsync("mircea.albu91@gmail.com");
 	if (adminUser == null)
 	{
@@ -37,16 +35,15 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 			UserName = "blanc0",
 			Email = "mircea.albu91@gmail.com",
 			EmailConfirmed = true,
-			CreatedAt = DateTime.Now, // Ensure CreatedAt is set
-			IsEmailVerified = true // or false, depending on your requirements
+			CreatedAt = DateTime.Now,
+			IsEmailVerified = true
 		};
 
 		string adminPassword = "Recall1547!";
-		var createAdminUser = await userManager.CreateAsync(admin, adminPassword); // No need to set PasswordHash
+		var createAdminUser = await userManager.CreateAsync(admin, adminPassword);
 
 		if (createAdminUser.Succeeded)
 		{
-			// Assign Admin role to the admin user
 			await userManager.AddToRoleAsync(admin, "Admin");
 		}
 	}
@@ -58,7 +55,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>
 {
-	options.IdleTimeout = TimeSpan.FromMinutes(15);
+	options.IdleTimeout = TimeSpan.FromMinutes(30);
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
@@ -69,10 +66,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	{
 		options.LoginPath = "/LoginRegister/Login";
 		options.LogoutPath = "/LoginRegister/Logout";
+		options.AccessDeniedPath = "/LoginRegister/AccessDenied";
 		options.Cookie.Name = "_200SXContact.AuthCookie";
-		options.Cookie.HttpOnly = true;
+		options.Cookie.HttpOnly = true;		
 		options.SlidingExpiration = true;
-		options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Set the expiration time
+		options.ExpireTimeSpan = TimeSpan.FromMinutes(60); 
 	})
 .AddMicrosoftAccount(microsoftOptions =>
 {
@@ -88,11 +86,13 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-var logger = app.Services.GetRequiredService<ILogger<Program>>(); // Use Program as the logger category
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
 app.Use(async (context, next) =>
-{
+{	
+	// Log the incoming request path for other requests
 	var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 	logger.LogInformation($"Incoming request path: {context.Request.Path}");
+
 	await next();
 });
 //app.Use(async (context, next) =>
