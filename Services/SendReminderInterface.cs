@@ -8,7 +8,6 @@ namespace _200SXContact.Services
 	{
 		Task SendDueDateReminder(string userEmail,Item item, int daysBeforeDue);
 	}
-
 	public class EmailService : IEmailService
 	{
 		public async Task SendDueDateReminder(string userEmail, Item item, int daysBeforeDue)
@@ -17,10 +16,8 @@ namespace _200SXContact.Services
 			{
 				var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
 				var toAddress = new MailAddress(userEmail); 
-
 				string subject = $"Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days";
 				string body = $"<p>This is a reminder that your service item '<strong>{item.EntryItem}</strong>' is due on <strong>{item.DueDate.ToShortDateString()}</strong>.</p>";
-
 				using (var smtpClient = new SmtpClient
 				{
 					Host = "mail5019.site4now.net",

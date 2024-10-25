@@ -21,42 +21,38 @@ namespace _200SXContact.Services
 			_context = context;
 			_emailService = emailService;
 		}
-
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
 			_timer = new Timer(CheckDueDates, null, TimeSpan.Zero, TimeSpan.FromDays(1)); 
 			return Task.CompletedTask;
 		}
-
 		private async void CheckDueDates(object state)
 		{
-			/*var dueItems10Days = await _context.Items
-				.Where(i => i.DueDate <= DateTime.Now.AddDays(10) && i.DueDate > DateTime.Now.AddDays(5))
-				.ToListAsync();*/
 			var dueItems1Day = await _context.Items
-	.Where(i => i.DueDate <= DateTime.Now.AddDays(1) && i.DueDate > DateTime.Now)
-	.ToListAsync();
+				.Where(i => i.DueDate <= DateTime.Now.AddDays(1) && i.DueDate > DateTime.Now && !i.EmailSent)
+				.ToListAsync();
+
 			foreach (var item in dueItems1Day)
 			{
-				await _emailService.SendDueDateReminder(item.User.Email, item, 10);
+				await _emailService.SendDueDateReminder(item.User.Email, item, 1);
+				item.EmailSent = true;
 			}
-
 			var dueItems5Days = await _context.Items
-				.Where(i => i.DueDate.Date == DateTime.Now.AddDays(5).Date)
+				.Where(i => i.DueDate.Date == DateTime.Now.AddDays(5).Date && !i.EmailSent)
 				.ToListAsync();
 
 			foreach (var item in dueItems5Days)
 			{
 				await _emailService.SendDueDateReminder(item.User.Email, item, 5);
+				item.EmailSent = true;
 			}
+			await _context.SaveChangesAsync();
 		}
-
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
 			_timer?.Change(Timeout.Infinite, 0);
 			return Task.CompletedTask;
 		}
-
 		public void Dispose()
 		{
 			_timer?.Dispose();

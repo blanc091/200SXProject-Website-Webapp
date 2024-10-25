@@ -18,22 +18,20 @@ namespace _200SXContact.Controllers
 			_context = context;
 			_userManager = userManager;
 		}
+
 		public async Task<IActionResult> Dashboard()
-		{			
+		{
 			if (!User.Identity.IsAuthenticated)
 			{
 				Console.WriteLine("User is not authenticated");
 				return RedirectToAction("Login", "LoginRegister");
 			}
-
 			var user = await _userManager.GetUserAsync(User);
-
 			if (user == null)
 			{
 				Console.WriteLine("User is null, cannot retrieve user");
 				return NotFound("User not found");
 			}
-
 			var userWithItems = await _context.Users
 											  .Include(u => u.Items)
 											  .FirstOrDefaultAsync(u => u.Id == user.Id);
@@ -41,12 +39,12 @@ namespace _200SXContact.Controllers
 			if (userWithItems == null || !userWithItems.Items.Any())
 			{
 				Console.WriteLine("No items found for this user");
+				return View("~/Views/Account/Dashboard.cshtml", new List<Item>()); 
 			}
 
 			var items = userWithItems.Items.ToList();
 			return View("~/Views/Account/Dashboard.cshtml", items);
 		}
-
 		[HttpPost]
 		public async Task<IActionResult> CreateEntry(string entryTitle, string entryDescription, string dueDate)
 		{

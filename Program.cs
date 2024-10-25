@@ -15,41 +15,72 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 	var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
+	// Create roles if they don't exist
 	string[] roleNames = { "Admin", "User" };
-	IdentityResult roleResult;
-
 	foreach (var roleName in roleNames)
 	{
-		var roleExist = await roleManager.RoleExistsAsync(roleName);
-		if (!roleExist)
+		if (!await roleManager.RoleExistsAsync(roleName))
 		{
-			roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+			await roleManager.CreateAsync(new IdentityRole(roleName));
 		}
 	}
 
-	var adminUser = await userManager.FindByEmailAsync("mircea.albu91@gmail.com");
+	// Check if the admin user exists
+	var adminEmail = "mircea.albu91@gmail.com"; // Your admin email
+	var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
 	if (adminUser == null)
 	{
+		// Create a new admin user
 		var admin = new User
 		{
-			UserName = "blanc0",
-			Email = "mircea.albu91@gmail.com",
+			UserName = "blanc0",  // Username can be adjusted as needed
+			Email = adminEmail,
 			EmailConfirmed = true,
 			CreatedAt = DateTime.Now,
 			IsEmailVerified = true
 		};
 
-		string adminPassword = "Recall1547!";
-		var createAdminUser = await userManager.CreateAsync(admin, adminPassword);
+		string adminPassword = "Recall1547!"; // Ensure you have a strong password here
+		var createAdminUserResult = await userManager.CreateAsync(admin, adminPassword);
 
-		if (createAdminUser.Succeeded)
+		if (createAdminUserResult.Succeeded)
 		{
 			await userManager.AddToRoleAsync(admin, "Admin");
 		}
+		else
+		{
+			// Log the errors if the user creation fails
+			foreach (var error in createAdminUserResult.Errors)
+			{
+				Console.WriteLine($"Error creating user: {error.Description}");
+			}
+		}
 	}
 }
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowSpecificOrigins", builder =>
+	{
+		builder.WithOrigins("https://localhost:7109","https://200sxproject.com") // Add specific allowed origins here
+			   .AllowAnyHeader() // Allows any header
+			   .AllowAnyMethod() // Allows any HTTP method
+			   .AllowCredentials(); // Allows cookies and other credentials
+	});
+});
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+	//options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
+	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._ ";
+	options.User.RequireUniqueEmail = true;
+
+})
+
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
@@ -70,6 +101,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		options.Cookie.Name = "_200SXContact.AuthCookie";
 		options.Cookie.HttpOnly = true;		
 		options.SlidingExpiration = true;
+		options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Use HTTPS
+		options.Cookie.SameSite = SameSiteMode.Strict; // Prevent CSRF attacks
 		options.ExpireTimeSpan = TimeSpan.FromMinutes(60); 
 	})
 .AddMicrosoftAccount(microsoftOptions =>
@@ -84,6 +117,8 @@ if (!app.Environment.IsDevelopment())
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 }
+app.UseRouting();
+app.UseCors("AllowSpecificOrigins");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -108,8 +143,6 @@ app.Use(async (context, next) =>
 //	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
 //	await next();
 //});
-app.UseRouting();
-app.UseSession();
 
 if (app.Environment.IsDevelopment())
 {
@@ -120,6 +153,7 @@ else
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 }
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
@@ -134,6 +168,6 @@ app.MapPost("/signout", async context =>
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
-	await CreateRoles(services);
+	//await CreateRoles(services);
 }
 app.Run();

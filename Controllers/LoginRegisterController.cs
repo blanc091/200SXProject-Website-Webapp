@@ -10,6 +10,7 @@ using _200SXContact.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace _200SXContact.Controllers
 {
@@ -96,7 +97,7 @@ namespace _200SXContact.Controllers
 					if (result.Succeeded)
 					{
 						Console.WriteLine("User logged in successfully.");
-						return LocalRedirect(returnUrl); 
+						return LocalRedirect(returnUrl);
 					}
 				}
 			}
@@ -116,21 +117,25 @@ namespace _200SXContact.Controllers
 			}
 			return View("~/Views/Account/ForgotPassReset.cshtml", model);
 		}
-		
 		[HttpGet]
 		[AllowAnonymous]
 		public async Task<IActionResult> SigninMicrosoft()
 		{
-			var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			var result = await HttpContext.AuthenticateAsync(MicrosoftAccountDefaults.AuthenticationScheme);
 			if (!result.Succeeded)
 			{
-				_logger.LogWarning("Authentication failed. Redirecting to login.");
-				return RedirectToAction("Login", "LoginRegister");
+				_logger.LogError("Microsoft login failed.");
+				return RedirectToAction("Login");
 			}
-
-			var email = result.Principal.FindFirst(ClaimTypes.Email)?.Value; 
-			var username = result.Principal.FindFirst(ClaimTypes.Name)?.Value; 
-			var userId = result.Principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var emailClaim = result.Principal.FindFirst(ClaimTypes.Email);
+			var email = emailClaim?.Value;
+			var username = email.Split('@')[0];
+			username = Regex.Replace(username, @"[^a-zA-Z0-9]", string.Empty);
+			if (string.IsNullOrEmpty(email))
+			{
+				_logger.LogError("Email claim not found in the authentication result.");
+				return RedirectToAction("Login");
+			}
 			var user = await _userManager.FindByEmailAsync(email);
 			if (user == null)
 			{
@@ -138,42 +143,28 @@ namespace _200SXContact.Controllers
 				{
 					UserName = username,
 					Email = email,
+					EmailConfirmed = true,
 					CreatedAt = DateTime.UtcNow,
-					IsEmailVerified = true,
-					EmailVerificationToken = Guid.NewGuid().ToString() + "_MS_OAuth"
+					IsEmailVerified = true
 				};
 
-				var createResult = await _userManager.CreateAsync(user);
-				if (!createResult.Succeeded)
+				var createUserResult = await _userManager.CreateAsync(user);
+				if (!createUserResult.Succeeded)
 				{
-					foreach (var error in createResult.Errors)
-					{
-						_logger.LogError($"Error creating user: {error.Description}");
-					}
-					return RedirectToAction("Login", "LoginRegister"); 
+					_logger.LogError("Failed to create user: {Errors}", string.Join(", ", createUserResult.Errors.Select(e => e.Description)));
+					return RedirectToAction("Login");
 				}
 			}
+			await _signInManager.SignInAsync(user, isPersistent: true);
 
-			var claims = new List<Claim>
-			{
-				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-				new Claim(ClaimTypes.Name, user.UserName),
-				new Claim(ClaimTypes.Email, user.Email)
-			};
-			var roles = await _userManager.GetRolesAsync(user);
-			foreach (var role in roles)
-			{
-				claims.Add(new Claim(ClaimTypes.Role, role));
-			}
-
-			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-			var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 			TempData["IsUserLoggedIn"] = true;
 			ViewData["IsUserLoggedIn"] = true;
-			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft !";
-			return RedirectToAction("Dashboard", "Dashboard"); 
+			TempData["MicrosoftLogin"] = true;
+			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft!";
+
+			return RedirectToAction("Dashboard", "Dashboard");
 		}
+
 		[HttpGet]
 		public IActionResult Register()
 		{
@@ -250,21 +241,45 @@ namespace _200SXContact.Controllers
 			return View("~/Views/Account/ResetPass.cshtml", model);
 		}
 		[HttpPost]
+		public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View("~/Views/Account/ForgotPassReset.cshtml", model);
+			}
+
+			var user = await _userManager.FindByEmailAsync(model.Email);
+			if (user == null)
+			{
+				TempData["Message"] = "If that email is associated with an account, you will receive a password reset link.";
+				return RedirectToAction("ForgotPassword");
+			}
+			var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+			var encodedToken = System.Web.HttpUtility.UrlEncode(token);
+			var resetUrl = Url.Action("ResetPassword", "LoginRegister",
+				new { token = encodedToken, email = user.Email }, Request.Scheme);
+			await SendPasswordResetEmail(user.Email, resetUrl);
+
+			TempData["PassResetLinkEmailed"] = "yes";
+			TempData["Message"] = "Password reset link emailed!";
+			return RedirectToAction("Login");
+		}
+		[HttpPost]
 		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
 		{
 			if (!ModelState.IsValid)
 			{
 				return View("~/Views/Account/ResetPass.cshtml", model);
 			}
-
 			var user = await _userManager.FindByEmailAsync(model.Email);
-			if (user == null || user.PasswordResetToken != model.Token)
+			if (user == null)
 			{
 				ModelState.AddModelError("", "Invalid token or email.");
 				return View("~/Views/Account/ResetPass.cshtml", model);
 			}
 
-			var resetResult = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+			var decodedToken = System.Web.HttpUtility.UrlDecode(model.Token);
+			var resetResult = await _userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
 			if (!resetResult.Succeeded)
 			{
 				foreach (var error in resetResult.Errors)
@@ -273,10 +288,6 @@ namespace _200SXContact.Controllers
 				}
 				return View("~/Views/Account/ResetPass.cshtml", model);
 			}
-
-			user.PasswordResetToken = null; 
-			await _userManager.UpdateAsync(user);
-
 			TempData["PassResetSuccess"] = "yes";
 			TempData["Message"] = "Your password has been reset successfully.";
 			return RedirectToAction("Login", "LoginRegister");
@@ -394,29 +405,6 @@ namespace _200SXContact.Controllers
 					await smtpClient.SendMailAsync(message);
 				}
 			}
-		}
-		[HttpPost]
-		public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View("~/Views/Account/ForgotPassReset.cshtml", model); 
-			}
-
-			var user = await _userManager.FindByEmailAsync(model.Email);
-			if (user == null)
-			{
-				TempData["Message"] = "If that email is associated with an account, you will receive a password reset link.";
-				return RedirectToAction("ForgotPassword");
-			}
-
-			var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-			var resetUrl = Url.Action("ResetPassword", "LoginRegister", new { token = token, email = user.Email }, Request.Scheme);
-
-			await SendPasswordResetEmail(user.Email, resetUrl);
-			TempData["PassResetLinkEmailed"] = "yes";
-			TempData["Message"] = "Password reset link emailed !";
-			return RedirectToAction("Login");
 		}
 		private async Task SendVerificationEmail(string email, string verificationUrl)
 		{

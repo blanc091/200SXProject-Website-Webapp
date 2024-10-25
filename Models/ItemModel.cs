@@ -12,5 +12,6 @@ namespace _200SXContact.Models
 		public DateTime UpdatedAt { get; set; }
 		public string UserId { get; set; } // Foreign key to User
 		public virtual User User { get; set; }
+		public bool EmailSent { get; set; }  // Default to false
 	}
 }
