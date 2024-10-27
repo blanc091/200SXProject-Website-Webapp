@@ -8,14 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
-
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 	var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-
-	// Create roles if they don't exist
 	string[] roleNames = { "Admin", "User" };
 	foreach (var roleName in roleNames)
 	{
@@ -24,24 +20,20 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 			await roleManager.CreateAsync(new IdentityRole(roleName));
 		}
 	}
-
-	// Check if the admin user exists
-	var adminEmail = "mircea.albu91@gmail.com"; // Your admin email
+	var adminEmail = "mircea.albu91@gmail.com";
 	var adminUser = await userManager.FindByEmailAsync(adminEmail);
-
 	if (adminUser == null)
 	{
-		// Create a new admin user
 		var admin = new User
 		{
-			UserName = "blanc0",  // Username can be adjusted as needed
+			UserName = "blanc0",
 			Email = adminEmail,
 			EmailConfirmed = true,
 			CreatedAt = DateTime.Now,
 			IsEmailVerified = true
 		};
 
-		string adminPassword = "Recall1547!"; // Ensure you have a strong password here
+		string adminPassword = "Recall1547!";
 		var createAdminUserResult = await userManager.CreateAsync(admin, adminPassword);
 
 		if (createAdminUserResult.Succeeded)
@@ -50,11 +42,17 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 		}
 		else
 		{
-			// Log the errors if the user creation fails
 			foreach (var error in createAdminUserResult.Errors)
 			{
 				Console.WriteLine($"Error creating user: {error.Description}");
 			}
+		}
+	}
+	else
+	{
+		if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+		{
+			await userManager.AddToRoleAsync(adminUser, "Admin");
 		}
 	}
 }
@@ -168,6 +166,6 @@ app.MapPost("/signout", async context =>
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
-	//await CreateRoles(services);
+	await CreateRoles(services);
 }
 app.Run();

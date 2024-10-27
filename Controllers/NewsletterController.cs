@@ -105,7 +105,8 @@ namespace _200SXContact.Controllers
                 </body>
                 </html>"
 			};
-			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);
+			
+			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}
 		[HttpPost]
 		public IActionResult Subscribe(string email)

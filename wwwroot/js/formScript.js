@@ -7,7 +7,7 @@
     }
 }
 document.addEventListener("DOMContentLoaded", function () {
-    var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
+    /var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
     var isFormSuccess = document.body.getAttribute('data-is-form-success');
     var isUserLoggedIn = document.body.getAttribute('data-is-user-logged-in');
     var isFormRegisterSuccess = document.body.getAttribute('data-is-form-register-success');
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var isPassResetSuccess = document.body.getAttribute('data-is-pass-reset-success');
     var isNewsletterSubbed = document.body.getAttribute('data-is-newsletter-subbed');
     var isNewsletterError = document.body.getAttribute('data-is-newsletter-subbed');
+    var isNiceTry = document.body.getAttribute('data-is-nice-try');
     var formSubmitted = isFormSubmitted === "True";
     var formSuccess = isFormSuccess === "True";
 
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isPassResetSuccess == "yes" ||
         isEntrySuccess == "yes" ||
         userExists == "yes" ||
+        isNiceTry == "yes" ||
         isNewsletterSubbed == "yes" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {
