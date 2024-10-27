@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var passResetEmailSent = document.body.getAttribute('data-is-pass-reset-email-sent');
     var isPassResetSuccess = document.body.getAttribute('data-is-pass-reset-success');
     var isNewsletterSubbed = document.body.getAttribute('data-is-newsletter-subbed');
-    var isNewsletterError = document.body.getAttribute('data-is-newsletter-subbed');
+    var isNewsletterError = document.body.getAttribute('data-is-newsletter-error');
     var isNiceTry = document.body.getAttribute('data-is-nice-try');
     var formSubmitted = isFormSubmitted === "True";
     var formSuccess = isFormSuccess === "True";

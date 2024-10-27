@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<_200SXContact.Models.Item>
 
 @{
-    ViewData["Title"] = "Dashboard";
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Dashboard";
 }
 
 @if (TempData["Message"] != null)
@@ -89,11 +89,16 @@
 						<a href="#contactForm" id="contactLink">Contact</a>
 					</li>
 					@if (User.Identity.IsAuthenticated)
-					{
+					{						
+						<li>
+							<span>
+								<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
+							</span>
+						</li>
 						<li><span>Logged in as @User.Identity.Name</span></li>
 						<li>
 							<a href="#" id="logoutLink">Logout</a>
-						</li>
+						</li>											
 					}
 				</ul>
 			}
@@ -125,8 +130,6 @@
 			</ul>
 		</nav>
 
-
-
 		<!-- Main -->
 		<div id="main">
 
@@ -135,7 +138,7 @@
 				<header class="major">
 					<span class="date"></span>
 					<h7>MaintenApp</h7>
-					<br>
+					<br><br>
 					<p>Use the below form to log, handle and configure service and maintenance intervals and components for your vehicle. You can add a new entry via the form below, making sure to correctly set up the date of next change; the current form submission date is used as the current vehicle part change/service action. All of your entries are displayed in the table below, you can edit each individual entry and hit <b>Save</b> afterwards. <br><br>After sucessful configuration, you will get email alerts 10 and 5 days respectively before the set alert date. NOTE ! This feature is still in development !</p>
 				</header>
 				<h1>Welcome, @User.Identity.Name !</h1>
