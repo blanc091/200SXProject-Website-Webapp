@@ -13,6 +13,7 @@ namespace _200SXContact.Data
 		}
 		public DbSet<EmailLog> EmailLogs { get; set; }
 		//public new DbSet<User> Users { get; set; }
+		public DbSet<LoggingModel> Logging { get; set; }
 		public DbSet<Item> Items { get; set; }
 		public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; }
 

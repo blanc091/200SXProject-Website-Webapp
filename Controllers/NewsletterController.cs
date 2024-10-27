@@ -174,9 +174,9 @@ namespace _200SXContact.Controllers
 
 			return Ok("Unsubscribed successfully.");
 		}
-		[Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin")]
 		[HttpPost]
-		[Microsoft.AspNetCore.Mvc.ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
 		public IActionResult SendNewsletter(NewsletterViewModel model)
 		{
 			if (!ModelState.IsValid)

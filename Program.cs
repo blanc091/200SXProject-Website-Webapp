@@ -66,10 +66,10 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowSpecificOrigins", builder =>
 	{
-		builder.WithOrigins("https://localhost:7109","https://200sxproject.com") // Add specific allowed origins here
-			   .AllowAnyHeader() // Allows any header
-			   .AllowAnyMethod() // Allows any HTTP method
-			   .AllowCredentials(); // Allows cookies and other credentials
+		builder.WithOrigins("https://localhost:7109","https://200sxproject.com")
+			   .AllowAnyHeader() 
+			   .AllowAnyMethod() 
+			   .AllowCredentials();
 	});
 });
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -77,9 +77,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 	//options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
 	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._ ";
 	options.User.RequireUniqueEmail = true;
-
 })
-
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
@@ -91,6 +89,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ILoggerService, LoggerService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
@@ -123,7 +122,6 @@ app.UseStaticFiles();
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 app.Use(async (context, next) =>
 {	
-	// Log the incoming request path for other requests
 	var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 	logger.LogInformation($"Incoming request path: {context.Request.Path}");
 
@@ -143,7 +141,6 @@ app.Use(async (context, next) =>
     context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
     await next();
 });
-
 
 if (app.Environment.IsDevelopment())
 {

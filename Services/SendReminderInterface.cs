@@ -10,6 +10,11 @@ namespace _200SXContact.Services
 	}
 	public class EmailService : IEmailService
 	{
+		private readonly ILoggerService _loggerService;
+		public EmailService(ILoggerService loggerService)
+		{
+			_loggerService = loggerService;
+		}
 		public async Task SendDueDateReminder(string userEmail, Item item, int daysBeforeDue)
 		{
 			try
@@ -42,11 +47,12 @@ namespace _200SXContact.Services
 				var errorMessage = $"SMTP Error: {ex.Message}\n" +
 								   $"StatusCode: {ex.StatusCode}\n" +
 								   $"InnerException: {ex.InnerException?.Message}";
-
+				await _loggerService.LogAsync($"SMTP Error: {ex.Message}", "Error");
 				throw new Exception("Failed to send email for due date reminder. Please try again later.", ex);
 			}
 			catch (Exception ex)
 			{
+				await _loggerService.LogAsync($"Unexpected Error: {ex.Message}", "Error");
 				throw new Exception("An unexpected error occurred while sending the due date reminder email.", ex);
 			}
 		}
