@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Build.Framework;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 async Task CreateRoles(IServiceProvider serviceProvider)
@@ -128,19 +129,21 @@ app.Use(async (context, next) =>
 
 	await next();
 });
-//app.Use(async (context, next) =>
-//{
-//	var cspPolicy = "default-src 'self'; " +
-// 					"script-src 'self' https://ajax.googleapis.com https://fonts.googleapis.com https://login.microsoftonline.com https://aadcdn.msftauth.net https://stackpath.bootstrapcdn.com; " +
-// 					"style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; " +
-// 					"img-src 'self' https://www.google.com data:; " +
-// 					"font-src 'self' https://fonts.gstatic.com; " +
-// 					"frame-ancestors 'none'; " +
-// 					"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net http://localhost:65212 https://localhost:7109;";
 
-//	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
-//	await next();
-//});
+app.Use(async (context, next) =>
+{
+    var cspPolicy = "default-src 'self'; " +
+                    "script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://aadcdn.msftauth.net https://ajax.googleapis.com https://fonts.googleapis.com https://login.microsoftonline.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com; " +
+                    "style-src 'self' https://fonts.googleapis.com 'unsafe-inline' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com; " +
+                    "font-src 'self' https://fonts.gstatic.com; " +
+                    "img-src 'self' https://www.google.com data:; " +
+                    "connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net http://localhost:65212 https://localhost:7109; " +
+                    "frame-src 'self' https://pagead2.googlesyndication.com;";
+
+    context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
+    await next();
+});
+
 
 if (app.Environment.IsDevelopment())
 {
