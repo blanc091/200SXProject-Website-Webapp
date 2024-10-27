@@ -6,8 +6,9 @@
         console.error(`${elementId} not found!`);
     }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
-    /var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
+    var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
     var isFormSuccess = document.body.getAttribute('data-is-form-success');
     var isUserLoggedIn = document.body.getAttribute('data-is-user-logged-in');
     var isFormRegisterSuccess = document.body.getAttribute('data-is-form-register-success');
@@ -64,39 +65,44 @@ document.addEventListener("DOMContentLoaded", function () {
         scrollToContactForm();
     }
 
-    window.addEventListener('scroll', function () {
-        var introElement = document.getElementById('intro');
-        if (window.scrollY > 0) {
-            introElement.classList.add('hidden');
+    if (window.location.pathname != '/Account/Login') {
+        window.addEventListener('scroll', function () {
+            var introElement = document.getElementById('intro');
+            if (introElement) {
+                if (window.scrollY > 0) {
+                    introElement.classList.add('hidden');
+                } else {
+                    introElement.classList.remove('hidden');
+                }
+            }
+        });
+    }
+
+    function scrollToContactForm() {
+        var contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.scrollIntoView({ behavior: 'smooth' });
         } else {
-            introElement.classList.remove('hidden');
+            console.error('Contact form not found!');
         }
-    });
-});
-
-function scrollToContactForm() {
-    var contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        console.error('Contact form not found !');
-    }
-}
-$(document).ready(function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('scrollToContactForm')) {
-        scrollToContactForm(); 
     }
 
-    document.getElementById('contactLink').addEventListener('click', function (event) {
-        event.preventDefault();
-        if (window.location.pathname === '/Home/Index') {
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('scrollToContactForm')) {
             scrollToContactForm();
-        } else {
-            window.location.href = '/Home/Index?scrollToContactForm=true';
+        }
+
+        var contactLink = document.getElementById('contactLink');
+        if (contactLink) {
+            contactLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (window.location.pathname === '/Home/Index') {
+                    scrollToContactForm();
+                } else {
+                    window.location.href = '/Home/Index?scrollToContactForm=true';
+                }
+            });
         }
     });
 });
-
-
-
