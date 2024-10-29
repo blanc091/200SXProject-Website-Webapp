@@ -86,6 +86,11 @@
 					</li>
 
 				}
+				<li>
+					<span>
+						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+					</span>
+				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
 					<li>
@@ -144,14 +149,18 @@
 				{
 					<article>
 						<header>
-							<span class="date">@build.DateCreated.ToString("MMMM dd, yyyy")</span>
+							<span class="date">@build.DateCreated</span>
 							<h2><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id">@build.Title</a></h2>
 						</header>
 						<a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id" class="image fit">
 							<img src="@build.ImagePath" alt="@build.Title" />
 						</a>
 						<br>
-						<p>@build.Description.Substring(0, 50)...</p> <!-- Show a preview of the description -->
+						<p>
+							@(string.IsNullOrEmpty(build.Description) ? "No description available." :
+														build.Description.Length <= 50 ? build.Description :
+														build.Description.Substring(0, 50) + "...")
+						</p>
 						<ul class="actions special">
 							<li><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id" class="button">Read more</a></li>
 						</ul>

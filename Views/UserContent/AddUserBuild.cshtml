@@ -87,8 +87,18 @@
 					</li>
 
 				}
+				<li>
+					<span>
+						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+					</span>
+				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
+					<li>
+						<span>
+							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
+						</span>
+					</li>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
@@ -121,29 +131,30 @@
 
 		<!-- Main -->
 		<div id="main">		
-
-				<article class="post featured">
-					<header>
-						<h1>Create your own build, @Model.UserEmail</h1>
+			<article class="post featured">
+					<header class="major">
+						<h1>Create your own build, @Model.UserName</h1>
 					</header>
-
-					<form asp-action="SubmitBuild" asp-controller="UserBuilds" enctype="multipart/form-data" method="post">
-						<div class="form-group">
-							<label for="Title">Title</label>
-							<input type="text" id="Title" name="Title" required class="form-control" />
-						</div>
-						<div class="form-group">
-							<label for="Description">Description</label>
-							<textarea id="Description" name="Description" required class="form-control"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="Image">Upload Image</label>
-							<input type="file" id="Image" name="Image" class="form-control-file" required />
-						</div>
-						<button type="submit" class="btn-add-entry">Submit Build</button>
-					</form>
+					<br><br>
+				<p>Use the below form to showcase your build entries; make sure you also provide a meaningful description of your build. You can also add up to 10 images. </p>
+				<br>
+				<form asp-action="SubmitBuild" asp-controller="UserBuilds" enctype="multipart/form-data" method="post">
+					<div class="form-group">
+						<label for="Title">Title</label>
+						<input type="text" id="Title" name="Title" required class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="Description">Description</label>
+						<textarea id="Description" name="Description" required class="form-control"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="Images">Upload Images</label>
+						<input type="file" id="Images" name="Images" class="form-control-file" multiple required />
+					</div>
+					<button type="submit" class="btn-add-entry">Submit Build</button>
+				</form>
 				</article>		
-
+				
 		</div>
 		<!-- Footer -->
 		<footer id="footer">

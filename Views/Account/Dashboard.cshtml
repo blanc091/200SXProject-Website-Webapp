@@ -88,8 +88,13 @@
 					<li>
 						<a href="#contactForm" id="contactLink">Contact</a>
 					</li>
+					<li>
+						<span>
+							<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+						</span>
+					</li>
 					@if (User.Identity.IsAuthenticated)
-					{						
+					{
 						<li>
 							<span>
 								<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
@@ -98,7 +103,7 @@
 						<li><span>Logged in as @User.Identity.Name</span></li>
 						<li>
 							<a href="#" id="logoutLink">Logout</a>
-						</li>											
+						</li>
 					}
 				</ul>
 			}

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace _200SXContact.Controllers
 {
@@ -25,47 +26,67 @@ namespace _200SXContact.Controllers
 			var user = await _userManager.GetUserAsync(User);
 			var model = new UserBuild
 			{
-				UserName = user?.UserName
+				UserName = user.UserName
 			};
 			return View("~/Views/UserContent/AddUserBuild.cshtml", model);
 		}
 		[HttpPost]
 		[Authorize]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> SubmitBuild(UserBuild model, IFormFile image)
+		public async Task<IActionResult> SubmitBuild(UserBuild model, IFormFile[] Images)
 		{
+			ModelState.Remove("ImagePath");
+			ModelState.Remove("Id");
+			var user = await _userManager.GetUserAsync(User);
 			if (ModelState.IsValid)
 			{
-				if (image != null && image.Length > 0)
+				List<string> imagePaths = new List<string>(); // Store paths for multiple images
+
+				if (Images != null && Images.Length > 0)
 				{
-					var user = await _userManager.GetUserAsync(User);
-					var userEmail = user.Email.Replace("@", "_at_").Replace(".", "_");
-					var userDirectory = Path.Combine("wwwroot/images/uploads", userEmail);
-					if (!Directory.Exists(userDirectory))
+					foreach (var image in Images)
 					{
-						Directory.CreateDirectory(userDirectory);
+						if (image.Length > 0)
+						{
+							var userEmail = user.Email.Replace("@", "_at_").Replace(".", "_");
+							var userDirectory = Path.Combine("wwwroot/images/uploads", userEmail);
+							if (!Directory.Exists(userDirectory))
+							{
+								Directory.CreateDirectory(userDirectory);
+							}
+
+							var imagePath = Path.Combine(userDirectory, image.FileName);
+							using (var stream = new FileStream(imagePath, FileMode.Create))
+							{
+								await image.CopyToAsync(stream);
+							}
+
+							imagePaths.Add($"/images/uploads/{userEmail}/{image.FileName}"); // Add each image path
+						}
 					}
 
-					var imagePath = Path.Combine(userDirectory, image.FileName);
-					using (var stream = new FileStream(imagePath, FileMode.Create))
-					{
-						await image.CopyToAsync(stream);
-					}
-
-					model.ImagePath = $"/images/uploads/{userEmail}/{image.FileName}";
+					model.ImagePath = string.Join(",", imagePaths); // Concatenate paths if needed
 					model.DateCreated = DateTime.Now;
 					model.UserEmail = user.Email;
+					model.UserName = user.UserName;
+					model.UserId = user.Id; // Assuming this property exists
 				}
 
 				_context.UserBuilds.Add(model);
 				await _context.SaveChangesAsync();
 
-				return RedirectToAction("UserContentDashboard", "UserContent");
+				return RedirectToAction("UserContentDashboard", "UserBuilds");
 			}
-			return View(model);
+
+			foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+			{
+				_logger.LogError("Model Error: {0}", error.ErrorMessage);
+			}
+			return View("~/Views/UserContent/AddUserBuild.cshtml", model);
 		}
+
 		[HttpGet]
-		public async Task<IActionResult> DetailedUserView(int id)
+		public async Task<IActionResult> DetailedUserView(string id)
 		{
 			var build = await _context.UserBuilds
 				.FirstOrDefaultAsync(b => b.Id == id);

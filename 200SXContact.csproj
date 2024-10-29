@@ -396,7 +396,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\images\uploads\mircea_albu91_at_gmail_com\" />
   </ItemGroup>
 
 </Project>

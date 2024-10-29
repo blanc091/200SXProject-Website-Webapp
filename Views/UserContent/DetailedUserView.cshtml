@@ -86,8 +86,18 @@
 					</li>
 
 				}
+				<li>
+					<span>
+						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+					</span>
+				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
+					<li>
+						<span>
+							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
+						</span>
+					</li>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
@@ -138,7 +148,7 @@
 					<header>
 						<h1>@Model.Title</h1>
 						<p>by @Model.UserEmail</p>
-						<span class="date">@Model.DateCreated.ToString("MMMM dd, yyyy")</span>
+						<span class="date">@Model.DateCreated</span>
 					</header>
 
 					@if (!string.IsNullOrEmpty(Model.ImagePath))

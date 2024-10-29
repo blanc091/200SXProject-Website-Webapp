@@ -12,10 +12,8 @@ namespace _200SXContact.Models
 		[Required(ErrorMessage = "Username is required.")]
 		public override string UserName { get; set; }
 		[Required(ErrorMessage = "Email is required.")]
-		[EmailAddress(ErrorMessage = "Invalid email address.")]
-		
+		[EmailAddress(ErrorMessage = "Invalid email address.")]		
 		public override string Email { get; set; }
-		//public string? PasswordHash { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime? LastLogin { get; set; }
 		public bool IsEmailVerified { get; set; }
