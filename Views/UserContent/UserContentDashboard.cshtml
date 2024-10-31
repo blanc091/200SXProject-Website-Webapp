@@ -85,12 +85,7 @@
 						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
 					</li>
 
-				}
-				<li>
-					<span>
-						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
-					</span>
-				</li>
+				}				
 				@if (User.Identity.IsAuthenticated)
 				{
 					<li>
@@ -135,8 +130,16 @@
 				<article class="post featured">
 					<header class="major">
 						<span class="date"></span>
+						<br>
 						<h2>User Builds</h2>
 						<p>You can find here all user builds submitted by registered users.</p>
+						@if (!User.Identity.IsAuthenticated)
+						{
+						<div class="center-div">
+							Want to add your own build ? Create an account for
+							<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a> or <a href="@Url.Action("Login", "LoginRegister")"><strong>Login</strong></a>.
+						</div>
+						}
 					</header>					
 				
 				</article>
@@ -145,29 +148,32 @@
 				<section class="posts">
 
 				@foreach (var build in Model)
-
 				{
 					<article>
-						<header>
+						<header id="userContentDash">
 							<span class="date">@build.DateCreated</span>
 							<h2><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id">@build.Title</a></h2>
 						</header>
-						<a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id" class="image fit">
-							<img src="@build.ImagePath" alt="@build.Title" />
-						</a>
 						<br>
+						<div class="images-container">
+							@if (build.ImagePaths != null && build.ImagePaths.Any())
+
+							{
+								<img src="@build.ImagePaths.First().Trim()" alt="@build.Title" class="fit" style="width: 480px; height: 360px;" />
+							}
+						</div>
+						<br></br>
 						<p>
 							@(string.IsNullOrEmpty(build.Description) ? "No description available." :
-														build.Description.Length <= 50 ? build.Description :
-														build.Description.Substring(0, 50) + "...")
+														build.Description.Length <= 200 ? build.Description :
+														build.Description.Substring(0, 200) + "...")
 						</p>
 						<ul class="actions special">
 							<li><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id" class="button">Read more</a></li>
 						</ul>
 					</article>
-				}			
+				}
 				</section>
-
 
 			</div>
 			<!-- Footer -->

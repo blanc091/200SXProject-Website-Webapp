@@ -47,7 +47,7 @@
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 
 </head>
-<body class="is-preload" data-is-form-submitted="@TempData["IsFormSubmitted"]" data-is-form-success="@TempData["IsFormSuccess"]">
+<body class="is-preload">
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
 
@@ -93,12 +93,7 @@
 					</span>
 				</li>
 				@if (User.Identity.IsAuthenticated)
-				{
-					<li>
-						<span>
-							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
-						</span>
-					</li>
+				{					
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
@@ -132,10 +127,10 @@
 		<!-- Main -->
 		<div id="main">		
 			<article class="post featured">
+				<br>
 					<header class="major">
-						<h1>Create your own build, @Model.UserName</h1>
-					</header>
-					<br><br>
+						<h1 id="addBuild">Create your own build, @Model.UserName</h1>
+					</header>					
 				<p>Use the below form to showcase your build entries; make sure you also provide a meaningful description of your build. You can also add up to 10 images. </p>
 				<br>
 				<form asp-action="SubmitBuild" asp-controller="UserBuilds" enctype="multipart/form-data" method="post">

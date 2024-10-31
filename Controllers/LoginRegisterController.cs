@@ -213,8 +213,11 @@ namespace _200SXContact.Controllers
 						ModelState.AddModelError(string.Empty, error.Description);
 					}
 					return View("~/Views/Account/Register.cshtml", model);
-				}
-
+				}				
+				if (model.SubscribeToNewsletter)
+				{
+					await Subscribe(model.Email);
+				}				
 				var verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
 				await SendVerificationEmail(model.Email, verificationUrl);
 				TempData["IsFormRegisterSuccess"] = "yes";
@@ -223,6 +226,29 @@ namespace _200SXContact.Controllers
 				return RedirectToAction("Login", "LoginRegister");
 			}
 			return View("~/Views/Account/Register.cshtml", model);
+		}
+		private async Task Subscribe(string email)
+		{
+			var existingSubscription = _context.NewsletterSubscriptions
+				.FirstOrDefault(sub => sub.Email == email);
+
+			if (existingSubscription == null)
+			{
+				var subscription = new NewsletterSubscription
+				{
+					Email = email,
+					IsSubscribed = true,
+					SubscribedAt = DateTime.Now
+				};
+				_context.NewsletterSubscriptions.Add(subscription);
+			}
+			else if (!existingSubscription.IsSubscribed)
+			{
+				existingSubscription.IsSubscribed = true;
+				existingSubscription.SubscribedAt = DateTime.Now;
+			}
+
+			await _context.SaveChangesAsync();
 		}
 		[HttpGet]
 		public IActionResult ResetPassword(string token, string email)

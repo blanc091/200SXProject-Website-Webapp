@@ -6,7 +6,6 @@
         console.error(`${elementId} not found!`);
     }
 }
-
 document.addEventListener("DOMContentLoaded", function () {
     var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
     var isFormSuccess = document.body.getAttribute('data-is-form-success');
@@ -23,9 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
     var isNiceTry = document.body.getAttribute('data-is-nice-try');
     var formSubmitted = isFormSubmitted === "True";
     var formSuccess = isFormSuccess === "True";
+    var commentSubmitted = document.body.getAttribute('data-is-comment-posted'); 
 
     console.log("Current Pathname:", window.location.pathname);
-
+    if (window.location.pathname.startsWith('/UserBuilds/DetailedUserView')) {
+    scrollToElement("detailedViewSection");
+    }
     switch (window.location.pathname) {
         case '/Dashboard/Dashboard':
             scrollToElement("maintenApp");
@@ -43,6 +45,12 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/Newsletter/Subscribe':
             scrollToElement("newsletterForm");
             break;
+        case '/UserBuilds/AddUserBuild':
+            scrollToElement("addBuild");
+            break;
+        case '/UserBuilds/UserContentDashboard':
+            scrollToElement("userContentDash");
+            break;       
     }
 
     if ((isUserLoggedIn && !formSubmitted) ||
@@ -55,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
         userExists == "yes" ||
         isNiceTry == "yes" ||
         isNewsletterSubbed == "yes" ||
+        commentSubmitted == "yes" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {
             $('#messageModal').fadeOut(1250);

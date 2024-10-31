@@ -36,12 +36,12 @@ namespace _200SXContact.Controllers
 		public async Task<IActionResult> SubmitBuild(UserBuild model, IFormFile[] Images)
 		{
 			ModelState.Remove("ImagePath");
-			ModelState.Remove("Id");
+			//ModelState.Remove("Id");
+			model.Id = Guid.NewGuid().ToString();
 			var user = await _userManager.GetUserAsync(User);
 			if (ModelState.IsValid)
 			{
-				List<string> imagePaths = new List<string>(); // Store paths for multiple images
-
+				List<string> imagePaths = new List<string>();
 				if (Images != null && Images.Length > 0)
 				{
 					foreach (var image in Images)
@@ -49,27 +49,26 @@ namespace _200SXContact.Controllers
 						if (image.Length > 0)
 						{
 							var userEmail = user.Email.Replace("@", "_at_").Replace(".", "_");
-							var userDirectory = Path.Combine("wwwroot/images/uploads", userEmail);
+							var userDirectory = Path.Combine("wwwroot/images/uploads", user.Id);
 							if (!Directory.Exists(userDirectory))
 							{
 								Directory.CreateDirectory(userDirectory);
 							}
-
 							var imagePath = Path.Combine(userDirectory, image.FileName);
 							using (var stream = new FileStream(imagePath, FileMode.Create))
 							{
 								await image.CopyToAsync(stream);
 							}
 
-							imagePaths.Add($"/images/uploads/{userEmail}/{image.FileName}"); // Add each image path
+							imagePaths.Add($"/images/uploads/{user.Id}/{image.FileName}");
 						}
 					}
 
-					model.ImagePath = string.Join(",", imagePaths); // Concatenate paths if needed
+					model.ImagePaths = imagePaths; 
 					model.DateCreated = DateTime.Now;
 					model.UserEmail = user.Email;
 					model.UserName = user.UserName;
-					model.UserId = user.Id; // Assuming this property exists
+					model.UserId = user.Id;
 				}
 
 				_context.UserBuilds.Add(model);
@@ -89,7 +88,9 @@ namespace _200SXContact.Controllers
 		public async Task<IActionResult> DetailedUserView(string id)
 		{
 			var build = await _context.UserBuilds
-				.FirstOrDefaultAsync(b => b.Id == id);
+					   .Include(b => b.Comments) 
+					   .FirstOrDefaultAsync(b => b.Id == id);
+
 			if (build == null)
 			{
 				return NotFound(); 

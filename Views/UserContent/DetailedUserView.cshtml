@@ -46,8 +46,8 @@
 		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 		
 	</head>
-<body class="is-preload" data-is-form-submitted="@TempData["IsFormSubmitted"]" data-is-form-success="@TempData["IsFormSuccess"]"> 
-		<!-- Wrapper -->
+<body class="is-preload" data-is-comment-posted="@TempData["CommentPosted"]">
+	<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
 
 			<!-- Intro -->
@@ -92,12 +92,7 @@
 					</span>
 				</li>
 				@if (User.Identity.IsAuthenticated)
-				{
-					<li>
-						<span>
-							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
-						</span>
-					</li>
+				{					
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
@@ -136,7 +131,14 @@
 					<header class="major">
 						<span class="date"></span>
 						<h2>User Builds</h2>
-						<p>You can find here all user builds submitted by registered users.</p>
+					<p>You can find here all user builds submitted by registered users.</p>
+						@if (!User.Identity.IsAuthenticated)
+						{
+							<div class="center-div">
+								Want to add your own build ? Create an account for
+								<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a>.
+							</div>
+						}
 					</header>					
 				
 				</article>
@@ -146,26 +148,58 @@
 
 				<article>
 					<header>
-						<h1>@Model.Title</h1>
-						<p>by @Model.UserEmail</p>
+						<h1 id="detailedViewSection">@Model.Title</h1>
+						<span class="date">
+							<em>by @Model.UserEmail</em>
+						</span>
+						<br>
 						<span class="date">@Model.DateCreated</span>
-					</header>
-
-					@if (!string.IsNullOrEmpty(Model.ImagePath))
+						<br>
+					</header>					
+					@if (Model.ImagePaths != null && Model.ImagePaths.Any())
 					{
-						<img src="~@Model.ImagePath" alt="Image for @Model.Title" class="fit" />
+						foreach (var imagePath in Model.ImagePaths)
+						{
+							<a href="@Url.Content(imagePath)" target="_blank">
+								<img src="@Url.Content(imagePath)" alt="Image for @Model.Title" class="fit" width="480" height="360" />
+							</a>
+							<br>
+						}
 					}
-
+					else
+					{
+						<p>No images available for this build.</p>
+					}
+					<br><br>
 					<section>
 						<p>@Model.Description</p>
 					</section>
 				</article>
+				<article>
+				<h3>Comments</h3>
+				<br>
+				@foreach (var comment in Model.Comments)
+				{
+					<div>
+						<strong>@comment.UserName</strong>: @comment.Content <em>(Posted on @comment.CreatedAt)</em>
+					</div>
+					<br>
+				}
 
-				<!-- Comments section placeholder (optional for future functionality) -->
-				<div id="comments-section">
-					<h2>Comments</h2>
-					<!-- Code to display and add comments could go here -->
-				</div>
+				@if (User.Identity.IsAuthenticated)
+				{
+						<form asp-controller="Comments" asp-action="PostComment" method="post">
+						<input type="hidden" name="UserBuildId" value="@Model.Id" />
+						<textarea name="Content" required></textarea>
+						<br>
+						<button type="submit">Comment</button>
+					</form>
+				}
+				else
+				{
+					<span class="date">You must be registered to post a comment.</span>
+				}
+				</article>
 			</section>
 
 
