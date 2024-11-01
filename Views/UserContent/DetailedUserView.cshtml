@@ -1,4 +1,5 @@
-﻿@model _200SXContact.Models.UserBuild
+﻿@using System.Security.Claims
+@model _200SXContact.Models.UserBuild
 @{
 	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || " + Model.Title + " by " + Model.UserEmail;
 }
@@ -161,7 +162,7 @@
 						foreach (var imagePath in Model.ImagePaths)
 						{
 							<a href="@Url.Content(imagePath)" target="_blank">
-								<img src="@Url.Content(imagePath)" alt="Image for @Model.Title" class="fit" width="480" height="360" />
+								<img src="@Url.Content(imagePath)" alt="Image for @Model.Title" class="image fit" width="480" height="360" />
 							</a>
 							<br>
 						}
@@ -178,14 +179,25 @@
 				<article>
 				<h3>Comments</h3>
 				<br>
-				@foreach (var comment in Model.Comments)
-				{
-					<div>
-						<strong>@comment.UserName</strong>: @comment.Content <em>(Posted on @comment.CreatedAt)</em>
-					</div>
-					<br>
-				}
-
+					@foreach (var comment in Model.Comments)
+					{
+						<div class="comment">
+							<p>@comment.Content</p>
+							<p style="display: flex; align-items: center;">
+								<small>
+									Posted by @comment.UserName on @comment.CreatedAt
+								</small>
+								@if (User.Identity.IsAuthenticated && comment.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+								{
+									<form asp-action="DeleteComment" asp-controller="Comments" method="post" style="display: inline;">
+										<input type="hidden" name="commentId" value="@comment.Id" />
+										<input type="hidden" name="userBuildId" value="@Model.Id" />
+										<a href="#" onclick="this.closest('form').submit();" class="delete-comment-link" style="margin-left: 5px; text-decoration: underline; color: blue;">Delete</a>
+									</form>
+								}
+							</p>
+						</div>
+					}
 				@if (User.Identity.IsAuthenticated)
 				{
 						<form asp-controller="Comments" asp-action="PostComment" method="post">

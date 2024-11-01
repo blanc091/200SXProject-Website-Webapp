@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Claims;
 
 namespace _200SXContact.Controllers
 {
@@ -105,5 +106,6 @@ namespace _200SXContact.Controllers
 					   .ToListAsync();
 			return View("~/Views/UserContent/UserContentDashboard.cshtml", builds);
 		}
+		
 	}
 }

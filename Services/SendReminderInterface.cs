@@ -7,6 +7,7 @@ namespace _200SXContact.Services
 	public interface IEmailService
 	{
 		Task SendDueDateReminder(string userEmail,Item item, int daysBeforeDue);
+		Task SendCommentNotification(string userEmail, BuildsCommentsModel comment);
 	}
 	public class EmailService : IEmailService
 	{
@@ -14,6 +15,43 @@ namespace _200SXContact.Services
 		public EmailService(ILoggerService loggerService)
 		{
 			_loggerService = loggerService;
+		}
+		public async Task SendCommentNotification(string userEmail, BuildsCommentsModel comment)
+		{
+			try
+			{
+				var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
+				var toAddress = new MailAddress(userEmail);
+				string subject = "New Comment on Your Build";
+				string body = $"<p>Hello,</p><p>Your build has received a new comment:</p><blockquote>{comment.Content}</blockquote><p>Best regards,<br>Your Team</p>";
+
+				using (var smtpClient = new SmtpClient
+				{
+					Host = "mail5019.site4now.net",
+					Port = 587,
+					EnableSsl = true,
+					Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+				})
+				{
+					using (var message = new MailMessage(fromAddress, toAddress)
+					{
+						Subject = subject,
+						Body = body,
+						IsBodyHtml = true
+					})
+					{
+						await smtpClient.SendMailAsync(message);
+					}
+				}
+			}
+			catch (SmtpException ex)
+			{
+				// Handle SMTP exceptions as before
+			}
+			catch (Exception ex)
+			{
+				// Handle other exceptions as before
+			}
 		}
 		public async Task SendDueDateReminder(string userEmail, Item item, int daysBeforeDue)
 		{
