@@ -18,6 +18,7 @@ namespace _200SXContact.Data
 		public DbSet<UserBuild> UserBuilds { get; set; }
 		public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; }
 		public DbSet<BuildsCommentsModel> BuildComments { get; set; }
+		public DbSet<Product> Products { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

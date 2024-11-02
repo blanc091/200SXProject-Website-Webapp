@@ -1,0 +1,250 @@
+﻿@using System.Security.Claims
+@model _200SXContact.Models.UserBuild
+@{
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || " + Model.Title + " by " + Model.UserEmail;
+}
+@{
+	var message = TempData["Message"] as string;
+}
+@if (!string.IsNullOrEmpty(message))
+{
+	<div class="modal fade show" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display: block;">
+		<div class="modal-dialog" role="document" style="max-width: 380px;">
+			<div class="modal-content" style="background-color: #f0f0f0;">
+				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif;">@message</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-6TGFNLDLZ5');
+		</script>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
+			crossorigin="anonymous"></script>
+		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
+		<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<title>The Nissan 200SX Project || Import Garage</title>
+		<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true"/></noscript>
+		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
+		
+	</head>
+<body class="is-preload" data-is-comment-posted="@TempData["CommentPosted"]">
+	<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
+
+			<!-- Intro -->
+		<div id="intro">
+			<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
+			<br>
+			<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
+			<h1>Nissan 200SX Project</h1>
+			<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
+			<br>
+			<ul class="actions">
+				<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+			</ul>
+		</div>
+
+			<!-- Header -->
+			<header id="header">
+				<a asp-controller="Home" asp-action="Index" class="logo">Import Garage || Jap works</a>
+			</header>
+
+			<!-- Nav -->
+		<nav id="nav">
+			<ul class="links">
+				<li class="active">
+					<a asp-controller="Home" asp-action="Index">Build updates</a>
+				</li>
+				<li>
+					<a href="#" id="contactLink">Contact</a>
+				</li>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<li>
+						<a href="@Url.Action("Dashboard", "Dashboard")" id="dashboardLink">MaintenApp</a>
+					</li>
+				}
+				else
+				{
+					<li>
+						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
+					</li>
+
+				}
+				<li>
+					<span>
+						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+					</span>
+				</li>
+				@if (User.Identity.IsAuthenticated)
+				{					
+					<li><span>Logged in as @User.Identity.Name</span></li>
+					<li>
+						<a href="#" id="logoutLink">Logout</a>
+					</li>
+				}
+			</ul>
+			<ul class="icons">
+				@if (User.IsInRole("Admin"))
+				{
+					<li>
+						<a asp-controller="Newsletter" asp-action="CreateNewsletter" class="icon admin-link" title="Admin">
+							<span class="admin-icon">A</span>
+							<span class="label">Admin</span>
+						</a>
+					</li>
+				}
+				<li>
+					<a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f">
+						<span class="label">Facebook</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.instagram.com/200sxprojectro?igsh=MWZjeWE4eW5idGU0ZQ==" class="icon brands fa-instagram">
+						<span class="label">Instagram</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+
+			<!-- Main -->
+			<div id="main">
+
+				<!-- Featured Post -->
+				<article class="post featured">
+					<header class="major">
+						<span class="date"></span>
+						<h2>User Builds</h2>
+					<p>You can find here all user builds submitted by registered users.</p>
+						@if (!User.Identity.IsAuthenticated)
+						{
+							<div class="center-div">
+								Want to add your own build ? Create an account for
+								<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a>.
+							</div>
+						}
+					</header>					
+				
+				</article>
+
+				<!-- Posts -->
+				<section class="posts">
+
+				<article>
+					<header>
+						<h1 id="detailedViewSection">@Model.Title</h1>
+						<span class="date">
+							<em>by @Model.UserEmail</em>
+						</span>
+						<br>
+						<span class="date">@Model.DateCreated</span>
+						<br>
+					</header>					
+					@if (Model.ImagePaths != null && Model.ImagePaths.Any())
+					{
+						foreach (var imagePath in Model.ImagePaths)
+						{
+							<a href="@Url.Content(imagePath)" target="_blank">
+								<img src="@Url.Content(imagePath)" alt="Image for @Model.Title" class="image fit" width="480" height="360" />
+							</a>
+							<br>
+						}
+					}
+					else
+					{
+						<p>No images available for this build.</p>
+					}
+					<br><br>
+					<section>
+						<p>@Model.Description</p>
+					</section>
+				</article>
+				<article>
+				<h3>Comments</h3>
+				<br>
+					@foreach (var comment in Model.Comments)
+					{
+						<div class="comment">
+							<p>@comment.Content</p>
+							<p style="display: flex; align-items: center;">
+								<small>
+									Posted by @comment.UserName on @comment.CreatedAt
+								</small>
+								@if (User.Identity.IsAuthenticated && comment.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+								{
+									<form asp-action="DeleteComment" asp-controller="Comments" method="post" style="display: inline;">
+										<input type="hidden" name="commentId" value="@comment.Id" />
+										<input type="hidden" name="userBuildId" value="@Model.Id" />
+										<a href="#" onclick="this.closest('form').submit();" class="delete-comment-link" style="margin-left: 5px; text-decoration: underline; color: blue;">Delete</a>
+									</form>
+								}
+							</p>
+						</div>
+					}
+				@if (User.Identity.IsAuthenticated)
+				{
+						<form asp-controller="Comments" asp-action="PostComment" method="post">
+						<input type="hidden" name="UserBuildId" value="@Model.Id" />
+						<textarea name="Content" required></textarea>
+						<br>
+						<button type="submit">Comment</button>
+					</form>
+				}
+				else
+				{
+					<span class="date">You must be registered to post a comment.</span>
+				}
+				</article>
+			</section>
+
+
+			</div>
+			<!-- Footer -->
+			<footer id="footer">				
+				
+			</footer>
+
+			<!-- Copyright -->
+			<div id="copyright">
+				<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
+			</div>
+
+		</div>
+
+		<!-- Scripts -->
+		<!-- Include Bootstrap CSS -->
+		<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" /> -->
+	    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+		<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/jquery.scrolly.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/browser.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/breakpoints.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/util.js" asp-append-version="true"></script>
+		<script src="~/assets/js/main.js" asp-append-version="true"></script>
+		<script src="~/js/formScript.js" asp-append-version="true"></script>
+		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
+</body>
+	
+</html>
