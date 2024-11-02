@@ -23,8 +23,88 @@ namespace _200SXContact.Services
 				var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
 				var toAddress = new MailAddress(userEmail);
 				string subject = "New Comment on Your Build";
-				string body = $"<p>Hello,</p><p>Your build has received a new comment:</p><blockquote>{comment.Content}</blockquote><p>Best regards,<br>Your Team</p>";
-
+				string body = @"
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <style>
+            body {
+                font-family: 'Helvetica', 'Roboto', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #2c2c2c; 
+                color: #ffffff; 
+            }
+            .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #3c3c3c;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .header {
+                text-align: center;
+            }
+            .header img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+            h1 {
+                color: #f5f5f5;
+                font-size: 24px;
+				font-family: 'Helvetica', 'Roboto', sans-serif;
+				margin: 20px 0;
+            }
+            p {
+                line-height: 1.6;
+                margin: 10px 0;
+				color: #f5f5f5;
+				font-family: 'Helvetica', 'Roboto', sans-serif;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #ffffff;
+                background-color: #d0bed1;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+            .button:hover {
+                background-color: #966b91; 
+            }
+            .footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 12px;
+                color: #b0b0b0; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
+            </div>
+            <h1>Account Activation</h1>
+            <p>Hi there,</p>
+			<p>A new comment has been posted on your build:</p>
+            <P><blockquote>{comment.Content}</blockquote></p>
+            
+            <p>TO IMPLEMENT TTTTTTTTTTTTTTTTTTT CLICK HERE TO SEE</p>
+            <div class='footer'>
+                <p>© 2024 200SX Project. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
 				using (var smtpClient = new SmtpClient
 				{
 					Host = "mail5019.site4now.net",
@@ -46,11 +126,11 @@ namespace _200SXContact.Services
 			}
 			catch (SmtpException ex)
 			{
-				// Handle SMTP exceptions as before
+				// Handle SMTP 
 			}
 			catch (Exception ex)
 			{
-				// Handle other exceptions as before
+				// Handle other exception
 			}
 		}
 		public async Task SendDueDateReminder(string userEmail, Item item, int daysBeforeDue)

@@ -90,14 +90,12 @@ namespace _200SXContact.Controllers
                         <div class='header'>
                             <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
                         </div>
-                        <h1>Account Recovery</h1>
+                        <h1>title of article</h1>
                         <p>Hi there,</p>
-                        <p>Click the link below to reset and assign a new password for <b>MaintenApp</b>:</p>
+                        <p>ADD THE TEXT HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE</p>
                         <p>
                             <a href='' class='button'>Recover Your Account</a>
-                        </p>
-                        <p>If you did not request this, you can safely ignore this email.</p>
-                        <p>Thank you !</p>
+                        </p>                       
                         <div class='footer'>
                             <p>© 2024 200SX Project. All rights reserved.</p>
                         </div>

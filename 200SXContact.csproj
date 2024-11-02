@@ -13,58 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Views\Shared\5-0-ignite-trigger-kit.html" />
-    <Content Include="Views\Shared\a-bigger-lot-is-here.html" />
-    <Content Include="Views\Shared\alternator-rebuild.html" />
-    <Content Include="Views\Shared\altia-n1-enkei-wheels.html" />
-    <Content Include="Views\Shared\arp-manifolds-and-main-crank-studs.html" />
-    <Content Include="Views\Shared\ati-rb26-balancer-and-other-parts.html" />
-    <Content Include="Views\Shared\black-diamond-brakes.html" />
-    <Content Include="Views\Shared\cam-covers-refurb.html" />
-    <Content Include="Views\Shared\camtech-cams.html" />
-    <Content Include="Views\Shared\cp-carrillo-forged-pistons.html" />
-    <Content Include="Views\Shared\cpc-billet-carbon-intake-manifold.html" />
-    <Content Include="Views\Shared\custom-accessories-pulleys-cam gears.html" />
-    <Content Include="Views\Shared\custom-dash-gauges.html" />
-    <Content Include="Views\Shared\custom-pedal-covers.html" />
-    <Content Include="Views\Shared\custom-torque-plate.html" />
-    <Content Include="Views\Shared\custom-twin-scroll-twin-wg-manifold.html" />
-    <Content Include="Views\Shared\dayco-timing-kit-with-water-pump-gaskets.html" />
-    <Content Include="Views\Shared\denso-plugs-and-custom-coil-cover.html" />
-    <Content Include="Views\Shared\dw-control-arms-and-kaaz-diff.html" />
-    <Content Include="Views\Shared\elements.html" />
-    <Content Include="Views\Shared\exhaust-manifold-custom-flange.html" />
     <Content Include="Views\Shared\favicon.ico" />
-    <Content Include="Views\Shared\full-type-x-body-kit.html" />
-    <Content Include="Views\Shared\generic.html" />
-    <Content Include="Views\Shared\gktech-suspension-parts-and-other-bits.html" />
-    <Content Include="Views\Shared\headlights-restoration.html" />
-    <Content Include="Views\Shared\hks-ssqv3-bov-z32-bmc.html" />
-    <Content Include="Views\Shared\holset-hx35-twin-scroll-turbo.html" />
-    <Content Include="Views\Shared\hsd-monopro-adjustable-coilovers.html" />
-    <Content Include="Views\Shared\injector-dynamics-id1050x.html" />
-    <Content Include="Views\Shared\it-s-here.html" />
-    <Content Include="Views\Shared\LICENSE.txt" />
-    <Content Include="Views\Shared\link-g4+-ecu.html" />
-    <Content Include="Views\Shared\main-and-rod-bearings.html" />
-    <Content Include="Views\Shared\mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter.html" />
-    <Content Include="Views\Shared\mazworx-z32-adapter-kit-and-misc-parts.html" />
-    <Content Include="Views\Shared\mishimoto-radiators.html" />
-    <Content Include="Views\Shared\more-custom-gauges.html" />
-    <Content Include="Views\Shared\new-oem-crankshaft.html" />
-    <Content Include="Views\Shared\new-oil-pump.html" />
-    <Content Include="Views\Shared\oil-pan-extension-with-baffles.html" />
-    <Content Include="Views\Shared\pauter-machine-forged-rods.html" />
-    <Content Include="Views\Shared\ps-pump-rebuild.html" />
-    <Content Include="Views\Shared\README.txt" />
-    <Content Include="Views\Shared\refurbished-and-rebuilt-z32-calipers.html" />
-    <Content Include="Views\Shared\Robots.txt" />
-    <Content Include="Views\Shared\some-oem-parts.html" />
-    <Content Include="Views\Shared\tial-mv-s-wgs.html" />
-    <Content Include="Views\Shared\ultra-racing-chassis-bracing-bars.html" />
-    <Content Include="Views\Shared\vag-u5014-coils-and-custom-harness.html" />
-    <Content Include="Views\Shared\xtreme-twin-clutch-kit.html" />
-    <Content Include="Views\Shared\z32-300zx-gearbox.html" />
   </ItemGroup>
 
   <ItemGroup>

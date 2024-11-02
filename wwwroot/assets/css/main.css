@@ -78,6 +78,21 @@ p {
 	border-radius: 3px;
 	cursor: pointer;
 }
+.flag {
+	position: absolute;
+	top: 20px;
+	right: 10px;
+	width: 100px;
+	height: 100px;
+}
+.flagRo {
+	position: absolute;
+	top: 80px;
+	right: 10px;
+	width: 90px;
+	height: 70px;
+	transform: rotate(-20deg);
+}
 .table-scrollable {
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch; 
