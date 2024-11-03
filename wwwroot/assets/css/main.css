@@ -80,19 +80,20 @@ p {
 }
 .flag {
 	position: absolute;
-	top: 20px;
-	right: 10px;
-	width: 100px;
-	height: 100px;
+	top: 30px;
+	right: 6px;
+	width: 80px;
+	height: 80px;
 }
 .flagRo {
 	position: absolute;
 	top: 80px;
 	right: 10px;
-	width: 90px;
-	height: 70px;
+	width: 60px;
+	height: 50px;
 	transform: rotate(-20deg);
 }
+
 .table-scrollable {
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch; 
@@ -112,7 +113,7 @@ p {
 	font-family: "Helvetica", "Arial", sans-serif;
 }
 #messageModal {
-	display: none; /* Hide the modal initially */
+	display: none; 
 }
 h7 {
 	text-transform: none; 

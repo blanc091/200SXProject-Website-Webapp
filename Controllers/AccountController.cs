@@ -16,8 +16,7 @@ namespace _200SXContact.Controllers
                 TempData["isNiceTry"] = "yes";
                 TempData["Message"] = "Nice try :)";
                 ViewData["ReturnUrl"] = returnUrl;
-				return View("~/Views/Newsletter/AccessDenied.cshtml");
-				
+				return View("~/Views/Newsletter/AccessDenied.cshtml");				
 			}
 			else
 			{

@@ -1,6 +1,6 @@
-@model IEnumerable<UserBuild>
+﻿@model IEnumerable<_200SXContact.Models.Product>
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || User Builds";
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Products";
 }
 @{
 	var message = TempData["Message"] as string;
@@ -27,12 +27,11 @@
 	<head>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-
-		  gtag('config', 'G-6TGFNLDLZ5');
+		<script nonce="@Context.Items["CSPNonce"]">
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+			gtag('config', 'G-6TGFNLDLZ5');
 		</script>
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
 			crossorigin="anonymous"></script>
@@ -42,11 +41,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<title>The Nissan 200SX Project || Import Garage</title>
 		<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+	    <link rel="stylesheet" type="text/css" href="~/assets/css/carousel.css" asp-append-version="true" />
 		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true"/></noscript>
 		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 		
 	</head>
-<body class="is-preload" data-is-form-submitted="@TempData["IsFormSubmitted"]" data-is-form-success="@TempData["IsFormSuccess"]"> 
+<body class="is-preload"> 
 		<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
 
@@ -135,50 +135,37 @@
 					<header class="major">
 						<span class="date"></span>
 						<br>
-						<h2>User Builds</h2>
-						<p>You can find here all user builds submitted by registered users.</p>
-						@if (!User.Identity.IsAuthenticated)
-						{
-						<div class="center-div">
-							Want to add your own build ? Create an account for
-							<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a> or <a href="@Url.Action("Login", "LoginRegister")"><strong>Login</strong></a>.
-						</div>
-						}
+						<h2>Merchandise</h2>
+						<p>You can find here all the merch available from our brand.</p>						
 					</header>					
 				
 				</article>
-
 				<!-- Posts -->
-				<section class="posts">
-
-				@foreach (var build in Model)
-				{
-					<article>
-						<header id="userContentDash">
-							<span class="date">@build.DateCreated</span>
-							<h2><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id">@build.Title</a></h2>
-						</header>
-						<br>
-						<div class="images-container">
-							@if (build.ImagePaths != null && build.ImagePaths.Any())
-							{
-								<img src="@build.ImagePaths.First().Trim()" alt="@build.Title" class="image fit"/>
-							}
+				<article class="post featured">
+				<section class="container-custom-carousel">
+					<button class="button-custom-carousel prev">
+							<img src="https://image.ibb.co/mRsEb7/left_arrow.png" alt="Previous">
+						</button>
+						<div class="cards-wrapper">
+							<ul class="cards__container">
+								@foreach (var product in Model)
+								{
+								<li class="box-custom-carousel">
+									<div class="custom-carousel-center-content">
+										<img src="@product.ImagePath" alt="@product.Name" class="custom-carousel-center-image" />
+										<h3 class="custom-carousel-center-text">@product.Name</h3>
+										<p class="price custom-carousel-center-text">@product.Price</p>
+										<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id" class="button-custom-carousel">Details</a>
+									</div>
+								</li>
+								}
+							</ul>							
 						</div>
-						<br></br>
-						<p>
-							@(string.IsNullOrEmpty(build.Description) ? "No description available." :
-														build.Description.Length <= 200 ? build.Description :
-														build.Description.Substring(0, 200) + "...")
-						</p>
-						<ul class="actions special">
-							<li><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id" class="button">Read more</a></li>
-						</ul>
-					</article>
-				}
-				</section>
-
-			</div>
+					<button class="button-custom-carousel next">
+							<img src="https://image.ibb.co/dfPSw7/right_arrow.png" alt="Next">
+						</button>
+					</section>
+				</article>
 			<!-- Footer -->
 			<footer id="footer">				
 				
@@ -193,8 +180,7 @@
 
 		<!-- Scripts -->
 		<!-- Include Bootstrap CSS -->
-		<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" /> -->
-	    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
 		<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/jquery.scrolly.min.js" asp-append-version="true"></script>
@@ -204,6 +190,7 @@
 		<script src="~/assets/js/main.js" asp-append-version="true"></script>
 		<script src="~/js/formScript.js" asp-append-version="true"></script>
 		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
+		<script src="~/js/carousel.js" asp-append-version="true"></script>
 </body>
 	
 </html>

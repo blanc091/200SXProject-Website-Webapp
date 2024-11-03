@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
-@model _200SXContact.Models.UserBuild
+@model _200SXContact.Models.Product
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || " + Model.Title + " by " + Model.UserEmail;
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || " + Model.Name;
 }
 @{
 	var message = TempData["Message"] as string;
@@ -28,13 +28,12 @@
 	<head>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-
-		  gtag('config', 'G-6TGFNLDLZ5');
-		</script>
+	<script nonce="@Context.Items["CSPNonce"]">
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-6TGFNLDLZ5');
+	</script>
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
 			crossorigin="anonymous"></script>
 		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
@@ -131,93 +130,38 @@
 			<!-- Main -->
 			<div id="main">
 
-				<!-- Featured Post -->
-				<article class="post featured">
-					<header class="major">
-						<span class="date"></span>
-						<h2>User Builds</h2>
-					<p>You can find here all user builds submitted by registered users.</p>
-						@if (!User.Identity.IsAuthenticated)
-						{
-							<div class="center-div">
-								Want to add your own build ? Create an account for
-								<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a>.
-							</div>
-						}
-					</header>					
-				
-				</article>
-
 				<!-- Posts -->
-				<section class="posts">
-
-				<article>
+				<article class="post featured">
 					<header>
-						<h1 id="detailedViewSection">@Model.Title</h1>
-						<span class="date">
-							<em>by @Model.UserEmail</em>
+						<h1 id="detailedProductViewSection">@Model.Name</h1>
+						<span class="category">
+							<strong>Category:</strong> @Model.Category
 						</span>
 						<br>
-						<span class="date">@Model.DateCreated</span>
+						<span class="price">
+							<strong>Price:</strong> @Model.Price.ToString("N2") 
+						</span>
 						<br>
-					</header>					
-					@if (Model.ImagePaths != null && Model.ImagePaths.Any())
+						<span class="date-added">
+							<strong>Date Added:</strong> @Model.DateAdded.ToString("dd-MM-yyyy") 
+						</span>
+						<br>
+					</header>
+					<br>
+					@if (!string.IsNullOrEmpty(Model.ImagePath))
 					{
-						foreach (var imagePath in Model.ImagePaths)
-						{
-							<a href="@Url.Content(imagePath)" target="_blank">
-								<img src="@Url.Content(imagePath)" alt="Image for @Model.Title" class="image fit" width="480" height="360" />
-							</a>
-							<br>
-						}
+						<a href="@Url.Content(Model.ImagePath)" target="_blank">
+						<img src="@Url.Content(Model.ImagePath)" alt="Image for @Model.Name" class="image fit"/>
+						</a>
 					}
 					else
 					{
-						<p>No images available for this build.</p>
-					}
-					<br><br>
+						<p>No image available for this product.</p>
+					}					
 					<section>
 						<p>@Model.Description</p>
 					</section>
 				</article>
-				<article>
-				<h3>Comments</h3>
-				<br>
-					@foreach (var comment in Model.Comments)
-					{
-						<div class="comment">
-							<p>@comment.Content</p>
-							<p style="display: flex; align-items: center;">
-								<small>
-									Posted by @comment.UserName on @comment.CreatedAt
-								</small>
-								@if (User.Identity.IsAuthenticated && comment.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
-								{
-									<form asp-action="DeleteComment" asp-controller="Comments" method="post" style="display: inline;">
-										<input type="hidden" name="commentId" value="@comment.Id" />
-										<input type="hidden" name="userBuildId" value="@Model.Id" />
-										<a href="#" onclick="this.closest('form').submit();" class="delete-comment-link" style="margin-left: 5px; text-decoration: underline; color: blue;">Delete</a>
-									</form>
-								}
-							</p>
-						</div>
-					}
-				@if (User.Identity.IsAuthenticated)
-				{
-						<form asp-controller="Comments" asp-action="PostComment" method="post">
-						<input type="hidden" name="UserBuildId" value="@Model.Id" />
-						<textarea name="Content" required></textarea>
-						<br>
-						<button type="submit">Comment</button>
-					</form>
-				}
-				else
-				{
-					<span class="date">You must be registered to post a comment.</span>
-				}
-				</article>
-			</section>
-
 
 			</div>
 			<!-- Footer -->

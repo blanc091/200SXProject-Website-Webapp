@@ -28,13 +28,12 @@
 	<head>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-
-		  gtag('config', 'G-6TGFNLDLZ5');
-		</script>
+	<script nonce="@Context.Items["CSPNonce"]">
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-6TGFNLDLZ5');
+	</script>
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
 			crossorigin="anonymous"></script>
 		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
@@ -133,10 +132,7 @@
 
 				<!-- Featured Post -->
 				<article class="post featured">
-					<header class="major">
-						<span class="date"></span>
-						<h2>User Builds</h2>
-					<p>You can find here all user builds submitted by registered users.</p>
+					<header class="major">					
 						@if (!User.Identity.IsAuthenticated)
 						{
 							<div class="center-div">

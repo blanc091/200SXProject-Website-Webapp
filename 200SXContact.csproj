@@ -345,6 +345,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
     <Folder Include="wwwroot\images\uploads\" />
   </ItemGroup>
 

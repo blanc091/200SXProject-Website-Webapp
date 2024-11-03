@@ -4,11 +4,14 @@ using _200SXContact.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Build.Framework;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -59,6 +62,16 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 }
 
 var builder = WebApplication.CreateBuilder(args);
+var cultureInfo = new CultureInfo("en-US"); 
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+	options.DefaultRequestCulture = new RequestCulture(cultureInfo);
+	options.SupportedCultures = new List<CultureInfo> { cultureInfo };
+	options.SupportedUICultures = new List<CultureInfo> { cultureInfo };
+});
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
@@ -116,7 +129,12 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 app.UseRouting();
-app.UseCors("AllowSpecificOrigins");
+app.UseRequestLocalization();
+app.UseCors(builder =>
+	builder.WithOrigins("https://www.google.com", "https://pagead2.googlesyndication.com", "https://ep2.adtrafficquality.google", "https://ep1.adtrafficquality.google")
+		   .AllowAnyMethod()
+		   .AllowAnyHeader()
+);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -127,19 +145,21 @@ app.Use(async (context, next) =>
 
 	await next();
 });
-
 app.Use(async (context, next) =>
 {
-    var cspPolicy = "default-src 'self'; " +
-                    "script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://aadcdn.msftauth.net https://ajax.googleapis.com https://fonts.googleapis.com https://login.microsoftonline.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com; " +
-                    "style-src 'self' https://fonts.googleapis.com 'unsafe-inline' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com; " +
-                    "font-src 'self' https://fonts.gstatic.com; " +
-                    "img-src 'self' https://www.google.com data:; " +
-                    "connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net http://localhost:65212 https://localhost:7109; " +
-                    "frame-src 'self' https://pagead2.googlesyndication.com;";
+	var nonce = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+	context.Items["CSPNonce"] = nonce;
 
-    context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
-    await next();
+	var cspPolicy = $"default-src 'self'; " +
+					$"script-src 'self' 'nonce-{nonce}' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://aadcdn.msftauth.net https://ajax.googleapis.com https://fonts.googleapis.com https://login.microsoftonline.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://cdn.jsdelivr.net; " +
+					$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
+					$"font-src 'self' https://fonts.gstatic.com; " +
+					$"img-src 'self' https://www.google.com https://image.ibb.co https://i.ibb.co/ https://ep1.adtrafficquality.google data:; " +
+					$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net http://localhost:65212 https://localhost:7109 wss://localhost:44375 http://localhost:59950 https://www.googletagmanager.com https://region1.google-analytics.com https://ep1.adtrafficquality.google ws://localhost:59950; " +
+					$"frame-src 'self' https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google https://ep1.adtrafficquality.google;";
+
+	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
+	await next();
 });
 
 if (app.Environment.IsDevelopment())

@@ -24,6 +24,6 @@
             });
         });
     } else {
-        console.error('Logout link not found');
+        console.log('Logout link not found or user not logged in.');
     }
 });
