@@ -7,4 +7,6 @@ Registered users are also able to use MaintenApp, which is a feature that allows
 
 I am also implementing a merchandise page, where registered users can select and buy branded merchandise. The merchandise is stored in a database and is displayed on the page with a picture, description, and price. The user can select the quantity and size of the item and add it to the cart. The cart is stored in a session and is displayed on the page with the total price of the items in the cart. The user can also remove items from the cart. On order placement, both the user and the admin get an email notification, so that the order can be processed with the data entered.
 
+Google AdSense is also implemented, with adds being added dynamically to the pages.
+
 Website is also published on Azure Web Apps platform, which is used sort of like a pre-release testing interface before being published to the live domain. 
