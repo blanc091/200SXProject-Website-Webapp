@@ -32,15 +32,14 @@ namespace _200SXContact.Controllers
 				return Unauthorized("User not found.");
 			}
 
-			model.UserId = user.Id; // Associate the checkout with the user
+			model.UserId = user.Id;
 			model.CartItems = await _context.CartItems
 			.Where(ci => ci.UserId == user.Id)
-									 .ToListAsync(); // Link cart items to the checkout
+									 .ToListAsync(); 
 
 			_context.Checkouts.Add(model);
 			await _context.SaveChangesAsync();
 
-			// Optional: Clear cart items after checkout
 			_context.CartItems.RemoveRange(model.CartItems);
 			await _context.SaveChangesAsync();
 
@@ -65,8 +64,8 @@ namespace _200SXContact.Controllers
 				return BadRequest("Your cart is empty.");
 			}
 
-			var checkoutModel = new Checkout(); // Optionally populate with user details if available
-			return View(checkoutModel); // Show the checkout form
+			var checkoutModel = new Checkout(); 
+			return View(checkoutModel); 
 		}
 		[HttpPost]
 		[Authorize]
@@ -91,7 +90,6 @@ namespace _200SXContact.Controllers
 			_context.Checkouts.Add(model);
 			await _context.SaveChangesAsync();
 
-			// Optional: Clear cart items after checkout
 			_context.CartItems.RemoveRange(model.CartItems);
 			await _context.SaveChangesAsync();
 

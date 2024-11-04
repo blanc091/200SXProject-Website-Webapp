@@ -12,7 +12,7 @@
 		<div class="modal-dialog" role="document" style="max-width: 380px;">
 			<div class="modal-content" style="background-color: #f0f0f0;">
 				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
-					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif;">@message</strong>
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
 				</div>
 			</div>
 		</div>
@@ -150,8 +150,8 @@
 								<tr>
 									<td>@item.ProductName</td>
 									<td>@item.Quantity</td>
-									<td>@item.Price.ToString("C")</td>
-									<td>@(item.Price * item.Quantity).ToString("C")</td>
+									<td>@item.Price.ToString("F2")</td>
+									<td>@(item.Price * item.Quantity)</td>
 									<td>
 										<form asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" method="post">
 											<button type="submit">Remove</button>
@@ -161,7 +161,7 @@
 							}
 						</tbody>
 					</table>
-					<h3>Total: @Model.Sum(item => item.Price * item.Quantity).ToString("C")</h3>
+					<h3>Total: @Model.Sum(item => item.Price * item.Quantity).ToString("F2")</h3>
 				}
 				else
 				{
@@ -194,6 +194,8 @@
 	<script src="~/assets/js/main.js" asp-append-version="true"></script>
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
+	<script src="~/js/cartOps.js" asp-append-version="true"></script>
+
 </body>
 
 </html>

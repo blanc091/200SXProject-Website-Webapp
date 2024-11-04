@@ -11,7 +11,7 @@
 		<div class="modal-dialog" role="document" style="max-width: 450px;">
 			<div class="modal-content" style="background-color: #f0f0f0;">
 				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
-					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif;">@message</strong>
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 			}
 	</style>
 </head>
-<body class="is-preload" data-is-pass-reset-email-sent="@TempData["PassResetLinkEmailed"]" data-is-pass-reset-success="@TempData["PassResetSuccess"]" data-is-email-verified-login="@TempData["IsEmailVerifiedLogin"]" data-is-user-verified="@TempData["IsUserVerified"]" data-is-form-register-success="@TempData["IsFormRegisterSuccess"]" data-is-nice-try="@TempData["isNiceTry"]">
+<body class="is-preload" data-is-user-logged-in="@TempData["IsUserLoggedIn"]" data-is-pass-reset-email-sent="@TempData["PassResetLinkEmailed"]" data-is-pass-reset-success="@TempData["PassResetSuccess"]" data-is-email-verified-login="@TempData["IsEmailVerifiedLogin"]" data-is-user-verified="@TempData["IsUserVerified"]" data-is-form-register-success="@TempData["IsFormRegisterSuccess"]" data-is-nice-try="@TempData["isNiceTry"]">
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -124,6 +124,7 @@
 					<h7>MaintenApp</h7>
 					<br><br>
 					<p>Use the below form to log into your MaintenApp account; from there, you can handle and configure your service and maintenance intervals and components for your vehicle. After sucessful configuration, you will get email alerts 10 and 5 days respectively before the set alert date.</p>
+					<p>You also need a MaintenApp unified account in order to purchase any items from the webshop.</p>
 				</header>
 				<form asp-action="Login" method="post">
 					<input type="hidden" name="ReturnUrl" value="@ViewData["ReturnUrl"]" />

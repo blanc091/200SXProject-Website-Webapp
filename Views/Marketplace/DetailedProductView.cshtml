@@ -12,7 +12,7 @@
 		<div class="modal-dialog" role="document" style="max-width: 380px;">
 			<div class="modal-content" style="background-color: #f0f0f0;">
 				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
-					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif;">@message</strong>
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
 				</div>
 			</div>
 		</div>
@@ -131,37 +131,51 @@
 			<div id="main">
 
 				<!-- Posts -->
-				<article class="post featured">
-					<header>
-						<h1 id="detailedProductViewSection">@Model.Name</h1>
-						<span class="category">
-							<strong>Category:</strong> @Model.Category
-						</span>
-						<br>
-						<span class="price">
-							<strong>Price:</strong> @Model.Price.ToString("N2") 
-						</span>
-						<br>
-						<span class="date-added">
-							<strong>Date Added:</strong> @Model.DateAdded.ToString("dd-MM-yyyy") 
-						</span>
-						<br>
-					</header>
+			<article class="post featured">
+				<header>
+					<h1 id="detailedProductViewSection">@Model.Name</h1>
+					<span class="category">
+						<strong>Category:</strong> @Model.Category
+					</span>
 					<br>
-					@if (!string.IsNullOrEmpty(Model.ImagePath))
-					{
-						<a href="@Url.Content(Model.ImagePath)" target="_blank">
-						<img src="@Url.Content(Model.ImagePath)" alt="Image for @Model.Name" class="image fit"/>
-						</a>
-					}
-					else
-					{
-						<p>No image available for this product.</p>
-					}					
-					<section>
-						<p>@Model.Description</p>
-					</section>
-				</article>
+					<span class="price">
+						<strong>Price:</strong> @Model.Price.ToString("N2")
+					</span>
+					<br>
+					<span class="date-added">
+						<strong>Date Added:</strong> @Model.DateAdded.ToString("dd-MM-yyyy")
+					</span>
+					<br>
+				</header>
+				<br>
+				@if (!string.IsNullOrEmpty(Model.ImagePath))
+				{
+					<a href="@Url.Content(Model.ImagePath)" target="_blank">
+						<img src="@Url.Content(Model.ImagePath)" alt="Image for @Model.Name" class="image fit" />
+					</a>
+				}
+				else
+				{
+					<p>No image available for this product.</p>
+				}
+				<section>
+					<p>@Model.Description</p>
+				</section>
+
+				<!-- Add to Cart Section -->
+				<section style="display: flex; justify-content: center;">
+					<form asp-action="AddToCart" asp-controller="Cart" method="post" style="display: flex; align-items: center;">
+						<input type="hidden" name="productId" value="@Model.Id" />
+						<input type="hidden" name="quantity" value="1" />
+						<button type="submit" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
+							<span style="font-size: 16px; color: #333; margin-right: 8px;">&nbsp;&nbsp;Add this item to cart&nbsp;</span>
+							<img src="/images/addcart.png" alt="Add to Cart" style="width: 40px; height: 40px; border: none;" />
+						</button>
+					</form>
+				</section>
+
+			</article>
+
 
 			</div>
 			<!-- Footer -->
@@ -189,6 +203,8 @@
 		<script src="~/assets/js/main.js" asp-append-version="true"></script>
 		<script src="~/js/formScript.js" asp-append-version="true"></script>
 		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
+		<script src="~/js/cartOps.js" asp-append-version="true"></script>
+
 </body>
 	
 </html>

@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var isNiceTry = document.body.getAttribute('data-is-nice-try');
     var formSubmitted = isFormSubmitted === "True";
     var formSuccess = isFormSuccess === "True";
-    var commentSubmitted = document.body.getAttribute('data-is-comment-posted'); 
+    var commentSubmitted = document.body.getAttribute('data-is-comment-posted');
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/UserBuilds/DetailedUserView')) {
-    scrollToElement("detailedViewSection");
+        scrollToElement("detailedViewSection");
     }
     switch (window.location.pathname) {
         case '/Dashboard/Dashboard':
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
         case '/UserBuilds/UserContentDashboard':
             scrollToElement("userContentDash");
-            break;       
+            break;
     }
 
     if ((isUserLoggedIn && !formSubmitted) ||
@@ -64,11 +64,12 @@ document.addEventListener("DOMContentLoaded", function () {
         isNiceTry == "yes" ||
         isNewsletterSubbed == "yes" ||
         commentSubmitted == "yes" ||
+        isUserLoggedIn == "no" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {
             $('#messageModal').fadeOut(1250);
         }, 3000);
-    }
+    }    
 
     if (formSubmitted && !formSuccess) {
         scrollToContactForm();

@@ -3,8 +3,140 @@
   "WorkspaceRootPath": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231837_orderTracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20241103231837_orderTracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\usercontent\\usercontentdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\usercontent\\usercontentdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\usercontent\\detaileduserview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\usercontent\\detaileduserview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\usercontent\\adduserbuild.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\usercontent\\adduserbuild.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\newsletter\\createnewsletter.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\newsletter\\createnewsletter.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\newsletter\\accessdenied.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\newsletter\\accessdenied.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\productsdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\productsdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\pendingordersadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\pendingordersadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\orderplaced.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\orderplaced.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\detailedproductview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\detailedproductview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\checkoutview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\checkoutview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\cartview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\cartview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\addproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\addproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\forgotpassreset.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\forgotpassreset.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\resetpass.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\resetpass.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\loginregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\loginregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\js\\formscript.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\js\\formscript.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\models\\checkoutmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:models\\checkoutmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\services\\sendreminderinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:services\\sendreminderinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\commentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\commentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\js\\cartops.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\js\\cartops.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\js\\carousel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\js\\carousel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\migrations\\20241103231837_ordertracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:migrations\\20241103231837_ordertracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,16 +147,8 @@
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:models\\ordertrackingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231702_orderTracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20241103231702_orderTracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\models\\reviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,76 +163,16 @@
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:migrations\\20241103220422_addedcheckoutmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\models\\checkoutmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:models\\checkoutmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\commentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\commentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\migrations\\20241103214944_cartupdate0311.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:migrations\\20241103214944_cartupdate0311.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\services\\sendreminderinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:services\\sendreminderinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\loginregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\loginregistercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\cartview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\cartview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\assets\\css\\carousel.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\assets\\css\\carousel.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\productsdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\productsdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\detailedproductview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\detailedproductview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\usercontent\\detaileduserview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\usercontent\\detaileduserview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\js\\carousel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\js\\carousel.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\assets\\css\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -117,14 +181,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\detailedviews\\ultra-racing-chassis-bracing-bars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\detailedviews\\ultra-racing-chassis-bracing-bars.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\newsletter\\createnewsletter.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\newsletter\\createnewsletter.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\usercontent\\usercontentdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\usercontent\\usercontentdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\js\\loginlogout.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -311,38 +367,6 @@
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\detailedviews\\5-0-ignite-trigger-kit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\forgotpassreset.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\forgotpassreset.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\account\\resetpass.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\account\\resetpass.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\marketplace\\addproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\marketplace\\addproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\usercontent\\adduserbuild.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\usercontent\\adduserbuild.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|c:\\drive\\prj\\website200sx-asp.net-mvc - roles\\200sxproject-website---roles\\wwwroot\\assets\\css\\noscript.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{6101C332-2E4D-47A2-A144-BFF2650D7B4E}|200SXContact.csproj|solutionrelative:wwwroot\\assets\\css\\noscript.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
@@ -366,15 +390,444 @@
       "DocumentGroups": [
         {
           "DockedHeight": 365,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccessDenied.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Newsletter\\AccessDenied.cshtml",
+              "RelativeDocumentMoniker": "Views\\Newsletter\\AccessDenied.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Newsletter\\AccessDenied.cshtml",
+              "RelativeToolTip": "Views\\Newsletter\\AccessDenied.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAACHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T22:58:45.996Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CreateNewsletter.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Newsletter\\CreateNewsletter.cshtml",
+              "RelativeDocumentMoniker": "Views\\Newsletter\\CreateNewsletter.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Newsletter\\CreateNewsletter.cshtml",
+              "RelativeToolTip": "Views\\Newsletter\\CreateNewsletter.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:02:41.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AddUserBuild.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\AddUserBuild.cshtml",
+              "RelativeDocumentMoniker": "Views\\UserContent\\AddUserBuild.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\AddUserBuild.cshtml",
+              "RelativeToolTip": "Views\\UserContent\\AddUserBuild.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-02T22:54:23.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DetailedUserView.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\DetailedUserView.cshtml",
+              "RelativeDocumentMoniker": "Views\\UserContent\\DetailedUserView.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\DetailedUserView.cshtml",
+              "RelativeToolTip": "Views\\UserContent\\DetailedUserView.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:02:26.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserContentDashboard.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\UserContentDashboard.cshtml",
+              "RelativeDocumentMoniker": "Views\\UserContent\\UserContentDashboard.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\UserContentDashboard.cshtml",
+              "RelativeToolTip": "Views\\UserContent\\UserContentDashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:02:17.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Dashboard.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Dashboard.cshtml",
+              "RelativeToolTip": "Views\\Account\\Dashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:03:31.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProductsDashboard.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\ProductsDashboard.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\ProductsDashboard.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\ProductsDashboard.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\ProductsDashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-02T22:26:13.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PendingOrdersAdmin.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\PendingOrdersAdmin.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\PendingOrdersAdmin.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\PendingOrdersAdmin.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\PendingOrdersAdmin.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T22:08:41.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "OrderPlaced.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\OrderPlaced.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\OrderPlaced.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\OrderPlaced.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\OrderPlaced.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T22:07:25.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DetailedProductView.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\DetailedProductView.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\DetailedProductView.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\DetailedProductView.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\DetailedProductView.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:02:52.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CheckoutView.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\CheckoutView.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\CheckoutView.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\CheckoutView.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\CheckoutView.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T22:05:55.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CartView.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\CartView.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\CartView.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\CartView.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\CartView.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:02:56.661Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AddProduct.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\AddProduct.cshtml",
+              "RelativeDocumentMoniker": "Views\\Marketplace\\AddProduct.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\AddProduct.cshtml",
+              "RelativeToolTip": "Views\\Marketplace\\AddProduct.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-02T22:40:48.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:01:09.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ForgotPassReset.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ForgotPassReset.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\ForgotPassReset.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ForgotPassReset.cshtml",
+              "RelativeToolTip": "Views\\Account\\ForgotPassReset.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:03:27.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ResetPass.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ResetPass.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\ResetPass.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ResetPass.cshtml",
+              "RelativeToolTip": "Views\\Account\\ResetPass.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:03:13.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Register.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Register.cshtml",
+              "RelativeToolTip": "Views\\Account\\Register.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T11:22:26.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-03T17:03:22.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CartController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CartController.cs",
+              "RelativeToolTip": "Controllers\\CartController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T21:31:45.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "formScript.js",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\formScript.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\formScript.js",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\formScript.js",
+              "RelativeToolTip": "wwwroot\\js\\formScript.js",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwAsAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-11-04T22:39:46.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "LoginRegisterController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\LoginRegisterController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LoginRegisterController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\LoginRegisterController.cs",
+              "RelativeToolTip": "Controllers\\LoginRegisterController.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAAAJoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T11:22:26.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAcwI0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T22:14:41.591Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductsController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "Controllers\\ProductsController.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAQwFAAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T22:28:52.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CartItem.cs",
+              "RelativeDocumentMoniker": "Models\\CartItem.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CartItem.cs",
+              "RelativeToolTip": "Models\\CartItem.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAA8wA4AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T22:16:19.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CheckoutModel.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CheckoutModel.cs",
+              "RelativeDocumentMoniker": "Models\\CheckoutModel.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CheckoutModel.cs",
+              "RelativeToolTip": "Models\\CheckoutModel.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAADwvy0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T21:53:45.099Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SendReminderInterface.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Services\\SendReminderInterface.cs",
+              "RelativeDocumentMoniker": "Services\\SendReminderInterface.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Services\\SendReminderInterface.cs",
+              "RelativeToolTip": "Services\\SendReminderInterface.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAABIAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T21:44:06.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAcwA0AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T22:25:04.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "NewsletterController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\NewsletterController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NewsletterController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\NewsletterController.cs",
+              "RelativeToolTip": "Controllers\\NewsletterController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T11:22:25.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "CommentsController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CommentsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CommentsController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CommentsController.cs",
+              "RelativeToolTip": "Controllers\\CommentsController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T11:22:26.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "CheckoutController.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CheckoutController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CheckoutController.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CheckoutController.cs",
+              "RelativeToolTip": "Controllers\\CheckoutController.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAkwCIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T22:00:44.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAswBUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T22:11:51.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "cartOps.js",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\cartOps.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\cartOps.js",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\cartOps.js",
+              "RelativeToolTip": "wwwroot\\js\\cartOps.js",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAwBUAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-11-04T20:52:50.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "carousel.js",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\carousel.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\carousel.js",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\carousel.js",
+              "RelativeToolTip": "wwwroot\\js\\carousel.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-11-03T17:29:33.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
               "Title": "20241103231837_orderTracking.cs",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231837_orderTracking.cs",
               "RelativeDocumentMoniker": "Migrations\\20241103231837_orderTracking.cs",
@@ -387,59 +840,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "20241103231702_orderTracking.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231702_orderTracking.cs",
-              "RelativeDocumentMoniker": "Migrations\\20241103231702_orderTracking.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231702_orderTracking.cs",
-              "RelativeToolTip": "Migrations\\20241103231702_orderTracking.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T23:17:02.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OrderModel.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderModel.cs",
-              "RelativeDocumentMoniker": "Models\\OrderModel.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderModel.cs",
-              "RelativeToolTip": "Models\\OrderModel.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAIwAsAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T23:14:57.828Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "OrderTrackingModel.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderTrackingModel.cs",
-              "RelativeDocumentMoniker": "Models\\OrderTrackingModel.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderTrackingModel.cs",
-              "RelativeToolTip": "Models\\OrderTrackingModel.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAIwBkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T23:13:02.942Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ReviewModel.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\ReviewModel.cs",
-              "RelativeDocumentMoniker": "Models\\ReviewModel.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\ReviewModel.cs",
-              "RelativeToolTip": "Models\\ReviewModel.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAAwBwAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T23:11:05.016Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 38,
               "Title": "README.md",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\README.md",
               "RelativeDocumentMoniker": "README.md",
@@ -447,62 +848,59 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2024-11-03T22:35:17.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-03T22:35:17.834Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "CheckoutModel.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CheckoutModel.cs",
-              "RelativeDocumentMoniker": "Models\\CheckoutModel.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CheckoutModel.cs",
-              "RelativeToolTip": "Models\\CheckoutModel.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAADwvy0AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 37,
+              "Title": "ReviewModel.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\ReviewModel.cs",
+              "RelativeDocumentMoniker": "Models\\ReviewModel.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\ReviewModel.cs",
+              "RelativeToolTip": "Models\\ReviewModel.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAwBwAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T21:53:45.099Z"
+              "WhenOpened": "2024-11-03T23:11:05.016Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CartItem.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CartItem.cs",
-              "RelativeDocumentMoniker": "Models\\CartItem.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\CartItem.cs",
-              "RelativeToolTip": "Models\\CartItem.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA0AAAACAAAAAAAAAA==",
+              "DocumentIndex": 35,
+              "Title": "OrderTrackingModel.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderTrackingModel.cs",
+              "RelativeDocumentMoniker": "Models\\OrderTrackingModel.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderTrackingModel.cs",
+              "RelativeToolTip": "Models\\OrderTrackingModel.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAIwBkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T22:16:19.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-03T23:13:02.942Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CheckoutController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CheckoutController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CheckoutController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CheckoutController.cs",
-              "RelativeToolTip": "Controllers\\CheckoutController.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAkwGgAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 34,
+              "Title": "OrderModel.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderModel.cs",
+              "RelativeDocumentMoniker": "Models\\OrderModel.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\OrderModel.cs",
+              "RelativeToolTip": "Models\\OrderModel.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAIwAsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T22:00:44.7Z"
+              "WhenOpened": "2024-11-03T23:14:57.828Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAswBYAAAAtAAAAAAAAAA==",
+              "DocumentIndex": 36,
+              "Title": "20241103231702_orderTracking.cs",
+              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231702_orderTracking.cs",
+              "RelativeDocumentMoniker": "Migrations\\20241103231702_orderTracking.cs",
+              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103231702_orderTracking.cs",
+              "RelativeToolTip": "Migrations\\20241103231702_orderTracking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T22:11:51.805Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-03T23:17:02.968Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 39,
               "Title": "20241103220422_addedCheckoutModel.cs",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103220422_addedCheckoutModel.cs",
               "RelativeDocumentMoniker": "Migrations\\20241103220422_addedCheckoutModel.cs",
@@ -514,7 +912,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 40,
               "Title": "20241103214944_cartUpdate0311.cs",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241103214944_cartUpdate0311.cs",
               "RelativeDocumentMoniker": "Migrations\\20241103214944_cartUpdate0311.cs",
@@ -526,103 +924,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "SendReminderInterface.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Services\\SendReminderInterface.cs",
-              "RelativeDocumentMoniker": "Services\\SendReminderInterface.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Services\\SendReminderInterface.cs",
-              "RelativeToolTip": "Services\\SendReminderInterface.cs",
-              "ViewState": "AgIAANUAAAAAAAAAAAAAABIAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T21:44:06.949Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CartController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CartController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CartController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CartController.cs",
-              "RelativeToolTip": "Controllers\\CartController.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAwD0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T21:31:45.613Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "NewsletterController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\NewsletterController.cs",
-              "RelativeDocumentMoniker": "Controllers\\NewsletterController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\NewsletterController.cs",
-              "RelativeToolTip": "Controllers\\NewsletterController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T11:22:25.997Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "LoginRegisterController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\LoginRegisterController.cs",
-              "RelativeDocumentMoniker": "Controllers\\LoginRegisterController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\LoginRegisterController.cs",
-              "RelativeToolTip": "Controllers\\LoginRegisterController.cs",
-              "ViewState": "AgIAAKsBAAAAAAAAAAAqwLEBAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T11:22:26.095Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CommentsController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CommentsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CommentsController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\CommentsController.cs",
-              "RelativeToolTip": "Controllers\\CommentsController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T11:22:26.138Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "ProductsController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\ProductsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProductsController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\ProductsController.cs",
-              "RelativeToolTip": "Controllers\\ProductsController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T22:28:52.693Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAADwv2gAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T22:14:41.591Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "CartView.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\CartView.cshtml",
-              "RelativeDocumentMoniker": "Views\\Marketplace\\CartView.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\CartView.cshtml",
-              "RelativeToolTip": "Views\\Marketplace\\CartView.cshtml",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:02:56.661Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 41,
               "Title": "carousel.css",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\assets\\css\\carousel.css",
               "RelativeDocumentMoniker": "wwwroot\\assets\\css\\carousel.css",
@@ -634,43 +936,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAcwA0AAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T22:25:04.282Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "DetailedUserView.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\DetailedUserView.cshtml",
-              "RelativeDocumentMoniker": "Views\\UserContent\\DetailedUserView.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\DetailedUserView.cshtml",
-              "RelativeToolTip": "Views\\UserContent\\DetailedUserView.cshtml",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAAAIYAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:02:26.824Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "DetailedProductView.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\DetailedProductView.cshtml",
-              "RelativeDocumentMoniker": "Views\\Marketplace\\DetailedProductView.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\DetailedProductView.cshtml",
-              "RelativeToolTip": "Views\\Marketplace\\DetailedProductView.cshtml",
-              "ViewState": "AgIAAIkAAAAAAAAAAAAAAJkAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:02:52.058Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 42,
               "Title": "main.css",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\assets\\css\\main.css",
               "RelativeDocumentMoniker": "wwwroot\\assets\\css\\main.css",
@@ -682,31 +948,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "ProductsDashboard.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\ProductsDashboard.cshtml",
-              "RelativeDocumentMoniker": "Views\\Marketplace\\ProductsDashboard.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\ProductsDashboard.cshtml",
-              "RelativeToolTip": "Views\\Marketplace\\ProductsDashboard.cshtml",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAAAJkAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-02T22:26:13.598Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "UserContentDashboard.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\UserContentDashboard.cshtml",
-              "RelativeDocumentMoniker": "Views\\UserContent\\UserContentDashboard.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\UserContentDashboard.cshtml",
-              "RelativeToolTip": "Views\\UserContent\\UserContentDashboard.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACIAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:02:17.115Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 46,
               "Title": "z32-300zx-gearbox.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\z32-300zx-gearbox.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\z32-300zx-gearbox.cshtml",
@@ -718,19 +960,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "carousel.js",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\carousel.js",
-              "RelativeDocumentMoniker": "wwwroot\\js\\carousel.js",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\carousel.js",
-              "RelativeToolTip": "wwwroot\\js\\carousel.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-11-03T17:29:33.172Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 43,
               "Title": "bootstrap.min.css",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\assets\\css\\bootstrap.min.css",
               "RelativeDocumentMoniker": "wwwroot\\assets\\css\\bootstrap.min.css",
@@ -742,19 +972,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "CreateNewsletter.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Newsletter\\CreateNewsletter.cshtml",
-              "RelativeDocumentMoniker": "Views\\Newsletter\\CreateNewsletter.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Newsletter\\CreateNewsletter.cshtml",
-              "RelativeToolTip": "Views\\Newsletter\\CreateNewsletter.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:02:41.641Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 44,
               "Title": "ultra-racing-chassis-bracing-bars.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\ultra-racing-chassis-bracing-bars.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\ultra-racing-chassis-bracing-bars.cshtml",
@@ -766,7 +984,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 45,
               "Title": "logInlogOut.js",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\js\\logInlogOut.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\logInlogOut.js",
@@ -778,7 +996,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 48,
               "Title": "vag-u5014-coils-and-custom-harness.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\vag-u5014-coils-and-custom-harness.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\vag-u5014-coils-and-custom-harness.cshtml",
@@ -790,7 +1008,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 47,
               "Title": "xtreme-twin-clutch-kit.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\xtreme-twin-clutch-kit.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\xtreme-twin-clutch-kit.cshtml",
@@ -802,7 +1020,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 49,
               "Title": "tial-mv-s-wgs.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\tial-mv-s-wgs.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\tial-mv-s-wgs.cshtml",
@@ -814,7 +1032,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 50,
               "Title": "some-oem-parts.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\some-oem-parts.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\some-oem-parts.cshtml",
@@ -826,7 +1044,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 51,
               "Title": "refurbished-and-rebuilt-z32-calipers.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\refurbished-and-rebuilt-z32-calipers.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\refurbished-and-rebuilt-z32-calipers.cshtml",
@@ -838,7 +1056,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 52,
               "Title": "ps-pump-rebuild.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\ps-pump-rebuild.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\ps-pump-rebuild.cshtml",
@@ -850,7 +1068,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 53,
               "Title": "pauter-machine-forged-rods.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\pauter-machine-forged-rods.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\pauter-machine-forged-rods.cshtml",
@@ -862,7 +1080,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 54,
               "Title": "oil-pan-extension-with-baffles.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\oil-pan-extension-with-baffles.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\oil-pan-extension-with-baffles.cshtml",
@@ -874,7 +1092,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 55,
               "Title": "new-oil-pump.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\new-oil-pump.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\new-oil-pump.cshtml",
@@ -886,7 +1104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 56,
               "Title": "new-oem-crankshaft.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\new-oem-crankshaft.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\new-oem-crankshaft.cshtml",
@@ -898,7 +1116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 57,
               "Title": "more-custom-gauges.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\more-custom-gauges.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\more-custom-gauges.cshtml",
@@ -910,7 +1128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 58,
               "Title": "mishimoto-radiators.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\mishimoto-radiators.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\mishimoto-radiators.cshtml",
@@ -922,7 +1140,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 59,
               "Title": "mazworx-z32-adapter-kit-and-misc-parts.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\mazworx-z32-adapter-kit-and-misc-parts.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\mazworx-z32-adapter-kit-and-misc-parts.cshtml",
@@ -934,7 +1152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 60,
               "Title": "mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter.cshtml",
@@ -946,7 +1164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 61,
               "Title": "main-and-rod-bearings.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\main-and-rod-bearings.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\main-and-rod-bearings.cshtml",
@@ -958,7 +1176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 62,
               "Title": "link-g4-plus-ecu.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\link-g4-plus-ecu.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\link-g4-plus-ecu.cshtml",
@@ -970,7 +1188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 63,
               "Title": "it-s-here.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\it-s-here.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\it-s-here.cshtml",
@@ -982,7 +1200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 64,
               "Title": "injector-dynamics-id1050x.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\injector-dynamics-id1050x.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\injector-dynamics-id1050x.cshtml",
@@ -994,7 +1212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 65,
               "Title": "hsd-monopro-adjustable-coilovers.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\hsd-monopro-adjustable-coilovers.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\hsd-monopro-adjustable-coilovers.cshtml",
@@ -1006,7 +1224,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 66,
               "Title": "holset-hx35-twin-scroll-turbo.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\holset-hx35-twin-scroll-turbo.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\holset-hx35-twin-scroll-turbo.cshtml",
@@ -1018,7 +1236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 67,
               "Title": "hks-ssqv3-bov-z32-bmc.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\hks-ssqv3-bov-z32-bmc.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\hks-ssqv3-bov-z32-bmc.cshtml",
@@ -1030,7 +1248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 68,
               "Title": "headlights-restoration.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\headlights-restoration.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\headlights-restoration.cshtml",
@@ -1042,7 +1260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 69,
               "Title": "gktech-suspension-parts-and-other-bits.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\gktech-suspension-parts-and-other-bits.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\gktech-suspension-parts-and-other-bits.cshtml",
@@ -1054,7 +1272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 70,
               "Title": "full-type-x-body-kit.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\full-type-x-body-kit.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\full-type-x-body-kit.cshtml",
@@ -1066,7 +1284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 71,
               "Title": "exhaust-manifold-custom-flange.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\exhaust-manifold-custom-flange.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\exhaust-manifold-custom-flange.cshtml",
@@ -1078,7 +1296,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 72,
               "Title": "dw-control-arms-and-kaaz-diff.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\dw-control-arms-and-kaaz-diff.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\dw-control-arms-and-kaaz-diff.cshtml",
@@ -1090,7 +1308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 73,
               "Title": "denso-plugs-and-custom-coil-cover.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\denso-plugs-and-custom-coil-cover.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\denso-plugs-and-custom-coil-cover.cshtml",
@@ -1102,7 +1320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 74,
               "Title": "dayco-timing-kit-with-water-pump-gaskets.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\dayco-timing-kit-with-water-pump-gaskets.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\dayco-timing-kit-with-water-pump-gaskets.cshtml",
@@ -1114,7 +1332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 75,
               "Title": "custom-twin-scroll-twin-wg-manifold.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\custom-twin-scroll-twin-wg-manifold.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\custom-twin-scroll-twin-wg-manifold.cshtml",
@@ -1126,7 +1344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 76,
               "Title": "custom-torque-plate.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\custom-torque-plate.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\custom-torque-plate.cshtml",
@@ -1138,7 +1356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 77,
               "Title": "custom-pedal-covers.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\custom-pedal-covers.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\custom-pedal-covers.cshtml",
@@ -1150,7 +1368,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 78,
               "Title": "custom-dash-gauges.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\custom-dash-gauges.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\custom-dash-gauges.cshtml",
@@ -1162,7 +1380,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 79,
               "Title": "custom-accessories-pulleys-cam-gears.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\custom-accessories-pulleys-cam-gears.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\custom-accessories-pulleys-cam-gears.cshtml",
@@ -1174,7 +1392,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 80,
               "Title": "cpc-billet-carbon-intake-manifold.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\cpc-billet-carbon-intake-manifold.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\cpc-billet-carbon-intake-manifold.cshtml",
@@ -1186,7 +1404,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 81,
               "Title": "cp-carrillo-forged-pistons.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\cp-carrillo-forged-pistons.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\cp-carrillo-forged-pistons.cshtml",
@@ -1198,7 +1416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 82,
               "Title": "camtech-cams.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\camtech-cams.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\camtech-cams.cshtml",
@@ -1210,7 +1428,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 83,
               "Title": "cam-covers-refurb.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\cam-covers-refurb.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\cam-covers-refurb.cshtml",
@@ -1222,7 +1440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 84,
               "Title": "black-diamond-brakes.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\black-diamond-brakes.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\black-diamond-brakes.cshtml",
@@ -1234,7 +1452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 85,
               "Title": "ati-rb26-balancer-and-other-parts.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\ati-rb26-balancer-and-other-parts.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\ati-rb26-balancer-and-other-parts.cshtml",
@@ -1246,7 +1464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 86,
               "Title": "arp-manifolds-and-main-crank-studs.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\arp-manifolds-and-main-crank-studs.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\arp-manifolds-and-main-crank-studs.cshtml",
@@ -1258,7 +1476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 87,
               "Title": "altia-n1-enkei-wheels.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\altia-n1-enkei-wheels.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\altia-n1-enkei-wheels.cshtml",
@@ -1270,7 +1488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 88,
               "Title": "alternator-rebuild.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\alternator-rebuild.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\alternator-rebuild.cshtml",
@@ -1282,7 +1500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 89,
               "Title": "a-bigger-lot-is-here.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\a-bigger-lot-is-here.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\a-bigger-lot-is-here.cshtml",
@@ -1294,7 +1512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 90,
               "Title": "5-0-ignite-trigger-kit.cshtml",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\DetailedViews\\5-0-ignite-trigger-kit.cshtml",
               "RelativeDocumentMoniker": "Views\\DetailedViews\\5-0-ignite-trigger-kit.cshtml",
@@ -1306,103 +1524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
-              "Title": "Dashboard.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Dashboard.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Dashboard.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Dashboard.cshtml",
-              "RelativeToolTip": "Views\\Account\\Dashboard.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACEAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:03:31.412Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 78,
-              "Title": "ForgotPassReset.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ForgotPassReset.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\ForgotPassReset.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ForgotPassReset.cshtml",
-              "RelativeToolTip": "Views\\Account\\ForgotPassReset.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:03:27.73Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 79,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:03:22.943Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 81,
-              "Title": "ResetPass.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ResetPass.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\ResetPass.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\ResetPass.cshtml",
-              "RelativeToolTip": "Views\\Account\\ResetPass.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:03:13.71Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 80,
-              "Title": "Register.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Register.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Register.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Account\\Register.cshtml",
-              "RelativeToolTip": "Views\\Account\\Register.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T11:22:26.049Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 82,
-              "Title": "AddProduct.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\AddProduct.cshtml",
-              "RelativeDocumentMoniker": "Views\\Marketplace\\AddProduct.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Marketplace\\AddProduct.cshtml",
-              "RelativeToolTip": "Views\\Marketplace\\AddProduct.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-02T22:40:48.469Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 84,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACMAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T17:01:09.016Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 83,
-              "Title": "AddUserBuild.cshtml",
-              "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\AddUserBuild.cshtml",
-              "RelativeDocumentMoniker": "Views\\UserContent\\AddUserBuild.cshtml",
-              "ToolTip": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Views\\UserContent\\AddUserBuild.cshtml",
-              "RelativeToolTip": "Views\\UserContent\\AddUserBuild.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-02T22:54:23.211Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 92,
               "Title": "20241102221538_CartModel.cs",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241102221538_CartModel.cs",
               "RelativeDocumentMoniker": "Migrations\\20241102221538_CartModel.cs",
@@ -1414,7 +1536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 94,
               "Title": "20241102221701_CartModel.cs",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Migrations\\20241102221701_CartModel.cs",
               "RelativeDocumentMoniker": "Migrations\\20241102221701_CartModel.cs",
@@ -1426,7 +1548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 91,
               "Title": "noscript.css",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\wwwroot\\assets\\css\\noscript.css",
               "RelativeDocumentMoniker": "wwwroot\\assets\\css\\noscript.css",
@@ -1438,7 +1560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 93,
               "Title": "NewsletterSubscriptionModel.cs",
               "DocumentMoniker": "C:\\DRIVE\\prj\\Website200SX-ASP.NET-MVC - roles\\200SXProject-Website---Roles\\Models\\NewsletterSubscriptionModel.cs",
               "RelativeDocumentMoniker": "Models\\NewsletterSubscriptionModel.cs",
