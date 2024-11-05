@@ -103,16 +103,7 @@
 					</li>
 				}
 			</ul>
-			<ul class="icons">
-				@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-				{
-					<li>
-						<a asp-controller="Newsletter" asp-action="CreateNewsletter" class="icon admin-link" title="Admin">
-							<span class="admin-icon">A</span>
-							<span class="label">Admin</span>
-						</a>
-					</li>
-				}
+			<ul class="icons">				
 				<li>
 					<a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f">
 						<span class="label">Facebook</span>
@@ -162,6 +153,10 @@
 						</tbody>
 					</table>
 					<h3>Total: @Model.Sum(item => item.Price * item.Quantity).ToString("F2")</h3>
+					<br>
+					<form asp-action="Checkout" asp-controller="Checkout" method="get">
+						<button type="submit">Checkout</button>
+					</form>
 				}
 				else
 				{

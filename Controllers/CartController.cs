@@ -20,7 +20,7 @@ public class CartController : Controller
 		_emailService = emailService;
 	}
 	[HttpGet]
-	public async Task<IActionResult> getCartView()
+	public async Task<IActionResult> CartView()
 	{
 		var cartItems = await _context.CartItems.ToListAsync();
 		return View("~/Views/Marketplace/CartView.cshtml", cartItems);

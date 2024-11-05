@@ -90,10 +90,5 @@ namespace _200SXContact.Controllers
 			}
 			return View("~/Views/Marketplace/DetailedProductView.cshtml", product); 
 		}
-
-		public IActionResult OrderSuccess()
-		{
-			return View();
-		}
 	}
 }

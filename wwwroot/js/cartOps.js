@@ -45,6 +45,6 @@
         .catch(error => console.error('Error fetching cart count:', error));
 
     cartIcon.addEventListener('click', function () {
-        window.location.href = '/Cart/getCartView';
+        window.location.href = '/Cart/CartView';
     });
 });

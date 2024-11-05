@@ -8,11 +8,34 @@ namespace _200SXContact.Models
 	public class Order
 	{
 		public int Id { get; set; }
-		public string UserId { get; set; }
-		[Column(TypeName = "decimal(4,2)")]
-		public decimal TotalAmount { get; set; }
+		[Required]
+		[Display(Name = "Full Name")]
+		public string FullName { get; set; }
+		[Required]
+		[Display(Name = "Address Line 1")]
+		public string AddressLine1 { get; set; }
+		[Display(Name = "Address Line 2")]
+		public string AddressLine2 { get; set; }
+		[Required]
+		public string City { get; set; }
+		[Required]
+		[Display(Name = "County or State")]
+		public string County { get; set; }
+		[Required]
+		[Phone]
+		[Display(Name = "Phone Number")]
+		public string PhoneNumber { get; set; }
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Email Address")]
+		public string Email { get; set; }
+		[Display(Name = "Order Notes")]
+		public string OrderNotes { get; set; }
 		public DateTime OrderDate { get; set; } = DateTime.UtcNow;
-				
-		public virtual ICollection<OrderTracking> OrderTrackings { get; set; } = new List<OrderTracking>();
+		[ForeignKey("User")]
+		public string UserId { get; set; }
+		public User User { get; set; }
+		public ICollection<CartItem> CartItems { get; set; }
+		public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 	}
 }

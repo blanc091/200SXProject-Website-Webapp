@@ -15,7 +15,6 @@ namespace _200SXContact.Controllers
 		{
 			_context = context;
 			_emailService = emailService;
-
 		}
 		[HttpPost]
 		[Authorize]

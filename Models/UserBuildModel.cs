@@ -9,7 +9,7 @@
 		public DateTime? DateCreated { get; set; }
 		public string? UserEmail { get; set; }
 		public string? UserName { get; set; }
-		public string? UserId { get; set; } // FK to User.Id
+		public string? UserId { get; set; } 
 		public virtual User? User { get; set; }
 		public virtual ICollection<BuildsCommentsModel> Comments { get; set; } = new List<BuildsCommentsModel>();
 	}
