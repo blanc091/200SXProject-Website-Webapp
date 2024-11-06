@@ -1,6 +1,0 @@
-# Allow all crawlers access to all content
-User-agent: *
-Disallow:
-
-# Sitemap location (if you have a sitemap)
-Sitemap: https://www.200sxproject.com/sitemap.xml
