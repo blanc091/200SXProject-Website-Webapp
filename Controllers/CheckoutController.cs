@@ -74,7 +74,7 @@ namespace _200SXContact.Controllers
 			await _emailService.SendOrderConfirmEmail(user.Email, model);
 			string adminEmail = _adminSettings.Email;
 			await _emailService.SendOrderConfirmEmail(adminEmail, model);
-
+			/////
 			return RedirectToAction("OrderSummary", new { orderId = model.Id });
 		}
 		[HttpGet]
