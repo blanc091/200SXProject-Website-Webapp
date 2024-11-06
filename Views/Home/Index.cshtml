@@ -1,0 +1,868 @@
+@using System.Security.Claims
+@{
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage";
+}
+@{
+	var message = TempData["Message"] as string;
+}
+@model _200SXContact.Models.ContactForm
+@if (!string.IsNullOrEmpty(message))
+{
+	<div class="modal fade show" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display: block;">
+		<div class="modal-dialog" role="document" style="max-width: 380px;">
+			<div class="modal-content" style="background-color: #f0f0f0;">
+				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
+		<script nonce="@Context.Items["CSPNonce"]">
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+			gtag('config', 'G-6TGFNLDLZ5');
+		</script>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
+			crossorigin="anonymous"></script>
+		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
+		<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<title>The Nissan 200SX Project || Import Garage</title>
+		<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true"/></noscript>
+		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
+		
+	</head>
+<body class="is-preload" data-is-form-submitted="@TempData["IsFormSubmitted"]" data-is-form-success="@TempData["IsFormSuccess"]" data-is-newsletter-subbed="@TempData["IsNewsletterSubscribed"]" data-is-newsletter-error="@TempData["IsNewsletterError"]"> 
+		<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
+
+			<!-- Intro -->
+			<div id="intro">
+			<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
+			<br>
+			<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
+				<h1>Nissan 200SX Project</h1>
+				<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
+				<br>
+				<ul class="actions">
+					<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				</ul>
+			</div>
+
+			<!-- Header -->
+			<header id="header">
+				<a asp-controller="Home" asp-action="Index" class="logo">Import Garage || Jap works</a>
+			</header>
+
+			<!-- Nav -->
+		<nav id="nav">
+			<ul class="links">
+				<li class="active">
+					<a asp-controller="Home" asp-action="Index">Build updates</a>
+				</li>
+				<li>
+					<a href="#" id="contactLink">Contact</a>
+				</li>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<li>
+						<a href="@Url.Action("Dashboard", "Dashboard")" id="dashboardLink">MaintenApp</a>
+					</li>
+				}
+				else
+				{
+					<li>
+						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
+					</li>
+
+				}
+				<li>
+					<span>
+						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+					</span>
+				</li>
+				@if (User.Identity.IsAuthenticated)
+
+				{
+					<li>
+						<span>
+							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
+						</span>
+					</li>
+					<li><span>Logged in as @User.Identity.Name</span></li>
+					<li>
+						<a href="#" id="logoutLink">Logout</a>
+					</li>
+				}
+			</ul>
+			<ul class="icons">
+				@if (User.IsInRole("Admin"))
+				{
+					<li>
+						<a asp-controller="Newsletter" asp-action="CreateNewsletter" class="icon admin-link" title="Admin">
+							<span class="admin-icon">A</span>
+							<span class="label">Admin</span>
+						</a>
+					</li>
+				}
+				<li>
+					<a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f">
+						<span class="label">Facebook</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.instagram.com/200sxprojectro?igsh=MWZjeWE4eW5idGU0ZQ==" class="icon brands fa-instagram">
+						<span class="label">Instagram</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+
+			<!-- Main -->
+			<div id="main">
+
+				<!-- Featured Post -->
+				<article class="post featured">
+					<header class="major">
+						<span class="date"></span>
+						<h2>Welcome</h2>
+						<p>You can scroll below for build & project updates, with pictures and a short description of each component.</p>
+					</header>
+					<div class="image main"><img src="~/images/thumbs/pic01g.gif" alt="" /></div>
+				<div class="newsletter-subscription">
+					<span class="date" id="newsletterForm"><i>Subscribe to the Newsletter for email updates !</i></span><br><br>
+					<form asp-controller="Newsletter" asp-action="Subscribe" method="post">
+						@Html.AntiForgeryToken()
+						<div class="form-group" style="text-align: center;">
+							<label for="email">Email Address:</label>
+							<input type="email" name="email" class="form-control small-input" required style="margin: 0 auto; display: block;" placeholder="Enter your email"/> <br>
+							<button type="submit" class="btn-save">Subscribe</button>
+						</div>
+						
+					</form>
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				</div>
+				</article>
+
+				<!-- Posts -->
+				<section class="posts">
+					<article>
+						<header>
+							<span class="date">June 08, 2022</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="oil-pan-extension-with-baffles">Oil pan extension with baffles</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="oil-pan-extension-with-baffles" class="image fit"><img src="~/images/thumbs/oil-pan-extension-with-baffles-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Custom oil pan extension with baffle plates.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="oil-pan-extension-with-baffles" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">January 13, 2022</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-accessories-pulleys-cam-gears">Custom accessories pulleys & cam gears</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-accessories-pulleys-cam-gears" class="image fit"><img src="~/images/thumbs/custom-accessories-pulleys-cam gears-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Custom accessories pulleys to fit the ATI RB26 balancer, and Goleby adjustable cam gears. In the end, I've decided to go with these newly-released PRP adjustable cam gears instead of the Goleby ones I had.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-accessories-pulleys-cam-gears" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 23, 2021</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="5-0-ignite-trigger-kit">5-0 Ignite trigger kit</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="5-0-ignite-trigger-kit" class="image fit"><img src="~/images/thumbs/5-0-ignite-trigger-kit-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							5-0 Ignite cam and crank trigger kit.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="5-0-ignite-trigger-kit" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 16, 2020</span>
+							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-pedal-covers">Custom pedal covers</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-pedal-covers" class="image fit"><img src="~/images/thumbs/custom-pedal-covers-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Custom pedal covers; pretty self-explanatory.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-pedal-covers" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 16, 2020</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="arp-manifolds-and-main-crank-studs">ARP manifolds and main crank studs</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="arp-manifolds-and-main-crank-studs" class="image fit"><img src="~/images/thumbs/arp-manifolds-and-main-crank-studs-2-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got some ARP main crank studs and intake and exhaust manifold studs, along with some extra AN fittings and TAARKS alloy half moon seals.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="arp-manifolds-and-main-crank-studs" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 16, 2020</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="denso-plugs-and-custom-coil-cover">Denso plugs and custom coil cover</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="denso-plugs-and-custom-coil-cover" class="image fit"><img src="~/images/thumbs/denso-plugs-and-custom-coil-cover-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got 4 of these, these are harder to find than I initially thought, at least where I live. I wanted to get the NGK BCPR7E-11s, couldn't find any, so I got the DENSO equivallent; also got a custom coil cover for the VAG coils from 5-0 Ignite.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="denso-plugs-and-custom-coil-cover" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">March 13, 2020</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dayco-timing-kit-with-water-pump-gaskets">Dayco timing kit with water pump & gaskets</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dayco-timing-kit-with-water-pump-gaskets" class="image fit"><img src="~/images/thumbs/dayco-timing-kit-with-water-pump-gaskets-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Dayco timing kit with water pump & gaskets and seals.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dayco-timing-kit-with-water-pump-gaskets" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">April 28, 2020</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-dash-gauges">Custom dash gauges</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-dash-gauges" class="image fit"><img src="~/images/thumbs/custom-dash-gauges-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Customized dashboard gauges, made in Poland.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-dash-gauges" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">December 25, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-twin-scroll-twin-wg-manifold">Custom twin scroll twin WG manifold</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-twin-scroll-twin-wg-manifold" class="image fit"><img src="~/images/thumbs/custom-twin-scroll-twin-wg-manifold-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Custom twin scroll, twin wastegate manifold from Soara Performance, Ukraine. I coated it in ceramic coating, along with the turbo exhaust housing. Notice the flange I got earlier.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-twin-scroll-twin-wg-manifold" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 08, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hks-ssqv3-bov-z32-bmc">HKS SSQV3 BOV & Z32 BMC</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hks-ssqv3-bov-z32-bmc" class="image fit"><img src="~/images/thumbs/hks-ssqv3-bov-z32-bmc-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got a HKS SSQV3 BOV and a Z32 1 1/16 brake master cylinder (painted them black), along with K&N air and oil filters.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hks-ssqv3-bov-z32-bmc" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 29, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="altia-n1-enkei-wheels">Altia N1 (Enkei) wheels</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="altia-n1-enkei-wheels" class="image fit"><img src="~/images/thumbs/altia-n1-enkei-wheels-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got some Altia N1 (Enkei, confirmed with them) wheels and got them professionally reconditioned.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="altia-n1-enkei-wheels" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 29, 2019</span>
+							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="a-bigger-lot-is-here">A bigger lot is here</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="a-bigger-lot-is-here" class="image fit"><img src="~/images/thumbs/a-bigger-lot-is-here-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Ok, quite a few stuff to show here.. 400lph fuel pump kit for S13 from TI Automotive, cusco side pillar bars, TTT hatch bar, UR floor bar, flywheel bolts, Cometic MLS HG, OEM overflow tank...
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="a-bigger-lot-is-here" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">August 14, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="black-diamond-brakes">Black Diamond brakes</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="black-diamond-brakes" class="image fit"><img src="~/images/thumbs/black-diamond-brakes-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Black Diamond 280 mm fronts & 297 mm rear discs and brake pads to match.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="black-diamond-brakes" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">August 05, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="camtech-cams">Camtech cams</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="camtech-cams" class="image fit"><img src="~/images/thumbs/camtech-cams-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Camtech intake and exhaust cams, advertised duration: 264 degrees, lift: 8.9 mm. No longer in production, unfortunately.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="camtech-cams" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">July 30, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="vag-u5014-coils-and-custom-harness">VAG U5014 coils and custom harness</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="vag-u5014-coils-and-custom-harness" class="image fit"><img src="~/images/thumbs/vag-u5014-coils-and-custom-harness-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Fully PnP (Plug and Play) VAG (4-pin) ignition conversion harness and U5014 coils.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="vag-u5014-coils-and-custom-harness" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">May 16, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-torque-plate">Custom torque plate</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-torque-plate" class="image fit"><img src="~/images/thumbs/custom-torque-plate-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got a CNC custom torque plate made just for the CA18, to be used when honing the cylinders.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-torque-plate" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">April 24, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="tial-mv-s-wgs">TiAl MV-s WGs</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="tial-mv-s-wgs" class="image fit"><img src="~/images/thumbs/tial-mv-s-wgs-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							2 x TiAl MV-S external wastegates with springs & clamps, along with flanges for the mani.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="tial-mv-s-wgs" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">April 10, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="injector-dynamics-id1050x">Injector Dynamics ID1050X</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="injector-dynamics-id1050x" class="image fit"><img src="~/images/thumbs/injector-dynamics-id1050x-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Injector Dynamics Bosch ID1050X injectors fitted to custom-made fuel rail.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="injector-dynamics-id1050x" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">March 13, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="more-custom-gauges">More custom gauges</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="more-custom-gauges" class="image fit"><img src="~/images/thumbs/more-custom-gauges-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							AEM custom boost, AFR and oil pressure gauges, along with some more generic oil and water temp gauges.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="more-custom-gauges" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">February 06, 2019</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mishimoto-radiators">Mishimoto radiators</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mishimoto-radiators" class="image fit"><img src="~/images/thumbs/mishimoto-radiators-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Mishimoto radiator, J-Line intercooler and 19-row thermostatic oil cooler kit just came in.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mishimoto-radiators" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">February 04, 2019</span>
+							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter">Mallory FPR and K-Tuned pressure gauge and fuel filter</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter" class="image fit"><img src="~/images/thumbs/mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Mallory FPR and K-Tuned pressure gauge and fuel filter got delivered today; mated them together, just for fun.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">December 18, 2018</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="headlights-restoration">Headlights restoration</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="headlights-restoration" class="image fit"><img src="~/images/thumbs/headlights-restoration-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Having some spare time, I set up to refurbish the headlights and headlight supports; stripped them down, wirebrushed all the rust away, applied rust converter on the brushed spots, coated everything in zinc spray, then a final coat of color paint. I also fixed the plastic cover in the meantime.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="headlights-restoration" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">December 18, 2018</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dw-control-arms-and-kaaz-diff">DW control arms and Kaaz diff</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dw-control-arms-and-kaaz-diff" class="image fit"><img src="~/images/thumbs/dw-control-arms-and-kaaz-diff-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							The Kaaz 1.5-way LSD & DW lower control arms arrived today.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dw-control-arms-and-kaaz-diff" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">July 23, 2018</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="gktech-suspension-parts-and-other-bits">GKTech suspension parts and other bits</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="gktech-suspension-parts-and-other-bits" class="image fit"><img src="~/images/thumbs/gktech-suspension-parts-and-other-bits-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							GKTech tension weld in plates, GKTECH Clutch Fan, GKTECH ABS delete kit, GKTECH Suspension Arms all around, GKTECH front & rear Z32 caliper conversion brake lines, Megan Racing bracing bar, GKTECH subframe bushes, GKTech subframe reinforcement plates and a Cusco strut tower reinforcement bar.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="gktech-suspension-parts-and-other-bits" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">May 16, 2018</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ultra-racing-chassis-bracing-bars">Ultra Racing chassis bracing bars</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ultra-racing-chassis-bracing-bars" class="image fit"><img src="~/images/thumbs/ultra-racing-chassis-bracing-bars-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Ultra Racing chassis bracing bars all around.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ultra-racing-chassis-bracing-bars" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">December 01, 2017</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hsd-monopro-adjustable-coilovers">HSD Monopro adjustable coilovers</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hsd-monopro-adjustable-coilovers" class="image fit"><img src="~/images/thumbs/hsd-monopro-adjustable-coilovers-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							HSD Monopro Coilovers, 7/5 kgs F/R.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hsd-monopro-adjustable-coilovers" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">August 22, 2017</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="link-g4-plus-ecu">Link G4+ ECU</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="link-g4-plus-ecu" class="image fit"><img src="~/images/thumbs/link-g4-plus-ecu-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Link G4+ plug & play standalone ECU for the CA18DET, plus a speedo recalibrator for the Z32 gearbox.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="link-g4-plus-ecu" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">July 22, 2017</span>
+							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mazworx-z32-adapter-kit-and-misc-parts">Mazworx Z32 adapter kit and misc parts</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mazworx-z32-adapter-kit-and-misc-parts" class="image fit"><img src="~/images/thumbs/mazworx-z32-adapter-kit-and-misc-parts-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Z32 adapter plate, shifter bracket and PST carbon driveshaft. Plus some new valve seats, hydraulic lifters, a new CAS sensor and a gasket.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mazworx-z32-adapter-kit-and-misc-parts" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 25, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cpc-billet-carbon-intake-manifold">CPC billet carbon intake manifold</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cpc-billet-carbon-intake-manifold" class="image fit"><img src="~/images/thumbs/cpc-billet-carbon-intake-manifold-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							CPC Billet/carbon intake manifold, with provisions for water/meth injection and other ports for sensor/vacuum. I will probably have to apply a layer of epoxy at the seams, as some people have had the manifolds separate under high boost. If this is the case, I will most likely get a Plazmaman one and be done with it.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cpc-billet-carbon-intake-manifold" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 21, 2016</span>
+							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="xtreme-twin-clutch-kit">Xtreme Twin Clutch Kit</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="xtreme-twin-clutch-kit" class="image fit"><img src="~/images/thumbs/xtreme-twin-clutch-kit-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							XTREME Twin Disc Ceramic 184 mm clutch kit.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="xtreme-twin-clutch-kit" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 10, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="refurbished-and-rebuilt-z32-calipers">Refurbished and rebuilt Z32 calipers</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="refurbished-and-rebuilt-z32-calipers" class="image fit"><img src="~/images/thumbs/refurbished-and-rebuilt-z32-calipers-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Refurbished and rebuilt Z32 calipers, with rebuild kit from Z1 Motorsports.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="refurbished-and-rebuilt-z32-calipers" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">August 11, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ati-rb26-balancer-and-other-parts">ATI RB26 balancer and other parts</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ati-rb26-balancer-and-other-parts" class="image fit"><img src="~/images/thumbs/ati-rb26-balancer-and-other-parts-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							ATI RB26 harmonic balancer, bronze alloy valve guides, alternator and PS pump belts, thermostat and housing, K&N oil filter, new oil pickup strainer, a new oil restrictor that goes in the block and a new main crank bolt...
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ati-rb26-balancer-and-other-parts" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">July 11, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="holset-hx35-twin-scroll-turbo">Holset HX35 twin scroll turbo</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="holset-hx35-twin-scroll-turbo" class="image fit"><img src="~/images/thumbs/holset-hx35-twin-scroll-turbo-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got one of these in good condition :) Holset HX35 with 12 cm housing. Need to remove the wastegate and weld the internal flap so I can run external WG.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="holset-hx35-twin-scroll-turbo" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">June 30, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="full-type-x-body-kit">Full Type-X body kit</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="full-type-x-body-kit" class="image fit"><img src="~/images/thumbs/full-type-x-body-kit-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Bought a full Type-X body kit, including rear lights; ended up getting a new OEM front bumper with accessories and lights, since the fiberglass one just wasn't cutting it.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="full-type-x-body-kit" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">June 15, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="exhaust-manifold-custom-flange">Exhaust manifold custom flange</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="exhaust-manifold-custom-flange" class="image fit"><img src="~/images/thumbs/exhaust-manifold-custom-flange-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got a custom exhaust manifold flange made, thick and nice and straight. It will be used to build the custom exhaust manifold.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="exhaust-manifold-custom-flange" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">March 10, 2016</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="z32-300zx-gearbox">Z32 (300ZX) gearbox</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="z32-300zx-gearbox" class="image fit"><img src="~/images/thumbs/z32-300zx-gearbox-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Z32 (300ZX) gearbox, way more reliable and for sure will hold my intended power levels.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="z32-300zx-gearbox" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">February 05, 2015</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="alternator-rebuild">Alternator rebuild</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="alternator-rebuild" class="image fit"><img src="~/images/thumbs/alternator-rebuild-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							I've sorted out the alternator, I've replaced the bearings and it doesn't squeak anymore. Cleaned everything inside and coated it in some nice paint. Let's hope it charges well *fingers-crossed*.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="alternator-rebuild" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">January 13, 2015</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ps-pump-rebuild">PS pump rebuild</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ps-pump-rebuild" class="image fit"><img src="~/images/thumbs/ps-pump-rebuild-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							I've finally finished refurb'ing the PS pump. It was full of solidified deposits of PS fluid.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ps-pump-rebuild" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">December 24, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="main-and-rod-bearings">Main and rod bearings</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="main-and-rod-bearings" class="image fit"><img src="~/images/thumbs/main-and-rod-bearings-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Bought the main and rod bearings from Clevite (Mahle); standard size.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="main-and-rod-bearings" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 17, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oil-pump">New oil pump</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oil-pump" class="image fit"><img src="~/images/thumbs/new-oil-pump-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							The new oil pump has arrived today; I opened it up and confirmed it is the new design, which works well.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oil-pump" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 14, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="pauter-machine-forged-rods">Pauter Machine forged rods</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="pauter-machine-forged-rods" class="image fit"><img src="~/images/thumbs/pauter-machine-forged-rods-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							The forged Pauter Machine NIS-200-480-1330F 4340 rods fitted with ARP 2000 rod bolts finally arrived today. Pretty happy with them.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="pauter-machine-forged-rods" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">November 06, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cp-carrillo-forged-pistons">CP Carrillo forged pistons</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cp-carrillo-forged-pistons" class="image fit"><img src="~/images/thumbs/cp-carrillo-forged-pistons-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Got my forged pistons today, CP Carrillo 83.5 mm oversize, 8.5:1 standard compression ratio.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cp-carrillo-forged-pistons" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">October 31, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oem-crankshaft">New OEM crankshaft</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oem-crankshaft" class="image fit"><img src="~/images/thumbs/new-oem-crankshaft-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							The new OEM crankshaft is here ! Standard size, looks pretty.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oem-crankshaft" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">September 20, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="some-oem-parts">Some OEM parts</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="some-oem-parts" class="image fit"><img src="~/images/thumbs/some-oem-parts-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Bought some misc OEM parts for the rebuild, as seen in the pics.
+							<ul class="actions special">
+								<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="some-oem-parts" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">July 13, 2014</span>
+						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cam-covers-refurb">Cam covers refurb</a></h2>
+						</header>
+						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cam-covers-refurb" class="image fit"><img src="~/images/thumbs/cam-covers-refurb-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							I've finally finished painting my rocker covers, not before cleaning them on the inside of all the oil deposits and gunk.
+							<ul class="actions special">
+							<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cam-covers-refurb" class="button">Read more</a></li>
+							</ul>
+					</article>
+					<article>
+						<header>
+							<span class="date">January 17, 2014</span>
+							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="it-s-here">It's here !</a></h2>
+						</header>
+					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="it-s-here" class="image fit"><img src="~/images/thumbs/it-s-here-t.jpg" alt="" /></a>
+						<br>
+						<p>
+							Well, the car finally arrived, after more than a year of hard work and money saving.<br><br>
+							It’s just as I wanted it to be, ’93 model, CA18DET, ~110.000 miles / 174.000 km. Runs nice, almost no rust, the hood needs to be fixed...
+						</p>
+						<ul class="actions special">
+						<li><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="it-s-here" class="button">Read more</a></li>
+						</ul>
+					</article>
+
+				</section>
+
+				<!-- Footer -->
+				<!--<footer>
+				<!--<div class="pagination">
+					<!--<a href="#" class="previous">Prev</a>-->
+				<!--	<a href="#" class="page active">1</a>
+				<!--	<a href="#" class="page">2</a>
+				<!--	<a href="#" class="page">3</a>
+				<!--	<span class="extra">&hellip;</span>
+				<!--	<a href="#" class="page">8</a>
+				<!--	<a href="#" class="page">9</a>
+				<!--	<a href="#" class="page">10</a>
+				<!--	<a href="#" class="next">Next</a>
+				<!--</div>
+			<!--</footer>-->
+
+			</div>
+			<!-- Footer -->
+			<footer id="footer">				
+				<section>
+				<form id="contactForm" action="/contact/send-email" method="post">
+					@Html.AntiForgeryToken()
+					<div class="fields">
+						<div class="field">
+							<input type="hidden" name="ViewName" value="Home/Index" />
+						</div>
+						<div class="field">
+							<label for="name">Name</label>
+							<input type="text" name="name" id="name" value="@Model?.Name" placeholder="Enter your name" />
+							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Name"]?.Errors.Count > 0)
+							{
+								<span class="text-danger">@ViewData.ModelState["Name"].Errors.First().ErrorMessage</span>
+							}
+						</div>
+						<div class="field">
+							<label for="email">Email</label>
+							<input type="text" name="email" id="email" value="@Model?.Email" placeholder="Enter your email" />
+							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Email"]?.Errors.Count > 0)
+							{
+								<span class="text-danger">@ViewData.ModelState["Email"].Errors.First().ErrorMessage</span>
+							}
+						</div>
+						<div class="field">
+							<label for="message">Message</label>
+							<textarea name="message" id="message" rows="3" placeholder="Enter your message">@Model?.Message</textarea>
+							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Message"]?.Errors.Count > 0)
+							{
+								<span class="text-danger">@ViewData.ModelState["Message"].Errors.First().ErrorMessage</span>
+							}
+						</div>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Send Message" /></li>
+					</ul>
+				</form>
+				</section>
+				<section class="split contact">
+					<section class="alt">
+						<h3>Address</h3>
+						<p>Anywhere & Everywhere</p>
+					</section>
+					<section>
+						<h3>Phone</h3>
+						<p><a href="#">(000) 000-0000</a></p>
+					</section>
+					<section>
+						<h3>Email</h3>
+						<p><a href="mailto:mail@200sxproject.com">mail@200sxproject.com</a></p>
+					</section>
+					<section>
+						<h3>Social</h3>
+						<ul class="icons alt">
+							<li><a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="https://www.instagram.com/200sxprojectro?igsh=MWZjeWE4eW5idGU0ZQ==" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						</ul>
+					</section>
+				</section>
+			</footer>
+
+			<!-- Copyright -->
+			<div id="copyright">
+				<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
+			</div>
+
+		</div>
+
+		<!-- Scripts -->
+		<!-- Include Bootstrap CSS -->
+		<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" /> -->
+	    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+		<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/jquery.scrolly.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/browser.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/breakpoints.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/util.js" asp-append-version="true"></script>
+		<script src="~/assets/js/main.js" asp-append-version="true"></script>
+		<script src="~/js/formScript.js" asp-append-version="true"></script>
+		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
+		<script src="~/js/ScrollToTop.js" asp-append-version="true"></script>
+</body>
+	
+</html>

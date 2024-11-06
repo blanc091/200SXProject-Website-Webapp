@@ -1,0 +1,183 @@
+﻿@model _200SXContact.Models.ResetPasswordViewModel
+@{
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Reset Password";
+}
+@{
+	var message = TempData["Message"] as string;
+}
+@if (!string.IsNullOrEmpty(message))
+{
+	<div class="modal fade show" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display: block;">
+		<div class="modal-dialog" role="document" style="max-width: 450px;">
+			<div class="modal-content" style="background-color: #f0f0f0;">
+				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
+	<script nonce="@Context.Items["CSPNonce"]">
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-6TGFNLDLZ5');
+	</script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
+			crossorigin="anonymous"></script>
+	<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
+	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>The Nissan 200SX Project || Import Garage</title>
+	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
+	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
+	<style>
+		/* Target the validation summary list to remove bullet points */
+		.validation-summary-valid ul,
+		.validation-summary-errors ul {
+			list-style-type: none;
+			padding-left: 0;
+		}
+
+			.validation-summary-valid ul li,
+			.validation-summary-errors ul li {
+				margin-left: 0;
+				padding-left: 0;
+			}
+	</style>
+</head>
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper" class="fade-in">
+
+		<!-- Intro -->
+		<div id="intro">
+			<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
+			<br>
+			<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
+			<h1>Nissan 200SX Project</h1>
+			<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
+			<br>
+			<ul class="actions">
+				<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+			</ul>
+		</div>
+
+		<!-- Header -->
+		<header id="header">
+			<a asp-controller="Home" asp-action="Index" class="logo">Import Garage || Jap works</a>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul class="links">
+				<li class="active">
+					<a asp-controller="Home" asp-action="Index">Build updates</a>
+				</li>
+				<li>
+					<a href="/Home/Index?scrollToContactForm=true" id="contactLink">Contact</a>
+				</li>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<li><span>Logged in as @User.Identity.Name</span></li>
+					<li>
+						<a href="#" id="logoutLink">Logout</a>
+					</li>
+				}
+			</ul>
+			<ul class="icons">
+				<li>
+					<a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f">
+						<span class="label">Facebook</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.instagram.com/200sxprojectro?igsh=MWZjeWE4eW5idGU0ZQ==" class="icon brands fa-instagram">
+						<span class="label">Instagram</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Featured Post -->
+			<article class="post featured">
+				<header class="major">
+					<span class="date"></span>
+					<h7 id="maintenApp">MaintenApp</h7>
+					<br>
+					<p>Use the below form to reset your password for your account.</p>
+				</header>
+				<h2>Reset Password</h2>
+
+				<form asp-action="ResetPassword" method="post">
+					@Html.AntiForgeryToken()
+
+					@Html.HiddenFor(m => m.Token)
+					@Html.HiddenFor(m => m.Email)
+
+					<div class="form-group">
+						<label asp-for="NewPassword"></label>
+						<input asp-for="NewPassword" class="form-control" />
+						<span asp-validation-for="NewPassword" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="ConfirmPassword"></label>
+						<input asp-for="ConfirmPassword" class="form-control" />
+						<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+					</div>
+
+					<button type="submit" class="btn-add-entry">Reset Password</button>
+				</form>
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+				<div>
+					@if (TempData["Message"] != null)
+					{
+						<div class="alert alert-info">@TempData["Message"]</div>
+					}
+				</div>
+				
+				<br>
+				
+			</article>
+		</div>
+
+		<!-- Copyright -->
+		<div id="copyright">
+			<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
+		</div>
+
+	</div>
+	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+	<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
+	<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
+	<script src="~/assets/js/jquery.scrolly.min.js" asp-append-version="true"></script>
+	<script src="~/assets/js/browser.min.js" asp-append-version="true"></script>
+	<script src="~/assets/js/breakpoints.min.js" asp-append-version="true"></script>
+	<script src="~/assets/js/util.js" asp-append-version="true"></script>
+	<script src="~/assets/js/main.js" asp-append-version="true"></script>
+	<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
+	<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
+	<script src="~/js/formScript.js" asp-append-version="true"></script>
+
+</body>
+</html>

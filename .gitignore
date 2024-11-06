@@ -1,0 +1,5 @@
+appsettings.json
+
+/configs/AppSettings.cs
+bin/
+obj/
