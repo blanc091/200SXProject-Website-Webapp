@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using _200SXContact.Models;
+using _200SXContact.Models.Configs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using _200SXContact.Data;
@@ -11,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Net;
+using Microsoft.Extensions.Options;
 
 namespace _200SXContact.Controllers
 {
@@ -21,13 +24,16 @@ namespace _200SXContact.Controllers
 		private readonly IPasswordHasher<User> _passwordHasher;
 		private readonly ILogger<LoginRegisterController> _logger;
 		private readonly UserManager<User> _userManager;
-		public LoginRegisterController(ApplicationDbContext context, ILogger<LoginRegisterController> logger, SignInManager<User> signInManager, UserManager<User> userManager)
+		private readonly NetworkCredential _credentials;
+		public LoginRegisterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, ILogger<LoginRegisterController> logger, SignInManager<User> signInManager, UserManager<User> userManager)
 		{
 			_context = context;
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_passwordHasher = new PasswordHasher<User>();
 			_logger = logger;
+			var emailSettings = appSettings.Value.EmailSettings;
+			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 		}
 		[HttpGet]
 		[AllowAnonymous]
@@ -161,7 +167,6 @@ namespace _200SXContact.Controllers
 			ViewData["IsUserLoggedIn"] = true;
 			TempData["MicrosoftLogin"] = true;
 			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft!";
-
 			return RedirectToAction("Dashboard", "Dashboard");
 		}
 
@@ -325,7 +330,7 @@ namespace _200SXContact.Controllers
         }
 		private async Task SendPasswordResetEmail(string email, string resetUrl)
 		{
-			var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
+			var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 			var toAddress = new MailAddress(email);
 			string subject = "200SX Project || Reset Your Password";
 			string body = @"
@@ -418,7 +423,7 @@ namespace _200SXContact.Controllers
 				Host = "mail5019.site4now.net",
 				Port = 587,
 				EnableSsl = true,
-				Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
 			})
 			{
 				using (var message = new MailMessage(fromAddress, toAddress)
@@ -434,7 +439,7 @@ namespace _200SXContact.Controllers
 		}
 		private async Task SendVerificationEmail(string email, string verificationUrl)
 		{
-			var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
+			var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 			var toAddress = new MailAddress(email);
 			string subject = "200SX Project || Verify your email";
 			string body = @"
@@ -521,13 +526,12 @@ namespace _200SXContact.Controllers
         </div>
     </body>
     </html>";
-			//string body = "test";
 			using (var smtpClient = new SmtpClient
 			{
 				Host = "mail5019.site4now.net",
 				Port = 587,
 				EnableSsl = true,
-				Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
 			})
 			{
 				using (var message = new MailMessage(fromAddress, toAddress)

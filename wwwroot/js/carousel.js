@@ -1,5 +1,12 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     const nextButton = document.querySelector('.button-custom-carousel.next');
+    const boxes = document.querySelectorAll(".box-custom-carousel");
+    const tmpNode = boxes[5];
+    boxes[5].className = "box-custom-carousel move-out-from-left";
+    if (boxes.length > 5) {
+        tmpNode.classList.add("box--hide");
+       // boxes[5].className = "box-custom-carousel box--hide";
+    }
     if (nextButton) {
         nextButton.addEventListener('click', shiftRight);
     }
@@ -41,7 +48,7 @@ function shiftRight() {
         }
 
         const tmpNode = boxes[noOfCards - 1];
-        tmpNode.classList.remove("box-custom-carousel--hide");
+        tmpNode.classList.remove("box--hide");
         boxes[noOfCards - 1].remove();
         let parentObj = document.querySelector(".cards__container");
         parentObj.insertBefore(tmpNode, parentObj.firstChild);

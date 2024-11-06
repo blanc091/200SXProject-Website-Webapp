@@ -6,6 +6,8 @@ using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Net;
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
 
 
 namespace _200SXContact.Controllers
@@ -13,10 +15,13 @@ namespace _200SXContact.Controllers
 	public class NewsletterController : Controller
 	{
 		private readonly ApplicationDbContext _context;
+		private readonly NetworkCredential _credentials;
 
-		public NewsletterController(ApplicationDbContext context)
+		public NewsletterController(ApplicationDbContext context, IOptions<AppSettings> appSettings)
 		{
 			_context = context;
+			var emailSettings = appSettings.Value.EmailSettings;
+			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 		}
 		[Authorize(Roles = "Admin")] 
 		public IActionResult CreateNewsletter()
@@ -207,13 +212,13 @@ namespace _200SXContact.Controllers
 			var smtpClient = new SmtpClient("mail5019.site4now.net")
 			{
 				Port = 587,
-				Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!"),
+				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password),
 				EnableSsl = true,
 			};
 
 			var mailMessage = new MailMessage
 			{
-				From = new MailAddress("test@200sxproject.com"),
+				From = new MailAddress(_credentials.UserName),
 				Subject = subject,
 				Body = body,
 				IsBodyHtml = true,

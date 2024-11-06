@@ -1,4 +1,7 @@
 ﻿using _200SXContact.Models;
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,20 +10,24 @@ namespace _200SXContact.Services
 {
 	public interface IEmailService
 	{
+
 		Task SendDueDateReminder(string userEmail,Item item, int daysBeforeDue);
 		Task SendCommentNotification(string userEmail, BuildsCommentsModel comment);
         Task SendOrderConfirmEmail(string email, Order order);
 	}
 	public class EmailService : IEmailService
 	{
+		private readonly NetworkCredential _credentials;
 		private readonly ILoggerService _loggerService;
-		public EmailService(ILoggerService loggerService)
+		public EmailService(ILoggerService loggerService, IOptions<AppSettings> appSettings)
 		{
+			var emailSettings = appSettings.Value.EmailSettings;
+			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 			_loggerService = loggerService;
 		}
 		public async Task SendOrderConfirmEmail(string email, Order order)
 		{
-			var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
+			var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 			var toAddress = new MailAddress(email);
 			string subject = "200SX Project || Your Order";
 
@@ -77,7 +84,7 @@ namespace _200SXContact.Services
 				Host = "mail5019.site4now.net",
 				Port = 587,
 				EnableSsl = true,
-				Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
 			})
 			{
 				using (var message = new MailMessage(fromAddress, toAddress)
@@ -91,12 +98,11 @@ namespace _200SXContact.Services
 				}
 			}
 		}
-
 		public async Task SendCommentNotification(string userEmail, BuildsCommentsModel comment)
 		{
 			try
 			{
-				var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
+				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 				var toAddress = new MailAddress(userEmail);
 				string subject = "New Comment on Your Build";
 				string body = @"
@@ -186,7 +192,7 @@ namespace _200SXContact.Services
 					Host = "mail5019.site4now.net",
 					Port = 587,
 					EnableSsl = true,
-					Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+					Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
 				})
 				{
 					using (var message = new MailMessage(fromAddress, toAddress)
@@ -213,7 +219,7 @@ namespace _200SXContact.Services
 		{
 			try
 			{
-				var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
+				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 				var toAddress = new MailAddress(userEmail); 
 				string subject = $"Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days";
 				string body = $"<p>This is a reminder that your service item '<strong>{item.EntryItem}</strong>' is due on <strong>{item.DueDate.ToShortDateString()}</strong>.</p>";
@@ -222,7 +228,7 @@ namespace _200SXContact.Services
 					Host = "mail5019.site4now.net",
 					Port = 587,
 					EnableSsl = true,
-					Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+					Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
 				})
 				{
 					using (var message = new MailMessage(fromAddress, toAddress)

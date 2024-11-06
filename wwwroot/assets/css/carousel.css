@@ -77,6 +77,9 @@
     position: relative;
     overflow: hidden;
 }
+.box--hide {
+    display:none;
+}
 @media (max-width: 768px) {
     .box-custom-carousel {
         width: 30%; 

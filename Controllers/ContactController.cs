@@ -5,17 +5,22 @@ using Microsoft.EntityFrameworkCore;
 using _200SXContact.Data;
 using Ganss.Xss;
 using AngleSharp.Dom;
-
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
+using System.Net;
 namespace _200SXContact.Controllers
 {
     [Route("contact")]
     public class ContactController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ContactController(ApplicationDbContext context)
+		private readonly NetworkCredential _credentials;
+		public ContactController(ApplicationDbContext context, IOptions<AppSettings> appSettings)
         {
-            _context = context;
-        }
+			var emailSettings = appSettings.Value.EmailSettings;
+			_context = context;
+			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
+		}
 		[HttpPost("send-email")]
 		[ValidateAntiForgeryToken]
 		public IActionResult SendEmail(ContactForm model, string ViewName)
@@ -32,7 +37,7 @@ namespace _200SXContact.Controllers
 					{
 						Timestamp = DateTime.Now,
 						From = model.Email,
-						To = "test@200sxproject.com",
+						To = _credentials.UserName
 						Subject = $"New Contact Form Submission from {model.Name}",
 						Body = model.Message,
 						Status = "Sent",
@@ -72,7 +77,7 @@ namespace _200SXContact.Controllers
 			{
 				Timestamp = DateTime.Now,
 				From = model.Email,
-				To = "test@200sxproject.com",
+				To = _credentials.UserName,
 				Subject = $"New Contact Form Submission from {model.Name}",
 				Body = model.Message,
 				Status = "Failed",
@@ -85,8 +90,8 @@ namespace _200SXContact.Controllers
         {
             try
             {
-                var fromAddress = new MailAddress("test@200sxproject.com", "Admin");
-                var toAddress = new MailAddress("test@200sxproject.com", "Admin");
+                var fromAddress = new MailAddress(_credentials.UserName, "Admin");
+                var toAddress = new MailAddress(_credentials.UserName, "Admin");
                 string subject = $"New Contact Form Submission from {model.Name}";
                 string body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}";
 
@@ -95,7 +100,7 @@ namespace _200SXContact.Controllers
                     Host = "mail5019.site4now.net",
                     Port = 587,
                     EnableSsl = true,
-                    Credentials = new System.Net.NetworkCredential("test@200sxproject.com", "Recall1547!")
+                    Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
                 })
                 {
                     using (var message = new MailMessage(fromAddress, toAddress)

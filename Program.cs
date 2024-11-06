@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -24,7 +26,9 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 			await roleManager.CreateAsync(new IdentityRole(roleName));
 		}
 	}
-	var adminEmail = "mircea.albu91@gmail.com";
+	var appSettings = serviceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
+	var adminEmail = appSettings.AdminSettings.Email;
+	var adminPassword = appSettings.AdminSettings.Password;
 	var adminUser = await userManager.FindByEmailAsync(adminEmail);
 	if (adminUser == null)
 	{
@@ -36,8 +40,7 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 			CreatedAt = DateTime.Now,
 			IsEmailVerified = true
 		};
-
-		string adminPassword = "Recall1547!";
+				
 		var createAdminUserResult = await userManager.CreateAsync(admin, adminPassword);
 
 		if (createAdminUserResult.Succeeded)
@@ -103,6 +106,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
