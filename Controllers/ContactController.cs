@@ -37,7 +37,7 @@ namespace _200SXContact.Controllers
 					{
 						Timestamp = DateTime.Now,
 						From = model.Email,
-						To = _credentials.UserName
+						To = _credentials.UserName,
 						Subject = $"New Contact Form Submission from {model.Name}",
 						Body = model.Message,
 						Status = "Sent",
