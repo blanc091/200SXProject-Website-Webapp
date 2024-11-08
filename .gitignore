@@ -26,3 +26,5 @@ LPT9
 /configs/AppSettings.cs
 bin/
 obj/
+.config/
+.vs/
