@@ -2782,12 +2782,11 @@ input[type="radio"]:focus + label:before {
 			  display: flex;
 			  justify-content: center;
 			  align-items: center;
-			  height: 100%; /* Adjust as needed */
 			}
 
 			.image.centered img {
-			  max-width: none; /* Ensures the image does not scale to fit the container */
-			  height: auto;    /* Maintain the image's aspect ratio */
+			  max-width: none;
+			  height: auto;  
 			}
 
 		.image.fit {
