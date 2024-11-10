@@ -18,9 +18,28 @@
 		</div>
 	</div>
 }
-
-<!---- add modal for cookies here >
-
+<!-- Modal structure -->
+<div class="custom-modal fade show" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="cookieModalLabel" aria-hidden="true">
+	<div class="custom-modal-dialog" role="document" style="max-width: 100%; margin: 0;">
+		<div class="custom-modal-content" style="background-color: rgba(240, 240, 240, 0.9);">
+			<div class="custom-modal-body d-flex justify-content-center align-items-center" style="height: auto; text-align: center; padding: 20px;">
+				<div style="width: 100%; text-align: center;">
+					<strong style="font-size: 0.7rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">
+						We use cookies to make your experience smoother; by accepting this, you agree to our use of cookies. If you choose to deny, some parts of the website may not work as intended; please keep in mind that denying the cookies will only disable the non-essential ones, while essential cookies used for authentication and authorisation are still necessary for the website to function.
+					</strong>
+					<div style="margin-top: 15px;">
+						<span id="acceptCookies" class="custom-cookie-text" style="margin: 10px; color: #333; cursor: pointer; font-size: 16px; font-family: Helvetica, Arial, sans-serif;">
+							Accept
+						</span>
+						<span id="denyCookies" class="custom-cookie-text" style="margin: 10px; color: #333; cursor: pointer; font-size: 16px; font-family: Helvetica, Arial, sans-serif;">
+							Deny
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!DOCTYPE HTML>
 <!--
@@ -29,17 +48,7 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TGFNLDLZ5"></script>
-		<script nonce="@Context.Items["CSPNonce"]">
-			window.dataLayer = window.dataLayer || [];
-			function gtag() { dataLayer.push(arguments); }
-			gtag('js', new Date());
-			gtag('config', 'G-6TGFNLDLZ5');
-		</script>
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8385228399742318"
-			crossorigin="anonymous"></script>
+	<head>		
 		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
 		<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 		<meta charset="utf-8" />
@@ -100,13 +109,7 @@
 					</span>
 				</li>
 				@if (User.Identity.IsAuthenticated)
-
-				{
-					<li>
-						<span>
-							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
-						</span>
-					</li>
+				{					
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
@@ -168,6 +171,7 @@
 					<article>
 						<header>
 							<span class="date">June 08, 2022</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="oil-pan-extension-with-baffles">Oil pan extension with baffles</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="oil-pan-extension-with-baffles" class="image fit"><img src="~/images/thumbs/oil-pan-extension-with-baffles-t.jpg" alt="" /></a>
@@ -181,6 +185,7 @@
 					<article>
 						<header>
 							<span class="date">January 13, 2022</span>
+						<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-accessories-pulleys-cam-gears">Custom accessories pulleys & cam gears</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-accessories-pulleys-cam-gears" class="image fit"><img src="~/images/thumbs/custom-accessories-pulleys-cam gears-t.jpg" alt="" /></a>
@@ -194,6 +199,7 @@
 					<article>
 						<header>
 							<span class="date">November 23, 2021</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="5-0-ignite-trigger-kit">5-0 Ignite trigger kit</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="5-0-ignite-trigger-kit" class="image fit"><img src="~/images/thumbs/5-0-ignite-trigger-kit-t.jpg" alt="" /></a>
@@ -207,6 +213,7 @@
 					<article>
 						<header>
 							<span class="date">September 16, 2020</span>
+							<br>
 							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-pedal-covers">Custom pedal covers</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-pedal-covers" class="image fit"><img src="~/images/thumbs/custom-pedal-covers-t.jpg" alt="" /></a>
@@ -220,6 +227,7 @@
 					<article>
 						<header>
 							<span class="date">September 16, 2020</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="arp-manifolds-and-main-crank-studs">ARP manifolds and main crank studs</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="arp-manifolds-and-main-crank-studs" class="image fit"><img src="~/images/thumbs/arp-manifolds-and-main-crank-studs-2-t.jpg" alt="" /></a>
@@ -233,6 +241,7 @@
 					<article>
 						<header>
 							<span class="date">September 16, 2020</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="denso-plugs-and-custom-coil-cover">Denso plugs and custom coil cover</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="denso-plugs-and-custom-coil-cover" class="image fit"><img src="~/images/thumbs/denso-plugs-and-custom-coil-cover-t.jpg" alt="" /></a>
@@ -246,6 +255,7 @@
 					<article>
 						<header>
 							<span class="date">March 13, 2020</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dayco-timing-kit-with-water-pump-gaskets">Dayco timing kit with water pump & gaskets</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dayco-timing-kit-with-water-pump-gaskets" class="image fit"><img src="~/images/thumbs/dayco-timing-kit-with-water-pump-gaskets-t.jpg" alt="" /></a>
@@ -259,6 +269,7 @@
 					<article>
 						<header>
 							<span class="date">April 28, 2020</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-dash-gauges">Custom dash gauges</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-dash-gauges" class="image fit"><img src="~/images/thumbs/custom-dash-gauges-t.jpg" alt="" /></a>
@@ -272,6 +283,7 @@
 					<article>
 						<header>
 							<span class="date">December 25, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-twin-scroll-twin-wg-manifold">Custom twin scroll twin WG manifold</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-twin-scroll-twin-wg-manifold" class="image fit"><img src="~/images/thumbs/custom-twin-scroll-twin-wg-manifold-t.jpg" alt="" /></a>
@@ -285,6 +297,7 @@
 					<article>
 						<header>
 							<span class="date">November 08, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hks-ssqv3-bov-z32-bmc">HKS SSQV3 BOV & Z32 BMC</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hks-ssqv3-bov-z32-bmc" class="image fit"><img src="~/images/thumbs/hks-ssqv3-bov-z32-bmc-t.jpg" alt="" /></a>
@@ -298,6 +311,7 @@
 					<article>
 						<header>
 							<span class="date">September 29, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="altia-n1-enkei-wheels">Altia N1 (Enkei) wheels</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="altia-n1-enkei-wheels" class="image fit"><img src="~/images/thumbs/altia-n1-enkei-wheels-t.jpg" alt="" /></a>
@@ -311,6 +325,7 @@
 					<article>
 						<header>
 							<span class="date">September 29, 2019</span>
+							<br>
 							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="a-bigger-lot-is-here">A bigger lot is here</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="a-bigger-lot-is-here" class="image fit"><img src="~/images/thumbs/a-bigger-lot-is-here-t.jpg" alt="" /></a>
@@ -324,6 +339,7 @@
 					<article>
 						<header>
 							<span class="date">August 14, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="black-diamond-brakes">Black Diamond brakes</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="black-diamond-brakes" class="image fit"><img src="~/images/thumbs/black-diamond-brakes-t.jpg" alt="" /></a>
@@ -337,6 +353,7 @@
 					<article>
 						<header>
 							<span class="date">August 05, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="camtech-cams">Camtech cams</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="camtech-cams" class="image fit"><img src="~/images/thumbs/camtech-cams-t.jpg" alt="" /></a>
@@ -350,6 +367,7 @@
 					<article>
 						<header>
 							<span class="date">July 30, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="vag-u5014-coils-and-custom-harness">VAG U5014 coils and custom harness</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="vag-u5014-coils-and-custom-harness" class="image fit"><img src="~/images/thumbs/vag-u5014-coils-and-custom-harness-t.jpg" alt="" /></a>
@@ -363,6 +381,7 @@
 					<article>
 						<header>
 							<span class="date">May 16, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-torque-plate">Custom torque plate</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="custom-torque-plate" class="image fit"><img src="~/images/thumbs/custom-torque-plate-t.jpg" alt="" /></a>
@@ -376,6 +395,7 @@
 					<article>
 						<header>
 							<span class="date">April 24, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="tial-mv-s-wgs">TiAl MV-s WGs</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="tial-mv-s-wgs" class="image fit"><img src="~/images/thumbs/tial-mv-s-wgs-t.jpg" alt="" /></a>
@@ -389,6 +409,7 @@
 					<article>
 						<header>
 							<span class="date">April 10, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="injector-dynamics-id1050x">Injector Dynamics ID1050X</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="injector-dynamics-id1050x" class="image fit"><img src="~/images/thumbs/injector-dynamics-id1050x-t.jpg" alt="" /></a>
@@ -401,7 +422,8 @@
 					</article>
 					<article>
 						<header>
-							<span class="date">March 13, 2019</span>
+						<span class="date">March 13, 2019</span>
+						<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="more-custom-gauges">More custom gauges</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="more-custom-gauges" class="image fit"><img src="~/images/thumbs/more-custom-gauges-t.jpg" alt="" /></a>
@@ -415,6 +437,7 @@
 					<article>
 						<header>
 							<span class="date">February 06, 2019</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mishimoto-radiators">Mishimoto radiators</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mishimoto-radiators" class="image fit"><img src="~/images/thumbs/mishimoto-radiators-t.jpg" alt="" /></a>
@@ -428,6 +451,7 @@
 					<article>
 						<header>
 							<span class="date">February 04, 2019</span>
+							<br>
 							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter">Mallory FPR and K-Tuned pressure gauge and fuel filter</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter" class="image fit"><img src="~/images/thumbs/mallory-fpr-and-k-tuned-pressure-gauge-and-fuel-filter-t.jpg" alt="" /></a>
@@ -441,6 +465,7 @@
 					<article>
 						<header>
 							<span class="date">December 18, 2018</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="headlights-restoration">Headlights restoration</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="headlights-restoration" class="image fit"><img src="~/images/thumbs/headlights-restoration-t.jpg" alt="" /></a>
@@ -454,6 +479,7 @@
 					<article>
 						<header>
 							<span class="date">December 18, 2018</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dw-control-arms-and-kaaz-diff">DW control arms and Kaaz diff</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="dw-control-arms-and-kaaz-diff" class="image fit"><img src="~/images/thumbs/dw-control-arms-and-kaaz-diff-t.jpg" alt="" /></a>
@@ -467,6 +493,7 @@
 					<article>
 						<header>
 							<span class="date">July 23, 2018</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="gktech-suspension-parts-and-other-bits">GKTech suspension parts and other bits</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="gktech-suspension-parts-and-other-bits" class="image fit"><img src="~/images/thumbs/gktech-suspension-parts-and-other-bits-t.jpg" alt="" /></a>
@@ -480,6 +507,7 @@
 					<article>
 						<header>
 							<span class="date">May 16, 2018</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ultra-racing-chassis-bracing-bars">Ultra Racing chassis bracing bars</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ultra-racing-chassis-bracing-bars" class="image fit"><img src="~/images/thumbs/ultra-racing-chassis-bracing-bars-t.jpg" alt="" /></a>
@@ -493,6 +521,7 @@
 					<article>
 						<header>
 							<span class="date">December 01, 2017</span>
+						<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hsd-monopro-adjustable-coilovers">HSD Monopro adjustable coilovers</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="hsd-monopro-adjustable-coilovers" class="image fit"><img src="~/images/thumbs/hsd-monopro-adjustable-coilovers-t.jpg" alt="" /></a>
@@ -506,6 +535,7 @@
 					<article>
 						<header>
 							<span class="date">August 22, 2017</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="link-g4-plus-ecu">Link G4+ ECU</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="link-g4-plus-ecu" class="image fit"><img src="~/images/thumbs/link-g4-plus-ecu-t.jpg" alt="" /></a>
@@ -519,6 +549,7 @@
 					<article>
 						<header>
 							<span class="date">July 22, 2017</span>
+							<br>
 							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mazworx-z32-adapter-kit-and-misc-parts">Mazworx Z32 adapter kit and misc parts</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="mazworx-z32-adapter-kit-and-misc-parts" class="image fit"><img src="~/images/thumbs/mazworx-z32-adapter-kit-and-misc-parts-t.jpg" alt="" /></a>
@@ -532,6 +563,7 @@
 					<article>
 						<header>
 							<span class="date">November 25, 2016</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cpc-billet-carbon-intake-manifold">CPC billet carbon intake manifold</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cpc-billet-carbon-intake-manifold" class="image fit"><img src="~/images/thumbs/cpc-billet-carbon-intake-manifold-t.jpg" alt="" /></a>
@@ -545,6 +577,7 @@
 					<article>
 						<header>
 							<span class="date">November 21, 2016</span>
+							<br>
 							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="xtreme-twin-clutch-kit">Xtreme Twin Clutch Kit</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="xtreme-twin-clutch-kit" class="image fit"><img src="~/images/thumbs/xtreme-twin-clutch-kit-t.jpg" alt="" /></a>
@@ -558,6 +591,7 @@
 					<article>
 						<header>
 							<span class="date">September 10, 2016</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="refurbished-and-rebuilt-z32-calipers">Refurbished and rebuilt Z32 calipers</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="refurbished-and-rebuilt-z32-calipers" class="image fit"><img src="~/images/thumbs/refurbished-and-rebuilt-z32-calipers-t.jpg" alt="" /></a>
@@ -571,6 +605,7 @@
 					<article>
 						<header>
 							<span class="date">August 11, 2016</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ati-rb26-balancer-and-other-parts">ATI RB26 balancer and other parts</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ati-rb26-balancer-and-other-parts" class="image fit"><img src="~/images/thumbs/ati-rb26-balancer-and-other-parts-t.jpg" alt="" /></a>
@@ -584,6 +619,7 @@
 					<article>
 						<header>
 							<span class="date">July 11, 2016</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="holset-hx35-twin-scroll-turbo">Holset HX35 twin scroll turbo</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="holset-hx35-twin-scroll-turbo" class="image fit"><img src="~/images/thumbs/holset-hx35-twin-scroll-turbo-t.jpg" alt="" /></a>
@@ -597,6 +633,7 @@
 					<article>
 						<header>
 							<span class="date">June 30, 2016</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="full-type-x-body-kit">Full Type-X body kit</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="full-type-x-body-kit" class="image fit"><img src="~/images/thumbs/full-type-x-body-kit-t.jpg" alt="" /></a>
@@ -610,6 +647,7 @@
 					<article>
 						<header>
 							<span class="date">June 15, 2016</span>
+						<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="exhaust-manifold-custom-flange">Exhaust manifold custom flange</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="exhaust-manifold-custom-flange" class="image fit"><img src="~/images/thumbs/exhaust-manifold-custom-flange-t.jpg" alt="" /></a>
@@ -623,6 +661,7 @@
 					<article>
 						<header>
 							<span class="date">March 10, 2016</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="z32-300zx-gearbox">Z32 (300ZX) gearbox</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="z32-300zx-gearbox" class="image fit"><img src="~/images/thumbs/z32-300zx-gearbox-t.jpg" alt="" /></a>
@@ -636,6 +675,7 @@
 					<article>
 						<header>
 							<span class="date">February 05, 2015</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="alternator-rebuild">Alternator rebuild</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="alternator-rebuild" class="image fit"><img src="~/images/thumbs/alternator-rebuild-t.jpg" alt="" /></a>
@@ -649,6 +689,7 @@
 					<article>
 						<header>
 							<span class="date">January 13, 2015</span>
+						<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ps-pump-rebuild">PS pump rebuild</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="ps-pump-rebuild" class="image fit"><img src="~/images/thumbs/ps-pump-rebuild-t.jpg" alt="" /></a>
@@ -662,6 +703,7 @@
 					<article>
 						<header>
 							<span class="date">December 24, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="main-and-rod-bearings">Main and rod bearings</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="main-and-rod-bearings" class="image fit"><img src="~/images/thumbs/main-and-rod-bearings-t.jpg" alt="" /></a>
@@ -675,6 +717,7 @@
 					<article>
 						<header>
 							<span class="date">November 17, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oil-pump">New oil pump</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oil-pump" class="image fit"><img src="~/images/thumbs/new-oil-pump-t.jpg" alt="" /></a>
@@ -688,6 +731,7 @@
 					<article>
 						<header>
 							<span class="date">November 14, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="pauter-machine-forged-rods">Pauter Machine forged rods</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="pauter-machine-forged-rods" class="image fit"><img src="~/images/thumbs/pauter-machine-forged-rods-t.jpg" alt="" /></a>
@@ -701,6 +745,7 @@
 					<article>
 						<header>
 							<span class="date">November 06, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cp-carrillo-forged-pistons">CP Carrillo forged pistons</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cp-carrillo-forged-pistons" class="image fit"><img src="~/images/thumbs/cp-carrillo-forged-pistons-t.jpg" alt="" /></a>
@@ -714,6 +759,7 @@
 					<article>
 						<header>
 							<span class="date">October 31, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oem-crankshaft">New OEM crankshaft</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="new-oem-crankshaft" class="image fit"><img src="~/images/thumbs/new-oem-crankshaft-t.jpg" alt="" /></a>
@@ -727,6 +773,7 @@
 					<article>
 						<header>
 							<span class="date">September 20, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="some-oem-parts">Some OEM parts</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="some-oem-parts" class="image fit"><img src="~/images/thumbs/some-oem-parts-t.jpg" alt="" /></a>
@@ -740,6 +787,7 @@
 					<article>
 						<header>
 							<span class="date">July 13, 2014</span>
+							<br>
 						<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cam-covers-refurb">Cam covers refurb</a></h2>
 						</header>
 						<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="cam-covers-refurb" class="image fit"><img src="~/images/thumbs/cam-covers-refurb-t.jpg" alt="" /></a>
@@ -753,6 +801,7 @@
 					<article>
 						<header>
 							<span class="date">January 17, 2014</span>
+						<br>
 							<h2><a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="it-s-here">It's here !</a></h2>
 						</header>
 					<a asp-controller="DetailedViews" asp-action="DetailedView" asp-route-id="it-s-here" class="image fit"><img src="~/images/thumbs/it-s-here-t.jpg" alt="" /></a>
@@ -856,10 +905,12 @@
 		<!-- Scripts -->
 		<!-- Include Bootstrap CSS -->
 		<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" /> -->
-	    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+	    
 		<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/jquery.scrolly.min.js" asp-append-version="true"></script>
+		<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
+		<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
 		<script src="~/assets/js/browser.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/breakpoints.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/util.js" asp-append-version="true"></script>
@@ -867,6 +918,7 @@
 		<script src="~/js/formScript.js" asp-append-version="true"></script>
 		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
 		<script src="~/js/ScrollToTop.js" asp-append-version="true"></script>
+		<script src="~/js/cookies.js" asp-append-version="true"></script>
 </body>
 	
 </html>

@@ -155,12 +155,12 @@ app.Use(async (context, next) =>
 	context.Items["CSPNonce"] = nonce;
 
 	var cspPolicy = $"default-src 'self'; " +
-					$"script-src 'self' 'nonce-{nonce}' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://aadcdn.msftauth.net https://ajax.googleapis.com https://fonts.googleapis.com https://login.microsoftonline.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://cdn.jsdelivr.net; " +
-					$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
-					$"font-src 'self' https://fonts.gstatic.com; " +
-					$"img-src 'self' https://www.google.com https://image.ibb.co https://i.ibb.co/ https://ep1.adtrafficquality.google data:; " +
-					$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net http://localhost:65212 https://localhost:7109 wss://localhost:44375 http://localhost:59950 https://www.googletagmanager.com https://region1.google-analytics.com https://ep1.adtrafficquality.google ws://localhost:59950; " +
-					$"frame-src 'self' https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google https://ep1.adtrafficquality.google;";
+				$"script-src 'self' 'nonce-{nonce}' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://aadcdn.msftauth.net https://ajax.googleapis.com https://fonts.googleapis.com https://login.microsoftonline.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com https://cdn.jsdelivr.net https://www.google-analytics.com https://ep2.adtrafficquality.google; " +
+				$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
+				$"font-src 'self' https://fonts.gstatic.com; " +
+				$"img-src 'self' https://www.google.com https://image.ibb.co https://i.ibb.co/ https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com data:; " +
+				$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net http://localhost:65212 https://localhost:7109 wss://localhost:44375 http://localhost:59950 https://www.googletagmanager.com https://region1.google-analytics.com https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com ws://localhost:59950; " +
+				$"frame-src 'self' https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google https://ep1.adtrafficquality.google;";
 
 	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
 	await next();

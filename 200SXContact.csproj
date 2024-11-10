@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Views\Shared\favicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\assets\css\fontawesome-all.min.css" />
     <None Include="wwwroot\assets\css\main.css" />
     <None Include="wwwroot\assets\css\noscript.css" />

@@ -6,6 +6,51 @@
 	html5up.net | ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+/* Custom Modal styling */
+body.modal-open {
+	overflow: auto;
+}
+.custom-modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1050;
+	padding: 20px;
+	overflow-y: auto; 
+}
+
+.custom-modal-content {
+	background-color: rgba(240, 240, 240, 0.9); 
+	margin: 10px auto;
+	padding: 20px;
+	max-width: 80%;
+	border-radius: 8px;
+	overflow: auto;
+}
+
+.custom-modal-body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+}
+
+.custom-cookie-text {
+	margin: 10px;
+	color: #333;
+	cursor: pointer;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+	.custom-cookie-text:hover {
+		text-decoration: underline;
+	}
 .labelCheck {
 	display: flex; 
 	align-items: center;
