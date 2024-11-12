@@ -1,4 +1,4 @@
-﻿    document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     const cartIcon = document.createElement('div');
     cartIcon.id = 'cart-icon';
     cartIcon.style.position = 'fixed';
@@ -38,11 +38,23 @@
     document.body.appendChild(cartIcon);
 
     fetch('/Cart/GetCartItemCount')
-        .then(response => response.json())
-        .then(data => {
-        cartCount.innerText = data;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-        .catch(error => console.error('Error fetching cart count:', error));
+        .then(data => {
+            if (data !== null && data !== undefined) {
+                cartCount.innerText = data;
+            } else {
+                cartCount.innerText = '0';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching cart count:', error);
+            cartCount.innerText = '0';
+        });
 
     cartIcon.addEventListener('click', function () {
         window.location.href = '/Cart/CartView';

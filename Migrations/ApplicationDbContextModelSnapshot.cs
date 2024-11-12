@@ -499,7 +499,7 @@ namespace _200SXContact.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("ImagePaths")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

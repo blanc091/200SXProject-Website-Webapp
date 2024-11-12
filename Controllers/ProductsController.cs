@@ -25,16 +25,17 @@ namespace _200SXContact.Controllers
 		public IActionResult AddProduct()
 		{
 			var model = new Product
-			{			
+			{
 				Name = string.Empty,
 				Category = string.Empty,
 				Description = string.Empty,
 				Price = 0.00m,
-				ImagePath = string.Empty,
-				DateAdded = DateTime.Now 
+				ImagePaths = new List<string>(),
+				DateAdded = DateTime.Now
 			};
 			return View("~/Views/Marketplace/AddProduct.cshtml", model);
 		}
+
 		[HttpGet]
 		public async Task<IActionResult> ProductsDashboard()
 		{
@@ -44,26 +45,35 @@ namespace _200SXContact.Controllers
 		[HttpPost]
 		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> AddProduct(Product model, IFormFile Image)
+		public async Task<IActionResult> AddProduct(Product model, List<IFormFile> Images)
 		{
-			ModelState.Remove("ImagePath");
+			ModelState.Remove("ImagePaths");
 			if (ModelState.IsValid)
 			{
 				model.DateAdded = DateTime.Now;
 
-				if (Image != null && Image.Length > 0)
+				if (Images != null && Images.Any())
 				{
 					var productDirectory = Path.Combine("wwwroot/images/products", model.Id.ToString());
 					if (!Directory.Exists(productDirectory))
 					{
 						Directory.CreateDirectory(productDirectory);
 					}
-					var imagePath = Path.Combine(productDirectory, Image.FileName);
-					using (var stream = new FileStream(imagePath, FileMode.Create))
+
+					model.ImagePaths = new List<string>();
+
+					foreach (var image in Images)
 					{
-						await Image.CopyToAsync(stream);
+						if (image.Length > 0)
+						{
+							var imagePath = Path.Combine(productDirectory, image.FileName);
+							using (var stream = new FileStream(imagePath, FileMode.Create))
+							{
+								await image.CopyToAsync(stream);
+							}
+							model.ImagePaths.Add($"/images/products/{model.Id}/{image.FileName}");
+						}
 					}
-					model.ImagePath = $"/images/products/{model.Id}/{Image.FileName}";
 				}
 
 				_context.Products.Add(model);
@@ -77,7 +87,8 @@ namespace _200SXContact.Controllers
 			}
 			return View("AddProduct", model);
 		}
-		
+
+
 		[HttpGet]
 		public async Task<IActionResult> DetailedProductView(int id)
 		{

@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname.startsWith('/UserBuilds/DetailedUserView')) {
         scrollToElement("detailedViewSection");
     }
+    if (window.location.pathname.startsWith('/Products/DetailedProductView')) {
+        scrollToElement("detailedProductViewSection");
+    }
     switch (window.location.pathname) {
         case '/Dashboard/Dashboard':
             scrollToElement("maintenApp");
@@ -51,6 +54,15 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/UserBuilds/UserContentDashboard':
             scrollToElement("userContentDash");
             break;
+        case '/Products/ProductsDashboard':
+            scrollToElement("productsDash");
+            break;
+        case '/Cart/CartView':
+            scrollToElement("cartView");
+            break;
+        case '/Checkout/Checkout':
+            scrollToElement("checkoutView");
+            break;            
     }
 
     if ((isUserLoggedIn && !formSubmitted) ||

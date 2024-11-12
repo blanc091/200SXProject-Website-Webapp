@@ -1,0 +1,24 @@
+/**
+ * UI Initiative Carousel Slider
+ *
+ * Infinite 3D carousel slider
+ *
+ * https://uiinitiative.com
+ *
+ * Copyright 2024 UI Initiative
+ *
+ * Released under the UI Initiative Regular License
+ *
+ * September 12, 2024
+ */
+
+.swiper-carousel {
+  position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+  overflow: hidden;
+  .swiper-slide,
+  swiper-slide {
+    position: relative;
+  }
+}

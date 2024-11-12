@@ -156,6 +156,12 @@
 							<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a> or <a href="@Url.Action("Login", "LoginRegister")"><strong>Login</strong></a>.
 						</div>
 						}
+					<br>
+					<div class="merchandise">
+						<a asp-controller="Products" asp-action="ProductsDashboard">
+							<span class="date flashy-text" id="merchandiseSpan"><i><strong>For merchandise, click here !</strong></i></span>
+						</a>						
+					</div>
 					</header>					
 				
 				</article>
@@ -216,6 +222,9 @@
 		<script src="~/assets/js/main.js" asp-append-version="true"></script>
 		<script src="~/js/formScript.js" asp-append-version="true"></script>
 		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
+		<script src="~/js/floatLoginBtn.js" asp-append-version="true"></script>
+		<script src="~/js/cookies.js" asp-append-version="true"></script>
+		<script src="~/js/floatLoginBtn.js" asp-append-version="true"></script>
 </body>
 	
 </html>

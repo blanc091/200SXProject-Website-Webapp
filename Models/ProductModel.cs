@@ -10,7 +10,7 @@ namespace _200SXContact.Models
 		public string Description { get; set; }
 		[Column(TypeName = "decimal(4,2)")]
 		public decimal Price { get; set; }
-		public string ImagePath { get; set; }
+		public List<string> ImagePaths { get; set; } = new List<string>();
 		public DateTime DateAdded { get; set; }
 	}
 }

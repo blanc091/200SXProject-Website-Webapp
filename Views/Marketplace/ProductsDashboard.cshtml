@@ -47,34 +47,44 @@
 -->
 <html>
 	<head>
-		
+		<!-- Swiper CSS from CDN -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+		<!-- Your local effect-carousel styles -->
+		<link rel="stylesheet" href="/src/styles/effect-carousel.min.css" />
+		<link rel="stylesheet" href="/src/styles/swiper.css" />
+
 		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
 		<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
 		<title>The Nissan 200SX Project || Import Garage</title>
+
+		<!-- Main CSS -->
 		<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
-	    <link rel="stylesheet" type="text/css" href="~/assets/css/carousel.css" asp-append-version="true" />
-		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true"/></noscript>
+		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
+
+		<!-- Favicon -->
 		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
-		
 	</head>
+
 <body class="is-preload"> 
 		<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
 
 			<!-- Intro -->
-		<div id="intro">
-			<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
-			<br>
-			<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
-			<h1>Nissan 200SX Project</h1>
-			<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
-			<br>
-			<ul class="actions">
-				<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-			</ul>
-		</div>
+			<div id="intro">
+				<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
+				<br>
+				<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
+				<h1>Nissan 200SX Project</h1>
+				<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
+				<br>
+				<ul class="actions">
+					<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				</ul>
+			</div>
 
 			<!-- Header -->
 			<header id="header">
@@ -149,36 +159,38 @@
 						<span class="date"></span>
 						<br>
 						<h2>Merchandise</h2>
-						<p>You can find here all the merch available from our brand.</p>						
-					</header>					
+					<p id="productsDash">You can find here all the merch available from our brand.</p>
+				</header>					
 				
 				</article>
-				<!-- Posts -->
-				<article class="post featured">
-				<section class="container-custom-carousel">
-					<button class="button-custom-carousel prev">
-							<img src="https://image.ibb.co/mRsEb7/left_arrow.png" alt="Previous">
-						</button>
-						<div class="cards-wrapper">
-							<ul class="cards__container">
-								@foreach (var product in Model)
-								{
-								<li class="box-custom-carousel">
-									<div class="custom-carousel-center-content">
-										<img src="@product.ImagePath" alt="@product.Name" class="custom-carousel-center-image" />
-										<h3 class="custom-carousel-center-text">@product.Name</h3>
+				<div id="app">
+					<div class="swiper swiper-carousel">
+					<div class="swiper-wrapper">
+						@foreach (var product in Model)
+						{
+							<div class="swiper-slide">
+								<div class="swiper-carousel-animate-opacity">
+									<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id">
+										<img src="@(product.ImagePaths?.FirstOrDefault() ?? "/images/default-placeholder.png")" alt="@product.Name" />
+									</a>
+									<div class="slide-content">
+										<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id">
+											<h2>@product.Name</h2>
+										</a>
+										<p>@product.Description</p>
 										<p class="price custom-carousel-center-text">@product.Price</p>
-										<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id" class="button-custom-carousel">Details</a>
 									</div>
-								</li>
-								}
-							</ul>							
-						</div>
-					<button class="button-custom-carousel next">
-							<img src="https://image.ibb.co/dfPSw7/right_arrow.png" alt="Next">
-						</button>
-					</section>
-				</article>
+								</div>
+							</div>
+						}
+					</div>
+						<div class="swiper-pagination"></div>
+						
+					</div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+				</div>			
+			</div>
 			<!-- Footer -->
 			<footer id="footer">				
 				
@@ -202,9 +214,15 @@
 		<script src="~/assets/js/util.js" asp-append-version="true"></script>
 		<script src="~/assets/js/main.js" asp-append-version="true"></script>
 		<script src="~/js/formScript.js" asp-append-version="true"></script>
-		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
-		<script src="~/js/carousel.js" asp-append-version="true"></script>
+		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>		
 		<script src="~/js/cartOps.js" asp-append-version="true"></script>
+		<script src="~/js/cookies.js" asp-append-version="true"></script>
+		<script src="~/js/floatLoginBtn.js" asp-append-version="true"></script>
+		<!-- Swiper JS from CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+		<!-- Your local effect-carousel script -->
+		<script src="/src/styles/effect-carousel.min.js" asp-append-version="true"></script>
+		<script src="/js/swiperCarousel.js"></script>
 </body>
 	
 </html>

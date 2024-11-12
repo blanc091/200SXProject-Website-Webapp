@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NETCore.MailKit.Core;
 using _200SXContact.Services;
 using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
 
 namespace _200SXContact.Controllers
 {
@@ -16,12 +17,12 @@ namespace _200SXContact.Controllers
 		private readonly UserManager<User> _userManager;
 		private readonly Services.IEmailService _emailService;
 		private readonly AdminSettings _adminSettings;
-		public CheckoutController(ApplicationDbContext context, UserManager<User> userManager, Services.IEmailService emailService, AdminSettings adminSettings)
+		public CheckoutController(ApplicationDbContext context, UserManager<User> userManager, Services.IEmailService emailService, IOptions<AdminSettings> adminSettings)
 		{
 			_emailService = emailService;
 			_context = context;
 			_userManager = userManager;
-			_adminSettings = adminSettings;
+			_adminSettings = adminSettings.Value;
 		}
 		[HttpGet]
 		public IActionResult Checkout()
@@ -113,6 +114,11 @@ namespace _200SXContact.Controllers
 			}
 
 			return View("~/Views/Marketplace/OrderPlaced.cshtml", order);
+		}
+		[HttpGet]
+		public async Task<IActionResult> PendingOrder()
+		{
+			return View("~/Views/Marketplace/PendingOrdersAdmin.cshtml");
 		}
 	}
 }

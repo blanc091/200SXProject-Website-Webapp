@@ -48,13 +48,15 @@ public class CartController : Controller
 		}
 		else
 		{
+			var primaryImagePath = product.ImagePaths?.FirstOrDefault() ?? "/images/default-placeholder.png";
+
 			var cartItem = new CartItem
 			{
 				ProductId = product.Id,
 				ProductName = product.Name,
 				Price = product.Price,
 				Quantity = quantity,
-				ImagePath = product.ImagePath,
+				ImagePath = primaryImagePath,
 				UserId = user.Id
 			};
 
@@ -68,7 +70,9 @@ public class CartController : Controller
 	{
 		var user = await _userManager.GetUserAsync(User);
 		if (user == null)
-			return Unauthorized();
+		{
+			return Json(0);
+		}
 
 		var cartItemCount = await _context.CartItems
 			.Where(ci => ci.UserId == user.Id)
@@ -81,7 +85,9 @@ public class CartController : Controller
 	{
 		var user = await _userManager.GetUserAsync(User);
 		if (user == null)
-			return Unauthorized();
+		{
+			return Json(0);
+		}
 
 		var cartItem = await _context.CartItems
 			.FirstOrDefaultAsync(ci => ci.ProductId == productId && ci.UserId == user.Id);

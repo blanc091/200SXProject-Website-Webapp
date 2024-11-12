@@ -48,6 +48,10 @@ namespace _200SXContact.Controllers
 		[AllowAnonymous]
 		public IActionResult Login(string returnUrl = null)
 		{
+			if (returnUrl != null && !Url.IsLocalUrl(returnUrl))
+			{
+				returnUrl = null;
+			}
 			if (!User.Identity.IsAuthenticated) 
 			{ 
 				ViewData["ReturnUrl"] = returnUrl;

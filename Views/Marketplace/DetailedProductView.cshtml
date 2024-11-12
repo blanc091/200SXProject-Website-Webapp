@@ -48,7 +48,12 @@
 -->
 <html>
 	<head>
-		
+		<!-- Swiper CSS from CDN -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+		<!-- Your local effect-carousel styles -->
+		<link rel="stylesheet" href="/src/styles/effect-carousel.min.css" />
+		<link rel="stylesheet" href="/src/styles/swiper.css" />
 		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
 		<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 		<meta charset="utf-8" />
@@ -161,16 +166,27 @@
 					<br>
 				</header>
 				<br>
-				@if (!string.IsNullOrEmpty(Model.ImagePath))
+				@if (Model.ImagePaths != null && Model.ImagePaths.Any())
 				{
-					<a href="@Url.Content(Model.ImagePath)" target="_blank">
-						<img src="@Url.Content(Model.ImagePath)" alt="Image for @Model.Name" class="image fit" />
-					</a>
+				<div id="app">
+					<div class="swiper swiper-carousel">
+						<div class="swiper-wrapper">
+								@foreach (var imagePath in Model.ImagePaths)
+								{
+								<div class="swiper-slide">
+									<div class="swiper-carousel-animate-opacity">
+										<img src="@Url.Content(imagePath)" alt="Image for @Model.Name"/>
+									</div>
+								</div>
+								}
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+				</div>
 				}
-				else
-				{
-					<p>No image available for this product.</p>
-				}
+				
 				<section>
 					<p>@Model.Description</p>
 				</section>
@@ -217,6 +233,14 @@
 		<script src="~/js/formScript.js" asp-append-version="true"></script>
 		<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
 		<script src="~/js/cartOps.js" asp-append-version="true"></script>
+		<script src="~/js/floatLoginBtn.js" asp-append-version="true"></script>
+		<script src="~/js/cookies.js" asp-append-version="true"></script>
+		<script src="~/js/floatLoginBtn.js" asp-append-version="true"></script>
+		<!-- Swiper JS from CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+		<!-- Your local effect-carousel script -->
+		<script src="/src/styles/effect-carousel.min.js" asp-append-version="true"></script>
+		<script src="/js/swiperCarousel.js"></script>
 
 </body>
 	
