@@ -27,4 +27,9 @@
 		public EmailSettings EmailSettings { get; set; }
 		public AdminSettings AdminSettings { get; set; }
 	}
+	public class StripeSettings
+	{
+		public string PublishableKey { get; set; }
+		public string SecretKey { get; set; }
+	}
 }

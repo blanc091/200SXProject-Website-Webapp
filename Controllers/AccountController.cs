@@ -9,6 +9,12 @@ namespace _200SXContact.Controllers
 	{
 		[HttpGet]
 		[AllowAnonymous]
+		public IActionResult AdminDash()
+		{
+			return View("~/Views/Account/AdminDash.cshtml");
+		}
+			[HttpGet]
+		[AllowAnonymous]
 		public async Task<IActionResult> Login(string returnUrl = null)
 		{
 			if (!User.Identity.IsAuthenticated)

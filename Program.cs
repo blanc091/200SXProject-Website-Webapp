@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
+using static System.Net.WebRequestMethods;
+using Stripe;
+using Microsoft.Extensions.Configuration;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -68,7 +71,7 @@ var builder = WebApplication.CreateBuilder(args);
 var cultureInfo = new CultureInfo("en-US"); 
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-
+var stripeSettingsSection = builder.Configuration.GetSection("Stripe");
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
 	options.DefaultRequestCulture = new RequestCulture(cultureInfo);
@@ -108,6 +111,9 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
+builder.Services.Configure<StripeSettings>(stripeSettingsSection);
+StripeConfiguration.ApiKey = stripeSettingsSection["SecretKey"];
+builder.Services.AddSingleton<PayPalHelperService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
@@ -117,8 +123,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		options.Cookie.Name = "_200SXContact.AuthCookie";
 		options.Cookie.HttpOnly = true;		
 		options.SlidingExpiration = true;
-		options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Use HTTPS
-		options.Cookie.SameSite = SameSiteMode.Strict; // Prevent CSRF attacks
+		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+		options.Cookie.SameSite = SameSiteMode.Strict;
 		options.ExpireTimeSpan = TimeSpan.FromMinutes(60); 
 	})
 .AddMicrosoftAccount(microsoftOptions =>
@@ -136,7 +142,7 @@ if (!app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseRequestLocalization();
 app.UseCors(builder =>
-	builder.WithOrigins("https://www.google.com", "https://pagead2.googlesyndication.com", "https://ep2.adtrafficquality.google", "https://ep1.adtrafficquality.google")
+	builder.WithOrigins("https://www.google.com", "https://pagead2.googlesyndication.com", "https://ep2.adtrafficquality.google", "https://ep1.adtrafficquality.google", "https://www.paypal.com", "https://www.sandbox.paypal.com", "https://js.stripe.com", "https://newassets.hcaptcha.com")
 		   .AllowAnyMethod()
 		   .AllowAnyHeader()
 );
@@ -156,34 +162,41 @@ app.Use(async (context, next) =>
 	context.Items["CSPNonce"] = nonce;
 
 	var cspPolicy = $"default-src 'self'; " +
-$"script-src 'self' 'nonce-{nonce}' " +
-	"https://www.googletagmanager.com " +
-	"https://pagead2.googlesyndication.com " +
-	"https://aadcdn.msftauth.net " +
-	"https://ajax.googleapis.com " +
-	"https://fonts.googleapis.com " +
-	"https://login.microsoftonline.com " +
-	"https://cdnjs.cloudflare.com " +
-	"https://stackpath.bootstrapcdn.com " +
-	"https://cdn.jsdelivr.net " + // Added
-	"https://www.google-analytics.com " +
-	"https://ep2.adtrafficquality.google " +
-	"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js; " + // Swiper script CDN
-$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' " +
-	"https://stackpath.bootstrapcdn.com " +
-	"https://cdnjs.cloudflare.com " +
-	"https://cdn.jsdelivr.net " + // Added
-	"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css; " + // Swiper CSS CDN
-$"font-src 'self' https://fonts.gstatic.com data:; " +
-$"img-src 'self' https://www.google.com https://image.ibb.co https://i.ibb.co/ https://ep1.adtrafficquality.google https://pagead2.googlesyndication.com data:; " +
-$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net " +
-	"http://localhost:65212 https://localhost:7109 wss://localhost:44375 " +
-	"http://localhost:59950 https://www.googletagmanager.com " +
-	"https://region1.google-analytics.com https://ep1.adtrafficquality.google " +
-	"https://pagead2.googlesyndication.com ws://localhost:59950; " +
-$"frame-src 'self' https://pagead2.googlesyndication.com " +
-	"https://ep2.adtrafficquality.google " +
-	"https://ep1.adtrafficquality.google;";
+				$"script-src 'self' 'nonce-{nonce}' " +
+				"https://www.googletagmanager.com " +
+				"https://pagead2.googlesyndication.com " +
+				"https://aadcdn.msftauth.net " +
+				"https://*.googleapis.com " +
+				"https://login.microsoftonline.com " +
+				"https://cdnjs.cloudflare.com " +
+				"https://stackpath.bootstrapcdn.com " +
+				"https://cdn.jsdelivr.net " + 
+				"https://www.google-analytics.com " +
+				"https://ep2.adtrafficquality.google " +
+				"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js " +
+				"https://*.paypal.com " +
+				"https://www.paypalobjects.com " +
+				"blob: https://newassets.hcaptcha.com https://*.hcaptcha.com " + 
+				"https://*.stripe.com;" + 
+				$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' " +
+				"https://stackpath.bootstrapcdn.com " +
+				"https://cdnjs.cloudflare.com " +
+				"https://cdn.jsdelivr.net " + 
+				"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css; " +  
+				$"font-src 'self' https://fonts.gstatic.com data:; " +
+				$"img-src 'self' https://www.google.com https://*.ibb.co/ " +
+				"https://www.paypalobjects.com " +
+				"https://*.adtrafficquality.google https://pagead2.googlesyndication.com data:; " +
+				$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net " +
+				"https://www.googletagmanager.com https://*.paypal.com " +
+				"https://region1.google-analytics.com https://*.adtrafficquality.google https://*.stripe.com https://*.hcaptcha.com " +
+				"https://pagead2.googlesyndication.com ws://localhost:59950; " +
+				$"frame-src 'self' https://pagead2.googlesyndication.com " +
+				"https://*.paypal.com " +
+				"https://*.stripe.com " +
+				"https://*.hcaptcha.com " +
+				"https://*.adtrafficquality.google;";
+
 
 	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
 	await next();

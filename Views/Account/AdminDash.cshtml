@@ -1,7 +1,5 @@
-﻿@model IEnumerable<_200SXContact.Models.Item>
-
-@{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Dashboard";
+﻿@{
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Admin";
 }
 
 @if (TempData["Message"] != null)
@@ -46,7 +44,7 @@
 -->
 <html>
 <head>
-	
+
 	<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
@@ -54,23 +52,9 @@
 	<title>The Nissan 200SX Project || Import Garage</title>
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
-	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
-	<style>
-		/* Target the validation summary list to remove bullet points */
-		.validation-summary-valid ul,
-		.validation-summary-errors ul {
-			list-style-type: none;
-			padding-left: 0;
-		}
-
-			.validation-summary-valid ul li,
-			.validation-summary-errors ul li {
-				margin-left: 0;
-				padding-left: 0;
-			}
-	</style>
+	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">	
 </head>
-<body class="is-preload" is-entry-success="@TempData["IsEntrySuccess"]">
+<body class="is-preload" is-entry-success="@TempData["IsAdminEntrySuccess"]">
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -111,11 +95,6 @@
 					</li>
 					@if (User.Identity.IsAuthenticated)
 					{
-						<li>
-							<span>
-								<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
-							</span>
-						</li>
 						<li><span>Logged in as @User.Identity.Name</span></li>
 						<li>
 							<a href="#" id="logoutLink">Logout</a>
@@ -128,16 +107,7 @@
 				<p>Error: @ex.Message</p>
 			}
 
-			<ul class="icons">
-				@if (User.IsInRole("Admin"))
-				{
-					<li>
-						<a asp-controller="Account" asp-action="AdminDash" class="icon admin-link" title="Admin">
-							<span class="admin-icon">A</span>
-							<span class="label">Admin</span>
-						</a>
-					</li>
-				}
+			<ul class="icons">				
 				<li>
 					<a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f">
 						<span class="label">Facebook</span>
@@ -157,81 +127,20 @@
 			<!-- Featured Post -->
 			<article class="post featured">
 				<header class="major">
-					<span class="date"></span>
-					<h7>MaintenApp</h7>
+					<h7>Admin Interface</h7>					
+					<br><br>					
+					<a href="@Url.Action("AddProduct", "Products")" class="btn-save" role="button">Add Product</a>
 					<br><br>
-					<p>Use the below form to log, handle and configure service and maintenance intervals and components for your vehicle. You can add a new entry via the form below, making sure to correctly set up the date of next change; the current form submission date is used as the current vehicle part change/service action. All of your entries are displayed in the table below, you can edit each individual entry and hit <b>Save</b> afterwards. <br><br>After sucessful configuration, you will get email alerts 10 and 5 days respectively before the set alert date. NOTE ! This feature is still in development !</p>
+					<a href="@Url.Action("CreateNewsletter", "Newsletter")" class="btn-save" role="button">Send Newsletter</a>
 				</header>
-				<h1>Welcome, @User.Identity.Name !</h1>
-				<h2>Manage Your Entries</h2>
+				
 				<br>
-				<form asp-controller="Dashboard" asp-action="CreateEntry" method="post">
-					<div class="form-group">
-						<label for="entryTitle">Entry Title:</label>
-						<input type="text" id="entryTitle" name="entryTitle" class="form-control" required />
-					</div>
-					<div class="form-group">
-						<label for="entryDescription">Entry Description:</label>
-						<textarea id="entryDescription" name="entryDescription" class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label for="dueDate">Select Due Date:</label>
-						<div class="input-group">
-							<input type="text" id="dueDate" name="dueDate" class="form-control" placeholder="Select due date" readonly />
-							<span class="input-group-append">
-								<button type="button" class="btn btn-outline-secondary" onclick="openDatepicker()">📅</button>
-							</span>
-						</div>
-						<label id="selectedDate" style="margin-top: 10px;">Selected Date: None</label>
-					</div>
-					<button type="submit" class="btn-add-entry">
-						Add Entry
-					</button>
-				</form>
-
-				<br>
-				<h2>Your recorded entries</h2>
-				<div class="table-scrollable">
-					<table class="table">
-						<thead>
-							<tr>
-								<th style="text-align: center;">Entry</th>
-								<th style="text-align: center;">Description</th>
-								<th style="text-align: center;">Set Due Date</th>
-								<th style="text-align: center;">Action</th>
-							</tr>
-						</thead>
-					<tbody>
-						@foreach (var item in Model)
-						{
-							<tr data-item-id="@item.Id">
-								<td contenteditable="true" class="editable" data-field="EntryItem">@item.EntryItem</td>
-								<td contenteditable="true" class="editable" data-field="EntryDescription">@item.EntryDescription</td>
-								<td>
-									<input type="date" class="editable" data-field="DueDate" value="@item.DueDate.ToString("yyyy-MM-dd")" />
-								</td>
-								<td>
-									<button class="btn-save" data-id="@item.Id">Save</button>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-				</div>
-				<div id="successMessage" style="display:none;" class="alert alert-success">Changes saved successfully !</div>
-				<div id="errorMessage" style="display:none;" class="alert alert-danger">Error saving changes !</div>
-				<div class="center-div">
-
-					Having issues with the app functionality ?
-					<a href="/Home/Index?scrollToContactForm=true" class="contact-link"><strong>Contact me</strong></a>.
-
-				</div>
+				
 			</article>
 		</div>
 
 		<!-- Footer -->
 		<footer id="footer">
-		
 		</footer>
 
 		<!-- Copyright -->
@@ -251,11 +160,8 @@
 	<script src="~/assets/js/util.js" asp-append-version="true"></script>
 	<script src="~/assets/js/main.js" asp-append-version="true"></script>
 	<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
-	<script src="~/js/dashboard.js" asp-append-version="true"></script>
 	<script src="~/js/cookies.js" asp-append-version="true"></script>
 
 </body>
