@@ -5,7 +5,7 @@ Website has a user base functionality, wherein registered users are able to acce
 
 Registered users are also able to use MaintenApp, which is a feature that allows them to log records of service intervals and part changes by due date; an email notification service is running in the background, checking the due dates and notifying the user of approaching deadlines.
 
-I am also implementing a merchandise page, where registered users can select and buy branded merchandise. The merchandise is stored in a database and is displayed on the page with a picture, description, and price. The user can select the quantity and size of the item and add it to the cart. The cart is stored in a session and is displayed on the page with the total price of the items in the cart. The user can also remove items from the cart. On order placement, both the user and the admin get an email notification, so that the order can be processed with the data entered.
+I also implemented a merchandise page, where registered users can select and buy branded merchandise. The merchandise is stored in a database and is displayed on the page with a picture, description, and price in a carousel format. The user can select the product and add it to the cart. The cart is stored in a session and is displayed on the page with the total price of the items in the cart. The user can also remove items from the cart. On order placement, both the user and the admin get an email notification, so that the order can be processed with the data entered. There are plans to implement PayPal and Stripe for online payments, but those only work for registered businesses so they are implemented just as a test for now.
 
 Google AdSense is also implemented, with adds being added dynamically to the pages.
 
