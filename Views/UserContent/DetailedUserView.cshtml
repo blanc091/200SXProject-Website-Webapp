@@ -202,10 +202,10 @@
 								</small>
 								@if (User.Identity.IsAuthenticated && comment.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
 								{
-									<form asp-action="DeleteComment" asp-controller="Comments" method="post" style="display: inline;">
+									<form asp-action="DeleteComment" asp-controller="Comments" method="post" style="display: inline;" class="delete-comment-form">
 										<input type="hidden" name="commentId" value="@comment.Id" />
 										<input type="hidden" name="userBuildId" value="@Model.Id" />
-										<a href="#" onclick="this.closest('form').submit();" class="delete-comment-link" style="margin-left: 5px; text-decoration: underline; color: blue;">Delete</a>
+										<a href="#" class="delete-comment-link" style="margin-left: 5px; text-decoration: underline; color: blue;">Delete</a>
 									</form>
 								}
 							</p>

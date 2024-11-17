@@ -6,6 +6,19 @@
         console.error(`${elementId} not found!`);
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const deleteLinks = document.querySelectorAll(".delete-comment-link");
+
+    deleteLinks.forEach(link => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const form = link.closest("form");
+            if (form) {
+                form.submit();
+            }
+        });
+    });
+});
 document.addEventListener("DOMContentLoaded", function () {
     var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
     var isFormSuccess = document.body.getAttribute('data-is-form-success');

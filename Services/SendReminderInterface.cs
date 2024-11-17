@@ -38,12 +38,12 @@ namespace _200SXContact.Services
 			sb.AppendLine("    <meta charset='UTF-8'>");
 			sb.AppendLine("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
 			sb.AppendLine("    <style>");
-			sb.AppendLine("        body { font-family: 'Helvetica', 'Roboto', sans-serif; margin: 0; padding: 0; background-color: #2c2c2c; color: #ffffff; }");
+			sb.AppendLine("        body { font-family: 'Helvetica', 'Roboto', sans-serif; margin: 0; padding: 0; background-color: #2c2c2c; color: #ece8ed !important; }");
 			sb.AppendLine("        .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #3c3c3c; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }");
 			sb.AppendLine("        .header { text-align: center; }");
 			sb.AppendLine("        .header img { max-width: 100%; height: auto; border-radius: 8px; }");
-			sb.AppendLine("        h1 { color: #f5f5f5; font-size: 24px; margin: 20px 0; }");
-			sb.AppendLine("        p { line-height: 1.6; margin: 10px 0; color: #f5f5f5; }");
+			sb.AppendLine("        h1 { color: #ece8ed !important; font-size: 24px; margin: 20px 0; }");
+			sb.AppendLine("        p { line-height: 1.6; margin: 10px 0; color: #ece8ed !important; }");
 			sb.AppendLine("        .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #b0b0b0; }");
 			sb.AppendLine("    </style>");
 			sb.AppendLine("</head>");
@@ -54,20 +54,27 @@ namespace _200SXContact.Services
 			sb.AppendLine("        </div>");
 			sb.AppendLine("        <h1>Order Confirmation</h1>");
 			sb.AppendLine("        <p>Hi " + order.FullName + ",</p>");
-			sb.AppendLine("        <p>Your order has been confirmed !</p>");
+			if (email == _credentials.UserName)
+			{
+				sb.AppendLine("        <p>Your order has been confirmed !</p>");
+			}
+			else
+			{
+				sb.AppendLine("        <p>A new order is registered !</p>");
+			}	
 			sb.AppendLine("        <p><strong>Order ID:</strong> " + order.Id + "</p>");
 			sb.AppendLine("        <p><strong>Order Date:</strong> " + order.OrderDate.ToString("f") + "</p>");
 			sb.AppendLine("        <h2>Order Details:</h2>");
 			sb.AppendLine("        <table style='width:100%; border-collapse: collapse;'>");
-			sb.AppendLine("            <tr><th style='border: 1px solid #ffffff; padding: 8px;'>Item</th><th style='border: 1px solid #ffffff; padding: 8px;'>Quantity</th><th style='border: 1px solid #ffffff; padding: 8px;'>Price</th></tr>");
+			sb.AppendLine("            <tr><th style='border: 1px solid #ece8ed !important !important; padding: 8px;'>Item</th><th style='border: 1px solid #ece8ed !important; padding: 8px;'>Quantity</th><th style='border: 1px solid #ece8ed !important; padding: 8px;'>Price</th></tr>");
 
-			foreach (var item in order.OrderItems)
+			foreach (var item in order.CartItems)
 			{
-				sb.AppendLine($"<tr><td style='border: 1px solid #ffffff; padding: 8px;'>{item.ProductName}</td><td style='border: 1px solid #ffffff; padding: 8px;'>{item.Quantity}</td><td style='border: 1px solid #ffffff; padding: 8px;'>${item.Price.ToString("F2")}</td></tr>");
+				sb.AppendLine($"<tr><td style='border: 1px solid #ece8ed !important; padding: 8px;'>{item.ProductName}</td><td style='border: 1px solid #ece8ed !important; padding: 8px;'>{item.Quantity}</td><td style='border: 1px solid #ece8ed !important; padding: 8px;'>${item.Price.ToString("F2")}</td></tr>");
 			}
 
-			decimal total = order.OrderItems.Sum(item => item.Price * item.Quantity);
-			sb.AppendLine($"<tr><td colspan='2' style='border: 1px solid #ffffff; padding: 8px; text-align: right;'><strong>Total:</strong></td><td style='border: 1px solid #ffffff; padding: 8px;'>${total.ToString("F2")}</td></tr>");
+			decimal total = order.CartItems.Sum(item => item.Price * item.Quantity);
+			sb.AppendLine($"<tr><td colspan='2' style='border: 1px solid #ece8ed !important; padding: 8px; text-align: right;'><strong>Total:</strong></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'>${total.ToString("F2")}</td></tr>");
 			sb.AppendLine("        </table>");
 			sb.AppendLine("        <p>Thank you !</p>");
 			sb.AppendLine("        <div class='footer'>");
@@ -104,22 +111,22 @@ namespace _200SXContact.Services
 			{
 				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 				var toAddress = new MailAddress(userEmail);
-				string subject = "New Comment on Your Build";
-				string body = @"
+				string subject = "New comment added for your Build";
+				string body = $@"
     <!DOCTYPE html>
     <html lang='en'>
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <style>
-            body {
+            body {{
                 font-family: 'Helvetica', 'Roboto', sans-serif;
                 margin: 0;
                 padding: 0;
                 background-color: #2c2c2c; 
                 color: #ffffff; 
-            }
-            .container {
+            }}
+            .container {{
                 width: 100%;
                 max-width: 600px;
                 margin: 0 auto;
@@ -127,28 +134,28 @@ namespace _200SXContact.Services
                 background-color: #3c3c3c;
                 border-radius: 8px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            }
-            .header {
+            }}
+            .header {{
                 text-align: center;
-            }
-            .header img {
+            }}
+            .header img {{
                 max-width: 100%;
                 height: auto;
                 border-radius: 8px;
-            }
-            h1 {
+            }}
+            h1 {{
                 color: #f5f5f5;
                 font-size: 24px;
 				font-family: 'Helvetica', 'Roboto', sans-serif;
 				margin: 20px 0;
-            }
-            p {
+            }}
+            p {{
                 line-height: 1.6;
                 margin: 10px 0;
 				color: #f5f5f5;
 				font-family: 'Helvetica', 'Roboto', sans-serif;
-            }
-            .button {
+            }}
+            .button {{
                 display: inline-block;
                 padding: 10px 20px;
                 font-size: 16px;
@@ -158,16 +165,16 @@ namespace _200SXContact.Services
                 text-decoration: none;
                 border-radius: 5px;
                 transition: background-color 0.3s ease;
-            }
-            .button:hover {
+            }}
+            .button:hover {{
                 background-color: #966b91; 
-            }
-            .footer {
+            }}
+            .footer {{
                 text-align: center;
                 margin-top: 20px;
                 font-size: 12px;
                 color: #b0b0b0; 
-            }
+            }}
         </style>
     </head>
     <body>
@@ -175,12 +182,13 @@ namespace _200SXContact.Services
             <div class='header'>
                 <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
             </div>
-            <h1>Account Activation</h1>
+            <h1>New comment added</h1>
             <p>Hi there,</p>
 			<p>A new comment has been posted on your build:</p>
-            <P><blockquote>{comment.Content}</blockquote></p>
-            
-            <p>TO IMPLEMENT TTTTTTTTTTTTTTTTTTT CLICK HERE TO SEE</p>
+            <p><blockquote style=""color: #ffffff !important;"">{comment.Content}</blockquote></p>
+            <p>
+				<a href='https://200sxproject.com/UserBuilds/DetailedUserView/{comment.UserBuildId}' target='_blank'>Click here to access your build page.</a>
+			</p>
             <div class='footer'>
                 <p>© 2024 200SX Project. All rights reserved.</p>
             </div>

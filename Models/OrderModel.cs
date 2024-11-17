@@ -30,12 +30,12 @@ namespace _200SXContact.Models
 		[Display(Name = "Email Address")]
 		public string Email { get; set; }
 		[Display(Name = "Order Notes")]
+		[Required]
 		public string OrderNotes { get; set; }
 		public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 		[ForeignKey("User")]
 		public string UserId { get; set; }
 		public User User { get; set; }
-		public ICollection<CartItem> CartItems { get; set; }
-		public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+		public virtual ICollection<CartItem> CartItems { get; set; }
 	}
 }

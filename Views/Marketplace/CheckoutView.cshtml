@@ -1,5 +1,11 @@
-﻿@model _200SXContact.Models.Order
+﻿@inject UserManager<User> UserManager
+@model _200SXContact.Models.Order
+@{
+	var user = UserManager.GetUserAsync(User).Result;
+	var email = user?.Email ?? "Enter your email";
+}
 @using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
 @{
 	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Checkout";
 }
@@ -173,7 +179,7 @@
 
 					<div class="form-group">
 						<label asp-for="Email"></label>
-						<input asp-for="Email" class="form-control" />
+						<input asp-for="Email" class="form-control" value=@email/>
 						<span asp-validation-for="Email" class="text-danger"></span>
 					</div>
 

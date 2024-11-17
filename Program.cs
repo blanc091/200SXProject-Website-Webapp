@@ -85,7 +85,7 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowSpecificOrigins", builder =>
 	{
-		builder.WithOrigins("https://localhost:7109","https://200sxproject.com")
+		builder.WithOrigins("https://localhost:7109","https://200sxproject.com", "https://*.stripe.com", "https://*.hcaptcha.com")
 			   .AllowAnyHeader() 
 			   .AllowAnyMethod() 
 			   .AllowCredentials();

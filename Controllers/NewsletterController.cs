@@ -99,7 +99,7 @@ namespace _200SXContact.Controllers
                         <p>Hi there,</p>
                         <p>ADD THE TEXT HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE</p>
                         <p>
-                            <a href='' class='button'>Recover Your Account</a>
+                            <a href='LINK TO ARTICLEEEEEEE' class='button'>Click here to go to the article</a>
                         </p>                       
                         <div class='footer'>
                             <p>© 2024 200SX Project. All rights reserved.</p>

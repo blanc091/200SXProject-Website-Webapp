@@ -29,15 +29,14 @@ namespace _200SXContact.Controllers
 		{
 			return View("~/Views/Marketplace/CheckoutView.cshtml");
 		}
-
 		[HttpPost]
 		[Authorize]
 		public async Task<IActionResult> PlaceOrder(Order model)
 		{
 			ModelState.Remove("UserId");
-			ModelState.Remove("User");
 			ModelState.Remove("CartItems");
 			ModelState.Remove("OrderItems");
+			ModelState.Remove("User");
 			if (!ModelState.IsValid)
 			{
 				return View("~/Views/Marketplace/CheckoutView.cshtml", model);
@@ -52,32 +51,60 @@ namespace _200SXContact.Controllers
 			}
 
 			model.UserId = user.Id;
-			var cartItems = await _context.CartItems.Where(ci => ci.UserId == user.Id).ToListAsync();
-			model.CartItems = cartItems;
-			model.OrderItems = new List<OrderItem>();
 
-			foreach (var cartItem in cartItems)
+			using (var transaction = await _context.Database.BeginTransactionAsync())
 			{
-				model.OrderItems.Add(new OrderItem
+				try
 				{
-					CartItemId = cartItem.Id,
-					Quantity = cartItem.Quantity,
-					Price = cartItem.Price, 
-					ProductName = cartItem.ProductName 
-				});
-			}
-			
-			_context.Orders.Add(model);
-			await _context.SaveChangesAsync();
-			_context.CartItems.RemoveRange(model.CartItems);
-			await _context.SaveChangesAsync();
+					// Save the Order first to get the Order ID
+					_context.Orders.Add(model);
+					await _context.SaveChangesAsync();
 
-			await _emailService.SendOrderConfirmEmail(user.Email, model);
-			string adminEmail = _adminSettings.Email;
-			await _emailService.SendOrderConfirmEmail(adminEmail, model);
-			/////
-			return RedirectToAction("OrderSummary", new { orderId = model.Id });
+					// Retrieve cart items for the user
+					var cartItems = await _context.CartItems
+						.Where(ci => ci.UserId == user.Id)
+						.ToListAsync();
+
+					if (!cartItems.Any())
+					{
+						TempData["Message"] = "Your cart is empty. Please add items before checking out.";
+						return RedirectToAction("Index", "Marketplace");
+					}
+
+					// Update each CartItem with the OrderId
+					foreach (var cartItem in cartItems)
+					{
+						cartItem.OrderId = model.Id; // Assign the saved Order's ID
+						_context.CartItems.Update(cartItem); // Update the cart item
+					}
+					
+					await _context.SaveChangesAsync(); // Save changes to CartItems
+
+					// Commit the transaction
+					await transaction.CommitAsync();
+
+					// Reload the order with cart items included
+					var orderWithItems = await _context.Orders
+						.Include(o => o.CartItems)
+						.FirstOrDefaultAsync(o => o.Id == model.Id);
+
+					// Send confirmation emails
+					await _emailService.SendOrderConfirmEmail(model.Email, orderWithItems);
+					await _emailService.SendOrderConfirmEmail(_adminSettings.Email, orderWithItems);
+					_context.CartItems.RemoveRange(cartItems);
+					await _context.SaveChangesAsync();
+					// Redirect to order summary
+					return RedirectToAction("OrderSummary", new { orderId = model.Id });
+				}
+				catch (Exception ex)
+				{
+					await transaction.RollbackAsync(); // Rollback if any error occurs
+					TempData["Message"] = "Error: " + ex.Message;
+					return RedirectToAction("CheckoutView");
+				}
+			}
 		}
+
 		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> Index()

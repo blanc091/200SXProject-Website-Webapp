@@ -22,7 +22,6 @@ namespace _200SXContact.Data
 		public DbSet<CartItem> CartItems { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderTracking> OrderTrackings { get; set; }
-		public DbSet<OrderItem> OrderItems { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -33,6 +32,11 @@ namespace _200SXContact.Data
 				.WithMany(u => u.Items)
 				.HasForeignKey(i => i.UserId)
 				.OnDelete(DeleteBehavior.Cascade);
+			modelBuilder.Entity<Order>()
+			    .HasMany(o => o.CartItems)
+			    .WithOne(ci => ci.Order)
+			    .HasForeignKey(ci => ci.OrderId)
+			    .OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }
