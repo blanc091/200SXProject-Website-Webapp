@@ -17,6 +17,9 @@ using Microsoft.Extensions.Options;
 
 namespace _200SXContact.Controllers
 {
+	/// <summary>
+	/// /////////
+	/// </summary>
 	public class LoginRegisterController : Controller
 	{
 		private readonly SignInManager<User> _signInManager;
