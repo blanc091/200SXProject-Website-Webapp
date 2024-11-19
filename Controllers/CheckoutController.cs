@@ -8,6 +8,7 @@ using NETCore.MailKit.Core;
 using _200SXContact.Services;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace _200SXContact.Controllers
 {
@@ -37,6 +38,7 @@ namespace _200SXContact.Controllers
 			ModelState.Remove("CartItems");
 			ModelState.Remove("OrderItems");
 			ModelState.Remove("User");
+			ModelState.Remove("CartItemsJson");
 			if (!ModelState.IsValid)
 			{
 				return View("~/Views/Marketplace/CheckoutView.cshtml", model);
@@ -55,12 +57,24 @@ namespace _200SXContact.Controllers
 			using (var transaction = await _context.Database.BeginTransactionAsync())
 			{
 				try
-				{
-					// Save the Order first to get the Order ID
+				{ 
 					_context.Orders.Add(model);
 					await _context.SaveChangesAsync();
 
-					// Retrieve cart items for the user
+					var orderTracking = new OrderTracking
+					{
+						OrderId = model.Id,
+						Status = "Pending",
+						StatusUpdatedAt = DateTime.UtcNow,
+						Email = model.Email,
+						AddressLine = model.AddressLine1,
+						OrderNotes = model.OrderNotes,
+						CartItemsJson = model.CartItemsJson
+					};
+
+					_context.OrderTrackings.Add(orderTracking);
+					await _context.SaveChangesAsync();
+
 					var cartItems = await _context.CartItems
 						.Where(ci => ci.UserId == user.Id)
 						.ToListAsync();
@@ -70,41 +84,40 @@ namespace _200SXContact.Controllers
 						TempData["Message"] = "Your cart is empty. Please add items before checking out.";
 						return RedirectToAction("Index", "Marketplace");
 					}
+					else
+					{
+						var cartItemsJson = JsonSerializer.Serialize(cartItems);
+						model.CartItemsJson = cartItemsJson;
+					}
 
-					// Update each CartItem with the OrderId
 					foreach (var cartItem in cartItems)
 					{
-						cartItem.OrderId = model.Id; // Assign the saved Order's ID
-						_context.CartItems.Update(cartItem); // Update the cart item
+						cartItem.OrderId = model.Id;
+						_context.CartItems.Update(cartItem);
+						_context.Orders.Update(model);
 					}
 					
-					await _context.SaveChangesAsync(); // Save changes to CartItems
-
-					// Commit the transaction
+					await _context.SaveChangesAsync(); 
 					await transaction.CommitAsync();
 
-					// Reload the order with cart items included
 					var orderWithItems = await _context.Orders
 						.Include(o => o.CartItems)
 						.FirstOrDefaultAsync(o => o.Id == model.Id);
 
-					// Send confirmation emails
 					await _emailService.SendOrderConfirmEmail(model.Email, orderWithItems);
 					await _emailService.SendOrderConfirmEmail(_adminSettings.Email, orderWithItems);
 					_context.CartItems.RemoveRange(cartItems);
 					await _context.SaveChangesAsync();
-					// Redirect to order summary
 					return RedirectToAction("OrderSummary", new { orderId = model.Id });
 				}
 				catch (Exception ex)
 				{
-					await transaction.RollbackAsync(); // Rollback if any error occurs
+					await transaction.RollbackAsync();
 					TempData["Message"] = "Error: " + ex.Message;
-					return RedirectToAction("CheckoutView");
+					return RedirectToAction("Checkout");
 				}
 			}
 		}
-
 		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> Index()
@@ -126,22 +139,28 @@ namespace _200SXContact.Controllers
 
 			var orderModel = new Order();
 			return View("~/Views/Marketplace/CheckoutView.cshtml", orderModel); 
-		}		
+		}
 		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> OrderSummary(int orderId)
 		{
 			var order = await _context.Orders
-							   .Include(c => c.CartItems)
-							   .FirstOrDefaultAsync(c => c.Id == orderId);
+									   .FirstOrDefaultAsync(c => c.Id == orderId);
 
 			if (order == null || order.UserId != _userManager.GetUserId(User))
 			{
 				return NotFound();
 			}
+			if (!string.IsNullOrEmpty(order.CartItemsJson))
+			{
+				var cartItems = JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson);
+
+				order.CartItems = cartItems;
+			}
 
 			return View("~/Views/Marketplace/OrderPlaced.cshtml", order);
 		}
+
 		[HttpGet]
 		public async Task<IActionResult> PendingOrder()
 		{

@@ -6,7 +6,38 @@
 	html5up.net | ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
-/* Custom Modal styling */
+
+.popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	z-index: 1000;
+	display: none;
+}
+.popup-content {
+	position: relative;
+}
+.popup .hidden {
+	display: none;
+}
+.popup-footer {
+	margin-top: 20px;
+	text-align: center;
+}
+	.popup-footer button {
+		padding: 10px 20px;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+		.popup-footer button:hover {
+			background-color: #bfbfbf;
+		}
 
 .flashy-text {
 	animation: flash 1.2s infinite;

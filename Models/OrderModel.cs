@@ -37,5 +37,6 @@ namespace _200SXContact.Models
 		public string UserId { get; set; }
 		public User User { get; set; }
 		public virtual ICollection<CartItem> CartItems { get; set; }
+		public string? CartItemsJson { get; set; }
 	}
 }

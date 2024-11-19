@@ -1,6 +1,6 @@
-﻿@model _200SXContact.Models.Order
+﻿@model _200SXContact.Models.OrderTrackingViewModel
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Order placed";
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Your orders";
 }
 @{
 	var message = TempData["Message"] as string;
@@ -157,18 +157,22 @@
 			<article class="post featured">
 				<header class="major">
 					<br>
-					<h2 id="orderSuccess">Order placed !</h2>
+					<h2 id="customerOrders">Your orders</h2>
 					<span style="display: block; text-align: left;"><strong>Here is a summary of your order:</strong></span><br><br>
-					<span style="display: block; text-align: left;"><strong>Order ID:</strong> @Model.Id</span><br>
-					<span style="display: block; text-align: left;"><strong>Full name:</strong> @Model.FullName</span><br>
-					<span style="display: block; text-align: left;"><strong>Address:</strong> @Model.AddressLine1</span><br>
-					<span style="display: block; text-align: left;"><strong>Address extra:</strong> @Model.AddressLine2</span><br>
-					<span style="display: block; text-align: left;"><strong>City:</strong> @Model.City</span><br>
-					<span style="display: block; text-align: left;"><strong>County:</strong> @Model.County</span><br>
-					<span style="display: block; text-align: left;"><strong>Phone:</strong> @Model.PhoneNumber</span><br>
-					<span style="display: block; text-align: left;"><strong>Email:</strong> @Model.Email</span><br>
-					<span style="display: block; text-align: left;"><strong>Order notes:</strong> @Model.OrderNotes</span><br>
-					<span style="display: block; text-align: left;"><strong>Order date:</strong> @Model.OrderDate</span><br><br>
+
+					<!-- Order details -->
+					<span style="display: block; text-align: left;"><strong>Order ID:</strong> @Model.Order.Id</span><br>
+					<span style="display: block; text-align: left;"><strong>Full name:</strong> @Model.Order.FullName</span><br>
+					<span style="display: block; text-align: left;"><strong>Address:</strong> @Model.Order.AddressLine1</span><br>
+					<span style="display: block; text-align: left;"><strong>City:</strong> @Model.Order.City</span><br>
+					<span style="display: block; text-align: left;"><strong>County:</strong> @Model.Order.County</span><br>
+					<span style="display: block; text-align: left;"><strong>Phone:</strong> @Model.Order.PhoneNumber</span><br>
+					<span style="display: block; text-align: left;"><strong>Email:</strong> @Model.Order.Email</span><br>
+					<span style="display: block; text-align: left;"><strong>Order notes:</strong> @Model.Order.OrderNotes</span><br>
+					<span style="display: block; text-align: left;"><strong>Order date:</strong> @Model.Order.OrderDate</span><br>
+					<span style="display: block; text-align: left;"><strong>Updated At:</strong> @Model.OrderTracking.StatusUpdatedAt.ToLocalTime()</span><br/>
+
+					<!-- Cart items table -->
 					<table>
 						<thead>
 							<tr>
@@ -191,10 +195,13 @@
 
 					<span><strong>Total:</strong> @Model.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</span>
 					<br>
-					<!--<p>You can view the status of your order here:</p>-->
+
+					<!-- Optionally, display tracking details -->
+					<span style="display: block; text-align: left;"><strong>Status:</strong> @Model.OrderTracking.Status</span><br>
+					<span style="display: block; text-align: left;"><strong>Carrier:</strong> @Model.OrderTracking.Carrier</span><br>
+					<span style="display: block; text-align: left;"><strong>Tracking Number:</strong> @Model.OrderTracking.TrackingNumber</span><br>
 				</header>
 			</article>
-			
 		</div>
 		<!-- Footer -->
 		<footer id="footer">
@@ -220,7 +227,7 @@
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
 	<script src="~/js/cookies.js" asp-append-version="true"></script>
-	
+
 
 </body>
 

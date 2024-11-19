@@ -116,6 +116,9 @@
 				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
+					<form>
+						@Html.AntiForgeryToken()
+					</form>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>

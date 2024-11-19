@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<_200SXContact.Models.Product>
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Payment";
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Payment".Substring(0, 50) + "...";
 }
 @{
 	var message = TempData["Message"] as string;
@@ -118,6 +118,9 @@
 							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
 						</span>
 					</li>
+					<form>
+						@Html.AntiForgeryToken()
+					</form>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>

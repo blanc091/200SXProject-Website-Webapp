@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
 @model _200SXContact.Models.Product
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || " + Model.Name;
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || " + Model.Name.Substring(0, 50) + "...";
 }
 @{
 	var message = TempData["Message"] as string;
@@ -114,7 +114,10 @@
 					</span>
 				</li>
 				@if (User.Identity.IsAuthenticated)
-				{					
+				{
+					<form>
+						@Html.AntiForgeryToken()
+					</form>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>

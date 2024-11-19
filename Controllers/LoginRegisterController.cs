@@ -17,9 +17,6 @@ using Microsoft.Extensions.Options;
 
 namespace _200SXContact.Controllers
 {
-	/// <summary>
-	/// /////////
-	/// </summary>
 	public class LoginRegisterController : Controller
 	{
 		private readonly SignInManager<User> _signInManager;
@@ -109,6 +106,8 @@ namespace _200SXContact.Controllers
 
 					if (result.Succeeded)
 					{
+						user.LastLogin = DateTime.UtcNow;
+						var updateResult = await _userManager.UpdateAsync(user);
 						Console.WriteLine("User logged in successfully.");
 						return LocalRedirect(returnUrl);
 					}
@@ -168,6 +167,8 @@ namespace _200SXContact.Controllers
 					return RedirectToAction("Login");
 				}
 			}
+			user.LastLogin = DateTime.UtcNow;
+			var updateResult = await _userManager.UpdateAsync(user);
 			await _signInManager.SignInAsync(user, isPersistent: true);
 
 			TempData["IsUserLoggedIn"] = true;
@@ -176,7 +177,6 @@ namespace _200SXContact.Controllers
 			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft!";
 			return RedirectToAction("Dashboard", "Dashboard");
 		}
-
 		[HttpGet]
 		public IActionResult Register()
 		{

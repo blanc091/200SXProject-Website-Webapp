@@ -44,6 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname.startsWith('/Products/DetailedProductView')) {
         scrollToElement("detailedProductViewSection");
     }
+    if (window.location.pathname.startsWith('/Checkout/OrderSummary')) {
+        scrollToElement("orderSuccess");
+    }
+    if (window.location.pathname.startsWith('/PendingOrders/OrderSummary')) {
+        scrollToElement("customerOrders");
+    }
     switch (window.location.pathname) {
         case '/Dashboard/Dashboard':
             scrollToElement("maintenApp");
@@ -75,7 +81,10 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
         case '/Checkout/Checkout':
             scrollToElement("checkoutView");
-            break;            
+            break;
+        case '/PendingOrders/GetAllOrders':
+            scrollToElement("ordersAll");
+            break;
     }
 
     if ((isUserLoggedIn && !formSubmitted) ||
@@ -112,7 +121,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
+    
+    fetch('/api/is-logged-in')
+        .then(response => response.json())
+        .then(isUserLoggedIn => {
+            if (isUserLoggedIn && window.location.pathname === '/') {
+                scrollToElement("posts");
+            }
+        });
     function scrollToContactForm() {
         var contactForm = document.getElementById('contactForm');
         if (contactForm) {

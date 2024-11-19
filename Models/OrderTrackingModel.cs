@@ -8,22 +8,20 @@ namespace _200SXContact.Models
 	{
 		public int Id { get; set; } 
 
-		[Required]
 		[ForeignKey("Order")]
 		public int OrderId { get; set; } 
 
-		[Required]
-		[StringLength(50)]
 		public string Status { get; set; }  
 
-		[StringLength(100)]
-		public string Carrier { get; set; } 
+		public string? Carrier { get; set; } 
 
-		[StringLength(50)]
-		public string TrackingNumber { get; set; } 
+		public string? TrackingNumber { get; set; } 
 
-		public DateTime StatusUpdatedAt { get; set; } = DateTime.UtcNow;  
-
+		public DateTime StatusUpdatedAt { get; set; } = DateTime.UtcNow;
+		public string Email { get; set; }
+		public string AddressLine { get; set; }
+		public string OrderNotes { get; set; }						
+		public string? CartItemsJson { get; set; }
 		public virtual Order Order { get; set; } 
 	}
 }

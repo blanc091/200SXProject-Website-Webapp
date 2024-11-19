@@ -4,13 +4,15 @@
 
     if (logoutLink) {
         logoutLink.addEventListener("click", function (event) {
-            console.log('Logout link clicked'); 
+            console.log('Logout link clicked');
             event.preventDefault();
+            var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
             fetch('/LoginRegister/Logout', {
                 method: 'POST',
                 headers: {
-                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken
                 }
             }).then(response => {
                 if (response.ok) {

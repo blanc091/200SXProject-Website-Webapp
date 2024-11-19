@@ -1,12 +1,10 @@
-﻿@model _200SXContact.Models.Order
+﻿@model List<_200SXContact.Models.OrderTrackingViewModel>
+@using System.Security.Claims
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Order placed";
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Update Order".Substring(0, 50) + "..."; 
 }
 @{
 	var message = TempData["Message"] as string;
-}
-@{
-	var nonce = Context.Items["CSPNonce"] as string;
 }
 @if (!string.IsNullOrEmpty(message))
 {
@@ -55,17 +53,12 @@
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-
 	<title>The Nissan 200SX Project || Import Garage</title>
-
-	<!-- Main CSS -->
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
-
-	<!-- Favicon -->
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
-</head>
 
+</head>
 <body class="is-preload">
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -110,16 +103,13 @@
 					</li>
 
 				}
+				<li>
+					<span>
+						<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
+					</span>
+				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
-					<li>
-						<span>
-							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
-						</span>
-					</li>
-					<form>
-						@Html.AntiForgeryToken()
-					</form>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
@@ -127,7 +117,7 @@
 				}
 			</ul>
 			<ul class="icons">
-				@if (User.IsInRole("Admin"))
+				@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 				{
 					<li>
 						<a asp-controller="Account" asp-action="AdminDash" class="icon admin-link" title="Admin">
@@ -152,50 +142,71 @@
 
 		<!-- Main -->
 		<div id="main">
-
-			<!-- Featured Post -->
 			<article class="post featured">
-				<header class="major">
-					<br>
-					<h2 id="orderSuccess">Order placed !</h2>
-					<span style="display: block; text-align: left;"><strong>Here is a summary of your order:</strong></span><br><br>
-					<span style="display: block; text-align: left;"><strong>Order ID:</strong> @Model.Id</span><br>
-					<span style="display: block; text-align: left;"><strong>Full name:</strong> @Model.FullName</span><br>
-					<span style="display: block; text-align: left;"><strong>Address:</strong> @Model.AddressLine1</span><br>
-					<span style="display: block; text-align: left;"><strong>Address extra:</strong> @Model.AddressLine2</span><br>
-					<span style="display: block; text-align: left;"><strong>City:</strong> @Model.City</span><br>
-					<span style="display: block; text-align: left;"><strong>County:</strong> @Model.County</span><br>
-					<span style="display: block; text-align: left;"><strong>Phone:</strong> @Model.PhoneNumber</span><br>
-					<span style="display: block; text-align: left;"><strong>Email:</strong> @Model.Email</span><br>
-					<span style="display: block; text-align: left;"><strong>Order notes:</strong> @Model.OrderNotes</span><br>
-					<span style="display: block; text-align: left;"><strong>Order date:</strong> @Model.OrderDate</span><br><br>
-					<table>
-						<thead>
+				<h2 id="ordersAll">Orders</h2>
+				<table id="orderTable">
+					<thead>
+						<tr>
+							<th>Order ID</th>
+							<th>Customer Name</th>
+							<th>Status</th>
+							<th>Carrier</th>
+							<th>Tracking Number</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<form id="order-tracking-form">
+							@Html.AntiForgeryToken()
+						</form>
+						@foreach (var item in Model)
+						{
 							<tr>
-								<th>Item</th>
-								<th>Quantity</th>
-								<th>Price</th>
+								<td>@item.Order.Id</td>
+								<td>@item.Order.FullName</td>
+								<td>
+									<input type="text" class="status-input" value="@item.OrderTracking?.Status" />
+								</td>
+								<td>
+									<input type="text" class="carrier-input" value="@item.OrderTracking?.Carrier" />
+								</td>
+								<td>
+									<input type="text" class="tracking-number-input" value="@item.OrderTracking?.TrackingNumber" />
+								</td>
+								<td>
+									<button class="save-btn">Save</button>
+								</td>
+								<td>
+									<button class="view-cart-btn" data-order-id="@item.Order.Id">View Cart Items</button>
+								</td>
 							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model.CartItems)
-							{
+						}
+					</tbody>
+				</table>
+				<div id="cartItemsPopup" class="popup hidden">
+					<div class="popup-content">						
+						<h3>Cart Items</h3>
+						<table>
+							<thead>
 								<tr>
-									<td>@item.ProductName</td>
-									<td>@item.Quantity</td>
-									<td>@item.Price.ToString("C")</td>
+									<th>Product Name</th>
+									<th>Quantity</th>
+									<th>Price</th>
 								</tr>
-							}
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="cartItemsTable">
+							</tbody>
+						</table>
+						<div class="popup-footer">
+							<button class="save-btn" id="closePopup">Close</button>
+						</div>
+					</div>
+				</div>
 
-					<span><strong>Total:</strong> @Model.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</span>
-					<br>
-					<!--<p>You can view the status of your order here:</p>-->
-				</header>
 			</article>
-			
 		</div>
+
+
 		<!-- Footer -->
 		<footer id="footer">
 		</footer>
@@ -207,8 +218,9 @@
 
 	</div>
 
-
+	<!-- Scripts -->
 	<!-- Include Bootstrap CSS -->
+	<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" /> -->
 	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
 	<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
 	<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
@@ -219,9 +231,7 @@
 	<script src="~/assets/js/main.js" asp-append-version="true"></script>
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
-	<script src="~/js/cookies.js" asp-append-version="true"></script>
-	
-
+	<script src="~/js/orderTracking.js" defer asp-append-version="true"></script>
 </body>
 
 </html>

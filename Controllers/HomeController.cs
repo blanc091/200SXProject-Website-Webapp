@@ -21,5 +21,11 @@ namespace _200SXContact.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-    }
+		[HttpGet]
+		[Route("api/is-logged-in")]
+		public IActionResult IsLoggedIn()
+		{
+			return Json(User.Identity.IsAuthenticated);
+		}
+	}
 }

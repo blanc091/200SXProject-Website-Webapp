@@ -117,6 +117,9 @@
 							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
 						</span>
 					</li>
+					<form>
+						@Html.AntiForgeryToken()
+					</form>
 					<li><span>Logged in as @User.Identity.Name</span></li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>

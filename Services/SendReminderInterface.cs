@@ -56,25 +56,25 @@ namespace _200SXContact.Services
 			sb.AppendLine("        <p>Hi " + order.FullName + ",</p>");
 			if (email == _credentials.UserName)
 			{
-				sb.AppendLine("        <p>Your order has been confirmed !</p>");
+				sb.AppendLine("        <p>A new order is registered !</p>");
 			}
 			else
 			{
-				sb.AppendLine("        <p>A new order is registered !</p>");
+				sb.AppendLine("        <p>Your order has been confirmed !</p>");
 			}	
 			sb.AppendLine("        <p><strong>Order ID:</strong> " + order.Id + "</p>");
 			sb.AppendLine("        <p><strong>Order Date:</strong> " + order.OrderDate.ToString("f") + "</p>");
-			sb.AppendLine("        <h2>Order Details:</h2>");
+			sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Order Details:</p></h2>");
 			sb.AppendLine("        <table style='width:100%; border-collapse: collapse;'>");
-			sb.AppendLine("            <tr><th style='border: 1px solid #ece8ed !important !important; padding: 8px;'>Item</th><th style='border: 1px solid #ece8ed !important; padding: 8px;'>Quantity</th><th style='border: 1px solid #ece8ed !important; padding: 8px;'>Price</th></tr>");
+			sb.AppendLine("            <tr><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Item</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Quantity</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Price</p></th></tr>");
 
 			foreach (var item in order.CartItems)
 			{
-				sb.AppendLine($"<tr><td style='border: 1px solid #ece8ed !important; padding: 8px;'>{item.ProductName}</td><td style='border: 1px solid #ece8ed !important; padding: 8px;'>{item.Quantity}</td><td style='border: 1px solid #ece8ed !important; padding: 8px;'>${item.Price.ToString("F2")}</td></tr>");
+				sb.AppendLine($"<tr><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.ProductName}<p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Quantity}</p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Price.ToString("F2")}</p></td></tr>");
 			}
 
 			decimal total = order.CartItems.Sum(item => item.Price * item.Quantity);
-			sb.AppendLine($"<tr><td colspan='2' style='border: 1px solid #ece8ed !important; padding: 8px; text-align: right;'><strong>Total:</strong></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'>${total.ToString("F2")}</td></tr>");
+			sb.AppendLine($"<tr><td colspan='2' style='border: 1px solid #ece8ed !important; padding: 8px; text-align: right;'><strong><p>Total:</p></strong></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{total.ToString("F2")}</p></td></tr>");
 			sb.AppendLine("        </table>");
 			sb.AppendLine("        <p>Thank you !</p>");
 			sb.AppendLine("        <div class='footer'>");
