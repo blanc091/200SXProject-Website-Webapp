@@ -1,4 +1,4 @@
-﻿@model _200SXContact.Models.OrderTrackingViewModel
+﻿@model List<_200SXContact.Models.OrderTrackingViewModel>
 @{
 	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Your orders";
 }
@@ -149,71 +149,71 @@
 			</ul>
 		</nav>
 
-
-		<!-- Main -->
 		<div id="main">
-
-			<!-- Featured Post -->
 			<article class="post featured">
 				<header class="major">
 					<br>
-					<h2 id="customerOrders">Your orders</h2>
-					<span style="display: block; text-align: left;"><strong>Here is a summary of your order:</strong></span><br><br>
+					<h2 id="customerOrders">Your orders</h2><br />
+					<span style="display: block; text-align: left;"><strong>Here is a collection of your orders and their status:</strong></span><br><br>
+					@if (Model != null && Model.Any())
+					{
+						@foreach (var orderViewModel in Model)
+						{
+							<section class="order-summary">
+								<h3>Order ID: @orderViewModel.Order.Id</h3>
+								<p><strong>Full Name:</strong> @orderViewModel.Order.FullName</p>
+								<p><strong>Address:</strong> @orderViewModel.Order.AddressLine1, @orderViewModel.Order.City, @orderViewModel.Order.County</p>
+								<p><strong>Phone:</strong> @orderViewModel.Order.PhoneNumber</p>
+								<p><strong>Email:</strong> @orderViewModel.Order.Email</p>
+								<p><strong>Order Notes:</strong> @orderViewModel.Order.OrderNotes</p>
+								<p><strong>Order Date:</strong> @orderViewModel.Order.OrderDate</p>
+								<p><strong>Updated At:</strong> @orderViewModel.OrderTracking?.StatusUpdatedAt.ToLocalTime()</p>
 
-					<!-- Order details -->
-					<span style="display: block; text-align: left;"><strong>Order ID:</strong> @Model.Order.Id</span><br>
-					<span style="display: block; text-align: left;"><strong>Full name:</strong> @Model.Order.FullName</span><br>
-					<span style="display: block; text-align: left;"><strong>Address:</strong> @Model.Order.AddressLine1</span><br>
-					<span style="display: block; text-align: left;"><strong>City:</strong> @Model.Order.City</span><br>
-					<span style="display: block; text-align: left;"><strong>County:</strong> @Model.Order.County</span><br>
-					<span style="display: block; text-align: left;"><strong>Phone:</strong> @Model.Order.PhoneNumber</span><br>
-					<span style="display: block; text-align: left;"><strong>Email:</strong> @Model.Order.Email</span><br>
-					<span style="display: block; text-align: left;"><strong>Order notes:</strong> @Model.Order.OrderNotes</span><br>
-					<span style="display: block; text-align: left;"><strong>Order date:</strong> @Model.Order.OrderDate</span><br>
-					<span style="display: block; text-align: left;"><strong>Updated At:</strong> @Model.OrderTracking.StatusUpdatedAt.ToLocalTime()</span><br/>
+								<h4>Products</h4>
+								<table>
+									<thead>
+										<tr>
+											<th>Item</th>
+											<th>Quantity</th>
+											<th>Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in orderViewModel.CartItems)
+										{
+											<tr>
+												<td>@item.ProductName</td>
+												<td>@item.Quantity</td>
+												<td>@item.Price.ToString("C")</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+								<p><strong>Total:</strong> @orderViewModel.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</p>
 
-					<!-- Cart items table -->
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Quantity</th>
-								<th>Price</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model.CartItems)
-							{
-								<tr>
-									<td>@item.ProductName</td>
-									<td>@item.Quantity</td>
-									<td>@item.Price.ToString("C")</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-
-					<span><strong>Total:</strong> @Model.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</span>
-					<br>
-
-					<!-- Optionally, display tracking details -->
-					<span style="display: block; text-align: left;"><strong>Status:</strong> @Model.OrderTracking.Status</span><br>
-					<span style="display: block; text-align: left;"><strong>Carrier:</strong> @Model.OrderTracking.Carrier</span><br>
-					<span style="display: block; text-align: left;"><strong>Tracking Number:</strong> @Model.OrderTracking.TrackingNumber</span><br>
+								<h4>Tracking Information</h4>
+								<p><strong>Status:</strong> @orderViewModel.OrderTracking?.Status</p>
+								<p><strong>Carrier:</strong> @orderViewModel.OrderTracking?.Carrier</p>
+								<p><strong>Tracking Number:</strong> @orderViewModel.OrderTracking?.TrackingNumber</p>
+							</section>
+							<hr />
+						}
+					}
+					else
+					{
+						<p>You have no orders yet.</p>
+					}
 				</header>
 			</article>
 		</div>
-		<!-- Footer -->
 		<footer id="footer">
 		</footer>
 
-		<!-- Copyright -->
 		<div id="copyright">
 			<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
 		</div>
 
 	</div>
-
 
 	<!-- Include Bootstrap CSS -->
 	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">

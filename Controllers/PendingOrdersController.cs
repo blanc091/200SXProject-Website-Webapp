@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace _200SXContact.Controllers
@@ -21,50 +22,34 @@ namespace _200SXContact.Controllers
 		}
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> OrderSummary(int orderId)
+		public async Task<IActionResult> UserOrders()
 		{
-			var order = await _context.Orders
-				.FirstOrDefaultAsync(o => o.Id == orderId);
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			if (order == null || order.UserId != _userManager.GetUserId(User))
-			{
-				return NotFound();
-			}
-
-			var orderTracking = await _context.OrderTrackings
-				.FirstOrDefaultAsync(ot => ot.OrderId == orderId);
-
-			if (orderTracking == null)
-			{
-				return NotFound();
-			}
-
-			var cartItemsJson = order.CartItemsJson ?? orderTracking.CartItemsJson;
-			var cartItems = string.IsNullOrEmpty(cartItemsJson)
-				? new List<CartItem>()
-				: JsonSerializer.Deserialize<List<CartItem>>(cartItemsJson);
-
-			var viewModel = new OrderTrackingViewModel
+			var orders = await _context.Orders
+				.Where(o => o.UserId == userId)
+				.ToListAsync();
+			var orderViewModels = orders.Select(order => new OrderTrackingViewModel
 			{
 				Order = order,
-				OrderTracking = orderTracking,
-				CartItems = cartItems
-			};
+				OrderTracking = _context.OrderTrackings.FirstOrDefault(ot => ot.OrderId == order.Id),
+				CartItems = string.IsNullOrWhiteSpace(order.CartItemsJson)
+					? new List<CartItem>()
+					: JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson)
+			}).ToList();
 
-			return View("~/Views/Marketplace/PendingOrdersCustomer.cshtml", viewModel);
+			return View("~/Views/Marketplace/PendingOrdersCustomer.cshtml", orderViewModels);
 		}
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetAllOrders()
 		{
-			// Fetch all orders along with their related data
 			var orders = await _context.Orders
-				.Include(o => o.CartItems) // Include cart items
+				.Include(o => o.CartItems) 
 				.ToListAsync();
 
 			var orderTrackings = await _context.OrderTrackings.ToListAsync();
 
-			// Map the data into a list of view models
 			var viewModels = orders.Select(order => new OrderTrackingViewModel
 			{
 				Order = order,
@@ -72,7 +57,6 @@ namespace _200SXContact.Controllers
 				CartItems = order.CartItems.ToList()
 			}).ToList();
 
-			// Pass the list of view models to the view
 			return View("~/Views/Marketplace/UpdateCustomerOrder.cshtml", viewModels);
 		}
 		[HttpGet]
@@ -116,7 +100,6 @@ namespace _200SXContact.Controllers
 				return BadRequest("Invalid data received.");
 			}
 
-			// Fetch the OrderTracking record
 			var orderTracking = await _context.OrderTrackings
 				.FirstOrDefaultAsync(ot => ot.OrderId == updateDto.OrderId);
 
@@ -125,13 +108,11 @@ namespace _200SXContact.Controllers
 				return NotFound("Order tracking record not found.");
 			}
 
-			// Update fields
 			orderTracking.Status = updateDto.Status;
 			orderTracking.Carrier = updateDto.Carrier;
 			orderTracking.TrackingNumber = updateDto.TrackingNumber;
 			orderTracking.StatusUpdatedAt = DateTime.UtcNow;
 
-			// Save changes
 			await _context.SaveChangesAsync();
 
 			return Ok(new { message = "Order tracking updated successfully!" });

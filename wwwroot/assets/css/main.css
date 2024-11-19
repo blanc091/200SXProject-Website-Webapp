@@ -39,6 +39,36 @@
 			background-color: #bfbfbf;
 		}
 
+.order-summary {
+	margin-bottom: 20px;
+	padding: 15px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+
+	.order-summary h3 {
+		margin-bottom: 10px;
+		color: #333;
+	}
+
+	.order-summary table {
+		width: 100%;
+		margin-top: 10px;
+		border-collapse: collapse;
+	}
+
+	.order-summary th, .order-summary td {
+		border: 1px solid #ddd;
+		padding: 8px;
+		text-align: left;
+	}
+
+	.order-summary th {
+		background-color: #f4f4f4;
+	}
+
+
 .flashy-text {
 	animation: flash 1.2s infinite;
 }
