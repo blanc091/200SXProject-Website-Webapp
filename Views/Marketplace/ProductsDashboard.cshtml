@@ -123,7 +123,11 @@
 					<form>
 						@Html.AntiForgeryToken()
 					</form>
-					<li><span>Logged in as @User.Identity.Name</span></li>
+					<li>
+						<span>
+							<a asp-controller="Account" asp-action="UserProfile">@User.Identity.Name</a>
+						</span>
+					</li>
 					<li>
 						<a href="#" id="logoutLink">Logout</a>
 					</li>
