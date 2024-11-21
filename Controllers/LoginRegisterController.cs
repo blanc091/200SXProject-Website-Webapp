@@ -190,54 +190,65 @@ namespace _200SXContact.Controllers
 			}
 		}
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterViewModel model)
 		{
 			if (User.Identity.IsAuthenticated)
 			{
 				return RedirectToAction("Dashboard", "Dashboard");
 			}
-			if (ModelState.IsValid)
+			ModelState.Remove(nameof(model.honeypotSpam));
+			if (!ModelState.IsValid)
 			{
-				var existingUser = await _userManager.FindByEmailAsync(model.Email)
-								   ?? await _userManager.FindByNameAsync(model.Username);
-
-				if (existingUser != null)
-				{
-					TempData["UserExists"] = "yes";
-					TempData["Message"] = "User already exists!";
-					return View("~/Views/Account/Register.cshtml", model);
-				}
-
-				var user = new User
-				{
-					UserName = model.Username,
-					Email = model.Email,
-					CreatedAt = DateTime.UtcNow,
-					IsEmailVerified = false,
-					EmailVerificationToken = Guid.NewGuid().ToString()
-				};
-
-				var createResult = await _userManager.CreateAsync(user, model.Password);
-				if (!createResult.Succeeded)
-				{
-					foreach (var error in createResult.Errors)
-					{
-						ModelState.AddModelError(string.Empty, error.Description);
-					}
-					return View("~/Views/Account/Register.cshtml", model);
-				}				
-				if (model.SubscribeToNewsletter)
-				{
-					await Subscribe(model.Email);
-				}				
-				var verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
-				await SendVerificationEmail(model.Email, verificationUrl);
-				TempData["IsFormRegisterSuccess"] = "yes";
-				TempData["Message"] = "Registration successful ! Check your email.";
-
-				return RedirectToAction("Login", "LoginRegister");
+				return View("~/Views/Account/Register.cshtml", model);
 			}
-			return View("~/Views/Account/Register.cshtml", model);
+
+			if (!string.IsNullOrWhiteSpace(model.honeypotSpam))
+			{
+				return BadRequest("Spam detected");
+			}
+
+			var existingUser = await _userManager.FindByEmailAsync(model.Email)
+							   ?? await _userManager.FindByNameAsync(model.Username);
+
+			if (existingUser != null)
+			{
+				TempData["UserExists"] = "yes";
+				TempData["Message"] = "User already exists!";
+				return View("~/Views/Account/Register.cshtml", model);
+			}
+
+			var user = new User
+			{
+				UserName = model.Username,
+				Email = model.Email,
+				CreatedAt = DateTime.UtcNow,
+				IsEmailVerified = false,
+				EmailVerificationToken = Guid.NewGuid().ToString()
+			};
+
+			var createResult = await _userManager.CreateAsync(user, model.Password);
+
+			if (!createResult.Succeeded)
+			{
+				foreach (var error in createResult.Errors)
+				{
+					ModelState.AddModelError(string.Empty, error.Description);
+				}
+				return View("~/Views/Account/Register.cshtml", model);
+			}
+
+			if (model.SubscribeToNewsletter)
+			{
+				await Subscribe(model.Email);
+			}
+			var verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
+			await SendVerificationEmail(model.Email, verificationUrl);
+
+			TempData["IsFormRegisterSuccess"] = "yes";
+			TempData["Message"] = "Registration successful! Check your email for verification.";
+
+			return RedirectToAction("Login", "LoginRegister");
 		}
 		private async Task Subscribe(string email)
 		{

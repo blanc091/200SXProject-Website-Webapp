@@ -85,6 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/PendingOrders/GetAllOrders':
             scrollToElement("ordersAll");
             break;
+        case '/Account/UserProfile':
+            scrollToElement("userProfileDash");
+            break;
+        case '/PendingOrders/UserOrders':
+            scrollToElement("customerOrders");
+            break;
     }
 
     if ((isUserLoggedIn && !formSubmitted) ||
@@ -127,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(isUserLoggedIn => {
             if (isUserLoggedIn && window.location.pathname === '/') {
                 scrollToElement("posts");
+                $('#tibi').css("display", "flex");
             }
         });
     function scrollToContactForm() {

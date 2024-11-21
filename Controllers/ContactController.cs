@@ -23,8 +23,13 @@ namespace _200SXContact.Controllers
 		}
 		[HttpPost("send-email")]
 		[ValidateAntiForgeryToken]
-		public IActionResult SendEmail(ContactForm model, string ViewName)
+		public IActionResult SendEmail(ContactForm model, string ViewName, string honeypotSpamContact)
 		{
+			ModelState.Remove("honeypotSpamContact");
+			if (!string.IsNullOrWhiteSpace(honeypotSpamContact))
+			{
+				return BadRequest("Spam detected");
+			}
 			if (ModelState.IsValid)
 			{
 				var sanitizer = new HtmlSanitizer();
@@ -88,7 +93,8 @@ namespace _200SXContact.Controllers
 		}
 		private void SendEmailToAdmin(ContactForm model)
         {
-            try
+			
+			try
             {
                 var fromAddress = new MailAddress(_credentials.UserName, "Admin");
                 var toAddress = new MailAddress(_credentials.UserName, "Admin");

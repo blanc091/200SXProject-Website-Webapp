@@ -6,5 +6,6 @@
 		public string Password { get; set; }
 		public string Email { get; set; }
 		public bool SubscribeToNewsletter { get; set; }
+		public string honeypotSpam { get; set; }
 	}
 }

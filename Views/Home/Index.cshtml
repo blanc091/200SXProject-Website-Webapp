@@ -153,16 +153,20 @@
 					</header>
 					<div class="image main"><img src="~/images/thumbs/pic01g.gif" alt="" /></div>
 				<div class="newsletter-subscription">
-					<span class="date" id="newsletterForm"><i>Subscribe to the Newsletter for email updates !</i></span><br><br>
+					<span class="date" id="newsletterForm"><i>Subscribe to the Newsletter for email updates!</i></span><br><br>
 					<form asp-controller="Newsletter" asp-action="Subscribe" method="post">
 						@Html.AntiForgeryToken()
 						<div class="form-group" style="text-align: center;">
+							<div style="display: none;">
+								<label for="honeypotSpam">Leave this field blank</label>
+								<input type="text" id="honeypotSpam" name="honeypotSpam" autocomplete="off" />
+							</div>
 							<label for="email">Email Address:</label>
-							<input type="email" name="email" class="form-control small-input" required style="margin: 0 auto; display: block;" placeholder="Enter your email"/> <br>
+							<input type="email" name="email" class="form-control small-input" required style="margin: 0 auto; display: block;" placeholder="Enter your email" /> <br>
 							<button type="submit" class="btn-save">Subscribe</button>
 						</div>
-						
 					</form>
+
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				</div>
 				<div class="merchandise">
@@ -801,6 +805,10 @@
 				<form id="contactForm" action="/contact/send-email" method="post">
 					@Html.AntiForgeryToken()
 					<div class="fields">
+						<div style="display: none;">
+							<label for="honeypotSpamContact">Leave this field blank</label>
+							<input type="text" id="honeypotSpamContact" name="honeypotSpamContact" autocomplete="off" />
+						</div>
 						<div class="field">
 							<input type="hidden" name="ViewName" value="Home/Index" />
 						</div>

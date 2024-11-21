@@ -1,20 +1,15 @@
-﻿@model List<_200SXContact.Models.OrderTrackingViewModel>
+﻿@model _200SXContact.Models.UserProfileViewModel
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Your orders";
+	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || User dashboard";
 }
-@{
-	var message = TempData["Message"] as string;
-}
-@{
-	var nonce = Context.Items["CSPNonce"] as string;
-}
-@if (!string.IsNullOrEmpty(message))
+
+@if (TempData["Message"] != null)
 {
 	<div class="modal fade show" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display: block;">
 		<div class="modal-dialog" role="document" style="max-width: 380px;">
 			<div class="modal-content" style="background-color: #f0f0f0;">
 				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
-					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
+					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align:center">@TempData["Message"]</strong>
 				</div>
 			</div>
 		</div>
@@ -55,20 +50,16 @@
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-
 	<title>The Nissan 200SX Project || Import Garage</title>
-
-	<!-- Main CSS -->
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
-
-	<!-- Favicon -->
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 </head>
-
 <body class="is-preload">
+
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
+
 		<!-- Intro -->
 		<div id="intro">
 			<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
@@ -84,56 +75,40 @@
 
 		<!-- Header -->
 		<header id="header">
-			<a asp-controller="Home" asp-action="Index" class="logo">Import Garage || Jap works</a>
+			<a asp-controller="Home" asp-action="Index" id="maintenApp" class="logo">Import Garage || Jap works</a>
 		</header>
 
 		<!-- Nav -->
 		<nav id="nav">
-			<ul class="links">
-				<li class="active">
-					<a asp-controller="Home" asp-action="Index">Build updates</a>
-				</li>
-				<li>
-					<a href="#" id="contactLink">Contact</a>
-				</li>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<li>
-						<a href="@Url.Action("Dashboard", "Dashboard")" id="dashboardLink">MaintenApp</a>
+			@try
+			{
+				<ul class="links">
+					<li class="active">
+						<a asp-controller="Home" asp-action="Index">Build updates</a>
 					</li>
-				}
-				else
-				{
 					<li>
-						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
+						<a href="#contactForm" id="contactLink">Contact</a>
 					</li>
-				}
-				@if (User.Identity.IsAuthenticated)
-				{
 					<li>
 						<span>
-							<a asp-controller="UserBuilds" asp-action="AddUserBuild">Add my build</a>
+							<a asp-controller="UserBuilds" asp-action="UserContentDashboard">User Builds</a>
 						</span>
 					</li>
-					<form>
-						@Html.AntiForgeryToken()
-					</form>
-					<li><span>Logged in as @User.Identity.Name</span></li>
-					<li>
-						<a href="#" id="logoutLink">Logout</a>
-					</li>
-				}
-			</ul>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li><span>Logged in as @User.Identity.Name</span></li>
+						<li>
+							<a href="#" id="logoutLink">Logout</a>
+						</li>
+					}
+				</ul>
+			}
+			catch (Exception ex)
+			{
+				<p>Error: @ex.Message</p>
+			}
+
 			<ul class="icons">
-				@if (User.IsInRole("Admin"))
-				{
-					<li>
-						<a asp-controller="Account" asp-action="AdminDash" class="icon admin-link" title="Admin">
-							<span class="admin-icon">A</span>
-							<span class="label">Admin</span>
-						</a>
-					</li>
-				}
 				<li>
 					<a href="https://www.facebook.com/nissan200sxproject" class="icon brands fa-facebook-f">
 						<span class="label">Facebook</span>
@@ -147,73 +122,70 @@
 			</ul>
 		</nav>
 
+		<!-- Main -->
 		<div id="main">
-			<article class="post featured">
+
+			<!-- Featured Post -->
+			<article class="post featured">				
 				<header class="major">
-					<br>
-					<h2 id="customerOrders">Your orders</h2><br />
-					<span style="display: block; text-align: left;"><strong>Here is a collection of your orders and their status:</strong></span><br><br>
-					@if (Model != null && Model.Any())
-					{
-						@foreach (var orderViewModel in Model)
-						{
-							<section class="order-summary">
-								<h3>Order ID: @orderViewModel.Order.Id</h3>
-								<p><strong>Full Name:</strong> @orderViewModel.Order.FullName</p>
-								<p><strong>Address:</strong> @orderViewModel.Order.AddressLine1, @orderViewModel.Order.City, @orderViewModel.Order.County</p>
-								<p><strong>Phone:</strong> @orderViewModel.Order.PhoneNumber</p>
-								<p><strong>Email:</strong> @orderViewModel.Order.Email</p>
-								<p><strong>Order Notes:</strong> @orderViewModel.Order.OrderNotes</p>
-								<p><strong>Order Date:</strong> @orderViewModel.Order.OrderDate</p>
-								<p><strong>Updated At:</strong> @orderViewModel.OrderTracking?.StatusUpdatedAt.ToLocalTime()</p>
-
-								<h4>Products</h4>
-								<table>
-									<thead>
-										<tr>
-											<th>Item</th>
-											<th>Quantity</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach (var item in orderViewModel.CartItems)
-										{
-											<tr>
-												<td>@item.ProductName</td>
-												<td>@item.Quantity</td>
-												<td>@item.Price.ToString("C")</td>
-											</tr>
-										}
-									</tbody>
-								</table>
-								<p><strong>Total:</strong> @orderViewModel.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</p>
-
-								<h4>Tracking Information</h4>
-								<p><strong>Status:</strong> @orderViewModel.OrderTracking?.Status</p>
-								<p><strong>Carrier:</strong> @orderViewModel.OrderTracking?.Carrier</p>
-								<p><strong>Tracking Number:</strong> @orderViewModel.OrderTracking?.TrackingNumber</p>
-							</section>
-							<hr />
-						}
-					}
-					else
-					{
-						<p>You have no orders yet.</p>
-					}
+					<h2 id="userProfileDash">User Profile</h2>							
+						<div class="userDashText">
+							<span><strong>Email:</strong> @Model.Email</span>
+							</div>
+						<div class="userDashText">
+							<span><strong>Created At:</strong> @Model.CreatedAt.ToLocalTime()</span>
+						</div>
+							<div class="userDashText">
+							<span><strong>Last Login:</strong> @Model.LastLogin?.ToLocalTime()</span>
+						</div>
+					<div class="userDash">
+						<span><strong>Checkout your orders here:</strong> </span>
+						</div>
+							<div class="userDash">
+								<a href="@Url.Action("UserOrders", "PendingOrders")" class="btn-save" role="button">Orders</a>
+							</div>
+							<h3>Your Builds</h3>
+							@if (Model.UserBuilds != null && Model.UserBuilds.Any())
+							{
+								foreach (var build in Model.UserBuilds)
+								{
+									<div class="userDash">
+									<a href="@Url.Action("DetailedUserView", "UserBuilds", new { id = build.Id })" class="btn-save" role="button">
+										@build.Title
+									</a>
+									</div>
+								}
+							}
+							else
+							{
+								<div class="userDash">
+								<span>No builds found.</span>
+								</div>
+							}
+					
+					<br />
+					<form asp-action="DeleteAccount" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
+					<button type="submit" class="btn-delete">Delete Account</button>
+					</form>
+						
+					
 				</header>
+				<br>
 			</article>
 		</div>
+
+		<!-- Footer -->
 		<footer id="footer">
 		</footer>
 
+		<!-- Copyright -->
 		<div id="copyright">
 			<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
 		</div>
 
 	</div>
 
-	<!-- Include Bootstrap CSS -->
+
 	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
 	<script src="~/assets/js/jquery.min.js" asp-append-version="true"></script>
 	<script src="~/assets/js/jquery.scrollex.min.js" asp-append-version="true"></script>
@@ -222,11 +194,10 @@
 	<script src="~/assets/js/breakpoints.min.js" asp-append-version="true"></script>
 	<script src="~/assets/js/util.js" asp-append-version="true"></script>
 	<script src="~/assets/js/main.js" asp-append-version="true"></script>
+	<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/logInlogOut.js" asp-append-version="true"></script>
 	<script src="~/js/cookies.js" asp-append-version="true"></script>
-
-
+	<script src="~/js/userProfile.js" asp-append-version="true"></script>
 </body>
-
 </html>

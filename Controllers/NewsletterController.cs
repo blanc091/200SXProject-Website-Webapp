@@ -112,8 +112,12 @@ namespace _200SXContact.Controllers
 			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}
 		[HttpPost]
-		public IActionResult Subscribe(string email)
+		public IActionResult Subscribe(string email, string honeypotSpam)
 		{
+			if (!string.IsNullOrWhiteSpace(honeypotSpam))
+			{
+				return BadRequest("Spam detected");
+			}
 			string viewPathSuccess = $"~/Views/Home/Index.cshtml";
 			if (string.IsNullOrEmpty(email))
 			{

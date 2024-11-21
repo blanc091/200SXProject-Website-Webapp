@@ -80,10 +80,8 @@
 			</ul>
 		</nav>
 
-
 		<!-- Main -->
 		<div id="main">
-
 			<!-- Featured Post -->
 			<article class="post featured">
 				<header class="major">
@@ -98,29 +96,23 @@
 						<label for="subject">Subject:</label>
 						<input type="text" name="Subject" class="form-control" asp-for="Subject" required />
 					</div>
-
 					<div class="form-group">
 						<label for="body">Newsletter Body:</label>
 						<textarea name="Body" class="form-control" asp-for="Body" rows="10" required>@Html.Raw(Model.Body)</textarea>
 					</div>
-
 				<button type="submit" class="btn-add-entry">Send Newsletter</button>
 				</form>
-
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
 				<div>
 					@if (TempData["Message"] != null)
 					{
 						<div class="alert alert-info">@TempData["Message"]</div>
 					}
 				</div>
-
 				<br>
 
 			</article>
 		</div>
-
 		<!-- Copyright -->
 		<div id="copyright">
 			<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>

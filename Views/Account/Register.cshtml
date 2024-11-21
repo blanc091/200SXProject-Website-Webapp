@@ -57,13 +57,11 @@
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 	<style>
-		/* Target the validation summary list to remove bullet points */
 		.validation-summary-valid ul,
 		.validation-summary-errors ul {
 			list-style-type: none;
 			padding-left: 0;
 		}
-
 			.validation-summary-valid ul li,
 			.validation-summary-errors ul li {
 				margin-left: 0;
@@ -122,11 +120,8 @@
 				</li>
 			</ul>
 		</nav>
-
-
 		<!-- Main -->
 		<div id="main">
-
 			<!-- Featured Post -->
 			<article class="post featured">
 				<header class="major">
@@ -134,12 +129,15 @@
 					<h7 id="registerForm">MaintenApp</h7>
 					<br>
 					<p>Use the below form to register a new user account for MaintenApp.</p>
-				</header>
-				
+				</header>				
 				<!-- Register Form -->
 				<form id="registerForm" asp-controller="LoginRegister" asp-action="Register" method="post">
 					@Html.AntiForgeryToken()
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div style="display: none;">
+						<label for="honeypotSpam">Leave this field blank</label>
+						<input id="honeypotSpam" name="honeypotSpam" type="text" autocomplete="off" />
+					</div>
 					<div class="form-group">
 						<label asp-for="Username"></label>
 						<input asp-for="Username" class="form-control" />
@@ -154,7 +152,8 @@
 						<label asp-for="Email"></label>
 						<input asp-for="Email" class="form-control" />
 						<span asp-validation-for="Email" class="text-danger"></span>
-					</div><br>
+					</div>
+					<br>
 					<div class="form-group d-flex align-items-center justify-content-center">
 						<label class="labelCheck">
 							Subscribe to the Newsletter?&nbsp;
@@ -163,6 +162,7 @@
 					</div>
 					<button type="submit" class="btn-add-entry">Create Account</button>
 				</form>
+
 				<br>
 				
 			</article>
