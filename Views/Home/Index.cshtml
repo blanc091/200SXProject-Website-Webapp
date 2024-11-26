@@ -157,8 +157,10 @@
 					</header>
 					<div class="image main"><img src="~/images/thumbs/pic01g.gif" alt="" /></div>
 				<div class="newsletter-subscription">
-					<span class="date" id="newsletterForm"><i>Subscribe to the Newsletter for email updates!</i></span><br><br>
-					<form asp-controller="Newsletter" asp-action="Subscribe" method="post">
+					<span class="date" id="newsletterFormSpan">
+						<i>Subscribe to the Newsletter for email updates!</i>
+					</span><br><br>
+					<form asp-controller="Newsletter" asp-action="Subscribe" method="post" id="newsletterForm">
 						@Html.AntiForgeryToken()
 						<div class="form-group" style="text-align: center;">
 							<div style="display: none;">
@@ -166,13 +168,24 @@
 								<input type="text" id="honeypotSpam" name="honeypotSpam" autocomplete="off" />
 							</div>
 							<label for="email">Email Address:</label>
-							<input type="email" name="email" class="form-control small-input" required style="margin: 0 auto; display: block;" placeholder="Enter your email" /> <br>
-							<button type="submit" class="btn-save">Subscribe</button>
+							<input type="email" name="email" class="form-control small-input" required style="margin: 0 auto; display: block;" placeholder="Enter your email" />
+							<br>
+							<!-- Hidden input for reCAPTCHA -->
+							<div id="g-recaptcha-newsletter"></div>
+							<input type="hidden" id="gRecaptchaResponseNewsletter" name="gRecaptchaResponseNewsletter" />
+							<button type="submit" class="btn-save g-recaptcha"
+									data-sitekey="6LfHIYgqAAAAALHD85A5uSVmIOeCS4Q458X6_LIv"
+									data-callback="onSubmitWithEvent"
+									data-formid="newsletterForm">
+								Subscribe
+							</button>							
 						</div>
 					</form>
 
+					<!-- Validation summary -->
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				</div>
+
 				<div class="merchandise">
 					<a asp-controller="Products" asp-action="ProductsDashboard">
 						<span class="date flashy-text" id="merchandiseSpan"><i><strong>For merchandise, click here !</strong></i></span>
@@ -820,6 +833,7 @@
 							<label for="name">Name</label>
 							<input type="text" name="name" id="name" value="@Model?.Name" placeholder="Enter your name" />
 							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Name"]?.Errors.Count > 0)
+
 							{
 								<span class="text-danger">@ViewData.ModelState["Name"].Errors.First().ErrorMessage</span>
 							}
@@ -828,6 +842,7 @@
 							<label for="email">Email</label>
 							<input type="text" name="email" id="email" value="@Model?.Email" placeholder="Enter your email" />
 							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Email"]?.Errors.Count > 0)
+
 							{
 								<span class="text-danger">@ViewData.ModelState["Email"].Errors.First().ErrorMessage</span>
 							}
@@ -836,15 +851,29 @@
 							<label for="message">Message</label>
 							<textarea name="message" id="message" rows="3" placeholder="Enter your message">@Model?.Message</textarea>
 							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Message"]?.Errors.Count > 0)
+
 							{
 								<span class="text-danger">@ViewData.ModelState["Message"].Errors.First().ErrorMessage</span>
 							}
 						</div>
 					</div>
 					<ul class="actions">
-						<li><input type="submit" value="Send Message" /></li>
+						<li>
+							<div id="g-recaptcha-contact"></div>
+							<input type="hidden" id="gRecaptchaResponseContact" name="gRecaptchaResponseContact" />
+							<button type="submit"
+									class="btn-save g-recaptcha"
+									data-sitekey="6LfHIYgqAAAAALHD85A5uSVmIOeCS4Q458X6_LIv"
+									data-callback="onSubmitWithEvent"
+									data-formid="contactForm">
+								Send Message
+							</button>
+						</li>
 					</ul>
+
 				</form>
+
+
 				</section>
 				<section class="split contact">
 					<section class="alt">
@@ -868,7 +897,6 @@
 					</section>
 				</section>
 			</footer>
-
 			<!-- Copyright -->
 			<div id="copyright">
 				<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
@@ -894,6 +922,8 @@
 		<script src="~/js/ScrollToTop.js" asp-append-version="true"></script>
 		<script src="~/js/cookies.js" asp-append-version="true"></script>
 		<script src="~/js/floatLoginBtn.js" asp-append-version="true"></script>
+		<script src="https://www.google.com/recaptcha/api.js" async defer asp-append-version="true"></script>
+		<script src="~/js/recaptcha.js" asp-append-version="true"></script>
 </body>
 	
 </html>

@@ -25,7 +25,8 @@ namespace _200SXContact.Controllers
 		private readonly ILogger<LoginRegisterController> _logger;
 		private readonly UserManager<User> _userManager;
 		private readonly NetworkCredential _credentials;
-		public LoginRegisterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, ILogger<LoginRegisterController> logger, SignInManager<User> signInManager, UserManager<User> userManager)
+		private readonly IConfiguration _configuration;
+		public LoginRegisterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, ILogger<LoginRegisterController> logger, SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration)
 		{
 			_context = context;
 			_userManager = userManager;
@@ -34,6 +35,7 @@ namespace _200SXContact.Controllers
 			_logger = logger;
 			var emailSettings = appSettings.Value.EmailSettings;
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
+			_configuration = configuration;
 		}
 		[HttpGet]
 		[AllowAnonymous]
@@ -191,33 +193,35 @@ namespace _200SXContact.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Register(RegisterViewModel model)
+		public async Task<IActionResult> Register(RegisterViewModel model, string gRecaptchaResponseRegister)
 		{
 			if (User.Identity.IsAuthenticated)
 			{
 				return RedirectToAction("Dashboard", "Dashboard");
+			}
+			if (string.IsNullOrWhiteSpace(gRecaptchaResponseRegister) || !await VerifyRecaptchaAsync(gRecaptchaResponseRegister))
+			{
+				TempData["IsFormRegisterSuccess"] = "no";
+				TempData["Message"] = "Failed reCAPTCHA validation.";
+				return View("~/Views/Home/Index.cshtml");
 			}
 			ModelState.Remove(nameof(model.honeypotSpam));
 			if (!ModelState.IsValid)
 			{
 				return View("~/Views/Account/Register.cshtml", model);
 			}
-
 			if (!string.IsNullOrWhiteSpace(model.honeypotSpam))
 			{
 				return BadRequest("Spam detected");
 			}
-
 			var existingUser = await _userManager.FindByEmailAsync(model.Email)
 							   ?? await _userManager.FindByNameAsync(model.Username);
-
 			if (existingUser != null)
 			{
 				TempData["UserExists"] = "yes";
-				TempData["Message"] = "User already exists!";
+				TempData["Message"] = "User already exists !";
 				return View("~/Views/Account/Register.cshtml", model);
 			}
-
 			var user = new User
 			{
 				UserName = model.Username,
@@ -226,9 +230,7 @@ namespace _200SXContact.Controllers
 				IsEmailVerified = false,
 				EmailVerificationToken = Guid.NewGuid().ToString()
 			};
-
 			var createResult = await _userManager.CreateAsync(user, model.Password);
-
 			if (!createResult.Succeeded)
 			{
 				foreach (var error in createResult.Errors)
@@ -237,18 +239,44 @@ namespace _200SXContact.Controllers
 				}
 				return View("~/Views/Account/Register.cshtml", model);
 			}
-
 			if (model.SubscribeToNewsletter)
 			{
 				await Subscribe(model.Email);
 			}
 			var verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
 			await SendVerificationEmail(model.Email, verificationUrl);
-
 			TempData["IsFormRegisterSuccess"] = "yes";
 			TempData["Message"] = "Registration successful! Check your email for verification.";
 
 			return RedirectToAction("Login", "LoginRegister");
+		}
+		private async Task<bool> VerifyRecaptchaAsync(string token)
+		{
+			var secretKey = _configuration["Recaptcha:SecretKey"];
+			using (var client = new HttpClient())
+			{
+				var requestContent = new FormUrlEncodedContent(new Dictionary<string, string>
+		{
+			{ "secret", secretKey },
+			{ "response", token }
+		});
+
+				var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", requestContent);
+				if (response.IsSuccessStatusCode)
+				{
+					var jsonString = await response.Content.ReadAsStringAsync();
+					Console.WriteLine($"reCAPTCHA Response: {jsonString}");
+
+					dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
+					return result.success == true;
+				}
+				else
+				{
+					Console.WriteLine($"Failed to verify reCAPTCHA: {response.StatusCode}");
+				}
+			}
+
+			return false;
 		}
 		private async Task Subscribe(string email)
 		{

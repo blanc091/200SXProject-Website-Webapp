@@ -3,8 +3,8 @@
     scrollToTopBtn.innerText = 'Top';
     scrollToTopBtn.id = 'scrollToTop';
     scrollToTopBtn.style.position = 'fixed';
-    scrollToTopBtn.style.bottom = '20px';
-    scrollToTopBtn.style.right = '20px';
+    scrollToTopBtn.style.bottom = '100px';
+    scrollToTopBtn.style.right = '10px';
     scrollToTopBtn.style.display = 'none';
     scrollToTopBtn.style.zIndex = '1000';
     scrollToTopBtn.style.padding = '10px 15px';

@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
             scrollToElement("maintenApp");
             break;
         case '/LoginRegister/Register':
-            scrollToElement("registerForm");
+            scrollToElement("registerFormSpan");
             break;
         case '/Newsletter/Subscribe':
-            scrollToElement("newsletterForm");
+            scrollToElement("newsletterFormSpan");
             break;
         case '/UserBuilds/AddUserBuild':
             scrollToElement("addBuild");

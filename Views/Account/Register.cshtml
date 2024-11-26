@@ -130,7 +130,7 @@
 			<article class="post featured">
 				<header class="major">
 					<span class="date"></span>
-					<h7 id="registerForm">MaintenApp</h7>
+					<h7 id="registerFormSpan">MaintenApp</h7>
 					<br>
 					<p>Use the below form to register a new user account for MaintenApp.</p>
 				</header>				
@@ -164,11 +164,16 @@
 							<input asp-for="SubscribeToNewsletter" id="subscribeCheckbox" />
 						</label>
 					</div>
-					<button type="submit" class="btn-add-entry">Create Account</button>
+					<div id="g-recaptcha-register"></div>
+					<input type="hidden" id="gRecaptchaResponseRegister" name="gRecaptchaResponseRegister" />
+					<button type="submit" class="btn-add-entry g-recaptcha"
+							data-sitekey="6LfHIYgqAAAAALHD85A5uSVmIOeCS4Q458X6_LIv"
+							data-callback="onSubmitWithEvent"
+							data-formid="registerForm">
+						Create Account
+					</button>
 				</form>
-
-				<br>
-				
+				<br>				
 			</article>
 		</div>
 
@@ -196,5 +201,7 @@
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/registerNewsletter.js" asp-append-version="true"></script>
 	<script src="~/js/cookies.js" asp-append-version="true"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer asp-append-version="true"></script>
+	<script src="~/js/recaptcha.js" asp-append-version="true"></script>
 </body>
 </html>

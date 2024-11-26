@@ -16,12 +16,13 @@ namespace _200SXContact.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly NetworkCredential _credentials;
-
-		public NewsletterController(ApplicationDbContext context, IOptions<AppSettings> appSettings)
+		private readonly IConfiguration _configuration;
+		public NewsletterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, IConfiguration configuration)
 		{
 			_context = context;
 			var emailSettings = appSettings.Value.EmailSettings;
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
+			_configuration = configuration;
 		}
 		[Authorize(Roles = "Admin")] 
 		public IActionResult CreateNewsletter()
@@ -112,18 +113,26 @@ namespace _200SXContact.Controllers
 			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}
 		[HttpPost]
-		public IActionResult Subscribe(string email, string honeypotSpam)
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Subscribe(string email, string honeypotSpam, string gRecaptchaResponseNewsletter)
 		{
 			if (!string.IsNullOrWhiteSpace(honeypotSpam))
 			{
 				return BadRequest("Spam detected");
 			}
-			string viewPathSuccess = $"~/Views/Home/Index.cshtml";
+
+			if (string.IsNullOrWhiteSpace(gRecaptchaResponseNewsletter) || !await VerifyRecaptchaAsync(gRecaptchaResponseNewsletter))
+			{
+				TempData["IsNewsletterError"] = "yes";
+				TempData["Message"] = "Failed reCAPTCHA validation.";
+				return View("~/Views/Home/Index.cshtml");
+			}
+
 			if (string.IsNullOrEmpty(email))
 			{
-				TempData["IsNewsletterSubscribed"] = "yes";
 				TempData["IsNewsletterError"] = "yes";
 				TempData["Message"] = "Email required !";
+				return View("~/Views/Home/Index.cshtml");
 			}
 
 			var existingSubscription = _context.NewsletterSubscriptions
@@ -136,14 +145,14 @@ namespace _200SXContact.Controllers
 					existingSubscription.IsSubscribed = true;
 					existingSubscription.SubscribedAt = DateTime.Now;
 					_context.SaveChanges();
-					TempData["IsNewsletterSubscribed"] = "yes";					
+					TempData["IsNewsletterSubscribed"] = "yes";
+					TempData["IsNewsletterError"] = "no";
 					TempData["Message"] = "Email resubscribed successfully !";
-					return View(viewPathSuccess);
+					return View("~/Views/Home/Index.cshtml");
 				}
-				TempData["IsNewsletterSubscribed"] = "yes";
 				TempData["IsNewsletterError"] = "yes";
 				TempData["Message"] = "Email already registered !";
-				return View(viewPathSuccess);
+				return View("~/Views/Home/Index.cshtml");
 			}
 
 			var subscription = new NewsletterSubscription
@@ -156,10 +165,38 @@ namespace _200SXContact.Controllers
 			_context.SaveChanges();
 
 			TempData["IsNewsletterSubscribed"] = "yes";
+			TempData["IsNewsletterError"] = "no";
 			TempData["Message"] = "Subscribed successfully !";
-			return View(viewPathSuccess);
+			return View("~/Views/Home/Index.cshtml");
 		}
+		private async Task<bool> VerifyRecaptchaAsync(string token)
+		{
+			var secretKey = _configuration["Recaptcha:SecretKey"];
+			using (var client = new HttpClient())
+			{
+				var requestContent = new FormUrlEncodedContent(new Dictionary<string, string>
+		{
+			{ "secret", secretKey },
+			{ "response", token }
+		});
 
+				var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", requestContent);
+				if (response.IsSuccessStatusCode)
+				{
+					var jsonString = await response.Content.ReadAsStringAsync();
+					Console.WriteLine($"reCAPTCHA Response: {jsonString}");
+
+					dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
+					return result.success == true;
+				}
+				else
+				{
+					Console.WriteLine($"Failed to verify reCAPTCHA: {response.StatusCode}");
+				}
+			}
+
+			return false;
+		}
 		[HttpPost]
 		public IActionResult Unsubscribe(string email)
 		{

@@ -8,8 +8,8 @@ async function initialize() {
   const session = await response.json();
 
   if (session.status == 'open') {
-      //window.replace('https://200sxproject.azurewebsites.net/Stripe/StripeProcessor')
-      window.replace('https://localhost:7109/Stripe/StripeProcessor') 
+      window.replace('https://200sxproject.azurewebsites.net/Stripe/StripeProcessor')
+     // window.replace('https://localhost:7109/Stripe/StripeProcessor') 
   } else if (session.status == 'complete') {
     document.getElementById('success').classList.remove('hidden');
     document.getElementById('customer-email').textContent = session.customer_email

@@ -162,40 +162,46 @@ app.Use(async (context, next) =>
 	context.Items["CSPNonce"] = nonce;
 
 	var cspPolicy = $"default-src 'self'; " +
-				$"script-src 'self' 'nonce-{nonce}' " +
-				"https://www.googletagmanager.com " +
-				"https://pagead2.googlesyndication.com " +
-				"https://aadcdn.msftauth.net " +
-				"https://*.googleapis.com " +
-				"https://login.microsoftonline.com " +
-				"https://cdnjs.cloudflare.com " +
-				"https://stackpath.bootstrapcdn.com " +
-				"https://cdn.jsdelivr.net " + 
-				"https://www.google-analytics.com " +
-				"https://ep2.adtrafficquality.google " +
-				"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js " +
-				"https://*.paypal.com " +
-				"https://www.paypalobjects.com " +
-				"blob: https://newassets.hcaptcha.com https://*.hcaptcha.com " + 
-				"https://*.stripe.com;" + 
-				$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' " +
-				"https://stackpath.bootstrapcdn.com " +
-				"https://cdnjs.cloudflare.com " +
-				"https://cdn.jsdelivr.net " + 
-				"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css; " +  
-				$"font-src 'self' https://fonts.gstatic.com data:; " +
-				$"img-src 'self' https://www.google.com https://*.ibb.co/ " +
-				"https://www.paypalobjects.com " +
-				"https://*.adtrafficquality.google https://pagead2.googlesyndication.com data:; " +
-				$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net " +
-				"https://www.googletagmanager.com https://*.paypal.com " +
-				"https://region1.google-analytics.com https://*.adtrafficquality.google https://*.stripe.com https://*.hcaptcha.com " +
-				"https://pagead2.googlesyndication.com ws://localhost:59950; " +
-				$"frame-src 'self' https://pagead2.googlesyndication.com " +
-				"https://*.paypal.com " +
-				"https://*.stripe.com " +
-				"https://*.hcaptcha.com " +
-				"https://*.adtrafficquality.google;";
+					$"script-src 'self' 'nonce-{nonce}' " +
+					"https://www.googletagmanager.com " +
+					"https://pagead2.googlesyndication.com " +
+					"https://aadcdn.msftauth.net " +
+					"https://*.googleapis.com " +
+					"https://login.microsoftonline.com " +
+					"https://cdnjs.cloudflare.com " +
+					"https://stackpath.bootstrapcdn.com " +
+					"https://cdn.jsdelivr.net " +
+					"https://www.google-analytics.com " +
+					"https://ep2.adtrafficquality.google " +
+					"https://*.stripe.network " +
+					"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js " +
+					"https://*.paypal.com " +
+					"https://www.paypalobjects.com " +
+					"blob: https://newassets.hcaptcha.com https://*.hcaptcha.com " +
+					"https://*.stripe.com " +
+					"https://www.google.com/recaptcha/api.js " +
+					"https://www.gstatic.com/recaptcha/; " +
+					$"style-src 'self' https://fonts.googleapis.com 'unsafe-inline' " +
+					"https://stackpath.bootstrapcdn.com " +
+					"https://cdnjs.cloudflare.com " +
+					"https://cdn.jsdelivr.net " +
+					"https://*.google.com " +
+					"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css; " +
+					$"font-src 'self' https://fonts.gstatic.com data:; " +
+					$"img-src 'self' https://www.google.com https://*.ibb.co/ " +
+					"https://www.paypalobjects.com " +
+					"https://*.adtrafficquality.google https://pagead2.googlesyndication.com data: https://www.gstatic.com/recaptcha/; " +
+					$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net " +
+					"https://www.googletagmanager.com https://*.paypal.com " +
+					"https://region1.google-analytics.com https://*.adtrafficquality.google https://*.stripe.com https://*.hcaptcha.com " +
+					"https://*.google.com " +
+					"https://pagead2.googlesyndication.com ws://localhost:59950; " +
+					$"frame-src 'self' https://pagead2.googlesyndication.com " +
+					"https://*.paypal.com " +
+					"https://*.stripe.com " +
+					"https://*.hcaptcha.com " +
+					"https://*.google.com " + 
+					"https://*.adtrafficquality.google;";
 
 
 	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
