@@ -216,11 +216,9 @@ namespace _200SXContact.Services
 			}
 			catch (SmtpException ex)
 			{
-				// Handle SMTP 
 			}
 			catch (Exception ex)
 			{
-				// Handle other exception
 			}
 		}
 		public async Task SendDueDateReminder(string userEmail, Item item, int daysBeforeDue)
@@ -228,7 +226,7 @@ namespace _200SXContact.Services
 			try
 			{
 				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
-				var toAddress = new MailAddress(userEmail); 
+				var toAddress = new MailAddress(userEmail);
 				string subject = $"Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days";
 				string body = $"<p>This is a reminder that your service item '<strong>{item.EntryItem}</strong>' is due on <strong>{item.DueDate.ToShortDateString()}</strong>.</p>";
 				using (var smtpClient = new SmtpClient
@@ -255,12 +253,14 @@ namespace _200SXContact.Services
 				var errorMessage = $"SMTP Error: {ex.Message}\n" +
 								   $"StatusCode: {ex.StatusCode}\n" +
 								   $"InnerException: {ex.InnerException?.Message}";
-				await _loggerService.LogAsync($"SMTP Error: {ex.Message}", "Error");
+				await _loggerService.LogAsync($"SMTP Error: {ex.Message}", "Error", ex.ToString());
+
 				throw new Exception("Failed to send email for due date reminder. Please try again later.", ex);
 			}
 			catch (Exception ex)
 			{
-				await _loggerService.LogAsync($"Unexpected Error: {ex.Message}", "Error");
+				await _loggerService.LogAsync($"Unexpected Error: {ex.Message}", "Error", ex.ToString());
+
 				throw new Exception("An unexpected error occurred while sending the due date reminder email.", ex);
 			}
 		}

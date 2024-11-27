@@ -106,9 +106,18 @@ builder.Services.AddSession(options =>
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
-builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Register DbContext, Email service, Logger service, etc.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
+
+// Register DueDateReminderService as Scoped
+builder.Services.AddScoped<DueDateReminderService>();
+
+// Register a hosted service that will manually resolve DueDateReminderService
+builder.Services.AddHostedService<DueDateReminderServiceHost>();
+
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);

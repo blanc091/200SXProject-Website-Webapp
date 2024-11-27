@@ -7,7 +7,7 @@ namespace _200SXContact.Services
 {
 	public interface ILoggerService
 	{
-		Task LogAsync(string message, string logLevel);
+		Task LogAsync(string message, string logLevel, string exception);
 	}
 	public class LoggerService : ILoggerService
 	{
@@ -17,13 +17,14 @@ namespace _200SXContact.Services
 		{
 			_context = context;
 		}
-		public async Task LogAsync(string message, string logLevel)
+		public async Task LogAsync(string message, string logLevel, string exception = "")
 		{
 			var logEntry = new LoggingModel
 			{
 				Message = message,
 				Timestamp = DateTime.UtcNow,
-				LogLevel = logLevel
+				LogLevel = logLevel,
+				Exception = exception
 			};
 			_context.Logging.Add(logEntry);
 			await _context.SaveChangesAsync();
