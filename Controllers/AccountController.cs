@@ -20,17 +20,12 @@ namespace _200SXContact.Controllers
 			_signInManager = signInManager;
 		}
 		[HttpGet]
+		[Route("account/admin-dashboard")]
 		[Authorize(Roles = "Admin")]
 		public IActionResult AdminDash()
 		{
 			return View("~/Views/Account/AdminDash.cshtml");
-		}
-		[HttpGet]
-		[Authorize]
-		public IActionResult UserDash()
-		{
-			return View("~/Views/Account/UserDash.cshtml");
-		}
+		}		
 		[HttpGet]
 		[AllowAnonymous]
 		public async Task<IActionResult> Login(string returnUrl = null)
@@ -82,7 +77,6 @@ namespace _200SXContact.Controllers
 					{
 						return View("~/Views/Newsletter/CreateNewsletter.cshtml");
 					}
-					//implement nice try modal here
 					ViewData["ReturnUrl"] = returnUrl;
 					return View("~/Views/Home/Index.cshtml");
 				}
@@ -90,6 +84,7 @@ namespace _200SXContact.Controllers
 			}
 		}
 		[HttpGet]
+		[Route("account/user-profile")]
 		[Authorize]
 		public async Task<IActionResult> UserProfile()
 		{

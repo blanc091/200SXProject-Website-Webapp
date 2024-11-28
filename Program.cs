@@ -42,10 +42,8 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 			EmailConfirmed = true,
 			CreatedAt = DateTime.Now,
 			IsEmailVerified = true
-		};
-				
+		};				
 		var createAdminUserResult = await userManager.CreateAsync(admin, adminPassword);
-
 		if (createAdminUserResult.Succeeded)
 		{
 			await userManager.AddToRoleAsync(admin, "Admin");
@@ -85,7 +83,7 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowSpecificOrigins", builder =>
 	{
-		builder.WithOrigins("https://localhost:7109","https://200sxproject.com", "https://*.stripe.com", "https://*.hcaptcha.com")
+		builder.WithOrigins("https://preprod.200sxproject.com", "https://localhost:7109","https://200sxproject.com", "https://*.stripe.com", "https://*.hcaptcha.com")
 			   .AllowAnyHeader() 
 			   .AllowAnyMethod() 
 			   .AllowCredentials();
@@ -111,13 +109,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
-
-// Register DueDateReminderService as Scoped
 builder.Services.AddScoped<DueDateReminderService>();
-
-// Register a hosted service that will manually resolve DueDateReminderService
 builder.Services.AddHostedService<DueDateReminderServiceHost>();
-
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
@@ -129,12 +122,16 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		options.LoginPath = "/LoginRegister/Login";
 		options.LogoutPath = "/LoginRegister/Logout";
 		options.AccessDeniedPath = "/LoginRegister/AccessDenied";
-		options.Cookie.Name = "_200SXContact.AuthCookie";
-		options.Cookie.HttpOnly = true;		
+		//options.Cookie.Name = "_200SXContact.AuthCookie";          // prod
+		options.Cookie.Name = "_200SXContact.AuthCookie_PreProd";	 // preprod
+		options.Cookie.HttpOnly = true;
+		options.Cookie.Domain = ".200sxproject.com";
 		options.SlidingExpiration = true;
-		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-		options.Cookie.SameSite = SameSiteMode.Strict;
-		options.ExpireTimeSpan = TimeSpan.FromMinutes(60); 
+		options.Cookie.SecurePolicy = CookieSecurePolicy.None;		 // preprod
+		//options.Cookie.SecurePolicy = CookieSecurePolicy.Always;   // prod
+		//options.Cookie.SameSite = SameSiteMode.Strict;			 // prod
+		options.Cookie.SameSite = SameSiteMode.Lax;					 // preprod
+		options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 	})
 .AddMicrosoftAccount(microsoftOptions =>
 {
@@ -176,6 +173,7 @@ app.Use(async (context, next) =>
 					"https://pagead2.googlesyndication.com " +
 					"https://aadcdn.msftauth.net " +
 					"https://*.googleapis.com " +
+					"http://*.200sxproject.com " +
 					"https://login.microsoftonline.com " +
 					"https://cdnjs.cloudflare.com " +
 					"https://stackpath.bootstrapcdn.com " +
@@ -201,7 +199,7 @@ app.Use(async (context, next) =>
 					"https://www.paypalobjects.com " +
 					"https://*.adtrafficquality.google https://pagead2.googlesyndication.com data: https://www.gstatic.com/recaptcha/; " +
 					$"connect-src 'self' https://login.microsoftonline.com https://aadcdn.msftauth.net " +
-					"https://www.googletagmanager.com https://*.paypal.com " +
+					"https://www.googletagmanager.com https://*.paypal.com http://*.200sxproject.com " +
 					"https://region1.google-analytics.com https://*.adtrafficquality.google https://*.stripe.com https://*.hcaptcha.com " +
 					"https://*.google.com " +
 					"https://pagead2.googlesyndication.com ws://localhost:59950; " +
@@ -211,7 +209,6 @@ app.Use(async (context, next) =>
 					"https://*.hcaptcha.com " +
 					"https://*.google.com " + 
 					"https://*.adtrafficquality.google;";
-
 
 	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
 	await next();

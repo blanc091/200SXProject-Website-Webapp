@@ -28,7 +28,7 @@
     if (isAuthenticated) {
         button.innerText = 'Profile';
         button.addEventListener('click', function () {
-            window.location.href = '/Account/UserProfile';
+            window.location.href = '/account/user-profile';
         });
     } else {
         button.innerText = 'Login';

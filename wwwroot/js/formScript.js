@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/PendingOrders/GetAllOrders':
             scrollToElement("ordersAll");
             break;
-        case '/Account/UserProfile':
+        case '/account/user-profile':
             scrollToElement("userProfileDash");
             break;
         case '/PendingOrders/UserOrders':
