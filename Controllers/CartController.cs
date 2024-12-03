@@ -63,6 +63,8 @@ namespace _200SXContact.Controllers
 				await _context.CartItems.AddAsync(cartItem);
 			}
 			await _context.SaveChangesAsync();
+			TempData["ItemAdded"] = "yes";
+			TempData["Message"] = "Item added to cart !";
 			return RedirectToAction("ProductsDashboard", "Products");
 		}
 		[HttpGet]

@@ -52,7 +52,7 @@ namespace _200SXContact.Services
 			sb.AppendLine("<body>");
 			sb.AppendLine("    <div class='container'>");
 			sb.AppendLine("        <div class='header'>");
-			sb.AppendLine("            <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />");
+			sb.AppendLine("            <a href=\"https://www.200sxproject.com\" target=\"_blank\">\r\n    <img src=\"https://200sxproject.com/images/verifHeader.JPG\" alt=\"200SX Project\" />\r\n</a>");
 			sb.AppendLine("        </div>");
 			sb.AppendLine("        <h1>Order Confirmation</h1>");
 			sb.AppendLine("        <p>Hi " + order.FullName + ",</p>");
@@ -184,7 +184,9 @@ namespace _200SXContact.Services
     <body>
         <div class='container'>
             <div class='header'>
-                <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
+                <a href=""https://www.200sxproject.com"" target=""_blank"">
+					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				</a>
             </div>
             <h1>New comment added</h1>
             <p>Hi there,</p>

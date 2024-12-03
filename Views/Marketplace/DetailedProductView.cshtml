@@ -61,7 +61,7 @@
 		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 		
 	</head>
-<body class="is-preload" data-is-comment-posted="@TempData["CommentPosted"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
+<body class="is-preload" data-item-added="@TempData["ItemAdded"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
 	<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
 
@@ -86,7 +86,7 @@
 			<!-- Nav -->
 		<nav id="nav">
 			<ul class="links">
-				<li class="active">
+				<li>
 					<a asp-controller="Home" asp-action="Index">Build updates</a>
 				</li>
 				<li>

@@ -95,14 +95,19 @@ namespace _200SXContact.Controllers
                 <body>
                     <div class='container'>
                         <div class='header'>
-                            <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
+                            <a href=""https://www.200sxproject.com"" target=""_blank"">
+								<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+							</a>
                         </div>
                         <h1>title of article</h1>
                         <p>Hi there,</p>
                         <p>ADD THE TEXT HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE</p>
                         <p>
                             <a href='LINK TO ARTICLEEEEEEE' class='button'>Click here to go to the article</a>
-                        </p>                       
+                        </p>     
+						<p>
+							<a href='https://www.200sxproject.com/newsletter/unsubscribe?email={EMAIL}' class='unsubscribe'>Unsubscribe here</a>
+						</p>
                         <div class='footer'>
                             <p>© 2024 200SX Project. All rights reserved.</p>
                         </div>
@@ -189,8 +194,7 @@ namespace _200SXContact.Controllers
 			}
 			return false;
 		}
-		[HttpPost]
-		[Route("newsletter/unsubscribe")]
+		[HttpGet]
 		public IActionResult Unsubscribe(string email)
 		{
 			if (string.IsNullOrEmpty(email))
@@ -205,7 +209,9 @@ namespace _200SXContact.Controllers
 			}
 			subscription.IsSubscribed = false;
 			_context.SaveChanges();
-			return Ok("Unsubscribed successfully."); // return modal, not like this
+			TempData["Unsubscribed"] = "yes";
+			TempData["Message"] = "Unsubscribed from the newsletter !";
+			return Redirect("/");
 		}
 		[HttpPost]
 		[Route("newsletter/send-newsletter-admin")]
@@ -231,6 +237,7 @@ namespace _200SXContact.Controllers
 		[Authorize(Roles = "Admin")]
 		private void SendEmailToSubscriber(string email, string subject, string body)
 		{
+			body = body.Replace("{EMAIL}", System.Net.WebUtility.UrlEncode(email));
 			var smtpClient = new SmtpClient("mail5019.site4now.net")
 			{
 				Port = 587,

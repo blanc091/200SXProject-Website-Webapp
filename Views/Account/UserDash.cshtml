@@ -81,7 +81,7 @@
 			@try
 			{
 				<ul class="links">
-					<li class="active">
+					<li>
 						<a asp-controller="Home" asp-action="Index">Build updates</a>
 					</li>
 					<li>
@@ -94,7 +94,7 @@
 					</li>
 					@if (User.Identity.IsAuthenticated)
 					{
-						<li>
+						<li class="active">
 							<span>
 								<a asp-controller="Account" asp-action="UserProfile">@User.Identity.Name</a>
 							</span>

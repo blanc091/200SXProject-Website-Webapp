@@ -80,7 +80,7 @@
 		<!-- Nav -->
 		<nav id="nav">
 			<ul class="links">
-				<li class="active">
+				<li>
 					<a asp-controller="Home" asp-action="Index">Build updates</a>
 				</li>
 				<li>
@@ -174,7 +174,15 @@
 				}
 				else
 				{
-					<p>Your cart is empty.</p>
+					<span class="date">Your cart is empty.</span>
+					<br>
+					<br>
+					<div class="merchandise">
+						<a asp-controller="Products" asp-action="ProductsDashboard">
+							<span class="date flashy-text" id="merchandiseSpan"><i><strong>Click here to go to the products page.</strong></i></span>
+						</a>
+						<br><br>
+					</div>
 				}
 			</article>
 		</div>

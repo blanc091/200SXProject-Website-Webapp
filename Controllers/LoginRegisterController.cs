@@ -439,7 +439,9 @@ namespace _200SXContact.Controllers
     <body>
         <div class='container'>
             <div class='header'>
-                <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
+                <a href=""https://www.200sxproject.com"" target=""_blank"">
+					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				</a>
             </div>
             <h1>Account Recovery</h1>
             <p>Hi there,</p>
@@ -548,7 +550,9 @@ namespace _200SXContact.Controllers
     <body>
         <div class='container'>
             <div class='header'>
-                <img src='https://200sxproject.com/images/verifHeader.JPG' alt='Header Image' />
+                <a href=""https://www.200sxproject.com"" target=""_blank"">
+					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				</a>
             </div>
             <h1>Account Activation</h1>
             <p>Hi there,</p>

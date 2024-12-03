@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 document.addEventListener("DOMContentLoaded", function () {
+    var itemAddedToCart = document.body.getAttribute('data-item-added');
     var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
     var isFormSuccess = document.body.getAttribute('data-is-form-success');
     var isUserLoggedIn = document.body.getAttribute('data-is-user-logged-in');
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var formSubmitted = isFormSubmitted === "True";
     var formSuccess = isFormSuccess === "True";
     var commentSubmitted = document.body.getAttribute('data-is-comment-posted');
+    var unsubscribed = document.body.getAttribute('data-unsubscribed'); 
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/detailed-user-build')) {
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (window.location.pathname.startsWith('/checkout/your-order')) {
         scrollToElement("orderSuccess");
-    }    
+    }
     switch (window.location.pathname) {
         case '/mainten-app':
             scrollToElement("maintenApp");
@@ -56,6 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
         case '/reset-password':
         case '/forgot-my-password':
+        case '/reset-my-password':
+        case '/newsletter/create-newsletter-admin':
             scrollToElement("maintenApp");
             break;
         case '/register-new-account':
@@ -88,8 +92,10 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/pendingorders/view-my-orders':
             scrollToElement("customerOrders");
             break;
+        case '/cart/remove-cart-item':
+            scrollToElement("cartView");
+            break;
     }
-
     if ((isUserLoggedIn && !formSubmitted) ||
         (formSubmitted && formSuccess) ||
         isFormRegisterSuccess == "yes" ||
@@ -102,16 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
         isNewsletterSubbed == "yes" ||
         commentSubmitted == "yes" ||
         isUserLoggedIn == "no" ||
+        unsubscribed == "yes" ||
+        itemAddedToCart == "yes" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {
             $('#messageModal').fadeOut(1250);
         }, 3000);
     }    
-
     if (formSubmitted && !formSuccess) {
         scrollToContactForm();
     }
-
     if (window.location.pathname != '/account/login-account') {
         window.addEventListener('scroll', function () {
             var introElement = document.getElementById('intro');
