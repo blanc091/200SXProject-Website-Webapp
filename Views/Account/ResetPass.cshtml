@@ -46,13 +46,11 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-<head>
-	
+<head>	
 	<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<title>The Nissan 200SX Project || Import Garage</title>
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
@@ -63,7 +61,6 @@
 			list-style-type: none;
 			padding-left: 0;
 		}
-
 			.validation-summary-valid ul li,
 			.validation-summary-errors ul li {
 				margin-left: 0;
@@ -71,7 +68,7 @@
 			}
 	</style>
 </head>
-<body class="is-preload">
+<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()>
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -129,7 +126,6 @@
 			</ul>
 		</nav>
 
-
 		<!-- Main -->
 		<div id="main">
 
@@ -142,38 +138,30 @@
 					<p>Use the below form to reset your password for your account.</p>
 				</header>
 				<h2>Reset Password</h2>
-
-				<form asp-action="ResetPassword" method="post">
+				<form action="/reset-password" method="post">
 					@Html.AntiForgeryToken()
-
 					@Html.HiddenFor(m => m.Token)
 					@Html.HiddenFor(m => m.Email)
-
 					<div class="form-group">
 						<label asp-for="NewPassword"></label>
 						<input asp-for="NewPassword" class="form-control" />
 						<span asp-validation-for="NewPassword" class="text-danger"></span>
 					</div>
-
 					<div class="form-group">
 						<label asp-for="ConfirmPassword"></label>
 						<input asp-for="ConfirmPassword" class="form-control" />
 						<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 					</div>
-
 					<button type="submit" class="btn-add-entry">Reset Password</button>
 				</form>
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
 				<div>
 					@if (TempData["Message"] != null)
 					{
 						<div class="alert alert-info">@TempData["Message"]</div>
 					}
-				</div>
-				
-				<br>
-				
+				</div>				
+				<br>				
 			</article>
 		</div>
 

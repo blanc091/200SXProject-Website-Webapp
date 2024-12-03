@@ -25,7 +25,7 @@ namespace _200SXContact.Controllers
 			if (!User.Identity.IsAuthenticated)
 			{
 				Console.WriteLine("User is not authenticated");
-				return Redirect("/login-register/login-page");
+				return Redirect("/login-page");
 			}
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)

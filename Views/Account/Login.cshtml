@@ -46,13 +46,11 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-<head>
-	
+<head>	
 	<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<title>The Nissan 200SX Project || Import Garage</title>
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
@@ -71,7 +69,7 @@
 			}
 	</style>
 </head>
-<body class="is-preload" data-is-user-logged-in="@TempData["IsUserLoggedIn"]" data-is-pass-reset-email-sent="@TempData["PassResetLinkEmailed"]" data-is-pass-reset-success="@TempData["PassResetSuccess"]" data-is-email-verified-login="@TempData["IsEmailVerifiedLogin"]" data-is-user-verified="@TempData["IsUserVerified"]" data-is-form-register-success="@TempData["IsFormRegisterSuccess"]" data-is-nice-try="@TempData["isNiceTry"]">
+<body class="is-preload" data-is-user-logged-in="@TempData["IsUserLoggedIn"]" data-is-pass-reset-email-sent="@TempData["PassResetLinkEmailed"]" data-is-pass-reset-success="@TempData["PassResetSuccess"]" data-is-email-verified-login="@TempData["IsEmailVerifiedLogin"]" data-is-user-verified="@TempData["IsUserVerified"]" data-is-form-register-success="@TempData["IsFormRegisterSuccess"]" data-is-nice-try="@TempData["isNiceTry"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()>
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">

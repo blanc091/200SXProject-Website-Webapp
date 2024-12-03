@@ -22,7 +22,7 @@ namespace _200SXContact.Services
 		public static void Main(string[] args)
 		{
 			WebHost.CreateDefaultBuilder(args)
-			  .UseUrls("https://200sxproject.azurewebsites.net", "https://localhost:7109")
+			  .UseUrls("https://200sxproject.azurewebsites.net", "https://localhost:7109", "https://www.200sxproject.com")
 			  .UseWebRoot("public")
 			  .UseStartup<Startup>()
 			  .Build()
@@ -62,8 +62,8 @@ namespace _200SXContact.Services
 		[HttpPost]
 		public ActionResult Create()
 		{
-			var domain = "https://200sxproject.azurewebsites.net";
-			//var domain = "https://localhost:7109";
+			//var domain = "https://200sxproject.azurewebsites.net";
+			var domain = "https://localhost:7109";
 			var options = new SessionCreateOptions
 			{
 				UiMode = "embedded",

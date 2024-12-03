@@ -8,7 +8,7 @@ async function initialize() {
   const session = await response.json();
 
   if (session.status == 'open') {
-      window.replace('https://200sxproject.azurewebsites.net/stripe/payment')
+      window.replace('https://www.200sxproject.com/stripe/payment')
      // window.replace('https://localhost:7109/Stripe/StripeProcessor') 
   } else if (session.status == 'complete') {
     document.getElementById('success').classList.remove('hidden');

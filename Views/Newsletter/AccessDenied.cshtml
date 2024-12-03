@@ -17,7 +17,7 @@
     </div>
 }
 <html>
-<body class="is-preload" data-is-nice-try="@TempData["isNiceTry"]">
+<body class="is-preload" data-is-nice-try="@TempData["isNiceTry"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()>
     <h2>Access Denied</h2>
     <br>
     <p>You do not have permission to access this page.</p>

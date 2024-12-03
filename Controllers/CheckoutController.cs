@@ -50,7 +50,7 @@ namespace _200SXContact.Controllers
 			{
 				TempData["IsUserLoggedIn"] = "no";
 				TempData["Message"] = "You need to be registered and logged in to checkout.";
-				return Redirect("/login-register/login-page");
+				return Redirect("/login-page");
 			}
 			model.UserId = user.Id;
 			using (var transaction = await _context.Database.BeginTransactionAsync())
@@ -78,7 +78,7 @@ namespace _200SXContact.Controllers
 					if (!cartItems.Any())
 					{
 						TempData["Message"] = "Your cart is empty, please add items before checking out.";
-						return RedirectToAction("Index", "Marketplace");
+						return View("~/Views/Marketplace/CheckoutView.cshtml", model);
 					}
 					else
 					{

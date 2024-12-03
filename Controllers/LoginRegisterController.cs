@@ -245,7 +245,7 @@ namespace _200SXContact.Controllers
 			await SendVerificationEmail(model.Email, verificationUrl);
 			TempData["IsFormRegisterSuccess"] = "yes";
 			TempData["Message"] = "Registration successful! Check your email for verification.";
-			return Redirect("/login-register/login-page");
+			return Redirect("/login-page");
 		}
 		private async Task<bool> VerifyRecaptchaAsync(string token)
 		{
@@ -329,7 +329,7 @@ namespace _200SXContact.Controllers
 				new { token = encodedToken, email = user.Email }, Request.Scheme);
 			await SendPasswordResetEmail(user.Email, resetUrl);
 			TempData["PassResetLinkEmailed"] = "yes";
-			TempData["Message"] = "Password reset link emailed!";
+			TempData["Message"] = "Password reset link emailed !";
 			return Redirect("/login-page");
 		}
 		[HttpPost]
@@ -596,7 +596,7 @@ namespace _200SXContact.Controllers
 			await _userManager.UpdateAsync(user);
 			TempData["IsEmailVerifiedLogin"] = "yes";
 			TempData["Message"] = "Email verified ! You can now log in.";
-			return Redirect("/login-register/login-page");
+			return Redirect("/login-page");
 		}
 		[HttpPost]
 		[Route("loginregister/logout")]

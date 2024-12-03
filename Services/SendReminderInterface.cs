@@ -19,11 +19,13 @@ namespace _200SXContact.Services
 	{
 		private readonly NetworkCredential _credentials;
 		private readonly ILoggerService _loggerService;
-		public EmailService(ILoggerService loggerService, IOptions<AppSettings> appSettings)
+		private readonly IConfiguration _configuration;
+		public EmailService(ILoggerService loggerService, IOptions<AppSettings> appSettings, IConfiguration configuration)
 		{
 			var emailSettings = appSettings.Value.EmailSettings;
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 			_loggerService = loggerService;
+			_configuration = configuration;
 		}
 		public async Task SendOrderConfirmEmail(string email, Order order)
 		{
@@ -107,6 +109,8 @@ namespace _200SXContact.Services
 		}
 		public async Task SendCommentNotification(string userEmail, BuildsCommentsModel comment)
 		{
+			var baseUrl = _configuration["AppSettings:BaseUrl"];
+			var link = $"{baseUrl}/detailed-user-build?id={comment.UserBuildId}";
 			try
 			{
 				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
@@ -187,7 +191,7 @@ namespace _200SXContact.Services
 			<p>A new comment has been posted on your build:</p>
             <p><blockquote style=""color: #ffffff !important;"">{comment.Content}</blockquote></p>
             <p>
-				<a href='https://200sxproject.com/detailed-user-build/{comment.UserBuildId}' target='_blank'>Click here to access your build page.</a>
+				<a href='{link}' target='_blank'>Click here to access your build page.</a>
 			</p>
             <div class='footer'>
                 <p>© 2024 200SX Project. All rights reserved.</p>
