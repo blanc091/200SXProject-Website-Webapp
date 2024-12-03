@@ -162,13 +162,11 @@
 							<span class="date flashy-text" id="merchandiseSpan"><i><strong>For merchandise, click here !</strong></i></span>
 						</a>						
 					</div>
-					</header>					
-				
+					</header>
 				</article>
 
 				<!-- Posts -->
 				<section class="posts">
-
 				@foreach (var build in Model)
 				{
 					<article>
@@ -183,7 +181,7 @@
 								<img src="@build.ImagePaths.First().Trim()" alt="@build.Title" class="image fit"/>
 							}
 						</div>
-						<br></br>
+						<br><br>
 						<p>
 							@(string.IsNullOrEmpty(build.Description) ? "No description available." :
 														build.Description.Length <= 200 ? build.Description :

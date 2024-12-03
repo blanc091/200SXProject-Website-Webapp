@@ -53,7 +53,6 @@ namespace _200SXContact.Controllers
 			if (ModelState.IsValid)
 			{
 				model.DateAdded = DateTime.Now;
-
 				if (Images != null && Images.Any())
 				{
 					var productDirectory = Path.Combine("wwwroot/images/products", model.Id.ToString());

@@ -62,7 +62,6 @@ namespace _200SXContact.Controllers
 							{
 								await image.CopyToAsync(stream);
 							}
-
 							imagePaths.Add($"/images/uploads/{user.Id}/{image.FileName}");
 						}
 					}
@@ -89,7 +88,6 @@ namespace _200SXContact.Controllers
 			var build = await _context.UserBuilds
 					   .Include(b => b.Comments) 
 					   .FirstOrDefaultAsync(b => b.Id == id);
-
 			if (build == null)
 			{
 				return NotFound(); 

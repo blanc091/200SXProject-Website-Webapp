@@ -26,9 +26,7 @@ namespace _200SXContact.Services
 		{
 			var currentTime = DateTime.Now;
 			var timeToMidnight = DateTime.Today.AddDays(1) - currentTime;
-
 			_timer = new Timer(ExecuteTimerCallback, null, timeToMidnight, TimeSpan.FromDays(1));
-
 			return Task.CompletedTask;
 		}
 		private void ExecuteTimerCallback(object state)
@@ -59,7 +57,6 @@ namespace _200SXContact.Services
 					int daysLeft = (item.DueDate - DateTime.Now).Days;
 					await _emailService.SendDueDateReminder(item.User.Email, item, daysLeft);
 					item.EmailSent = true;
-
 					await _loggerService.LogAsync($"Sent due date reminder for item '{item.EntryItem}' to '{item.User.Email}' due in {daysLeft} days.", "Information", string.Empty);
 				}
 				await _context.SaveChangesAsync();
@@ -80,6 +77,7 @@ namespace _200SXContact.Services
 		}
 		public async Task ManualCheckDueDates()
 		{
+			_loggerService.LogAsync($"Manually checking due dates..", "Error", "");
 			await CheckDueDates(null);
 		}
 	}

@@ -104,6 +104,7 @@ namespace _200SXContact.Services
 				})
 				{
 					await smtpClient.SendMailAsync(message);
+					_loggerService.LogAsync("Sent email reminder for due items","Info","");
 				}
 			}
 		}
@@ -217,6 +218,7 @@ namespace _200SXContact.Services
 					})
 					{
 						await smtpClient.SendMailAsync(message);
+						_loggerService.LogAsync($"Sent comment notification for build {comment.UserBuildId}", "Info", "");
 					}
 				}
 			}
@@ -231,6 +233,7 @@ namespace _200SXContact.Services
 		{
 			try
 			{
+				_loggerService.LogAsync($"Started sending item due date notification for item {item}", "Info", "");
 				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 				var toAddress = new MailAddress(userEmail);
 				string subject = $"Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days";
@@ -251,6 +254,7 @@ namespace _200SXContact.Services
 					})
 					{
 						await smtpClient.SendMailAsync(message);
+						_loggerService.LogAsync($"Sent item due date notification for item {item}", "Info", "");
 					}
 				}
 			}
@@ -260,13 +264,11 @@ namespace _200SXContact.Services
 								   $"StatusCode: {ex.StatusCode}\n" +
 								   $"InnerException: {ex.InnerException?.Message}";
 				await _loggerService.LogAsync($"SMTP Error: {ex.Message}", "Error", ex.ToString());
-
 				throw new Exception("Failed to send email for due date reminder. Please try again later.", ex);
 			}
 			catch (Exception ex)
 			{
 				await _loggerService.LogAsync($"Unexpected Error: {ex.Message}", "Error", ex.ToString());
-
 				throw new Exception("An unexpected error occurred while sending the due date reminder email.", ex);
 			}
 		}

@@ -10,7 +10,7 @@ namespace _200SXContact.Models
 		public DateTime DueDate { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime UpdatedAt { get; set; }
-		public string UserId { get; set; } // Foreign key to User
+		public string UserId { get; set; }
 		public virtual User User { get; set; }
 		public bool EmailSent { get; set; }  // Default to false
 	}

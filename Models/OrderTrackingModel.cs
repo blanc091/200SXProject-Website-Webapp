@@ -7,16 +7,11 @@ namespace _200SXContact.Models
 	public class OrderTracking
 	{
 		public int Id { get; set; } 
-
 		[ForeignKey("Order")]
-		public int OrderId { get; set; } 
-
+		public int OrderId { get; set; }
 		public string Status { get; set; }  
-
-		public string? Carrier { get; set; } 
-
+		public string? Carrier { get; set; }
 		public string? TrackingNumber { get; set; } 
-
 		public DateTime StatusUpdatedAt { get; set; } = DateTime.UtcNow;
 		public string Email { get; set; }
 		public string AddressLine { get; set; }

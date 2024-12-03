@@ -33,8 +33,8 @@ namespace _200SXContact.Controllers
 				Order = order,
 				OrderTracking = _context.OrderTrackings.FirstOrDefault(ot => ot.OrderId == order.Id),
 				CartItems = string.IsNullOrWhiteSpace(order.CartItemsJson)
-					? new List<CartItem>()
-					: JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson)
+							? new List<CartItem>()
+							: JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson)
 			}).ToList();
 			return View("~/Views/Marketplace/PendingOrdersCustomer.cshtml", orderViewModels);
 		}
