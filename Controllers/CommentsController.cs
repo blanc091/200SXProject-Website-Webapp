@@ -17,14 +17,14 @@ namespace _200SXContact.Controllers
 			_emailService = emailService;
 		}
 		[HttpPost]
-		[Authorize]
+		[Route("comments/add-comment")]
+		[Authorize]		
 		public async Task<IActionResult> PostComment(string userBuildId, string content)
 		{
 			if (string.IsNullOrWhiteSpace(content))
 			{
 				return BadRequest("Comment content cannot be empty.");
 			}
-
 			var comment = new BuildsCommentsModel
 			{
 				Content = content,
@@ -33,7 +33,6 @@ namespace _200SXContact.Controllers
 				UserName = User.Identity.Name,
 				UserBuildId = userBuildId
 			};
-
 			_context.BuildComments.Add(comment);
 			var userBuild = await _context.UserBuilds.FindAsync(userBuildId);
 			if (userBuild != null)
@@ -41,14 +40,13 @@ namespace _200SXContact.Controllers
 				var userEmail = userBuild.UserEmail; 													 
 				await _emailService.SendCommentNotification(userEmail, comment);
 			}
-
 			await _context.SaveChangesAsync();
 			TempData["CommentPosted"] = "yes";
 			TempData["Message"] = "Comment posted successfully !";
 			return RedirectToAction("DetailedUserView", "UserBuilds", new { id = userBuildId });
 		}
-
 		[HttpPost]
+		[Route("comments/delete-comment")]
 		[Authorize]
 		public async Task<IActionResult> DeleteComment(int commentId, string userBuildId)
 		{

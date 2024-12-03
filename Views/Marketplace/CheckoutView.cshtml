@@ -99,15 +99,14 @@
 				@if (User.Identity.IsAuthenticated)
 				{
 					<li>
-						<a href="@Url.Action("Dashboard", "Dashboard")" id="dashboardLink">MaintenApp</a>
+						<a href="/mainten-app" id="dashboardLink">MaintenApp</a>
 					</li>
 				}
 				else
 				{
 					<li>
-						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
+						<a href="/login-page" id="loginForm">MaintenApp</a>
 					</li>
-
 				}
 				<li>
 					<span>

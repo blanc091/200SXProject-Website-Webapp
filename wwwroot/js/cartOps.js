@@ -37,7 +37,7 @@
 
     document.body.appendChild(cartIcon);
 
-    fetch('/Cart/GetCartItemCount')
+    fetch('/cart/get-cart-items')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -57,6 +57,6 @@
         });
 
     cartIcon.addEventListener('click', function () {
-        window.location.href = '/Cart/CartView';
+        window.location.href = '/cart/view-cart';
     });
 });

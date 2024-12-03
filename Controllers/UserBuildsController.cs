@@ -21,6 +21,7 @@ namespace _200SXContact.Controllers
 			_logger = logger;
 		}
 		[HttpGet]
+		[Route("add-new-build")]
 		[Authorize]
 		public async Task<IActionResult> AddUserBuild()
 		{
@@ -32,6 +33,7 @@ namespace _200SXContact.Controllers
 			return View("~/Views/UserContent/AddUserBuild.cshtml", model);
 		}
 		[HttpPost]
+		[Route("submit-build")]
 		[Authorize]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> SubmitBuild(UserBuild model, IFormFile[] Images)
@@ -64,28 +66,24 @@ namespace _200SXContact.Controllers
 							imagePaths.Add($"/images/uploads/{user.Id}/{image.FileName}");
 						}
 					}
-
 					model.ImagePaths = imagePaths; 
 					model.DateCreated = DateTime.Now;
 					model.UserEmail = user.Email;
 					model.UserName = user.UserName;
 					model.UserId = user.Id;
 				}
-
 				_context.UserBuilds.Add(model);
 				await _context.SaveChangesAsync();
-
 				return RedirectToAction("UserContentDashboard", "UserBuilds");
 			}
-
 			foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
 			{
 				_logger.LogError("Model Error: {0}", error.ErrorMessage);
 			}
 			return View("~/Views/UserContent/AddUserBuild.cshtml", model);
 		}
-
 		[HttpGet]
+		[Route("detailed-user-build")]
 		public async Task<IActionResult> DetailedUserView(string id)
 		{
 			var build = await _context.UserBuilds
@@ -99,13 +97,13 @@ namespace _200SXContact.Controllers
 			return View("~/Views/UserContent/DetailedUserView.cshtml", build); 
 		}
 		[HttpGet]
+		[Route("user-builds")]
 		public async Task<IActionResult> UserContentDashboard()
 		{
 			var builds = await _context.UserBuilds
 					   .OrderByDescending(b => b.DateCreated)
 					   .ToListAsync();
 			return View("~/Views/UserContent/UserContentDashboard.cshtml", builds);
-		}
-		
+		}		
 	}
 }

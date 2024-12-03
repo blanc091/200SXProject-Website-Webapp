@@ -101,7 +101,7 @@
 					<a asp-controller="Home" asp-action="Index">Build updates</a>
 				</li>
 				<li>
-					<a href="/Home/Index?scrollToContactForm=true" id="contactLink">Contact</a>
+					<a href="/home/index?scrollToContactForm=true" id="contactLink">Contact</a>
 				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
@@ -144,19 +144,13 @@
 				<h2>Forgot Password</h2>
 				<form asp-action="ForgotPassword" method="post">
 					@Html.AntiForgeryToken()
-
-					<!-- Email Field -->
 					<div class="form-group">
 						<label asp-for="Email"></label>
 						<input asp-for="Email" class="form-control" />
 						<span asp-validation-for="Email" class="text-danger"></span>
 					</div>
-
-					<!-- Submit Button -->
 					<button type="submit" class="btn-add-entry">Send Password Reset Link</button>
 				</form>
-
-				<!-- Display model validation errors -->
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div>
 					@if (TempData["Message"] != null)

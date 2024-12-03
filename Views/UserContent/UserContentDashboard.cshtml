@@ -93,15 +93,14 @@
 				@if (User.Identity.IsAuthenticated)
 				{
 					<li>
-						<a href="@Url.Action("Dashboard", "Dashboard")" id="dashboardLink">MaintenApp</a>
+						<a href="/mainten-app" id="dashboardLink">MaintenApp</a>
 					</li>
 				}
 				else
 				{
 					<li>
-						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
+						<a href="/login-page" id="loginForm">MaintenApp</a>
 					</li>
-
 				}				
 				@if (User.Identity.IsAuthenticated)
 				{
@@ -158,7 +157,7 @@
 						{
 						<div class="center-div">
 							Want to add your own build ? Create an account for
-							<a href="@Url.Action("Register", "LoginRegister")"><strong>MaintenApp</strong></a> or <a href="@Url.Action("Login", "LoginRegister")"><strong>Login</strong></a>.
+							<a href="/register-new-account"><strong>MaintenApp</strong></a> or <a href="/login-page"><strong>Login</strong></a>.
 						</div>
 						}
 					<br>

@@ -8,7 +8,7 @@
             event.preventDefault();
             var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
-            fetch('/LoginRegister/Logout', {
+            fetch('/loginregister/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

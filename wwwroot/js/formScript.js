@@ -38,57 +38,54 @@ document.addEventListener("DOMContentLoaded", function () {
     var commentSubmitted = document.body.getAttribute('data-is-comment-posted');
 
     console.log("Current Pathname:", window.location.pathname);
-    if (window.location.pathname.startsWith('/UserBuilds/DetailedUserView')) {
+    if (window.location.pathname.startsWith('/detailed-user-build')) {
         scrollToElement("detailedViewSection");
     }
-    if (window.location.pathname.startsWith('/Products/DetailedProductView')) {
+    if (window.location.pathname.startsWith('/products/detailed-product-view')) {
         scrollToElement("detailedProductViewSection");
     }
-    if (window.location.pathname.startsWith('/Checkout/OrderSummary')) {
+    if (window.location.pathname.startsWith('/checkout/your-order')) {
         scrollToElement("orderSuccess");
-    }
-    if (window.location.pathname.startsWith('/PendingOrders/OrderSummary')) {
-        scrollToElement("customerOrders");
-    }
+    }    
     switch (window.location.pathname) {
-        case '/Dashboard/Dashboard':
+        case '/mainten-app':
             scrollToElement("maintenApp");
             break;
-        case '/LoginRegister/Login':
+        case '/login-page':
             scrollToElement("header");
             break;
-        case '/LoginRegister/ResetPassword':
-        case '/LoginRegister/ForgotPassReset':
+        case '/reset-password':
+        case '/forgot-my-password':
             scrollToElement("maintenApp");
             break;
-        case '/LoginRegister/Register':
+        case '/register-new-account':
             scrollToElement("registerFormSpan");
             break;
-        case '/Newsletter/Subscribe':
+        case '/newsletter/subscribe':
             scrollToElement("newsletterFormSpan");
             break;
-        case '/UserBuilds/AddUserBuild':
+        case '/add-new-build':
             scrollToElement("addBuild");
             break;
-        case '/UserBuilds/UserContentDashboard':
+        case '/user-builds':
             scrollToElement("userContentDash");
             break;
-        case '/Products/ProductsDashboard':
+        case '/products/view-products':
             scrollToElement("productsDash");
             break;
-        case '/Cart/CartView':
+        case '/cart/view-cart':
             scrollToElement("cartView");
             break;
-        case '/Checkout/Checkout':
+        case '/checkout/view-checkout':
             scrollToElement("checkoutView");
             break;
-        case '/PendingOrders/GetAllOrders':
+        case '/pendingorders/get-all-orders-admin':
             scrollToElement("ordersAll");
             break;
         case '/account/user-profile':
             scrollToElement("userProfileDash");
             break;
-        case '/PendingOrders/UserOrders':
+        case '/pendingorders/view-my-orders':
             scrollToElement("customerOrders");
             break;
     }
@@ -115,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
         scrollToContactForm();
     }
 
-    if (window.location.pathname != '/Account/Login') {
+    if (window.location.pathname != '/account/login-account') {
         window.addEventListener('scroll', function () {
             var introElement = document.getElementById('intro');
             if (introElement) {
@@ -126,8 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         });
-    }
-    
+    }    
     fetch('/api/is-logged-in')
         .then(response => response.json())
         .then(isUserLoggedIn => {
@@ -144,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Contact form not found!');
         }
     }
-
     $(document).ready(function () {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('scrollToContactForm')) {
@@ -155,10 +150,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (contactLink) {
             contactLink.addEventListener('click', function (event) {
                 event.preventDefault();
-                if (window.location.pathname === '/Home/Index') {
+                if (window.location.pathname === '/home/index') {
                     scrollToContactForm();
                 } else {
-                    window.location.href = '/Home/Index?scrollToContactForm=true';
+                    window.location.href = '/home/index?scrollToContactForm=true';
                 }
             });
         }

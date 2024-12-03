@@ -10,7 +10,6 @@ using Microsoft.Extensions.Options;
 using System.Net;
 namespace _200SXContact.Controllers
 {
-	[Route("contact")]
 	public class ContactController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -23,7 +22,8 @@ namespace _200SXContact.Controllers
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 			_configuration = configuration;
 		}
-		[HttpPost("send-email")]
+		[HttpPost]
+		[Route("contact/send-email")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> SendEmail(ContactForm model, string ViewName, string honeypotSpamContact, string gRecaptchaResponseContact)
 		{
@@ -32,7 +32,6 @@ namespace _200SXContact.Controllers
 			{
 				return BadRequest("Spam detected");
 			}
-
 			if (string.IsNullOrWhiteSpace(gRecaptchaResponseContact) || !await VerifyRecaptchaAsync(gRecaptchaResponseContact))
 			{
 				TempData["IsFormSubmitted"] = "no";
@@ -40,12 +39,10 @@ namespace _200SXContact.Controllers
 				TempData["Message"] = "Failed reCAPTCHA validation.";
 				return View("~/Views/Home/Index.cshtml");
 			}
-
 			if (ModelState.IsValid)
 			{
 				var sanitizer = new HtmlSanitizer();
 				model.Message = sanitizer.Sanitize(model.Message);
-
 				try
 				{
 					SendEmailToAdmin(model);
@@ -66,7 +63,6 @@ namespace _200SXContact.Controllers
 					TempData["IsFormSuccess"] = true;
 					ViewData["IsFormSubmitted"] = true;
 					ViewData["IsFormSuccess"] = true;
-
 					string viewPathSuccess = $"~/Views/{ViewName}.cshtml";
 					return View(viewPathSuccess);
 				}
@@ -110,7 +106,6 @@ namespace _200SXContact.Controllers
 				var toAddress = new MailAddress(_credentials.UserName, "Admin");
 				string subject = $"New Contact Form Submission from {model.Name}";
 				string body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}";
-
 				using (var smtpClient = new SmtpClient
 				{
 					Host = "mail5019.site4now.net",
@@ -147,11 +142,10 @@ namespace _200SXContact.Controllers
 			using (var client = new HttpClient())
 			{
 				var requestContent = new FormUrlEncodedContent(new Dictionary<string, string>
-		{
-			{ "secret", secretKey },
-			{ "response", token }
-		});
-
+				{
+					{ "secret", secretKey },
+					{ "response", token }
+				});
 				var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", requestContent);
 				if (response.IsSuccessStatusCode)
 				{
@@ -166,7 +160,6 @@ namespace _200SXContact.Controllers
 					Console.WriteLine($"Failed to verify reCAPTCHA: {response.StatusCode}");
 				}
 			}
-
 			return false;
 		}
 	}

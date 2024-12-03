@@ -187,7 +187,7 @@ namespace _200SXContact.Services
 			<p>A new comment has been posted on your build:</p>
             <p><blockquote style=""color: #ffffff !important;"">{comment.Content}</blockquote></p>
             <p>
-				<a href='https://200sxproject.com/UserBuilds/DetailedUserView/{comment.UserBuildId}' target='_blank'>Click here to access your build page.</a>
+				<a href='https://200sxproject.com/detailed-user-build/{comment.UserBuildId}' target='_blank'>Click here to access your build page.</a>
 			</p>
             <div class='footer'>
                 <p>© 2024 200SX Project. All rights reserved.</p>

@@ -94,15 +94,14 @@
 				@if (User.Identity.IsAuthenticated)
 				{
 					<li>
-						<a href="@Url.Action("Dashboard", "Dashboard")" id="dashboardLink">MaintenApp</a>
+						<a href="/mainten-app" id="dashboardLink">MaintenApp</a>
 					</li>
 				}
 				else
 				{
 					<li>
-						<a href="@Url.Action("Login", "LoginRegister")" id="loginForm">MaintenApp</a>
+						 <a href="/login-page" id="loginForm">MaintenApp</a>
 					</li>
-
 				}
 				<li>
 					<span>
@@ -174,7 +173,7 @@
 							<div id="g-recaptcha-newsletter"></div>
 							<input type="hidden" id="gRecaptchaResponseNewsletter" name="gRecaptchaResponseNewsletter" />
 							<button type="submit" class="btn-save g-recaptcha"
-									data-sitekey="6LfHIYgqAAAAALHD85A5uSVmIOeCS4Q458X6_LIv"
+									data-sitekey="6LdVNIgqAAAAAGdAW2AVoZGG3uoSYm0LgW-se5OH"
 									data-callback="onSubmitWithEvent"
 									data-formid="newsletterForm">
 								Subscribe
@@ -827,7 +826,7 @@
 							<input type="text" id="honeypotSpamContact" name="honeypotSpamContact" autocomplete="off" />
 						</div>
 						<div class="field">
-							<input type="hidden" name="ViewName" value="Home/Index" />
+							<input type="hidden" name="ViewName" value="home/index" />
 						</div>
 						<div class="field">
 							<label for="name">Name</label>
@@ -863,7 +862,7 @@
 							<input type="hidden" id="gRecaptchaResponseContact" name="gRecaptchaResponseContact" />
 							<button type="submit"
 									class="btn-save g-recaptcha"
-									data-sitekey="6LdYNIgqAAAAAAV3TpjyF92Cs7ul0PqaGpQo3nLy"
+									data-sitekey="6LdVNIgqAAAAAGdAW2AVoZGG3uoSYm0LgW-se5OH"
 									data-callback="onSubmitWithEvent"
 									data-formid="contactForm">
 								Send Message

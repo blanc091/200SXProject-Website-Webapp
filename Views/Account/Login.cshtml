@@ -101,7 +101,7 @@
 					<a asp-controller="Home" asp-action="Index">Build updates</a>
 				</li>
 				<li>
-					<a href="/Home/Index?scrollToContactForm=true" id="contactLink">Contact</a>
+					<a href="/home/index?scrollToContactForm=true" id="contactLink">Contact</a>
 				</li>
 				@if (User.Identity.IsAuthenticated)
 				{
@@ -162,7 +162,7 @@
 				<div class="center-div">
 				
 						Problems logging in ?
-						<a href="/Home/Index?scrollToContactForm=true" class="contact-link"><strong>Contact me</strong></a>. To reset your password, <a href="@Url.Action("ForgotPassReset", "LoginRegister")"><strong>Click here.</strong></a>
+						<a href="/home/index?scrollToContactForm=true" class="contact-link"><strong>Contact me</strong></a>. To reset your password, <a href="@Url.Action("ForgotPassReset", "LoginRegister")"><strong>Click here.</strong></a>
 
 				</div>
 				<br>
@@ -178,7 +178,7 @@
 				<br>
 				<h3>Don't have an account?</h3>
 				<br>
-				<form method="get" action="/LoginRegister/Register">
+				<form method="get" action ="/register-new-account">
 					<button type="submit" class="btn-add-entry">
 						Create New User
 					</button>

@@ -34,7 +34,7 @@
         button.innerText = 'Login';
         button.addEventListener('click', function () {
             const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
-            window.location.href = '/LoginRegister/Login?returnUrl=' + returnUrl;
+            window.location.href = '/login-page?returnUrl=' + returnUrl;
         });
     }
     const isMobile = window.innerWidth <= 768;

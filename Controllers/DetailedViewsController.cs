@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace _200SXContact.Controllers
 {
 	public class DetailedViewsController : Controller
-	{		
+	{
+		[HttpGet]
+		[Route("detailed-view/{id}")]
 		public IActionResult DetailedView(string id)
 		{
 			if (!string.IsNullOrEmpty(id))

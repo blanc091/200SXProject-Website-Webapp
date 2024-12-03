@@ -18,13 +18,14 @@ namespace _200SXContact.Controllers
 			_context = context;
 			_userManager = userManager;
 		}
-
+		[HttpGet]
+		[Route("mainten-app")]		
 		public async Task<IActionResult> Dashboard()
 		{
 			if (!User.Identity.IsAuthenticated)
 			{
 				Console.WriteLine("User is not authenticated");
-				return RedirectToAction("Login", "LoginRegister");
+				return Redirect("/login-register/login-page");
 			}
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
@@ -35,37 +36,31 @@ namespace _200SXContact.Controllers
 			var userWithItems = await _context.Users
 											  .Include(u => u.Items)
 											  .FirstOrDefaultAsync(u => u.Id == user.Id);
-
 			if (userWithItems == null || !userWithItems.Items.Any())
 			{
 				Console.WriteLine("No items found for this user");
 				return View("~/Views/Account/Dashboard.cshtml", new List<Item>()); 
 			}
-
 			var items = userWithItems.Items.ToList();
 			return View("~/Views/Account/Dashboard.cshtml", items);
 		}
 		[HttpPost]
+		[Route("add-entry")]
 		public async Task<IActionResult> CreateEntry(string entryTitle, string entryDescription, string dueDate)
 		{
 			Console.WriteLine("Received Due Date: " + dueDate);
-
 			var userEmail = User.FindFirstValue(ClaimTypes.Email);
 			var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
-
 			if (user == null)
 			{
 				return NotFound("User not found");
 			}
-
 			string[] dateFormats = { "MM/dd/yyyy", "yyyy-MM-dd" };
 			if (!DateTime.TryParseExact(dueDate, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDueDate))
 			{
 				return BadRequest("Invalid due date format");
 			}
-
 			TempData["IsUserLoggedIn"] = true;
-
 			var newItem = new Item
 			{
 				EntryItem = entryTitle,
@@ -75,15 +70,14 @@ namespace _200SXContact.Controllers
 				UpdatedAt = DateTime.Now,
 				UserId = user.Id
 			};
-
 			_context.Items.Add(newItem);
 			await _context.SaveChangesAsync();
-
 			TempData["Message"] = "Entry created successfully !";
 			TempData["IsEntrySuccess"] = "yes";
 			return RedirectToAction("Dashboard", "Dashboard");
 		}
 		[HttpPost]
+		[Route("update-entry")]
 		public JsonResult UpdateEntry([FromBody] Item updatedItem)
 		{
 			try
@@ -108,20 +102,6 @@ namespace _200SXContact.Controllers
 			{
 				return Json(new { success = false, message = ex.Message });
 			}
-		}
-		[HttpGet]
-		public IActionResult GetEntries()
-		{
-			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var entries = _context.Items
-				.Where(item => item.UserId == userId)
-				.OrderByDescending(item => item.CreatedAt)
-				.ToList();
-			return View("~/Views/Account/Dashboard.cshtml", entries);
-		}
-		private int GetLoggedInUserId()
-		{
-			return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-		}
+		}		
 	}
 }

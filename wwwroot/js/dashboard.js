@@ -24,7 +24,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: '/Dashboard/UpdateEntry',
+            url: '/update-entry',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(updatedData),

@@ -26,12 +26,14 @@ namespace _200SXContact.Controllers
 			_adminSettings = adminSettings.Value;
 		}
 		[HttpGet]
+		[Route("checkout/view-checkout")]
 		public IActionResult Checkout()
 		{
 			return View("~/Views/Marketplace/CheckoutView.cshtml");
 		}
 		[HttpPost]
-		[Authorize]
+		[Route("checkout/place-order")]
+		[Authorize]		
 		public async Task<IActionResult> PlaceOrder(Order model)
 		{
 			ModelState.Remove("UserId");
@@ -43,24 +45,20 @@ namespace _200SXContact.Controllers
 			{
 				return View("~/Views/Marketplace/CheckoutView.cshtml", model);
 			}
-
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
 			{
 				TempData["IsUserLoggedIn"] = "no";
 				TempData["Message"] = "You need to be registered and logged in to checkout.";
-				return RedirectToAction("Login", "LoginRegister");
+				return Redirect("/login-register/login-page");
 			}
-
 			model.UserId = user.Id;
-
 			using (var transaction = await _context.Database.BeginTransactionAsync())
 			{
 				try
 				{ 
 					_context.Orders.Add(model);
 					await _context.SaveChangesAsync();
-
 					var orderTracking = new OrderTracking
 					{
 						OrderId = model.Id,
@@ -71,17 +69,15 @@ namespace _200SXContact.Controllers
 						OrderNotes = model.OrderNotes,
 						CartItemsJson = model.CartItemsJson
 					};
-
 					_context.OrderTrackings.Add(orderTracking);
 					await _context.SaveChangesAsync();
-
 					var cartItems = await _context.CartItems
 						.Where(ci => ci.UserId == user.Id)
 						.ToListAsync();
 
 					if (!cartItems.Any())
 					{
-						TempData["Message"] = "Your cart is empty. Please add items before checking out.";
+						TempData["Message"] = "Your cart is empty, please add items before checking out.";
 						return RedirectToAction("Index", "Marketplace");
 					}
 					else
@@ -89,17 +85,14 @@ namespace _200SXContact.Controllers
 						var cartItemsJson = JsonSerializer.Serialize(cartItems);
 						model.CartItemsJson = cartItemsJson;
 					}
-
 					foreach (var cartItem in cartItems)
 					{
 						cartItem.OrderId = model.Id;
 						_context.CartItems.Update(cartItem);
 						_context.Orders.Update(model);
-					}
-					
+					}					
 					await _context.SaveChangesAsync(); 
 					await transaction.CommitAsync();
-
 					var orderWithItems = await _context.Orders
 						.Include(o => o.CartItems)
 						.FirstOrDefaultAsync(o => o.Id == model.Id);
@@ -117,36 +110,14 @@ namespace _200SXContact.Controllers
 					return RedirectToAction("Checkout");
 				}
 			}
-		}
+		}		
 		[HttpGet]
-		[Authorize]
-		public async Task<IActionResult> Index()
-		{
-			var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
-				return Unauthorized("User not found.");
-			}
-
-			var cartItems = await _context.CartItems
-									.Where(ci => ci.UserId == user.Id)
-									.ToListAsync();
-
-			if (!cartItems.Any())
-			{
-				return BadRequest("Your cart is empty.");
-			}
-
-			var orderModel = new Order();
-			return View("~/Views/Marketplace/CheckoutView.cshtml", orderModel); 
-		}
-		[HttpGet]
-		[Authorize]
+		[Route("checkout/your-order")]
+		[Authorize]		
 		public async Task<IActionResult> OrderSummary(int orderId)
 		{
 			var order = await _context.Orders
 									   .FirstOrDefaultAsync(c => c.Id == orderId);
-
 			if (order == null || order.UserId != _userManager.GetUserId(User))
 			{
 				return NotFound();
@@ -157,14 +128,7 @@ namespace _200SXContact.Controllers
 
 				order.CartItems = cartItems;
 			}
-
 			return View("~/Views/Marketplace/OrderPlaced.cshtml", order);
-		}
-
-		[HttpGet]
-		public async Task<IActionResult> PendingOrder()
-		{
-			return View("~/Views/Marketplace/PendingOrdersAdmin.cshtml");
-		}
+		}		
 	}
 }

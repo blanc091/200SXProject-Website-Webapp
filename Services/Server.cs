@@ -76,7 +76,7 @@ namespace _200SXContact.Services
 				  },
 				},
 				Mode = "payment",
-				ReturnUrl = domain + "/Stripe/OrderPlaced?session_id={CHECKOUT_SESSION_ID}",
+				ReturnUrl = domain + "/stripe/order-placed?session_id={CHECKOUT_SESSION_ID}",
 				AutomaticTax = new SessionAutomaticTaxOptions { Enabled = true },
 			};
 			var service = new SessionService();

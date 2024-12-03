@@ -12,6 +12,9 @@ namespace _200SXContact.Controllers
         {
             _logger = logger;
         }
+        [HttpGet]
+		[Route("")]
+		[Route("home/index")]
 		public IActionResult Index(ContactForm model = null)
 		{
 			return View(model); 

@@ -9,7 +9,6 @@ using System.Net;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
 
-
 namespace _200SXContact.Controllers
 {
 	public class NewsletterController : Controller
@@ -24,7 +23,9 @@ namespace _200SXContact.Controllers
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 			_configuration = configuration;
 		}
-		[Authorize(Roles = "Admin")] 
+		[HttpGet]
+		[Route("newsletter/create-newsletter-admin")]
+		[Authorize(Roles = "Admin")]
 		public IActionResult CreateNewsletter()
 		{
 			var model = new NewsletterViewModel
@@ -108,11 +109,11 @@ namespace _200SXContact.Controllers
                     </div>
                 </body>
                 </html>"
-			};
-			
+			};			
 			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}
 		[HttpPost]
+		[Route("newsletter/subscribe")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Subscribe(string email, string honeypotSpam, string gRecaptchaResponseNewsletter)
 		{
@@ -120,24 +121,20 @@ namespace _200SXContact.Controllers
 			{
 				return BadRequest("Spam detected");
 			}
-
 			if (string.IsNullOrWhiteSpace(gRecaptchaResponseNewsletter) || !await VerifyRecaptchaAsync(gRecaptchaResponseNewsletter))
 			{
 				TempData["IsNewsletterError"] = "yes";
 				TempData["Message"] = "Failed reCAPTCHA validation.";
 				return View("~/Views/Home/Index.cshtml");
 			}
-
 			if (string.IsNullOrEmpty(email))
 			{
 				TempData["IsNewsletterError"] = "yes";
 				TempData["Message"] = "Email required !";
 				return View("~/Views/Home/Index.cshtml");
 			}
-
 			var existingSubscription = _context.NewsletterSubscriptions
 				.FirstOrDefault(sub => sub.Email == email);
-
 			if (existingSubscription != null)
 			{
 				if (!existingSubscription.IsSubscribed)
@@ -154,7 +151,6 @@ namespace _200SXContact.Controllers
 				TempData["Message"] = "Email already registered !";
 				return View("~/Views/Home/Index.cshtml");
 			}
-
 			var subscription = new NewsletterSubscription
 			{
 				Email = email,
@@ -163,7 +159,6 @@ namespace _200SXContact.Controllers
 			};
 			_context.NewsletterSubscriptions.Add(subscription);
 			_context.SaveChanges();
-
 			TempData["IsNewsletterSubscribed"] = "yes";
 			TempData["IsNewsletterError"] = "no";
 			TempData["Message"] = "Subscribed successfully !";
@@ -175,17 +170,15 @@ namespace _200SXContact.Controllers
 			using (var client = new HttpClient())
 			{
 				var requestContent = new FormUrlEncodedContent(new Dictionary<string, string>
-		{
-			{ "secret", secretKey },
-			{ "response", token }
-		});
-
+				{
+					{ "secret", secretKey },
+					{ "response", token }
+				});
 				var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", requestContent);
 				if (response.IsSuccessStatusCode)
 				{
 					var jsonString = await response.Content.ReadAsStringAsync();
 					Console.WriteLine($"reCAPTCHA Response: {jsonString}");
-
 					dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
 					return result.success == true;
 				}
@@ -194,32 +187,29 @@ namespace _200SXContact.Controllers
 					Console.WriteLine($"Failed to verify reCAPTCHA: {response.StatusCode}");
 				}
 			}
-
 			return false;
 		}
 		[HttpPost]
+		[Route("newsletter/unsubscribe")]
 		public IActionResult Unsubscribe(string email)
 		{
 			if (string.IsNullOrEmpty(email))
 			{
 				return BadRequest("Email is required.");
 			}
-
 			var subscription = _context.NewsletterSubscriptions
 				.FirstOrDefault(sub => sub.Email == email);
-
 			if (subscription == null || !subscription.IsSubscribed)
 			{
 				return BadRequest("Not subscribed.");
 			}
-
 			subscription.IsSubscribed = false;
 			_context.SaveChanges();
-
-			return Ok("Unsubscribed successfully.");
+			return Ok("Unsubscribed successfully."); // return modal, not like this
 		}
-		[Authorize(Roles = "Admin")]
 		[HttpPost]
+		[Route("newsletter/send-newsletter-admin")]
+		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
 		public IActionResult SendNewsletter(NewsletterViewModel model)
 		{
@@ -227,27 +217,18 @@ namespace _200SXContact.Controllers
 			{
 				return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);
 			}
-
 			var subscribers = _context.NewsletterSubscriptions
 				.Where(sub => sub.IsSubscribed)
 				.Select(sub => sub.Email)
 				.ToList();
-
 			foreach (var email in subscribers)
 			{
 				SendEmailToSubscriber(email, model.Subject, model.Body);
 			}
-
 			TempData["Message"] = "Newsletter sent successfully.";
 			return RedirectToAction("CreateNewsletter", "Newsletter");
-		}
-
-		[Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
-		public IActionResult SendNewsletter()
-		{
-			return View("~/Views/Newsletter/CreateNewsletter.cshtml", new NewsletterViewModel());
-		}
-		[Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+		}		
+		[Authorize(Roles = "Admin")]
 		private void SendEmailToSubscriber(string email, string subject, string body)
 		{
 			var smtpClient = new SmtpClient("mail5019.site4now.net")
@@ -256,7 +237,6 @@ namespace _200SXContact.Controllers
 				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password),
 				EnableSsl = true,
 			};
-
 			var mailMessage = new MailMessage
 			{
 				From = new MailAddress(_credentials.UserName),
@@ -264,9 +244,7 @@ namespace _200SXContact.Controllers
 				Body = body,
 				IsBodyHtml = true,
 			};
-
 			mailMessage.To.Add(email);
-
 			try
 			{
 				smtpClient.Send(mailMessage);

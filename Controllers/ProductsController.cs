@@ -21,6 +21,7 @@ namespace _200SXContact.Controllers
 			_logger = logger;
 		}
 		[HttpGet]
+		[Route("products/add-product-interface")]
 		[Authorize(Roles = "Admin")]
 		public IActionResult AddProduct()
 		{
@@ -35,14 +36,15 @@ namespace _200SXContact.Controllers
 			};
 			return View("~/Views/Marketplace/AddProduct.cshtml", model);
 		}
-
 		[HttpGet]
+		[Route("products/view-products")]
 		public async Task<IActionResult> ProductsDashboard()
 		{
 			var products = await _context.Products.ToListAsync();
 			return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
 		}
 		[HttpPost]
+		[Route("products/add-product-admin")]
 		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> AddProduct(Product model, List<IFormFile> Images)
@@ -59,9 +61,7 @@ namespace _200SXContact.Controllers
 					{
 						Directory.CreateDirectory(productDirectory);
 					}
-
 					model.ImagePaths = new List<string>();
-
 					foreach (var image in Images)
 					{
 						if (image.Length > 0)
@@ -75,31 +75,27 @@ namespace _200SXContact.Controllers
 						}
 					}
 				}
-
 				_context.Products.Add(model);
 				await _context.SaveChangesAsync();
 				return RedirectToAction("ProductsDashboard", "Products");
 			}
-
 			foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
 			{
 				_logger.LogError("Model Error: {0}", error.ErrorMessage);
 			}
 			return View("AddProduct", model);
 		}
-
-
 		[HttpGet]
-		public async Task<IActionResult> DetailedProductView(int id)
+		[Route("products/detailed-product-view")]
+		public async Task<IActionResult> DetailedProductView([FromQuery] int id)
 		{
 			var product = await _context.Products
-					   .FirstOrDefaultAsync(b => b.Id == id);
-
+				.FirstOrDefaultAsync(b => b.Id == id);
 			if (product == null)
 			{
 				return NotFound();
 			}
-			return View("~/Views/Marketplace/DetailedProductView.cshtml", product); 
+			return View("~/Views/Marketplace/DetailedProductView.cshtml", product);
 		}
 	}
 }

@@ -27,6 +27,7 @@ namespace _200SXContact.Controllers
 			return View("~/Views/Account/AdminDash.cshtml");
 		}		
 		[HttpGet]
+		[Route("account/login-account")]
 		[AllowAnonymous]
 		public async Task<IActionResult> Login(string returnUrl = null)
 		{
@@ -38,27 +39,24 @@ namespace _200SXContact.Controllers
 				return View("~/Views/Newsletter/AccessDenied.cshtml");				
 			}
 			else
-			{
+			{				
+				var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
+				var user = await userManager.GetUserAsync(User);
+				if (user != null && await userManager.IsInRoleAsync(user, "Admin"))
 				{
-					var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
-					var user = await userManager.GetUserAsync(User);
-
-					if (user != null && await userManager.IsInRoleAsync(user, "Admin"))
-					{
-						return View("~/Views/Newsletter/CreateNewsletter.cshtml");
-					}
-					else
-					{
-						TempData["isNiceTry"] = "yes";
-						TempData["Message"] = "Nice try :)";
-						ViewData["ReturnUrl"] = returnUrl;
-						return View("~/Views/Home/Index.cshtml");
-					}
+					return View("~/Views/Newsletter/CreateNewsletter.cshtml");
 				}
-
+				else
+				{
+					TempData["isNiceTry"] = "yes";
+					TempData["Message"] = "Nice try :)";
+					ViewData["ReturnUrl"] = returnUrl;
+					return View("~/Views/Home/Index.cshtml");
+				}				
 			}
 		}
 		[HttpGet]
+		[Route("account/access-denied-account")]
 		[AllowAnonymous]
 		public async Task<IActionResult> AccessDenied(string returnUrl = null)
 		{
@@ -69,18 +67,14 @@ namespace _200SXContact.Controllers
 			}
 			else
 			{
+				var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
+				var user = await userManager.GetUserAsync(User);
+				if (user != null && await userManager.IsInRoleAsync(user, "Admin"))
 				{
-					var userManager = HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
-					var user = await userManager.GetUserAsync(User);
-
-					if (user != null && await userManager.IsInRoleAsync(user, "Admin"))
-					{
-						return View("~/Views/Newsletter/CreateNewsletter.cshtml");
-					}
-					ViewData["ReturnUrl"] = returnUrl;
-					return View("~/Views/Home/Index.cshtml");
+					return View("~/Views/Newsletter/CreateNewsletter.cshtml");
 				}
-
+				ViewData["ReturnUrl"] = returnUrl;
+				return View("~/Views/Home/Index.cshtml");
 			}
 		}
 		[HttpGet]
@@ -95,12 +89,10 @@ namespace _200SXContact.Controllers
 				.ToListAsync();
 
 			var user = await _userManager.FindByIdAsync(userId);
-
 			if (user == null)
 			{
 				return NotFound("User not found");
 			}
-
 			var viewModel = new UserProfileViewModel
 			{
 				UserName = user.UserName,
@@ -109,10 +101,10 @@ namespace _200SXContact.Controllers
 				LastLogin = user.LastLogin,
 				UserBuilds = userBuilds
 			};
-
 			return View("~/Views/Account/UserDash.cshtml", viewModel);
 		}
 		[HttpPost]
+		[Route("account/delete-account")]
 		[Authorize]
 		public async Task<IActionResult> DeleteAccount()
 		{
@@ -129,7 +121,6 @@ namespace _200SXContact.Controllers
 				await _context.SaveChangesAsync();
 			}
 			var result = await _userManager.DeleteAsync(user);
-
 			if (result.Succeeded)
 			{
 				await _signInManager.SignOutAsync();
@@ -138,6 +129,5 @@ namespace _200SXContact.Controllers
 			ModelState.AddModelError(string.Empty, "An error occurred while deleting your account.");
 			return RedirectToAction("UserProfile");
 		}
-
 	}
 }

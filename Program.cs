@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using static System.Net.WebRequestMethods;
 using Stripe;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.OAuth;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -104,7 +105,6 @@ builder.Services.AddSession(options =>
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
-// Register DbContext, Email service, Logger service, etc.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -115,34 +115,34 @@ builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
 StripeConfiguration.ApiKey = stripeSettingsSection["SecretKey"];
-builder.Services.AddSingleton<PayPalHelperService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
-		options.LoginPath = "/LoginRegister/Login";
-		options.LogoutPath = "/LoginRegister/Logout";
-		options.AccessDeniedPath = "/LoginRegister/AccessDenied";
-		//options.Cookie.Name = "_200SXContact.AuthCookie";          // prod
-		options.Cookie.Name = "_200SXContact.AuthCookie_PreProd";	 // preprod
-		options.Cookie.HttpOnly = true;
-		options.Cookie.Domain = ".200sxproject.com";
+		options.LoginPath = "/login-page";
+		options.LogoutPath = "/loginregister/logout";
+		options.AccessDeniedPath = "/access-denied";
+		options.Cookie.Name = "_200SXContact.AuthCookie";          // prod
+		//options.Cookie.Name = "_200SXContact.AuthCookie_PreProd";	 // preprod
+		options.Cookie.HttpOnly = false;
+		options.Cookie.Domain = ".200sxproject.com"; //prod, preprod
 		options.SlidingExpiration = true;
-		options.Cookie.SecurePolicy = CookieSecurePolicy.None;		 // preprod
-		//options.Cookie.SecurePolicy = CookieSecurePolicy.Always;   // prod
-		//options.Cookie.SameSite = SameSiteMode.Strict;			 // prod
-		options.Cookie.SameSite = SameSiteMode.Lax;					 // preprod
+		//options.Cookie.SecurePolicy = CookieSecurePolicy.None;		 // preprod
+		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;   // prod
+		options.Cookie.SameSite = SameSiteMode.Strict;			 // prod
+		//options.Cookie.SameSite = SameSiteMode.Lax;					 // preprod
 		options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 	})
 .AddMicrosoftAccount(microsoftOptions =>
 {
 	microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
 	microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
-	microsoftOptions.CallbackPath = "/signin-microsoft"; 
+	microsoftOptions.CallbackPath = "/sign-in-microsoft";	
 });
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
+	app.UseDeveloperExceptionPage();
 	app.UseHsts();
 }
 app.UseRouting();
@@ -159,14 +159,12 @@ app.Use(async (context, next) =>
 {	
 	var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 	logger.LogInformation($"Incoming request path: {context.Request.Path}");
-
 	await next();
 });
 app.Use(async (context, next) =>
 {
 	var nonce = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 	context.Items["CSPNonce"] = nonce;
-
 	var cspPolicy = $"default-src 'self'; " +
 					$"script-src 'self' 'nonce-{nonce}' " +
 					"https://www.googletagmanager.com " +
@@ -213,7 +211,6 @@ app.Use(async (context, next) =>
 	context.Response.Headers.Append("Content-Security-Policy", cspPolicy);
 	await next();
 });
-
 if (app.Environment.IsDevelopment())
 {
 	app.UseDeveloperExceptionPage();
@@ -229,7 +226,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapPost("/signout", async context =>
+app.MapControllerRoute(
+	name: "pendingorders",
+	pattern: "pendingorders/{action}/{id?}",
+	defaults: new { controller = "PendingOrders" });
+app.MapPost("/logout", async context =>
 {
 	await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 	await context.SignOutAsync(MicrosoftAccountDefaults.AuthenticationScheme);
