@@ -9,7 +9,7 @@
                 ];
                 forms.forEach(({ formId, recaptchaId }) => {
                     grecaptcha.render(recaptchaId, {
-                        'sitekey': '6LdVNIgqAAAAAGdAW2AVoZGG3uoSYm0LgW-se5OH',
+                        'sitekey': '6LfHIYgqAAAAALHD85A5uSVmIOeCS4Q458X6_LIv',
                         'callback': function (token) {
                             console.log(`${formId} token received:`, token);
                             onSubmitWithEvent(token, window.lastClickedButtonEvent);

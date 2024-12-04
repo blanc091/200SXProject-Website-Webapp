@@ -63,7 +63,8 @@ namespace _200SXContact.Services
 		public ActionResult Create()
 		{
 			//var domain = "https://200sxproject.azurewebsites.net";
-			var domain = "https://localhost:7109";
+			//var domain = "https://localhost:7109";
+			var domain = "https://www.200sxproject.com";
 			var options = new SessionCreateOptions
 			{
 				UiMode = "embedded",

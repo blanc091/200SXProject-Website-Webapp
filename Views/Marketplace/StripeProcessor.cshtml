@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<_200SXContact.Models.Product>
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Payment".Substring(0, 50) + "...";
-}
-@{
 	var message = TempData["Message"] as string;
 }
 @{
@@ -54,6 +51,7 @@
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>The Nissan 200SX Project || Import Garage || Stripe Payment</title>
 	<script src="https://js.stripe.com/v3/"></script>
 	<script src="/js/checkout.js"></script>
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />

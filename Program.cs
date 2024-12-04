@@ -124,7 +124,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		options.Cookie.Name = "_200SXContact.AuthCookie";          // prod
 		//options.Cookie.Name = "_200SXContact.AuthCookie_PreProd";	 // preprod
 		options.Cookie.HttpOnly = false;
-		options.Cookie.Domain = ".200sxproject.com"; //prod, preprod
+		options.Cookie.Domain = ".200sxproject.com"; // prod, preprod
 		options.SlidingExpiration = true;
 		//options.Cookie.SecurePolicy = CookieSecurePolicy.None;		 // preprod
 		options.Cookie.SecurePolicy = CookieSecurePolicy.Always;   // prod

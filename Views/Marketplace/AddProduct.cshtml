@@ -1,9 +1,6 @@
 ﻿@model _200SXContact.Models.Product
 @using System.Security.Claims
 @{
-	ViewData["Title"] = "The Nissan 200SX Project || Import Garage || Add Build";
-}
-@{
 	var message = TempData["Message"] as string;
 }
 @if (!string.IsNullOrEmpty(message))
@@ -52,6 +49,7 @@
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>The Nissan 200SX Project || Import Garage || Add Product</title>
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
