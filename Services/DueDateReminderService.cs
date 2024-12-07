@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using _200SXContact.Data;
 using _200SXContact.Models;
 using NETCore.MailKit.Core;
+using PayPalCheckoutSdk.Orders;
 
 namespace _200SXContact.Services
 {
@@ -24,10 +25,12 @@ namespace _200SXContact.Services
 		}
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			var currentTime = DateTime.Now;
+            _loggerService.LogAsync("DueDateReminderService started", "Info", "");
+            var currentTime = DateTime.Now;
 			var timeToMidnight = DateTime.Today.AddDays(1) - currentTime;
 			_timer = new Timer(ExecuteTimerCallback, null, timeToMidnight, TimeSpan.FromDays(1));
-			return Task.CompletedTask;
+            _loggerService.LogAsync("DueDateReminderService stopped", "Info", "");
+            return Task.CompletedTask;
 		}
 		private void ExecuteTimerCallback(object state)
 		{
@@ -41,7 +44,6 @@ namespace _200SXContact.Services
 					.Where(i => i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5) && !i.EmailSent)
 					.Include(i => i.User)
 					.ToListAsync();
-
 				foreach (var item in dueItems)
 				{
 					if (item.User == null)
