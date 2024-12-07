@@ -6,31 +6,34 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Claims;
+using _200SXContact.Services;
 
 namespace _200SXContact.Controllers
 {
 	public class UserBuildsController : Controller
 	{
 		private readonly ApplicationDbContext _context;
-		private readonly ILogger<UserBuildsController> _logger;
-		private readonly UserManager<User> _userManager;
-		public UserBuildsController(ApplicationDbContext context, ILogger<UserBuildsController> logger, UserManager<User> userManager)
+        private readonly ILoggerService _loggerService;
+        private readonly UserManager<User> _userManager;
+		public UserBuildsController(ApplicationDbContext context, ILoggerService loggerService, UserManager<User> userManager)
 		{
 			_context = context;
 			_userManager = userManager;
-			_logger = logger;
+			_loggerService = loggerService;
 		}
 		[HttpGet]
 		[Route("add-new-build")]
 		[Authorize]
 		public async Task<IActionResult> AddUserBuild()
 		{
+			await _loggerService.LogAsync("Getting Add User Build Interface", "Info", "");
 			var user = await _userManager.GetUserAsync(User);
 			var model = new UserBuild
 			{
 				UserName = user.UserName
 			};
-			return View("~/Views/UserContent/AddUserBuild.cshtml", model);
+            await _loggerService.LogAsync("Got Add User Build Interface", "Info", "");
+            return View("~/Views/UserContent/AddUserBuild.cshtml", model);
 		}
 		[HttpPost]
 		[Route("submit-build")]
@@ -38,7 +41,8 @@ namespace _200SXContact.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> SubmitBuild(UserBuild model, IFormFile[] Images)
 		{
-			ModelState.Remove("ImagePath");
+            await _loggerService.LogAsync("Starting to submit user build", "Info", "");
+            ModelState.Remove("ImagePath");
 			//ModelState.Remove("Id");
 			model.Id = Guid.NewGuid().ToString();
 			var user = await _userManager.GetUserAsync(User);
@@ -71,13 +75,14 @@ namespace _200SXContact.Controllers
 					model.UserName = user.UserName;
 					model.UserId = user.Id;
 				}
-				_context.UserBuilds.Add(model);
+				await _context.UserBuilds.AddAsync(model);
 				await _context.SaveChangesAsync();
-				return RedirectToAction("UserContentDashboard", "UserBuilds");
+                await _loggerService.LogAsync("Submitted User Build for " + model.UserId, "Info", "");
+                return RedirectToAction("UserContentDashboard", "UserBuilds");
 			}
 			foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
 			{
-				_logger.LogError("Model Error: {0}", error.ErrorMessage);
+                await _loggerService.LogAsync("Error in model state at AddUserBuild: " + error.ErrorMessage, "Error", "");
 			}
 			return View("~/Views/UserContent/AddUserBuild.cshtml", model);
 		}
@@ -85,23 +90,28 @@ namespace _200SXContact.Controllers
 		[Route("detailed-user-build")]
 		public async Task<IActionResult> DetailedUserView(string id)
 		{
-			var build = await _context.UserBuilds
+            await _loggerService.LogAsync("Getting detailed user build interface", "Info", "");
+            var build = await _context.UserBuilds
 					   .Include(b => b.Comments) 
 					   .FirstOrDefaultAsync(b => b.Id == id);
 			if (build == null)
 			{
-				return NotFound(); 
+                await _loggerService.LogAsync("Error in DetailedUserView, build not found", "Error", "");
+                return NotFound(); 
 			}
-			return View("~/Views/UserContent/DetailedUserView.cshtml", build); 
+            await _loggerService.LogAsync("Got detailed user build interface", "Info", "");
+            return View("~/Views/UserContent/DetailedUserView.cshtml", build); 
 		}
 		[HttpGet]
 		[Route("user-builds")]
 		public async Task<IActionResult> UserContentDashboard()
 		{
-			var builds = await _context.UserBuilds
+            await _loggerService.LogAsync("Getting user builds dashboard", "Info", "");
+            var builds = await _context.UserBuilds
 					   .OrderByDescending(b => b.DateCreated)
 					   .ToListAsync();
-			return View("~/Views/UserContent/UserContentDashboard.cshtml", builds);
+            await _loggerService.LogAsync("Got user builds dashboard", "Info", "");
+            return View("~/Views/UserContent/UserContentDashboard.cshtml", builds);
 		}		
 	}
 }

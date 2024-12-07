@@ -7,16 +7,19 @@ namespace _200SXContact.Controllers
 	public class DueDateTestingController : Controller
 	{
 		private readonly DueDateReminderService _dueDateReminderService;
-
-		public DueDateTestingController(DueDateReminderService dueDateReminderService)
+		private readonly ILoggerService _loggerService;
+		public DueDateTestingController(DueDateReminderService dueDateReminderService, ILoggerService loggerService)
 		{
 			_dueDateReminderService = dueDateReminderService;
+			_loggerService = loggerService;
 		}
 		[HttpGet("ManualCheckDueDates")]
 		public async Task<IActionResult> ManualCheckDueDates()
 		{
-			await _dueDateReminderService.ManualCheckDueDates();
-			return Ok("Manual check of due dates initiated.");
+            await _loggerService.LogAsync("Starting manually checking due dates", "Info", "");
+            await _dueDateReminderService.ManualCheckDueDates();
+            await _loggerService.LogAsync("Finished manually checking due dates", "Info", "");
+            return Ok("Manual check of due dates initiated.");
 		}
 	}
 }

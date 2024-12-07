@@ -5,29 +5,32 @@ using _200SXContact.Models;
 
 namespace _200SXContact.Services
 {
-	public interface ILoggerService
-	{
-		Task LogAsync(string message, string logLevel, string exception);
-	}
-	public class LoggerService : ILoggerService
-	{
-		private readonly ApplicationDbContext _context;
+    public interface ILoggerService
+    {
+        Task LogAsync(string message, string logLevel, string exception);
+    }
+    public class LoggerService : ILoggerService
+    {
+        private readonly DbContextOptions<ApplicationDbContext> _options;
 
-		public LoggerService(ApplicationDbContext context)
-		{
-			_context = context;
-		}
-		public async Task LogAsync(string message, string logLevel, string exception = "")
-		{
-			var logEntry = new LoggingModel
-			{
-				Message = message,
-				Timestamp = DateTime.UtcNow,
-				LogLevel = logLevel,
-				Exception = exception
-			};
-			_context.Logging.Add(logEntry);
-			await _context.SaveChangesAsync();
-		}
-	}
+        public LoggerService(DbContextOptions<ApplicationDbContext> options)
+        {
+            _options = options;
+        }
+        public async Task LogAsync(string message, string logLevel, string exception = "")
+        {
+            using (var context = new ApplicationDbContext(_options))
+            {
+                var logEntry = new LoggingModel
+                {
+                    Message = message,
+                    Timestamp = DateTime.UtcNow,
+                    LogLevel = logLevel,
+                    Exception = exception
+                };
+                await context.Logging.AddAsync(logEntry);
+                await context.SaveChangesAsync();
+            }
+        }
+    }
 }

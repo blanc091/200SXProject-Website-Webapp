@@ -69,7 +69,8 @@ namespace _200SXContact.Services
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
 			_timer?.Change(Timeout.Infinite, 0);
-			return Task.CompletedTask;
+			_loggerService.LogAsync("Stopped DueDateReminderService","Info","");
+            return Task.CompletedTask;
 		}
 		public void Dispose()
 		{
@@ -77,7 +78,7 @@ namespace _200SXContact.Services
 		}
 		public async Task ManualCheckDueDates()
 		{
-			_loggerService.LogAsync($"Manually checking due dates..", "Error", "");
+			await _loggerService.LogAsync($"Manually checking due dates..", "Error", "");
 			await CheckDueDates(null);
 		}
 	}

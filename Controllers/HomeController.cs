@@ -1,4 +1,5 @@
 using _200SXContact.Models;
+using _200SXContact.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.IO;
@@ -7,28 +8,31 @@ namespace _200SXContact.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ILoggerService _loggerService;
+        public HomeController(ILoggerService loggerService)
         {
-            _logger = logger;
+            _loggerService = loggerService;
         }
         [HttpGet]
 		[Route("")]
 		[Route("home/index")]
 		public IActionResult Index(ContactForm model = null)
 		{
-			return View(model); 
+            _loggerService.LogAsync("Getting index page", "Info", "");
+            return View(model); 
 		}
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            _loggerService.LogAsync("Returninf error view", "Info", "");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 		[HttpGet]
 		[Route("api/is-logged-in")]
 		public IActionResult IsLoggedIn()
 		{
-			return Json(User.Identity.IsAuthenticated);
+            _loggerService.LogAsync("Getting IsLoggedIn JSON for api/is-logged-in", "Info", "");
+            return Json(User.Identity.IsAuthenticated);
 		}
 	}
 }

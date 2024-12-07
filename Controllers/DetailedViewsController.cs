@@ -1,22 +1,32 @@
 ﻿using _200SXContact.Data;
+using _200SXContact.Services;
 using Microsoft.AspNetCore.Mvc;
+using Stripe.Climate;
 
 namespace _200SXContact.Controllers
 {
 	public class DetailedViewsController : Controller
 	{
+		private readonly ILoggerService _loggerService;
+		public DetailedViewsController(ILoggerService loggerService) 
+		{
+			_loggerService = loggerService;
+        }
 		[HttpGet]
 		[Route("detailed-view/{id}")]
 		public IActionResult DetailedView(string id)
 		{
-			if (!string.IsNullOrEmpty(id))
+            _loggerService.LogAsync("Starting getting detailed index view", "Info", "");
+            if (!string.IsNullOrEmpty(id))
 			{
 				var sanitizedId = id.Replace(" ", "-");
-				return View($"~/Views/DetailedViews/{sanitizedId}.cshtml");
+                _loggerService.LogAsync("Got detailed index view", "Info", "");
+                return View($"~/Views/DetailedViews/{sanitizedId}.cshtml");
 			}
 			else
 			{
-				return RedirectToAction("Index", "Home"); 
+                _loggerService.LogAsync("ID is empty when getting detailed index view", "Error", "");
+                return RedirectToAction("Index", "Home"); 
 			}
 		}
 	}

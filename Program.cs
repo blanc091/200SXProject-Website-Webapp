@@ -65,7 +65,6 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 		}
 	}
 }
-
 var builder = WebApplication.CreateBuilder(args);
 var cultureInfo = new CultureInfo("en-US"); 
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

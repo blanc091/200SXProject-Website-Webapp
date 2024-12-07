@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
+using _200SXContact.Services;
 
 namespace _200SXContact.Controllers
 {
@@ -16,19 +17,22 @@ namespace _200SXContact.Controllers
 		private readonly ApplicationDbContext _context;
 		private readonly NetworkCredential _credentials;
 		private readonly IConfiguration _configuration;
-		public NewsletterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, IConfiguration configuration)
+		private readonly ILoggerService _loggerService;
+		public NewsletterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, IConfiguration configuration, ILoggerService loggerService)
 		{
 			_context = context;
 			var emailSettings = appSettings.Value.EmailSettings;
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 			_configuration = configuration;
-		}
+            _loggerService = loggerService;
+        }
 		[HttpGet]
 		[Route("newsletter/create-newsletter-admin")]
 		[Authorize(Roles = "Admin")]
 		public IActionResult CreateNewsletter()
 		{
-			var model = new NewsletterViewModel
+            _loggerService.LogAsync("Getting create newsletter admin page", "Info", "");
+            var model = new NewsletterViewModel
 			{
 				Body = @"<!DOCTYPE html>
                 <html lang='en'>
@@ -114,15 +118,17 @@ namespace _200SXContact.Controllers
                     </div>
                 </body>
                 </html>"
-			};			
-			return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
+			};
+            _loggerService.LogAsync("Got create newsletter admin page", "Info", "");
+            return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}
 		[HttpPost]
 		[Route("newsletter/subscribe")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Subscribe(string email, string honeypotSpam, string gRecaptchaResponseNewsletter)
 		{
-			if (!string.IsNullOrWhiteSpace(honeypotSpam))
+            await _loggerService.LogAsync("Started subscribing to newsletter for " + email, "Info", "");
+            if (!string.IsNullOrWhiteSpace(honeypotSpam))
 			{
 				return BadRequest("Spam detected");
 			}
@@ -134,7 +140,8 @@ namespace _200SXContact.Controllers
 			}
 			if (string.IsNullOrEmpty(email))
 			{
-				TempData["IsNewsletterError"] = "yes";
+                await _loggerService.LogAsync("No email found in request for newsletter subscription", "Error", "");
+                TempData["IsNewsletterError"] = "yes";
 				TempData["Message"] = "Email required !";
 				return View("~/Views/Home/Index.cshtml");
 			}
@@ -146,15 +153,17 @@ namespace _200SXContact.Controllers
 				{
 					existingSubscription.IsSubscribed = true;
 					existingSubscription.SubscribedAt = DateTime.Now;
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 					TempData["IsNewsletterSubscribed"] = "yes";
 					TempData["IsNewsletterError"] = "no";
 					TempData["Message"] = "Email resubscribed successfully !";
-					return View("~/Views/Home/Index.cshtml");
+                    await _loggerService.LogAsync("Resubscribed for newsletter for " + email, "Info", "");
+                    return View("~/Views/Home/Index.cshtml");
 				}
 				TempData["IsNewsletterError"] = "yes";
 				TempData["Message"] = "Email already registered !";
-				return View("~/Views/Home/Index.cshtml");
+                await _loggerService.LogAsync("Email already registered for newsletter " + email, "Error", "");
+                return View("~/Views/Home/Index.cshtml");
 			}
 			var subscription = new NewsletterSubscription
 			{
@@ -162,12 +171,13 @@ namespace _200SXContact.Controllers
 				IsSubscribed = true,
 				SubscribedAt = DateTime.Now
 			};
-			_context.NewsletterSubscriptions.Add(subscription);
-			_context.SaveChanges();
+			await _context.NewsletterSubscriptions.AddAsync(subscription);
+			await _context.SaveChangesAsync();
 			TempData["IsNewsletterSubscribed"] = "yes";
 			TempData["IsNewsletterError"] = "no";
 			TempData["Message"] = "Subscribed successfully !";
-			return View("~/Views/Home/Index.cshtml");
+            await _loggerService.LogAsync("Subscribed to newsletter for " + email, "Info", "");
+            return View("~/Views/Home/Index.cshtml");
 		}
 		private async Task<bool> VerifyRecaptchaAsync(string token)
 		{
@@ -197,21 +207,25 @@ namespace _200SXContact.Controllers
 		[HttpGet]
 		public IActionResult Unsubscribe(string email)
 		{
-			if (string.IsNullOrEmpty(email))
+            _loggerService.LogAsync("Starting unsubscribe request for newsletter subscription", "Info", "");
+            if (string.IsNullOrEmpty(email))
 			{
-				return BadRequest("Email is required.");
+                _loggerService.LogAsync("Email not provided or found for newsletter unsubscribe request", "Error", "");
+                return BadRequest("Email is required.");
 			}
 			var subscription = _context.NewsletterSubscriptions
 				.FirstOrDefault(sub => sub.Email == email);
 			if (subscription == null || !subscription.IsSubscribed)
 			{
-				return BadRequest("Not subscribed.");
+                _loggerService.LogAsync("Email not subscribed for newsletter and request for unsubscribe sent", "Error", "");
+                return BadRequest("Not subscribed.");
 			}
 			subscription.IsSubscribed = false;
-			_context.SaveChanges();
+			_context.SaveChangesAsync();
 			TempData["Unsubscribed"] = "yes";
 			TempData["Message"] = "Unsubscribed from the newsletter !";
-			return Redirect("/");
+            _loggerService.LogAsync("Finished unsubscribe request for newsletter subscription", "Info", "");
+            return Redirect("/");
 		}
 		[HttpPost]
 		[Route("newsletter/send-newsletter-admin")]
@@ -219,7 +233,8 @@ namespace _200SXContact.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult SendNewsletter(NewsletterViewModel model)
 		{
-			if (!ModelState.IsValid)
+            _loggerService.LogAsync("Started sending newsletter admin", "Info", "");
+            if (!ModelState.IsValid)
 			{
 				return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);
 			}
@@ -232,12 +247,14 @@ namespace _200SXContact.Controllers
 				SendEmailToSubscriber(email, model.Subject, model.Body);
 			}
 			TempData["Message"] = "Newsletter sent successfully.";
-			return RedirectToAction("CreateNewsletter", "Newsletter");
+            _loggerService.LogAsync("Finished sending newsletter admin", "Info", "");
+            return RedirectToAction("CreateNewsletter", "Newsletter");
 		}		
 		[Authorize(Roles = "Admin")]
 		private void SendEmailToSubscriber(string email, string subject, string body)
 		{
-			body = body.Replace("{EMAIL}", System.Net.WebUtility.UrlEncode(email));
+            _loggerService.LogAsync("Started sending newsletter email to subscriber admin", "Info", "");
+            body = body.Replace("{EMAIL}", System.Net.WebUtility.UrlEncode(email));
 			var smtpClient = new SmtpClient("mail5019.site4now.net")
 			{
 				Port = 587,
@@ -258,8 +275,9 @@ namespace _200SXContact.Controllers
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Failed to send email to {email}: {ex.Message}");
+                _loggerService.LogAsync($"Failed to send email to {email}: {ex.Message}", "Error", "");
 			}
-		}
+            _loggerService.LogAsync("Finished sending newsletter email to subscriber admin", "Info", "");
+        }
 	}
 }

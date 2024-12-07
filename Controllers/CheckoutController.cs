@@ -18,17 +18,20 @@ namespace _200SXContact.Controllers
 		private readonly UserManager<User> _userManager;
 		private readonly Services.IEmailService _emailService;
 		private readonly AdminSettings _adminSettings;
-		public CheckoutController(ApplicationDbContext context, UserManager<User> userManager, Services.IEmailService emailService, IOptions<AdminSettings> adminSettings)
+		private readonly ILoggerService _loggerService;
+		public CheckoutController(ApplicationDbContext context, UserManager<User> userManager, Services.IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService)
 		{
 			_emailService = emailService;
 			_context = context;
 			_userManager = userManager;
 			_adminSettings = adminSettings.Value;
+			_loggerService = loggerService;	
 		}
 		[HttpGet]
 		[Route("checkout/view-checkout")]
-		public IActionResult Checkout()
+		public async Task<IActionResult> Checkout()
 		{
+			await _loggerService.LogAsync("Getting checkout view","Info","");
 			return View("~/Views/Marketplace/CheckoutView.cshtml");
 		}
 		[HttpPost]
@@ -36,7 +39,8 @@ namespace _200SXContact.Controllers
 		[Authorize]		
 		public async Task<IActionResult> PlaceOrder(Order model)
 		{
-			ModelState.Remove("UserId");
+            await _loggerService.LogAsync("Placing order", "Info", "");
+            ModelState.Remove("UserId");
 			ModelState.Remove("CartItems");
 			ModelState.Remove("OrderItems");
 			ModelState.Remove("User");
@@ -48,7 +52,8 @@ namespace _200SXContact.Controllers
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
 			{
-				TempData["IsUserLoggedIn"] = "no";
+                await _loggerService.LogAsync("No user found when placing order", "Error", "");
+                TempData["IsUserLoggedIn"] = "no";
 				TempData["Message"] = "You need to be registered and logged in to checkout.";
 				return Redirect("/login-page");
 			}
@@ -56,8 +61,9 @@ namespace _200SXContact.Controllers
 			using (var transaction = await _context.Database.BeginTransactionAsync())
 			{
 				try
-				{ 
-					_context.Orders.Add(model);
+				{
+                    await _loggerService.LogAsync("Creating a new ordertracking instance in checkout view", "Info", "");
+                    await _context.Orders.AddAsync(model);
 					await _context.SaveChangesAsync();
 					var orderTracking = new OrderTracking
 					{
@@ -69,45 +75,51 @@ namespace _200SXContact.Controllers
 						OrderNotes = model.OrderNotes,
 						CartItemsJson = model.CartItemsJson
 					};
-					_context.OrderTrackings.Add(orderTracking);
+					await _context.OrderTrackings.AddAsync(orderTracking);
 					await _context.SaveChangesAsync();
-					var cartItems = await _context.CartItems
+                    await _loggerService.LogAsync("Created new ordertracking instance and saved to DB in checkout view", "Info", "");
+                    var cartItems = await _context.CartItems
 						.Where(ci => ci.UserId == user.Id)
 						.ToListAsync();
-
 					if (!cartItems.Any())
 					{
-						TempData["Message"] = "Your cart is empty, please add items before checking out.";
+                        await _loggerService.LogAsync("Cart is empty when trying to serialize in checkout view", "Error", "");
+                        TempData["Message"] = "Your cart is empty, please add items before checking out.";
 						return View("~/Views/Marketplace/CheckoutView.cshtml", model);
 					}
 					else
 					{
 						var cartItemsJson = JsonSerializer.Serialize(cartItems);
 						model.CartItemsJson = cartItemsJson;
-					}
+                        await _loggerService.LogAsync("Cart items serialized in checkout view", "Info", "");
+                    }
 					foreach (var cartItem in cartItems)
 					{
 						cartItem.OrderId = model.Id;
 						_context.CartItems.Update(cartItem);
 						_context.Orders.Update(model);
 					}					
-					await _context.SaveChangesAsync(); 
-					await transaction.CommitAsync();
-					var orderWithItems = await _context.Orders
+					await _context.SaveChangesAsync();                   
+                    await transaction.CommitAsync();
+                    await _loggerService.LogAsync("Added all cart items to DB and in context in checkout view", "Info", "");
+                    await _loggerService.LogAsync("Creating orderwithItems in checkout view", "Info", "");
+                    var orderWithItems = await _context.Orders
 						.Include(o => o.CartItems)
 						.FirstOrDefaultAsync(o => o.Id == model.Id);
-
-					await _emailService.SendOrderConfirmEmail(model.Email, orderWithItems);
+                    await _loggerService.LogAsync("Sending confirmation emals to admin and user in checkout view", "Info", "");
+                    await _emailService.SendOrderConfirmEmail(model.Email, orderWithItems);
 					await _emailService.SendOrderConfirmEmail(_adminSettings.Email, orderWithItems);
 					_context.CartItems.RemoveRange(cartItems);
 					await _context.SaveChangesAsync();
-					return RedirectToAction("OrderSummary", new { orderId = model.Id });
+                    await _loggerService.LogAsync("Removed cart items from cart and finished order process in checkout view", "Info", "");
+                    return RedirectToAction("OrderSummary", new { orderId = model.Id });
 				}
 				catch (Exception ex)
 				{
 					await transaction.RollbackAsync();
 					TempData["Message"] = "Error: " + ex.Message;
-					return RedirectToAction("Checkout");
+                    await _loggerService.LogAsync("Error in checkout view " + ex.Message, "Error", "");
+                    return RedirectToAction("Checkout");
 				}
 			}
 		}		
@@ -116,19 +128,23 @@ namespace _200SXContact.Controllers
 		[Authorize]		
 		public async Task<IActionResult> OrderSummary(int orderId)
 		{
-			var order = await _context.Orders
+            await _loggerService.LogAsync("Getting order summary after order complete", "Info", "");
+            var order = await _context.Orders
 									   .FirstOrDefaultAsync(c => c.Id == orderId);
 			if (order == null || order.UserId != _userManager.GetUserId(User))
 			{
-				return NotFound();
+                await _loggerService.LogAsync("Order or user are null in order summary after order complete", "Error", "");
+                return NotFound();
 			}
 			if (!string.IsNullOrEmpty(order.CartItemsJson))
 			{
-				var cartItems = JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson);
-
+                await _loggerService.LogAsync("Getting cart items for order summary after order complete", "Info", "");
+                var cartItems = JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson);
 				order.CartItems = cartItems;
-			}
-			return View("~/Views/Marketplace/OrderPlaced.cshtml", order);
+                await _loggerService.LogAsync("Got cart items in order summary after order complete", "Info", "");
+            }
+            await _loggerService.LogAsync("Got order summary after order complete", "Info", "");
+            return View("~/Views/Marketplace/OrderPlaced.cshtml", order);
 		}		
 	}
 }
