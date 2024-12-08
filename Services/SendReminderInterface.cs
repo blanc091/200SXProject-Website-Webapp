@@ -104,7 +104,7 @@ namespace _200SXContact.Services
 				})
 				{
 					await smtpClient.SendMailAsync(message);
-					_loggerService.LogAsync("Sent email reminder for due items","Info","");
+					await _loggerService.LogAsync("Sent email reminder for due items","Info","");
 				}
 			}
 		}
@@ -218,7 +218,7 @@ namespace _200SXContact.Services
 					})
 					{
 						await smtpClient.SendMailAsync(message);
-						_loggerService.LogAsync($"Sent comment notification for build {comment.UserBuildId}", "Info", "");
+						await _loggerService.LogAsync($"Sent comment notification for build {comment.UserBuildId}", "Info", "");
 					}
 				}
 			}
@@ -233,7 +233,7 @@ namespace _200SXContact.Services
 		{
 			try
 			{
-				_loggerService.LogAsync($"Started sending item due date notification for item {item}", "Info", "");
+				await _loggerService.LogAsync($"Started sending item due date notification for item {item}", "Info", "");
 				var fromAddress = new MailAddress(_credentials.UserName, "Admin");
 				var toAddress = new MailAddress(userEmail);
 				string subject = $"Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days";
@@ -254,7 +254,7 @@ namespace _200SXContact.Services
 					})
 					{
 						await smtpClient.SendMailAsync(message);
-						_loggerService.LogAsync($"Sent item due date notification for item {item}", "Info", "");
+						await _loggerService.LogAsync($"Sent item due date notification for item {item}", "Info", "");
 					}
 				}
 			}
