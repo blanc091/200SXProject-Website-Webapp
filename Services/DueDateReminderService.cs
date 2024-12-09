@@ -56,7 +56,7 @@ namespace _200SXContact.Services
             {
                 await _loggerService.LogAsync("CheckDueDates started", "Info", "");
                 var dueItems = await _context.Items
-                    .Where(i => i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5) && !i.EmailSent)
+                    .Where(i => i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5))
                     .Include(i => i.User)
                     .ToListAsync();
 
