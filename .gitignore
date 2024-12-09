@@ -28,3 +28,6 @@ bin/
 obj/
 .config/
 .vs/
+
+# Node.js dependencies
+node_modules/

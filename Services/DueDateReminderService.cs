@@ -69,7 +69,7 @@ namespace _200SXContact.Services
                         continue;
                     }
                     int daysLeft = (item.DueDate - DateTime.Now).Days;
-                    await _emailService.SendDueDateReminder(item.User.Email, item, daysLeft);
+                    await _emailService.SendDueDateReminder(item.User.Email,item.User.UserName, item, daysLeft);
                     item.EmailSent = true;
 
                     await _loggerService.LogAsync($"Sent due date reminder for item '{item.EntryItem}' to '{item.User.Email}', due in {daysLeft} days.", "Info", string.Empty);

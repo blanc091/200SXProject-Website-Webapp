@@ -101,7 +101,7 @@ namespace _200SXContact.Controllers
 			try
 			{
                 await _loggerService.LogAsync("Started sending contact email to admin", "Info", "");
-                var fromAddress = new MailAddress(_credentials.UserName, "Admin");
+                var fromAddress = new MailAddress(_credentials.UserName, model.Email);
 				var toAddress = new MailAddress(_credentials.UserName, "Admin");
 				string subject = $"New Contact Form Submission from {model.Name}";
 				string body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}";

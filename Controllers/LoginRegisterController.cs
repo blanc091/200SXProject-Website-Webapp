@@ -415,9 +415,9 @@ namespace _200SXContact.Controllers
 		private async Task SendPasswordResetEmail(string email, string resetUrl)
 		{
             await _loggerService.LogAsync("Starting sending password reset email task", "Info", "");
-            var fromAddress = new MailAddress(_credentials.UserName, "Admin");
+            var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
 			var toAddress = new MailAddress(email);
-			string subject = "200SX Project || Reset Your Password";
+			string subject = "Import Garage || Reset Your Password";
 			string body = @"
     <!DOCTYPE html>
     <html lang='en'>
@@ -528,9 +528,9 @@ namespace _200SXContact.Controllers
 		private async Task SendVerificationEmail(string email, string verificationUrl)
 		{
             await _loggerService.LogAsync("Starting sending user verification email", "Info", "");
-            var fromAddress = new MailAddress(_credentials.UserName, "Admin");
+            var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
 			var toAddress = new MailAddress(email);
-			string subject = "200SX Project || Verify your email";
+			string subject = "Import Garage || Verify your email";
 			string body = @"
     <!DOCTYPE html>
     <html lang='en'>
