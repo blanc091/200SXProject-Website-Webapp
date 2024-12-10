@@ -16,14 +16,14 @@ namespace _200SXContact.Controllers
 		[Route("stripe/payment")]
 		public IActionResult StripeProcessor()
 		{
-            _loggerService.LogAsync("Got Stripe payment page", "Info", "");
+            _loggerService.LogAsync("Stripe || Got Stripe payment page", "Info", "");
             return View("~/Views/Marketplace/StripeProcessor.cshtml");
 		}
 		[Route("Stripe")]
 		[HttpPost("stripe/create-checkout-session")]
 		public IActionResult CreateCheckoutSession()
 		{
-            _loggerService.LogAsync("Starting to create Stripe checkout session", "Info", "");
+            _loggerService.LogAsync("Stripe || Starting to create Stripe checkout session", "Info", "");
             var options = new SessionCreateOptions
 			{
 				PaymentMethodTypes = new List<string> { "card" },
@@ -49,7 +49,7 @@ namespace _200SXContact.Controllers
 			};
 			var service = new SessionService();
 			Session session = service.Create(options);
-            _loggerService.LogAsync("Created Stripe checkout session", "Info", "");
+            _loggerService.LogAsync("Stripe || Created Stripe checkout session", "Info", "");
             return RedirectToAction("OrderPlaced", new { sessionId = session.Id });
 		}
 		[HttpPost]
@@ -57,23 +57,23 @@ namespace _200SXContact.Controllers
 		[Authorize]
 		public IActionResult OrderPlaced(string sessionId)
 		{
-            _loggerService.LogAsync("Starting Stripe OrderPlaced action", "Info", "");
+            _loggerService.LogAsync("Stripe || Starting Stripe OrderPlaced action", "Info", "");
             var service = new SessionService();
 			var session = service.Get(sessionId);
 			if (string.IsNullOrEmpty(sessionId))
 			{
-                _loggerService.LogAsync("Stripe payment session id is missing", "Error", "");
+                _loggerService.LogAsync("Stripe || Stripe payment session id is missing", "Error", "");
                 ViewBag.Message = "Session ID is missing!";
 				return View("~/Views/Marketplace/OrderPlaced.cshtml");
 			}
 			if (session.PaymentStatus == "paid")
 			{
-                _loggerService.LogAsync("Stripe payment successful", "Info", "");
+                _loggerService.LogAsync("Stripe || Stripe payment successful", "Info", "");
                 ViewBag.Message = "Payment successful!";
 			}
 			else
 			{
-                _loggerService.LogAsync("Stripe payment failed", "Error", "");
+                _loggerService.LogAsync("Stripe || Stripe payment failed", "Error", "");
                 ViewBag.Message = "Payment failed.";
 			}
 			return View("~/Views/Marketplace/OrderPlaced.cshtml");

@@ -16,9 +16,9 @@ namespace _200SXContact.Controllers
 		[HttpGet("ManualCheckDueDates")]
 		public async Task<IActionResult> ManualCheckDueDates()
 		{
-            await _loggerService.LogAsync("Starting manually checking due dates", "Info", "");
+            await _loggerService.LogAsync("Due Date Reminder || Starting manually checking due dates", "Info", "");
             await _dueDateReminderService.ManualCheckDueDates();
-            await _loggerService.LogAsync("Finished manually checking due dates", "Info", "");
+            await _loggerService.LogAsync("Due Date Reminder || Finished manually checking due dates", "Info", "");
             return Ok("Manual check of due dates initiated.");
 		}
 	}

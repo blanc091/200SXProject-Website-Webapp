@@ -18,20 +18,20 @@ namespace _200SXContact.Controllers
 		[Route("home/index")]
 		public IActionResult Index(ContactForm model = null)
 		{
-            _loggerService.LogAsync("Getting index page", "Info", "");
+            _loggerService.LogAsync("Home || Getting index page", "Info", "");
             return View(model); 
 		}
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            _loggerService.LogAsync("Returninf error view", "Info", "");
+            _loggerService.LogAsync("Home || Return if error view", "Info", "");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 		[HttpGet]
 		[Route("api/is-logged-in")]
 		public IActionResult IsLoggedIn()
 		{
-            _loggerService.LogAsync("Getting IsLoggedIn JSON for api/is-logged-in", "Info", "");
+            _loggerService.LogAsync("Home || Getting IsLoggedIn JSON for api/is-logged-in", "Info", "");
             return Json(User.Identity.IsAuthenticated);
 		}
 	}

@@ -20,7 +20,7 @@ namespace _200SXContact.Services
 			{
 				var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService>();
 				var dueDateReminderService = scope.ServiceProvider.GetRequiredService<DueDateReminderService>();
-				await loggerService.LogAsync("Started due date reminder service", "Info", "");
+				await loggerService.LogAsync("Due Date Reminder || Started due date reminder service", "Info", "");
 				await dueDateReminderService.StartAsync(cancellationToken);
 			}
 		}
@@ -30,7 +30,7 @@ namespace _200SXContact.Services
 			{
 				var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService>();				
 			}
-            _loggerService.LogAsync("Stopped due date reminder service in Host", "Info", "");
+            _loggerService.LogAsync("Due Date Reminder || Stopped due date reminder service in Host", "Info", "");
             return Task.CompletedTask;
 		}
 	}

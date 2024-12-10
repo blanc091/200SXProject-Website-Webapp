@@ -26,7 +26,7 @@ namespace _200SXContact.Controllers
 		[Authorize(Roles = "Admin")]
 		public IActionResult AddProduct()
 		{
-            _loggerService.LogAsync("Getting admin add product interface", "Info", "");
+            _loggerService.LogAsync("Products || Getting admin add product interface", "Info", "");
             var model = new Product
 			{
 				Name = string.Empty,
@@ -36,16 +36,16 @@ namespace _200SXContact.Controllers
 				ImagePaths = new List<string>(),
 				DateAdded = DateTime.Now
 			};
-            _loggerService.LogAsync("Got admin add product interface", "Info", "");
+            _loggerService.LogAsync("Products || Got admin add product interface", "Info", "");
             return View("~/Views/Marketplace/AddProduct.cshtml", model);
 		}
 		[HttpGet]
 		[Route("products/view-products")]
 		public async Task<IActionResult> ProductsDashboard()
 		{
-            await _loggerService.LogAsync("Getting products page", "Info", "");
+            await _loggerService.LogAsync("Products || Getting products page", "Info", "");
             var products = await _context.Products.ToListAsync();
-            await _loggerService.LogAsync("Got products page", "Info", "");
+            await _loggerService.LogAsync("Products || Got products page", "Info", "");
             return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
 		}
 		[HttpPost]
@@ -54,7 +54,7 @@ namespace _200SXContact.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> AddProduct(Product model, List<IFormFile> Images)
 		{
-            await _loggerService.LogAsync("Adding new product admin", "Info", "");
+            await _loggerService.LogAsync("Products || Adding new product admin", "Info", "");
             ModelState.Remove("ImagePaths");
 			if (ModelState.IsValid)
 			{
@@ -82,12 +82,12 @@ namespace _200SXContact.Controllers
 				}
 				await _context.Products.AddAsync(model);
 				await _context.SaveChangesAsync();
-                await _loggerService.LogAsync("Added new product admin", "Info", "");
+                await _loggerService.LogAsync("Products || Added new product admin", "Info", "");
                 return RedirectToAction("ProductsDashboard", "Products");
 			}
 			foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
 			{
-                await _loggerService.LogAsync("Error when adding new product admin " + error.ErrorMessage, "Error", ""); 
+                await _loggerService.LogAsync("Products || Error when adding new product admin " + error.ErrorMessage, "Error", ""); 
 			}
 			return View("AddProduct", model);
 		}
@@ -95,15 +95,15 @@ namespace _200SXContact.Controllers
 		[Route("products/detailed-product-view")]
 		public async Task<IActionResult> DetailedProductView([FromQuery] int id)
 		{
-            await _loggerService.LogAsync("Getting detailed product view", "Info", "");
+            await _loggerService.LogAsync("Products || Getting detailed product view", "Info", "");
             var product = await _context.Products
 				.FirstOrDefaultAsync(b => b.Id == id);
 			if (product == null)
 			{
-                await _loggerService.LogAsync("No product found when trying to access detailed product view", "Error", "");
+                await _loggerService.LogAsync("Products || No product found when trying to access detailed product view", "Error", "");
                 return NotFound();
 			}
-            await _loggerService.LogAsync("Got detailed product view", "Info", "");
+            await _loggerService.LogAsync("Products || Got detailed product view", "Info", "");
             return View("~/Views/Marketplace/DetailedProductView.cshtml", product);
 		}
 	}

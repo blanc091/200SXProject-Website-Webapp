@@ -44,21 +44,21 @@ namespace _200SXContact.Controllers
 		[AllowAnonymous]
 		public IActionResult LoginMicrosoft()
 		{
-            _loggerService.LogAsync("Started Microsoft logging in process", "Info", "");
+            _loggerService.LogAsync("Login Register || Started Microsoft logging in process", "Info", "");
             var redirectUri = Url.Action("SigninMicrosoft", "LoginRegister", null, Request.Scheme);
 			var properties = new AuthenticationProperties { RedirectUri = redirectUri };
-			_loggerService.LogAsync($"Initiating Microsoft login, redirecting to: {redirectUri}", "Info", "");
+			_loggerService.LogAsync($"Login Register || Initiating Microsoft login, redirecting to: {redirectUri}", "Info", "");
 			return Challenge(properties, MicrosoftAccountDefaults.AuthenticationScheme);
 		}
 		[HttpGet]
 		[AllowAnonymous]
 		public async Task<IActionResult> SigninMicrosoft()
 		{
-            await _loggerService.LogAsync("Started Microsoft OAuth process", "Info", "");
+            await _loggerService.LogAsync("Login Register || Started Microsoft OAuth process", "Info", "");
             var result = await HttpContext.AuthenticateAsync(MicrosoftAccountDefaults.AuthenticationScheme);
 			if (!result.Succeeded)
 			{
-				await _loggerService.LogAsync("Microsoft login failed", "Error","");
+				await _loggerService.LogAsync("Login Register || Microsoft login failed", "Error","");
 				return RedirectToAction("Login");
 			}
 			var emailClaim = result.Principal.FindFirst(ClaimTypes.Email);
@@ -67,7 +67,7 @@ namespace _200SXContact.Controllers
 			username = Regex.Replace(username, @"[^a-zA-Z0-9]", string.Empty);
 			if (string.IsNullOrEmpty(email))
 			{
-				await _loggerService.LogAsync("Email claim not found in the authentication result", "Error", "");
+				await _loggerService.LogAsync("Login Register || Email claim not found in the authentication result", "Error", "");
 				return RedirectToAction("Login");
 			}
 			var user = await _userManager.FindByEmailAsync(email);
@@ -84,7 +84,7 @@ namespace _200SXContact.Controllers
 				var createUserResult = await _userManager.CreateAsync(user);
 				if (!createUserResult.Succeeded)
 				{
-					await _loggerService.LogAsync("Failed to create user: {Errors}" + string.Join(", ", createUserResult.Errors.Select(e => e.Description)), "Error","");
+					await _loggerService.LogAsync("Login Register || Failed to create user: {Errors}" + string.Join(", ", createUserResult.Errors.Select(e => e.Description)), "Error","");
 					return RedirectToAction("Login");
 				}
 			}
@@ -95,7 +95,7 @@ namespace _200SXContact.Controllers
 			ViewData["IsUserLoggedIn"] = true;
 			TempData["MicrosoftLogin"] = true;
 			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft !";
-            await _loggerService.LogAsync("Finished Microsoft logging in process", "Info", "");
+            await _loggerService.LogAsync("Login Register || Finished Microsoft logging in process", "Info", "");
             return RedirectToAction("Dashboard", "Dashboard");
 		}
 		[HttpGet]
@@ -103,21 +103,21 @@ namespace _200SXContact.Controllers
 		[AllowAnonymous]
 		public IActionResult Login(string returnUrl = null)
 		{
-            _loggerService.LogAsync("Getting login page", "Info", "");
+            _loggerService.LogAsync("Login Register || Getting login page", "Info", "");
             if (returnUrl != null && !Url.IsLocalUrl(returnUrl))
 			{
-                _loggerService.LogAsync("No return url when getting login page", "Error", "");
+                _loggerService.LogAsync("Login Register || No return url when getting login page", "Error", "");
                 returnUrl = null;
 			}
 			if (!User.Identity.IsAuthenticated)
 			{
 				ViewData["ReturnUrl"] = returnUrl;
-                _loggerService.LogAsync("Got login page", "Info", "");
+                _loggerService.LogAsync("Login Register || Got login page", "Info", "");
                 return View("~/Views/Account/Login.cshtml");
 			}
 			else
 			{
-                _loggerService.LogAsync("user is already logged in, redirecting to MaintenApp", "Info", "");
+                _loggerService.LogAsync("Login Register || User is already logged in, redirecting to MaintenApp", "Info", "");
                 return RedirectToAction("Dashboard", "Dashboard");
 			}
 		}
@@ -126,11 +126,11 @@ namespace _200SXContact.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            await _loggerService.LogAsync("Starting login process", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting login process", "Info", "");
             returnUrl = returnUrl ?? Url.Action("Dashboard", "Dashboard");
             if (!ModelState.IsValid)
             {
-                await _loggerService.LogAsync("Model state invalid in login process", "Error", "");
+                await _loggerService.LogAsync("Login Register || Model state invalid in login process", "Error", "");
                 return View("~/Views/Account/Login.cshtml", model);
             }
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -141,7 +141,7 @@ namespace _200SXContact.Controllers
                     ModelState.AddModelError("", "Please verify your email before logging in.");
                     TempData["Message"] = "User is not verified ! Check email.";
                     TempData["IsUserVerified"] = "no";
-                    await _loggerService.LogAsync("User email is not verified when trying to log in", "Error", "");
+                    await _loggerService.LogAsync("Login Register || User email is not verified when trying to log in", "Error", "");
                     return View("~/Views/Account/Login.cshtml", model);
                 }
                 var passwordVerificationResult = await _userManager.CheckPasswordAsync(user, model.Password);
@@ -165,7 +165,7 @@ namespace _200SXContact.Controllers
                     {
                         user.LastLogin = DateTime.UtcNow;
                         var updateResult = await _userManager.UpdateAsync(user);
-                        await _loggerService.LogAsync("User logged in successfully", "Info", "");
+                        await _loggerService.LogAsync("Login Register || User logged in successfully", "Info", "");
                         return LocalRedirect(returnUrl);
                     }
                 }
@@ -174,42 +174,42 @@ namespace _200SXContact.Controllers
                     ModelState.AddModelError("", "Invalid username or password.");
                     TempData["Message"] = "Invalid username or password !";
                     TempData["IsUserVerified"] = "no";
-                    await _loggerService.LogAsync("Invalid password attempt", "Error", "");
+                    await _loggerService.LogAsync("Login Register || Invalid password attempt", "Error", "");
                     return View("~/Views/Account/Login.cshtml", model);
                 }
             }
             ModelState.AddModelError("", "Invalid username or password.");
             TempData["Message"] = "Invalid username or password !";
             TempData["IsUserVerified"] = "no";
-            await _loggerService.LogAsync("User not found", "Error", "");
+            await _loggerService.LogAsync("Login Register || User not found", "Error", "");
             return View("~/Views/Account/Login.cshtml", model);
         }
         [HttpGet]
 		[Route("forgot-my-password")]
 		public IActionResult ForgotPassReset()
 		{
-            _loggerService.LogAsync("Getting forgot pass view", "Info", "");
+            _loggerService.LogAsync("Login Register || Getting forgot pass view", "Info", "");
             var model = new ForgotPasswordViewModel();
 			if (model == null)
 			{
 				model = new ForgotPasswordViewModel();
 			}
-            _loggerService.LogAsync("Got forgot pass view", "Info", "");
+            _loggerService.LogAsync("Login Register || Got forgot pass view", "Info", "");
             return View("~/Views/Account/ForgotPassReset.cshtml", model);
 		}
 		[HttpGet]
 		[Route("register-new-account")]
 		public IActionResult Register()
 		{
-            _loggerService.LogAsync("Getting register account view", "Info", "");
+            _loggerService.LogAsync("Login Register || Getting register account view", "Info", "");
             if (!User.Identity.IsAuthenticated)
 			{
-                _loggerService.LogAsync("Got forgot pass view", "Info", "");
+                _loggerService.LogAsync("Login Register || Got forgot pass view", "Info", "");
                 return View("~/Views/Account/Register.cshtml", new RegisterViewModel());
 			}
 			else
 			{
-                _loggerService.LogAsync("User is already authenticated when trying to register new user, redirecting to MaintenApp", "Info", "");
+                _loggerService.LogAsync("Login Register || User is already authenticated when trying to register new user, redirecting to MaintenApp", "Info", "");
                 return RedirectToAction("Dashboard", "Dashboard");
 			}
 		}
@@ -218,10 +218,10 @@ namespace _200SXContact.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterViewModel model, string gRecaptchaResponseRegister)
 		{
-            await _loggerService.LogAsync("Starting new user registration process", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting new user registration process", "Info", "");
             if (User.Identity.IsAuthenticated)
 			{
-                await _loggerService.LogAsync("User already logged in when trying to register account in post action", "Info", "");
+                await _loggerService.LogAsync("Login Register || User already logged in when trying to register account in post action", "Info", "");
                 return RedirectToAction("Dashboard", "Dashboard");
 			}
 			if (string.IsNullOrWhiteSpace(gRecaptchaResponseRegister) || !await VerifyRecaptchaAsync(gRecaptchaResponseRegister))
@@ -261,21 +261,21 @@ namespace _200SXContact.Controllers
 			{                
                 foreach (var error in createResult.Errors)
 				{
-                    await _loggerService.LogAsync("Error in user creation " + error.Description, "Error", "");
+                    await _loggerService.LogAsync("Login Register || Error in user creation " + error.Description, "Error", "");
                     ModelState.AddModelError(string.Empty, error.Description);
 				}
 				return View("~/Views/Account/Register.cshtml", model);
             }
             if (model.SubscribeToNewsletter)
 			{
-                await _loggerService.LogAsync("New user opted for newsletter registration", "Info", "");
+                await _loggerService.LogAsync("Login Register || New user opted for newsletter registration", "Info", "");
                 await Subscribe(model.Email);
 			}
 			var verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
 			await SendVerificationEmail(model.Email, verificationUrl);
 			TempData["IsFormRegisterSuccess"] = "yes";
 			TempData["Message"] = "Registration successful! Check your email for verification.";
-            await _loggerService.LogAsync("New user registered, redirecting to login page", "Info", "");
+            await _loggerService.LogAsync("Login Register || New user registered, redirecting to login page", "Info", "");
             return Redirect("/login-page");
 		}
 		private async Task<bool> VerifyRecaptchaAsync(string token)
@@ -306,7 +306,7 @@ namespace _200SXContact.Controllers
 		}
 		private async Task Subscribe(string email)
 		{
-            await _loggerService.LogAsync("Starting Subscribe method when registering new user" , "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting Subscribe method when registering new user", "Info", "");
             var existingSubscription = _context.NewsletterSubscriptions
 				.FirstOrDefault(sub => sub.Email == email);
 			if (existingSubscription == null)
@@ -321,21 +321,21 @@ namespace _200SXContact.Controllers
 			}
 			else if (!existingSubscription.IsSubscribed)
 			{
-                await _loggerService.LogAsync("User already subscribed to the newsletter when registering new user", "Error", "");
+                await _loggerService.LogAsync("Login Register || User already subscribed to the newsletter when registering new user", "Error", "");
                 existingSubscription.IsSubscribed = true;
 				existingSubscription.SubscribedAt = DateTime.Now;
 			}
 			await _context.SaveChangesAsync();
-            await _loggerService.LogAsync("Finished Subscribe method when registering new user", "Info", "");
+            await _loggerService.LogAsync("Login Register || Finished Subscribe method when registering new user", "Info", "");
         }
 		[HttpGet]
 		[Route("reset-my-password")]
 		public IActionResult ResetPassword(string token, string email)
 		{
-            _loggerService.LogAsync("Getting reset password view", "Info", "");
+            _loggerService.LogAsync("Login Register || Getting reset password view", "Info", "");
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
 			{
-                _loggerService.LogAsync("Invalid password reset token or email in reset password view", "Error", "");
+                _loggerService.LogAsync("Login Register || Invalid password reset token or email in reset password view", "Error", "");
                 return BadRequest("Invalid password reset token or email.");
 			}
 			var model = new ResetPasswordViewModel
@@ -343,23 +343,23 @@ namespace _200SXContact.Controllers
 				Token = token,
 				Email = email
 			};
-            _loggerService.LogAsync("Got reset password view", "Info", "");
+            _loggerService.LogAsync("Login Register || Got reset password view", "Info", "");
             return View("~/Views/Account/ResetPass.cshtml", model);
 		}
 		[HttpPost]
 		[Route("forgot-password")]
 		public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
 		{
-            await _loggerService.LogAsync("Starting the forgot password process", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting the forgot password process", "Info", "");
             if (!ModelState.IsValid)
 			{
-                await _loggerService.LogAsync("Model state invalid when submitting reset password", "Error", "");
+                await _loggerService.LogAsync("Login Register || Model state invalid when submitting reset password", "Error", "");
                 return View("~/Views/Account/ForgotPassReset.cshtml", model);
 			}
 			var user = await _userManager.FindByEmailAsync(model.Email);
 			if (user == null)
 			{
-                await _loggerService.LogAsync("User is null when trying to reset password", "Error", "");
+                await _loggerService.LogAsync("Login Register || User is null when trying to reset password", "Error", "");
                 TempData["Message"] = "If that email is associated with an account, you will receive a password reset link.";
 				return RedirectToAction("ForgotPassword");
 			}
@@ -370,23 +370,23 @@ namespace _200SXContact.Controllers
 			await SendPasswordResetEmail(user.Email, resetUrl);
 			TempData["PassResetLinkEmailed"] = "yes";
 			TempData["Message"] = "Password reset link emailed !";
-            await _loggerService.LogAsync("Finished the reset password process", "Info", "");
+            await _loggerService.LogAsync("Login Register || Finished the reset password process", "Info", "");
             return Redirect("/login-page");
 		}
 		[HttpPost]
 		[Route("reset-password")]
 		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
 		{
-            await _loggerService.LogAsync("Started ResetPassword POST", "Info", "");
+            await _loggerService.LogAsync("Login Register || Started ResetPassword POST", "Info", "");
             if (!ModelState.IsValid)
 			{
-                await _loggerService.LogAsync("Model state invalid in ResetPassword", "Error", "");
+                await _loggerService.LogAsync("Login Register || Model state invalid in ResetPassword", "Error", "");
                 return View("~/Views/Account/ResetPass.cshtml", model);
 			}
 			var user = await _userManager.FindByEmailAsync(model.Email);
 			if (user == null)
 			{
-                await _loggerService.LogAsync("User is null or invalid email reset token in ResetPassword", "Error", "");
+                await _loggerService.LogAsync("Login Register || User is null or invalid email reset token in ResetPassword", "Error", "");
                 ModelState.AddModelError("", "Invalid token or email.");
 				return View("~/Views/Account/ResetPass.cshtml", model);
 			}
@@ -396,14 +396,14 @@ namespace _200SXContact.Controllers
 			{
 				foreach (var error in resetResult.Errors)
 				{
-                    await _loggerService.LogAsync("Model error in ResetPassword " + error.Description, "Error", "");
+                    await _loggerService.LogAsync("Login Register || Model error in ResetPassword " + error.Description, "Error", "");
                     ModelState.AddModelError(string.Empty, error.Description);
 				}
 				return View("~/Views/Account/ResetPass.cshtml", model);
 			}
 			TempData["PassResetSuccess"] = "yes";
 			TempData["Message"] = "Your password has been reset successfully.";
-            await _loggerService.LogAsync("Finished ResetPassword POST", "Info", "");
+            await _loggerService.LogAsync("Login Register || Finished ResetPassword POST", "Info", "");
             return Redirect("/login-page");
 		}
 		[HttpGet]
@@ -414,7 +414,7 @@ namespace _200SXContact.Controllers
         }
 		private async Task SendPasswordResetEmail(string email, string resetUrl)
 		{
-            await _loggerService.LogAsync("Starting sending password reset email task", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting sending password reset email task", "Info", "");
             var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
 			var toAddress = new MailAddress(email);
 			string subject = "Import Garage || Reset Your Password";
@@ -521,13 +521,13 @@ namespace _200SXContact.Controllers
 				})
 				{
 					await smtpClient.SendMailAsync(message);
-                    await _loggerService.LogAsync("Finished sending password reset email task", "Info", "");
+                    await _loggerService.LogAsync("Login Register || Finished sending password reset email task", "Info", "");
                 }
 			}
 		}
 		private async Task SendVerificationEmail(string email, string verificationUrl)
 		{
-            await _loggerService.LogAsync("Starting sending user verification email", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting sending user verification email", "Info", "");
             var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
 			var toAddress = new MailAddress(email);
 			string subject = "Import Garage || Verify your email";
@@ -633,18 +633,18 @@ namespace _200SXContact.Controllers
 				})
 				{
 					await smtpClient.SendMailAsync(message);
-                    await _loggerService.LogAsync("Finished sending user verification email", "Info", "");
+                    await _loggerService.LogAsync("Login Register || Finished sending user verification email", "Info", "");
                 }
 			}
 		}
 		[HttpGet]
 		public async Task<IActionResult> VerifyEmail(string token)
 		{
-            await _loggerService.LogAsync("Starting VerifyEmail method for user creation", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting VerifyEmail method for user creation", "Info", "");
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.EmailVerificationToken == token);
 			if (user == null)
 			{
-                await _loggerService.LogAsync("User is null or invalid token in VerifyEmail method for user creation", "Error", "");
+                await _loggerService.LogAsync("Login Register || User is null or invalid token in VerifyEmail method for user creation", "Error", "");
                 return NotFound("Invalid token.");
 			}
 			user.IsEmailVerified = true;
@@ -652,7 +652,7 @@ namespace _200SXContact.Controllers
 			await _userManager.UpdateAsync(user);
 			TempData["IsEmailVerifiedLogin"] = "yes";
 			TempData["Message"] = "Email verified ! You can now log in.";
-            await _loggerService.LogAsync("Finished VerifyEmail method for user creation", "Info", "");
+            await _loggerService.LogAsync("Login Register || Finished VerifyEmail method for user creation", "Info", "");
             return Redirect("/login-page");
 		}
 		[HttpPost]
@@ -662,9 +662,9 @@ namespace _200SXContact.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Logout()
 		{
-            await _loggerService.LogAsync("Starting logging out", "Info", "");
+            await _loggerService.LogAsync("Login Register || Starting logging out", "Info", "");
             await _signInManager.SignOutAsync();
-            await _loggerService.LogAsync("User logged out", "Info", "");
+            await _loggerService.LogAsync("Login Register || User logged out", "Info", "");
             return RedirectToAction("Index", "Home");
 		}
 	}

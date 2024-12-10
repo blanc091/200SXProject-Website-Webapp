@@ -29,7 +29,8 @@ namespace _200SXContact.Services
 		}
 		public async Task SendOrderConfirmEmail(string email, Order order)
 		{
-			var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+            await _loggerService.LogAsync("Orders || Started sending email with order confirmation", "Info", "");
+            var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
 			var toAddress = new MailAddress(email);
 			string subject = "Import Garage || Your Order";
 
@@ -102,13 +103,14 @@ namespace _200SXContact.Services
 				})
 				{
 					await smtpClient.SendMailAsync(message);
-					await _loggerService.LogAsync("Sent email reminder for due items","Info","");
+					await _loggerService.LogAsync("Orders || Sent email with order confirmation", "Info","");
 				}
 			}
 		}
 		public async Task SendCommentNotification(string userEmail, BuildsCommentsModel comment)
 		{
-			var baseUrl = _configuration["AppSettings:BaseUrl"];
+            await _loggerService.LogAsync($"Comments || Started sending comment notification for {comment.UserBuildId}", "Info", "");
+            var baseUrl = _configuration["AppSettings:BaseUrl"];
 			var link = $"{baseUrl}/detailed-user-build?id={comment.UserBuildId}";
 			try
 			{
@@ -216,7 +218,7 @@ namespace _200SXContact.Services
 					})
 					{
 						await smtpClient.SendMailAsync(message);
-						await _loggerService.LogAsync($"Sent comment notification for build {comment.UserBuildId}", "Info", "");
+						await _loggerService.LogAsync($"Comments || Sent comment notification for build {comment.UserBuildId}", "Info", "");
 					}
 				}
 			}
@@ -231,7 +233,7 @@ namespace _200SXContact.Services
 		{
 			try
 			{
-				await _loggerService.LogAsync($"Started sending item due date notification for item {item}", "Info", "");
+				await _loggerService.LogAsync($"Due Date Reminder || Started sending item due date notification for item {item}", "Info", "");
 				var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
 				var toAddress = new MailAddress(userEmail);
 				string subject = $"Import Garage || Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days !";
@@ -259,7 +261,7 @@ namespace _200SXContact.Services
                 sb.AppendLine("        </div>");
                 sb.AppendLine("        <h1>Your service items</h1>");
                 sb.AppendLine("        <p>Hi " + userName + ",</p>");
-				sb.AppendLine($"<p>Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days, on <strong>{item.DueDate.ToShortDateString()}</strong>.</p>");
+				sb.AppendLine($"<p>Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days, on <strong>{item.DueDate.ToString("dd/MM/yyyy")}</strong>.</p>");
                 sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Please make sure you take the necessary actions. Remember you can log into your profile and check your registered items in MaintenApp dashboard.</p></h2>");
                 sb.AppendLine("        <p>Thank you !</p>");
                 sb.AppendLine("        <div class='footer'>");
@@ -287,7 +289,7 @@ namespace _200SXContact.Services
 					})
 					{
 						await smtpClient.SendMailAsync(message);
-						await _loggerService.LogAsync($"Sent item due date notification for item {item}", "Info", "");
+						await _loggerService.LogAsync($"Due Date Reminder || Sent item due date notification for item {item}", "Info", "");
 					}
 				}
 			}
@@ -296,12 +298,12 @@ namespace _200SXContact.Services
 				var errorMessage = $"SMTP Error: {ex.Message}\n" +
 								   $"StatusCode: {ex.StatusCode}\n" +
 								   $"InnerException: {ex.InnerException?.Message}";
-				await _loggerService.LogAsync($"SMTP Error: {ex.Message}", "Error", ex.ToString());
+				await _loggerService.LogAsync($"Due Date Reminder || SMTP Error: {ex.Message}", "Error", ex.ToString());
 				throw new Exception("Failed to send email for due date reminder. Please try again later.", ex);
 			}
 			catch (Exception ex)
 			{
-				await _loggerService.LogAsync($"Unexpected Error: {ex.Message}", "Error", ex.ToString());
+				await _loggerService.LogAsync($"Due Date Reminder || Unexpected Error: {ex.Message}", "Error", ex.ToString());
 				throw new Exception("An unexpected error occurred while sending the due date reminder email.", ex);
 			}
 		}

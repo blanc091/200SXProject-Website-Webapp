@@ -13,7 +13,6 @@ public class StripeOptions
 {
 	public string option { get; set; }
 }
-
 namespace _200SXContact.Services
 {
 	public class Program
@@ -29,7 +28,6 @@ namespace _200SXContact.Services
 			  .Run();
 		}
 	}
-
 	public class Startup
 	{
 		public Startup(IConfiguration configuration)
@@ -54,7 +52,6 @@ namespace _200SXContact.Services
 			app.UseEndpoints(endpoints => endpoints.MapControllers());
 		}
 	}
-
 	[Route("create-checkout-session")]
 	[ApiController]
 	public class CheckoutApiController : Controller
@@ -86,7 +83,6 @@ namespace _200SXContact.Services
 			return Json(new { clientSecret = session.ClientSecret });
 		}
 	}
-
 	[Route("session-status")]
 	[ApiController]
 	public class SessionStatusController : Controller

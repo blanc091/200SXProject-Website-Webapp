@@ -27,7 +27,7 @@ namespace _200SXContact.Controllers
 		[Authorize]
 		public async Task<IActionResult> UserOrders()
 		{
-            await _loggerService.LogAsync("Getting user orders page", "Info", "");
+            await _loggerService.LogAsync("Orders || Getting user orders page", "Info", "");
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			var orders = await _context.Orders
 				.Where(o => o.UserId == userId)
@@ -40,7 +40,7 @@ namespace _200SXContact.Controllers
 							? new List<CartItem>()
 							: JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson)
 			}).ToList();
-            await _loggerService.LogAsync("Got user orders page", "Info", "");
+            await _loggerService.LogAsync("Orders || Got user orders page", "Info", "");
             return View("~/Views/Marketplace/PendingOrdersCustomer.cshtml", orderViewModels);
 		}
 		[HttpGet]
@@ -48,7 +48,7 @@ namespace _200SXContact.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetAllOrders()
 		{
-            await _loggerService.LogAsync("Getting all orders admin", "Info", "");
+            await _loggerService.LogAsync("Orders || Getting all orders admin", "Info", "");
             var orders = await _context.Orders
 				.Include(o => o.CartItems) 
 				.ToListAsync();
@@ -59,7 +59,7 @@ namespace _200SXContact.Controllers
 				OrderTracking = orderTrackings.FirstOrDefault(ot => ot.OrderId == order.Id),
 				CartItems = order.CartItems.ToList()
 			}).ToList();
-            await _loggerService.LogAsync("Got all orders admin", "Info", "");
+            await _loggerService.LogAsync("Orders || Got all orders admin", "Info", "");
             return View("~/Views/Marketplace/UpdateCustomerOrder.cshtml", viewModels);
 		}
 		[HttpGet]
@@ -67,20 +67,20 @@ namespace _200SXContact.Controllers
 		[Authorize(Roles = "Admin")]		
 		public async Task<IActionResult> GetCartItems(int orderId)
 		{
-            await _loggerService.LogAsync("Getting cart items admin for orders", "Info", "");
+            await _loggerService.LogAsync("Checkout || Getting cart items admin for orders", "Info", "");
             var order = await _context.Orders
 				.Where(o => o.Id == orderId)
 				.Select(o => o.CartItemsJson)
 				.FirstOrDefaultAsync();
 			if (order == null)
 			{
-                await _loggerService.LogAsync("No order found when trying to get cart items for order", "Error", "");
+                await _loggerService.LogAsync("Checkout || No order found when trying to get cart items for order", "Error", "");
                 return NotFound("Order not found.");
 			}
 			var cartItems = JsonSerializer.Deserialize<List<CartItem>>(order);
 			if (cartItems == null || !cartItems.Any())
 			{
-                await _loggerService.LogAsync("No cart items found for the specified order " + order, "Error", "");
+                await _loggerService.LogAsync("Checkout || No cart items found for the specified order " + order, "Error", "");
                 return NotFound("No cart items found for the specified order.");
 			}
 			var cartItemsViewModel = cartItems.Select(ci => new
@@ -89,7 +89,7 @@ namespace _200SXContact.Controllers
 				Quantity = ci.Quantity,
 				Price = ci.Price
 			});
-            await _loggerService.LogAsync("Got cart items admin for orders", "Info", "");
+            await _loggerService.LogAsync("Checkout || Got cart items admin for orders", "Info", "");
             return Json(cartItemsViewModel);
 		}
 		[HttpPost]
@@ -97,17 +97,17 @@ namespace _200SXContact.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> UpdateOrderTrackingAjax([FromBody] OrderTrackingUpdateDto updateDto)
 		{
-            await _loggerService.LogAsync("Started updating order tracking details admin", "Info", "");
+            await _loggerService.LogAsync("Orders || Started updating order tracking details admin", "Info", "");
             if (updateDto == null || updateDto.OrderId == 0)
 			{
-                await _loggerService.LogAsync("Invalid data received in admin interface for order tracking update AJAX", "Error", "");
+                await _loggerService.LogAsync("Orders || Invalid data received in admin interface for order tracking update AJAX", "Error", "");
                 return BadRequest("Invalid data received.");
 			}
 			var orderTracking = await _context.OrderTrackings
 				.FirstOrDefaultAsync(ot => ot.OrderId == updateDto.OrderId);
 			if (orderTracking == null)
 			{
-                await _loggerService.LogAsync("Order tracking not found in admin interface for " + updateDto.OrderId, "Error", "");
+                await _loggerService.LogAsync("Orders || Order tracking not found in admin interface for " + updateDto.OrderId, "Error", "");
                 return NotFound("Order tracking record not found.");
 			}
 			orderTracking.Status = updateDto.Status;
@@ -115,7 +115,7 @@ namespace _200SXContact.Controllers
 			orderTracking.TrackingNumber = updateDto.TrackingNumber;
 			orderTracking.StatusUpdatedAt = DateTime.UtcNow;
 			await _context.SaveChangesAsync();
-            await _loggerService.LogAsync("Updated order tracking details admin for " + updateDto.OrderId, "Info", "");
+            await _loggerService.LogAsync("Orders || Updated order tracking details admin for " + updateDto.OrderId, "Info", "");
             return Ok(new { message = "Order tracking updated successfully!" });
 		}
 	}
