@@ -11,18 +11,18 @@ using PayPalCheckoutSdk.Orders;
 
 namespace _200SXContact.Services
 {
-	public class DueDateReminderService : IHostedService, IDisposable
-	{
-		private Timer _timer;
-		private readonly ApplicationDbContext _context;
-		private readonly IEmailService _emailService;
-		private readonly ILoggerService _loggerService;
-		public DueDateReminderService(ApplicationDbContext context, IEmailService emailService, ILoggerService loggerService)
-		{
-			_context = context;
-			_emailService = emailService;
-			_loggerService = loggerService;
-		}
+    public class DueDateReminderService : IDisposable
+    {
+        private Timer _timer;
+        private readonly ApplicationDbContext _context;
+        private readonly IEmailService _emailService;
+        private readonly ILoggerService _loggerService;
+        public DueDateReminderService(ApplicationDbContext context, IEmailService emailService, ILoggerService loggerService)
+        {
+            _context = context;
+            _emailService = emailService;
+            _loggerService = loggerService;
+        }
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var currentTime = DateTime.Now;
@@ -36,7 +36,6 @@ namespace _200SXContact.Services
                  _loggerService.LogAsync("Manual timer callback triggered", "Info", "");
              }, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
              _loggerService.LogAsync("Set up up manual timer every minute for debugging", "Info", "");*/
-            _loggerService.LogAsync($"Due Date Reminder || Set up timer to trigger at {DateTime.Now.Add(timeToMidnight):HH:mm:ss}", "Info", "");
             return Task.CompletedTask;
         }
         private void ExecuteTimerCallback(object state)
@@ -71,7 +70,7 @@ namespace _200SXContact.Services
                         continue;
                     }
                     int daysLeft = (item.DueDate - DateTime.Now).Days;
-                    await _emailService.SendDueDateReminder(item.User.Email,item.User.UserName, item, daysLeft);
+                    await _emailService.SendDueDateReminder(item.User.Email, item.User.UserName, item, daysLeft);
                     item.EmailSent = true;
 
                     await _loggerService.LogAsync($"Due Date Reminder || Sent due date reminder for item '{item.EntryItem}' to '{item.User.Email}', due in {daysLeft} days.", "Info", string.Empty);
@@ -84,19 +83,19 @@ namespace _200SXContact.Services
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
-		{
-			_timer?.Change(Timeout.Infinite, 0);
-			_loggerService.LogAsync("Due Date Reminder || Stopped DueDateReminderService", "Info","");
+        {
+            _timer?.Change(Timeout.Infinite, 0);
+            _loggerService.LogAsync("Due Date Reminder || Stopped DueDateReminderService", "Info", "");
             return Task.CompletedTask;
-		}
-		public void Dispose()
-		{
-			_timer?.Dispose();
-		}
-		public async Task ManualCheckDueDates()
-		{
-			await _loggerService.LogAsync($"Due Date Reminder || Manually checking due dates", "Info", "");
-			await CheckDueDates(null);
-		}
-	}
+        }
+        public void Dispose()
+        {
+            _timer?.Dispose();
+        }
+        public async Task ManualCheckDueDates()
+        {
+            await _loggerService.LogAsync($"Due Date Reminder || Manually checking due dates", "Error", "");
+            await CheckDueDates(null);
+        }
+    }
 }

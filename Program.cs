@@ -105,11 +105,11 @@ builder.Services.AddSession(options =>
 	options.Cookie.IsEssential = true;
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
-builder.Services.AddSingleton<DueDateReminderService>();
-builder.Services.AddHostedService<DueDateReminderServiceHost>();
+builder.Services.AddScoped<DueDateReminderService>();
+builder.Services.AddSingleton<IHostedService, DueDateReminderServiceHost>();
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
