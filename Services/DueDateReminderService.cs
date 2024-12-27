@@ -3,99 +3,104 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using _200SXContact.Data;
 using _200SXContact.Models;
 using NETCore.MailKit.Core;
-using PayPalCheckoutSdk.Orders;
+using _200SXContact.Interfaces;
 
 namespace _200SXContact.Services
 {
-    public class DueDateReminderService : IDisposable
+    public class DueDateReminderService : BackgroundService, IDueDateReminderService
     {
-        private Timer _timer;
-        private readonly ApplicationDbContext _context;
-        private readonly IEmailService _emailService;
-        private readonly ILoggerService _loggerService;
-        public DueDateReminderService(ApplicationDbContext context, IEmailService emailService, ILoggerService loggerService)
+        private readonly IServiceProvider _serviceProvider;
+        public DueDateReminderService(IServiceProvider serviceProvider)
         {
-            _context = context;
-            _emailService = emailService;
-            _loggerService = loggerService;
+            _serviceProvider = serviceProvider;
         }
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task ManualCheckDueDates()
         {
-            var currentTime = DateTime.Now;
-            var timeToMidnight = DateTime.Today.AddDays(1) - currentTime;
-            _loggerService.LogAsync($"Due Date Reminder || Time to midnight: {timeToMidnight.TotalMinutes} minutes", "Info", "");
-            _loggerService.LogAsync($"Due Date Reminder || Setting up timer to trigger at {DateTime.Now.Add(timeToMidnight):HH:mm:ss}", "Info", "");
-            _timer = new Timer(ExecuteTimerCallback, null, timeToMidnight, TimeSpan.FromDays(1));
-            /* _loggerService.LogAsync("Setting up manual timer every minute for debugging", "Info", "");
-             new Timer((state) =>
-             {
-                 _loggerService.LogAsync("Manual timer callback triggered", "Info", "");
-             }, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-             _loggerService.LogAsync("Set up up manual timer every minute for debugging", "Info", "");*/
-            return Task.CompletedTask;
-        }
-        private void ExecuteTimerCallback(object state)
-        {
-            try
+            using (var scope = _serviceProvider.CreateScope())
             {
-                _loggerService.LogAsync("Due Date Reminder || Timer callback triggered", "Info", "");
-                _ = CheckDueDates(state);
-            }
-            catch (Exception ex)
-            {
-                _loggerService.LogAsync($"Due Date Reminder || Error during timer callback execution: {ex.Message}", "Error", ex.ToString());
+                var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService>();
+                await loggerService.LogAsync("Due Date Reminder || Manually checking due dates", "Info", "");
+                await ProcessDueDates(scope);
             }
         }
-        private async Task CheckDueDates(object? state)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService>();
+                    try
+                    {
+                        var currentTime = DateTime.Now;
+                        var timeToMidnight = DateTime.Today.AddDays(1) - currentTime;
+                        await loggerService.LogAsync(
+                            $"Due Date Reminder || Time to midnight: {timeToMidnight.TotalMinutes} minutes. Will trigger at {DateTime.Now.Add(timeToMidnight)}",
+                            "Info",
+                            "");
+                        await Task.Delay(timeToMidnight, stoppingToken);
+                        await ProcessDueDates(scope);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        await loggerService.LogAsync($"Due Date Reminder || Unexpected error: {ex.Message}", "Error", ex.ToString());
+                        await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
+                    }
+                }
+            }
+        }
+        private async Task ProcessDueDates(IServiceScope scope)
+        {
+            var loggerService = scope.ServiceProvider.GetRequiredService<ILoggerService>();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
             try
             {
-                await _loggerService.LogAsync("Due Date Reminder || CheckDueDates started", "Info", "");
-                var dueItems = await _context.Items
-                                .Where(i =>
-                                    (i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5)) ||
-                                    (i.DueDate.Date == DateTime.Now.AddDays(10).Date))
-                                .Include(i => i.User)
-                                .ToListAsync();
-                await _loggerService.LogAsync($"Due Date Reminder || Found {dueItems.Count} due items", "Info", "");
+                await loggerService.LogAsync("Due Date Reminder || Started processing due dates", "Info", "");
+                var dueItems = await context.Items
+                    .Where(i =>
+                        (i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5)) ||
+                        (i.DueDate.Date == DateTime.Now.AddDays(10).Date))
+                    .Include(i => i.User)
+                    .ToListAsync();
+                await loggerService.LogAsync($"Due Date Reminder || Found {dueItems.Count} due items", "Info", "");
                 foreach (var item in dueItems)
                 {
                     if (item.User == null || string.IsNullOrEmpty(item.User?.Email))
                     {
-                        await _loggerService.LogAsync($"Due Date Reminder || Skipping item '{item.EntryItem}' due to invalid user/email.", "Warning", string.Empty);
+                        await loggerService.LogAsync(
+                            $"Due Date Reminder || Skipping item '{item.EntryItem}' due to invalid user/email.",
+                            "Warning",
+                            "");
                         continue;
                     }
                     int daysLeft = (item.DueDate - DateTime.Now).Days;
-                    await _emailService.SendDueDateReminder(item.User.Email, item.User.UserName, item, daysLeft);
+                    await emailService.SendDueDateReminder(
+                        item.User.Email,
+                        item.User.UserName,
+                        item,
+                        daysLeft);
                     item.EmailSent = true;
-
-                    await _loggerService.LogAsync($"Due Date Reminder || Sent due date reminder for item '{item.EntryItem}' to '{item.User.Email}', due in {daysLeft} days.", "Info", string.Empty);
+                    await loggerService.LogAsync(
+                        $"Due Date Reminder || Sent due date reminder for item '{item.EntryItem}' to '{item.User.Email}', due in {daysLeft} days.",
+                        "Info",
+                        "");
                 }
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                await _loggerService.LogAsync($"Due Date Reminder || Error in due date checking: {ex.Message}", "Error", ex.ToString());
+                await loggerService.LogAsync($"Due Date Reminder || Error processing due dates: {ex.Message}", "Error", ex.ToString());
             }
-        }
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _timer?.Change(Timeout.Infinite, 0);
-            _loggerService.LogAsync("Due Date Reminder || Stopped DueDateReminderService", "Info", "");
-            return Task.CompletedTask;
-        }
-        public void Dispose()
-        {
-            _timer?.Dispose();
-        }
-        public async Task ManualCheckDueDates()
-        {
-            await _loggerService.LogAsync($"Due Date Reminder || Manually checking due dates", "Error", "");
-            await CheckDueDates(null);
         }
     }
 }

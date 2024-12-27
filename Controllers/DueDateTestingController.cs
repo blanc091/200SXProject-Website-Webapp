@@ -1,4 +1,5 @@
-﻿using _200SXContact.Services;
+﻿using _200SXContact.Interfaces;
+using _200SXContact.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _200SXContact.Controllers
@@ -6,9 +7,9 @@ namespace _200SXContact.Controllers
 	[Route("DueDateTesting")]
 	public class DueDateTestingController : Controller
 	{
-		private readonly DueDateReminderService _dueDateReminderService;
-		private readonly ILoggerService _loggerService;
-		public DueDateTestingController(DueDateReminderService dueDateReminderService, ILoggerService loggerService)
+        private readonly IDueDateReminderService _dueDateReminderService;
+        private readonly ILoggerService _loggerService;
+		public DueDateTestingController(IDueDateReminderService dueDateReminderService, ILoggerService loggerService)
 		{
 			_dueDateReminderService = dueDateReminderService;
 			_loggerService = loggerService;

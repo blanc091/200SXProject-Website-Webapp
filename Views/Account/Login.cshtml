@@ -163,6 +163,7 @@
 				</div>
 				<br>
 				<!-- Microsoft Login Button -->
+				<div class="desktop-only">
 				<h3>Or</h3>
 				<br>
 				<form method="get" action="@Url.Action("LoginMicrosoft", "LoginRegister")">
@@ -170,6 +171,7 @@
 						Login with Microsoft
 					</button>
 				</form>
+				</div>
 				<!-- Create New User Button -->
 				<br>
 				<h3>Don't have an account?</h3>
@@ -184,7 +186,7 @@
 
 		<!-- Copyright -->
 		<div id="copyright">
-			<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a></ul>
+			<ul>&copy; Import Garage | Design: <a href="https://html5up.net">HTML5 UP</a> | <a href="/home/policy">Privacy</a></ul>
 		</div>
 
 	</div>
@@ -200,6 +202,7 @@
 	<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
 	<script src="~/js/formScript.js" asp-append-version="true"></script>
 	<script src="~/js/cookies.js" asp-append-version="true"></script>
+	<script src="~/js/checkForMobile.js" asp-append-version="true"></script>
 
 </body>
 </html>

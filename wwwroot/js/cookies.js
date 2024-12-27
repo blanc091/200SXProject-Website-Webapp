@@ -5,22 +5,18 @@
         modal.style.display = 'none';
         document.body.classList.remove('modal-open');
     }
-
     var userChoice = localStorage.getItem('cookieConsent');
-
     if (userChoice !== 'accepted' && userChoice !== 'denied') {
         if (modal) {
             modal.style.display = 'block';
             document.body.classList.add('modal-open');
         }
     }
-
     document.getElementById('acceptCookies').addEventListener('click', function () {
         localStorage.setItem('cookieConsent', 'accepted');
         loadGoogleAnalytics();
         loadGoogleAds();
         console.log('Google Analytics and Ads scripts appended to head');
-
         if (modal) {
             modal.style.display = 'none';
             document.body.classList.remove('modal-open');
@@ -31,20 +27,20 @@
     });
     window.onload = function () {
         if (localStorage.getItem('scrollToTopAfterReload') === 'true') {
-            window.scrollTo(0, 0);
+            setTimeout(() => {
+                window.focus();
+                window.scrollTo(0, 0);
+            }, 100); 
             localStorage.removeItem('scrollToTopAfterReload');
         }
     };
-
     document.getElementById('denyCookies').addEventListener('click', function () {
         localStorage.setItem('cookieConsent', 'denied');
         console.log('User denied cookie consent');
-
         if (modal) {
             modal.style.display = 'none';
             document.body.classList.remove('modal-open');
         }
-
         location.reload();
     });
 });

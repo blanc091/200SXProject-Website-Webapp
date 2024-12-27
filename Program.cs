@@ -18,6 +18,7 @@ using static System.Net.WebRequestMethods;
 using Stripe;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using _200SXContact.Interfaces;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -108,8 +109,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
-builder.Services.AddScoped<DueDateReminderService>();
-builder.Services.AddSingleton<IHostedService, DueDateReminderServiceHost>();
+builder.Services.AddSingleton<DueDateReminderService>();
+builder.Services.AddSingleton<IDueDateReminderService>(sp => sp.GetRequiredService<DueDateReminderService>());
+builder.Services.AddHostedService(sp => sp.GetRequiredService<DueDateReminderService>());
+
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
