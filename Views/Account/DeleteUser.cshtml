@@ -45,12 +45,12 @@
 	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<title>The Nissan 200SX Project || Import Garage || Delete User</title>
+	<title>The Nissan 200SX Project || Import Garage || User Profile</title>
 	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
 	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 </head>
-<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
+<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-pass-reset-email-sent="@TempData["UserDeleteAccEmailSent"]">
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -127,44 +127,20 @@
 			<!-- Featured Post -->
 			<article class="post featured">				
 				<header class="major">
-					<h2 id="userProfileDash">User Profile</h2>							
-						<div class="userDashText">
-							<span><strong>Email:</strong> @Model.Email</span>
-							</div>
-						<div class="userDashText">
-							<span><strong>Created At:</strong> @Model.CreatedAt.ToLocalTime()</span>
-						</div>
-							<div class="userDashText">
-							<span><strong>Last Login:</strong> @Model.LastLogin?.ToLocalTime()</span>
-						</div>
+					<h2 id="userProfileDashDelete">Delete Account</h2>
 					<div class="userDash">
-						<span><strong>Checkout your orders here:</strong> </span>
+						<span>Use the below form to fill out your email account used for the account that you wish to delete; you will receive an email confirmation for this action and a button that you can click in order to finish the procedure.</span>
+					</div>
+					<form asp-action="DeleteAccountVerify" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
+						<div class="form-group">
+							<label for="email">Email Address</label>
+							<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+							<input type="email" name="userEmail" placeholder="Enter your email" required>
 						</div>
-							<div class="userDash">
-								<a href="@Url.Action("UserOrders", "PendingOrders")" class="btn-save" role="button">Orders</a>
-							</div>
-							<h3>Your Builds</h3>
-							@if (Model.UserBuilds != null && Model.UserBuilds.Any())
-							{
-								foreach (var build in Model.UserBuilds)
-								{
-									<div class="userDash">
-									<a href="@Url.Action("DetailedUserView", "UserBuilds", new { id = build.Id })" class="btn-save" role="button">
-										@build.Title
-									</a>
-									</div>
-								}
-							}
-							else
-							{
-								<div class="userDash">
-								<span>No builds found.</span>
-								</div>
-							}					
-					<br />
-					<form asp-action="DeleteAccountConfirmation" asp-method="get">
-						<button type="submit" class="btn-delete">Delete Account</button>
+						<button id="deletebtn" type="submit" class="btn-delete">Delete Account</button>
 					</form>
+						
+					
 				</header>
 				<br>
 			</article>

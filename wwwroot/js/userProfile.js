@@ -10,12 +10,12 @@
 
         });
     }
-});
-$(document).ready(function () {
-    $('#deletebtn').click(function () {
-        const confirmed = confirm('Are you sure you want to delete your account ? This action cannot be undone.');
+});$(document).ready(function () {
+    $('#deletebtn').click(function (e) {
+        const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
         if (!confirmed) {
             e.preventDefault();
         }
     });
 });
+

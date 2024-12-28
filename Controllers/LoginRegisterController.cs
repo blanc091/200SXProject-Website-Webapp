@@ -649,6 +649,7 @@ namespace _200SXContact.Controllers
 			}
 			user.IsEmailVerified = true;
 			user.EmailVerificationToken = null;
+			user.EmailConfirmed = true;
 			await _userManager.UpdateAsync(user);
 			TempData["IsEmailVerifiedLogin"] = "yes";
 			TempData["Message"] = "Email verified ! You can now log in.";

@@ -112,7 +112,6 @@ builder.Services.AddScoped<ILoggerService, LoggerService>();
 builder.Services.AddSingleton<DueDateReminderService>();
 builder.Services.AddSingleton<IDueDateReminderService>(sp => sp.GetRequiredService<DueDateReminderService>());
 builder.Services.AddHostedService(sp => sp.GetRequiredService<DueDateReminderService>());
-
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
@@ -232,6 +231,10 @@ app.MapControllerRoute(
 	name: "pendingorders",
 	pattern: "pendingorders/{action}/{id?}",
 	defaults: new { controller = "PendingOrders" });
+app.MapControllerRoute(
+	name: "account",
+	pattern: "account/{action}/{id?}",
+	defaults: new { controller = "Account" });
 app.MapPost("/logout", async context =>
 {
 	await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

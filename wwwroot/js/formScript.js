@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var formSuccess = isFormSuccess === "True";
     var commentSubmitted = document.body.getAttribute('data-is-comment-posted');
     var unsubscribed = document.body.getAttribute('data-unsubscribed'); 
+    var userDeleted = document.body.getAttribute('data-is-user-deleted');
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/detailed-user-build')) {
@@ -95,6 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/cart/remove-cart-item':
             scrollToElement("cartView");
             break;
+        case '/account/delete-account-confirmation':
+            scrollToElement("userProfileDashDelete");
+            break;
     }
     if ((isUserLoggedIn && !formSubmitted) ||
         (formSubmitted && formSuccess) ||
@@ -109,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         commentSubmitted == "yes" ||
         isUserLoggedIn == "no" ||
         unsubscribed == "yes" ||
+        userDeleted == 'yes' ||
         itemAddedToCart == "yes" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {

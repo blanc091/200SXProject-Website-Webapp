@@ -346,4 +346,11 @@
     <Folder Include="wwwroot\images\uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Account\DeleteUser.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
