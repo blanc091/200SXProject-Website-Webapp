@@ -1,21 +1,13 @@
 ﻿@model List<_200SXContact.Models.OrderTrackingViewModel>
 @{
-	var message = TempData["Message"] as string;
+	var nonce = Context.Items["CSPNonce"] as string;
 }
 @{
-	var nonce = Context.Items["CSPNonce"] as string;
+	var message = TempData["Message"] as string;
 }
 @if (!string.IsNullOrEmpty(message))
 {
-	<div class="modal fade show" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display: block;">
-		<div class="modal-dialog" role="document" style="max-width: 380px;">
-			<div class="modal-content" style="background-color: #f0f0f0;">
-				<div class="modal-body d-flex justify-content-center align-items-center" style="height: 80px;">
-					<strong style="font-size: 1.2rem; font-family: Helvetica, Arial, sans-serif; text-align: center;">@message</strong>
-				</div>
-			</div>
-		</div>
-	</div>
+	@await Html.PartialAsync("_MessageModalPartial", message)
 }
 <!-- Modal structure -->
 <div class="custom-modal fade show" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="cookieModalLabel" aria-hidden="true">

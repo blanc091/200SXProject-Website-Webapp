@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+  <Target Name="BundleMinify" AfterTargets="Build">
+    <Exec Command="dotnet bundle" />
+  </Target>
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -323,6 +325,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="HtmlSanitizer" Version="8.1.870" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.10" />

@@ -1,0 +1,12 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/js/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/cartOps.js",
+      "wwwroot/js/checkForMobile.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  }
+]
