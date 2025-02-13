@@ -1,9 +1,26 @@
 ﻿[
   {
-    "outputFileName": "wwwroot/js/bundle.min.js",
+    "outputFileName": "wwwroot/js/Areas/Home/bundle.min.js",
     "inputFiles": [
-      "wwwroot/js/cartOps.js",
-      "wwwroot/js/checkForMobile.js"
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/ScrollToTop.js",
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/floatLoginBtn.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/util.js",
+      "wwwroot/js/main.js",
+	    "wwwroot/js/formScript.js",
+	    "wwwroot/js/logInlogOut.js",
+	    "wwwroot/js/cookies.js"
     ],
     "minify": {
       "enabled": true

@@ -347,6 +347,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\uploads\" />
+    <Folder Include="wwwroot\js\Areas\Account\" />
+    <Folder Include="wwwroot\js\Areas\DetailedViews\" />
+    <Folder Include="wwwroot\js\Areas\Home\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\" />
+    <Folder Include="wwwroot\js\Areas\UserContent\" />
+    <Folder Include="wwwroot\js\Areas\Newsletter\" />
   </ItemGroup>
 
   <ItemGroup>
