@@ -14,16 +14,127 @@
     }
   },
   {
-    "outputFileName": "wwwroot/js/Areas/Account/bundle.min.js",
+    "outputFileName": "wwwroot/js/Areas/Home/Privacy/bundle.min.js",
     "inputFiles": [
-      "wwwroot/js/util.js",
-      "wwwroot/js/main.js",
-	    "wwwroot/js/formScript.js",
-	    "wwwroot/js/logInlogOut.js",
-	    "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/floatLoginBtn.js"
     ],
     "minify": {
-      "enabled": true
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/AddProduct/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/CartView/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cartOps.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/CheckoutView/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cartOps.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/DetailedProductView/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cartOps.js",
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/OrderPlaced/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/PendingOrdersCustomer/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/ProductsDashboard/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cartOps.js",
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/floatLoginBtn.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/StripeProcessor/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Marketplace/UpdateCustomerOrder/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/orderTracking.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
     }
   }
 ]

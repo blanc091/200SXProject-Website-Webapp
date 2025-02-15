@@ -349,8 +349,16 @@
     <Folder Include="wwwroot\images\uploads\" />
     <Folder Include="wwwroot\js\Areas\Account\" />
     <Folder Include="wwwroot\js\Areas\DetailedViews\" />
-    <Folder Include="wwwroot\js\Areas\Home\" />
-    <Folder Include="wwwroot\js\Areas\Marketplace\" />
+    <Folder Include="wwwroot\js\Areas\Home\Privacy\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\AddProduct\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\CartView\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\CheckoutView\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\DetailedProductView\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\UpdateCustomerOrder\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\StripeProcessor\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\ProductsDashboard\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\PendingOrdersCustomer\" />
+    <Folder Include="wwwroot\js\Areas\Marketplace\OrderPlaced\" />
     <Folder Include="wwwroot\js\Areas\UserContent\" />
     <Folder Include="wwwroot\js\Areas\Newsletter\" />
   </ItemGroup>
