@@ -374,6 +374,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot/js/cartOps.js" />
+    <Content Remove="wwwroot/js/checkForMobile.js" />
+	<Content Remove="wwwroot/js/checkout.js" />
+    <Content Remove="wwwroot/js/cookies.js" />
+	<Content Remove="wwwroot/js/dashboard.js" />
+    <Content Remove="wwwroot/js/deleteComment.js" />
+	<Content Remove="wwwroot/js/floatLoginBtn.js" />
+    <Content Remove="wwwroot/js/formScript.js" />
+	<Content Remove="wwwroot/js/logInlogOut.js" />
+    <Content Remove="wwwroot/js/orderTracking.js" />
+	<Content Remove="wwwroot/js/recaptcha.js" />
+    <Content Remove="wwwroot/js/scrollToTop.js" />
+	<Content Remove="wwwroot/js/swiperCarousel.js" />
+    <Content Remove="wwwroot/js/userProfile.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Account\DeleteUser.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
