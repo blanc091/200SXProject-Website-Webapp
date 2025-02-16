@@ -32,3 +32,5 @@ obj/
 # Node.js dependencies
 node_modules/
 /Properties/PublishProfiles/blanc091-001-site1 - Web Deploy15.pubxml.user
+/Views/DetailedViews/elements.cshtml
+/Views/DetailedViews/generic.cshtml
