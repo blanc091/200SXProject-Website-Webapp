@@ -242,5 +242,65 @@
       "enabled": true,
       "sourceMap": true
     }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Newsletter/AccessDenied/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Newsletter/CreateNewsletter/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/UserContent/AddUserBuild/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/UserContent/DetailedUserView/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/deleteComment.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/UserContent/UserContentDashboard/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
   }
 ]
