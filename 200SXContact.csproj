@@ -347,7 +347,14 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\uploads\" />
-    <Folder Include="wwwroot\js\Areas\Account\" />
+    <Folder Include="wwwroot\js\Areas\Account\AdminDash\" />
+    <Folder Include="wwwroot\js\Areas\Account\Dashboard\" />
+    <Folder Include="wwwroot\js\Areas\Account\DeleteUser\" />
+    <Folder Include="wwwroot\js\Areas\Account\ForgotPassReset\" />
+    <Folder Include="wwwroot\js\Areas\Account\Login\" />
+    <Folder Include="wwwroot\js\Areas\Account\UserDash\" />
+    <Folder Include="wwwroot\js\Areas\Account\ResetPass\" />
+    <Folder Include="wwwroot\js\Areas\Account\Register\" />
     <Folder Include="wwwroot\js\Areas\DetailedViews\" />
     <Folder Include="wwwroot\js\Areas\Home\Privacy\" />
     <Folder Include="wwwroot\js\Areas\Marketplace\AddProduct\" />

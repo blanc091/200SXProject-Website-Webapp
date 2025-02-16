@@ -136,5 +136,100 @@
       "enabled": true,
       "sourceMap": true
     }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/AdminDash/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/Dashboard/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/dashboard.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/DeleteUser/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/userProfile.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/ForgotPassReset/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/Login/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/checkForMobile.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/Register/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/ResetPass/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/cookies.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/Account/UserDash/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/userProfile.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
   }
 ]
