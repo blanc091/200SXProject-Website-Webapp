@@ -231,5 +231,16 @@
       "enabled": true,
       "sourceMap": true
     }
+  },
+  {
+    "outputFileName": "wwwroot/js/Areas/DetailedViews/SharedFiles/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/floatLoginBtn.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "sourceMap": true
+    }
   }
 ]

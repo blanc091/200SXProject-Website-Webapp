@@ -355,7 +355,7 @@
     <Folder Include="wwwroot\js\Areas\Account\UserDash\" />
     <Folder Include="wwwroot\js\Areas\Account\ResetPass\" />
     <Folder Include="wwwroot\js\Areas\Account\Register\" />
-    <Folder Include="wwwroot\js\Areas\DetailedViews\" />
+    <Folder Include="wwwroot\js\Areas\DetailedViews\SharedFiles\" />
     <Folder Include="wwwroot\js\Areas\Home\Privacy\" />
     <Folder Include="wwwroot\js\Areas\Marketplace\AddProduct\" />
     <Folder Include="wwwroot\js\Areas\Marketplace\CartView\" />
