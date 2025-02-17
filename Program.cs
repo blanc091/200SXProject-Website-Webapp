@@ -19,6 +19,7 @@ using Stripe;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using _200SXContact.Interfaces;
+using _200SXContact.Queries;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -99,6 +100,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetProductsQueryHandler>());
 builder.Services.AddSession(options =>
 {
 	options.IdleTimeout = TimeSpan.FromMinutes(30);

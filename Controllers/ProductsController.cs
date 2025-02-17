@@ -1,6 +1,8 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Models;
+using _200SXContact.Queries;
 using _200SXContact.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +17,13 @@ namespace _200SXContact.Controllers
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;
 		private readonly ILoggerService _loggerService;
-		public ProductsController(ApplicationDbContext context, ILoggerService loggerService, UserManager<User> userManager)
+		private readonly IMediator _mediator;
+		public ProductsController(ApplicationDbContext context, ILoggerService loggerService, UserManager<User> userManager, IMediator mediator)
 		{
 			_context = context;
 			_userManager = userManager;
 			_loggerService = loggerService;
+			_mediator = mediator;
 		}
 		[HttpGet]
 		[Route("products/add-product-interface")]
@@ -43,9 +47,7 @@ namespace _200SXContact.Controllers
 		[Route("products/view-products")]
 		public async Task<IActionResult> ProductsDashboard()
 		{
-            await _loggerService.LogAsync("Products || Getting products page", "Info", "");
-            var products = await _context.Products.ToListAsync();
-            await _loggerService.LogAsync("Products || Got products page", "Info", "");
+			var products = await _mediator.Send(new GetProductsQuery());
             return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
 		}
 		[HttpPost]
