@@ -1,11 +1,12 @@
 ﻿using _200SXContact.Models;
+using _200SXContact.Models.Areas.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Data
 {
-	public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User>
 	{
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using _200SXContact.Models.Areas.Products;
 
 namespace _200SXContact.Models
 {
-	public class Review
+    public class Review
 	{
 		public int Id { get; set; } 
 		[Required]

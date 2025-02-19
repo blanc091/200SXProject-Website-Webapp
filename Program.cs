@@ -4,22 +4,18 @@ using _200SXContact.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Build.Framework;
-using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
-using static System.Net.WebRequestMethods;
 using Stripe;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using _200SXContact.Interfaces;
-using _200SXContact.Queries;
+using _200SXContact.Commands;
+using AutoMapper;
+using _200SXContact.Helpers;
+using _200SXContact.Queries.Areas.Products;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -100,7 +96,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetProductsQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddProductCommandHandler>());
 builder.Services.AddSession(options =>
 {
 	options.IdleTimeout = TimeSpan.FromMinutes(30);
