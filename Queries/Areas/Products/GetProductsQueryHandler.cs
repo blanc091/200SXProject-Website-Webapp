@@ -1,5 +1,4 @@
 ﻿using _200SXContact.Data;
-using _200SXContact.Models;
 using _200SXContact.Models.DTOs.Areas.Products;
 using _200SXContact.Services;
 using AutoMapper;

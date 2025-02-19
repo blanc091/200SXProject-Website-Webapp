@@ -36,7 +36,7 @@ namespace _200SXContact.Controllers
 		public async Task<IActionResult> AddProduct()
 		{
 			var query = new GetAddProductInterfaceQuery();
-			IProductDto productDto = await _mediator.Send(query);
+			ProductDto productDto = await _mediator.Send(query);
 			return View("~/Views/Marketplace/AddProduct.cshtml", productDto);
 		}
 		[HttpGet]

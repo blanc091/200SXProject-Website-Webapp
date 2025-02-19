@@ -1,4 +1,5 @@
-﻿using _200SXContact.Models.DTOs.Areas.Products;
+﻿using _200SXContact.Interfaces.Areas.Products;
+using _200SXContact.Models.DTOs.Areas.Products;
 using MediatR;
 
 namespace _200SXContact.Queries.Areas.Products

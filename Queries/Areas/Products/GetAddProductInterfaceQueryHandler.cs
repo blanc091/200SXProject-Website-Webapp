@@ -1,13 +1,12 @@
 ﻿using MediatR;
 using _200SXContact.Services;
 using AutoMapper;
-using _200SXContact.Models;
-using _200SXContact.Interfaces.Areas.Products;
 using _200SXContact.Models.Areas.Products;
+using _200SXContact.Models.DTOs.Areas.Products;
 
 namespace _200SXContact.Queries.Areas.Products
 {
-    public class GetAddProductInterfaceQueryHandler : IRequestHandler<GetAddProductInterfaceQuery, IProductDto>
+    public class GetAddProductInterfaceQueryHandler : IRequestHandler<GetAddProductInterfaceQuery, ProductDto>
     {
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
@@ -16,7 +15,7 @@ namespace _200SXContact.Queries.Areas.Products
             _loggerService = loggerService;
             _mapper = mapper;
         }
-        public async Task<IProductDto> Handle(GetAddProductInterfaceQuery request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(GetAddProductInterfaceQuery request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Products || Getting admin add product interface", "Info", "");
             var model = new Product
@@ -29,7 +28,7 @@ namespace _200SXContact.Queries.Areas.Products
                 DateAdded = DateTime.Now
             };
             await _loggerService.LogAsync("Products || Got admin add product interface", "Info", "");
-            return _mapper.Map<IProductDto>(model);
+            return _mapper.Map<ProductDto>(model);
         }
     }
 }
