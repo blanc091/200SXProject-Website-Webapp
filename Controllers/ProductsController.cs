@@ -50,9 +50,9 @@ namespace _200SXContact.Controllers
 		[Route("products/add-product-admin")]
 		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> AddProduct(Product products, List<IFormFile> Images)
+		public async Task<IActionResult> AddProduct(ProductDto products, List<IFormFile> Images)
 		{
-			var result = await _mediator.Send(new AddProductCommand(products, Images));
+			bool result = await _mediator.Send(new AddProductCommand(products, Images));
 			if (result)
 			{
 				return RedirectToAction("ProductsDashboard", "Products");

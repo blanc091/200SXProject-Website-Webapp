@@ -15,8 +15,8 @@ namespace _200SXContact.Helpers.Areas.Products
 	            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
 	            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
 	            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
-	            .ForMember(dest => dest.ImagePaths, opt => opt.MapFrom(src => string.Join(",", src.ImagePaths)))
-	            .ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.DateAdded.ToString("yyyy-MM-dd")));
+				.ForMember(dest => dest.ImagePaths, opt => opt.MapFrom(src => string.Join(",", src.ImagePaths ?? new List<string>())))
+				.ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.DateAdded.ToString("yyyy-MM-dd")));
 
 			CreateMap<ProductDto, Product>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -25,7 +25,7 @@ namespace _200SXContact.Helpers.Areas.Products
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
                 .ForMember(dest => dest.ImagePaths, opt => opt.MapFrom<ImagePathsResolver>())
-                .ForMember(dest => dest.DateAdded, opt => opt.MapFrom(src => DateTime.Parse(src.AddedDate)));
-        }
+				.ForMember(dest => dest.DateAdded, opt => opt.Ignore());
+		}
     }
 }

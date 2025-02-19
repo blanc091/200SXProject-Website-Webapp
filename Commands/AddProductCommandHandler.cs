@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using _200SXContact.Data;
 using _200SXContact.Services;
+using AutoMapper;
+using _200SXContact.Models.Areas.Products;
 
 namespace _200SXContact.Commands
 {
@@ -9,16 +11,18 @@ namespace _200SXContact.Commands
 		private readonly ApplicationDbContext _context;
 		private readonly ILoggerService _loggerService;
 		private readonly IWebHostEnvironment _environment;
-		public AddProductCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment)
+		private readonly IMapper _mapper;
+		public AddProductCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
 		{
 			_context = context;
 			_loggerService = loggerService;
 			_environment = environment;
+			_mapper = mapper;
 		}
 		public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken)
 		{
 			await _loggerService.LogAsync("Products || Adding new product admin", "Info", "");
-			var product = request.Product;
+			var product = _mapper.Map<Product>(request.Product);
 			product.DateAdded = DateTime.Now;
 			if (request.Images != null && request.Images.Any())
 			{
@@ -27,7 +31,7 @@ namespace _200SXContact.Commands
 				{
 					Directory.CreateDirectory(productDirectory);
 				}
-				product.ImagePaths = new List<string>();
+				List<string> imagePaths = new List<string>();
 				foreach (var image in request.Images)
 				{
 					if (image.Length > 0)
@@ -38,7 +42,7 @@ namespace _200SXContact.Commands
 							await image.CopyToAsync(stream);
 						}
 						product.ImagePaths.Add($"/images/products/{product.Id}/{image.FileName}");
-					}
+					}					
 				}
 			}
 			await _context.Products.AddAsync(product, cancellationToken);

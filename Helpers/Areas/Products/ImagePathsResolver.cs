@@ -1,14 +1,15 @@
 ﻿using _200SXContact.Interfaces.Areas.Products;
 using _200SXContact.Models.Areas.Products;
+using _200SXContact.Models.DTOs.Areas.Products;
 using AutoMapper;
 
 namespace _200SXContact.Helpers.Areas.Products
 {
-    public class ImagePathsResolver : IValueResolver<IProductDto, Product, List<string>>
+    public class ImagePathsResolver : IValueResolver<ProductDto, Product, List<string>>
     {
-        public List<string> Resolve(IProductDto source, Product destination, List<string> destMember, ResolutionContext context)
+        public List<string> Resolve(ProductDto source, Product destination, List<string> destMember, ResolutionContext context)
         {
-            return source.ImagePaths?.Split(',').ToList() ?? new List<string>();
-        }
+			return string.IsNullOrEmpty(source.ImagePaths) ? new List<string>() : source.ImagePaths.Split(',').ToList();
+		}
     }
 }
