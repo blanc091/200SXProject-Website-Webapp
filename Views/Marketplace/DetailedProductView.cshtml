@@ -1,6 +1,6 @@
 ﻿@using System.Security.Claims
-@using _200SXContact.Models.Areas.Products
-@model _200SXContact.Models.Areas.Products.Product
+@using _200SXContact.Models.DTOs.Areas.Products
+@model _200SXContact.Models.DTOs.Areas.Products.ProductDto
 @{
 	var message = TempData["Message"] as string;
 }
@@ -132,31 +132,35 @@
 					</span>
 					<br>
 					<span class="date-added">
-						<strong>Date Added:</strong> @Model.DateAdded.ToString("dd-MM-yyyy")
+						<strong>Date Added:</strong> @Model.AddedDate
 					</span>
 					<br>
 				</header>
 				<br>
-				@if (Model.ImagePaths != null && Model.ImagePaths.Any())
+				@if (!string.IsNullOrEmpty(Model.ImagePaths))
 				{
-				<div id="app">
-					<div class="swiper swiper-carousel">
-						<div class="swiper-wrapper">
-								@foreach (var imagePath in Model.ImagePaths)
-								{
-								<div class="swiper-slide">
-									<div class="swiper-carousel-animate-opacity">
-										<img src="@Url.Content(imagePath)" alt="Image for @Model.Name"/>
-									</div>
+					var imagePaths = Model.ImagePaths.Split(',', StringSplitOptions.RemoveEmptyEntries);
+					if (imagePaths.Any())
+					{
+						<div id="app">
+							<div class="swiper swiper-carousel">
+								<div class="swiper-wrapper">
+									@foreach (var imagePath in imagePaths)
+									{
+										<div class="swiper-slide">
+											<div class="swiper-carousel-animate-opacity">
+												<img src="@Url.Content(imagePath)" alt="Image for @Model.Name" />
+											</div>
+										</div>
+									}
 								</div>
-								}
+								<div class="swiper-pagination"></div>
+							</div>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
 						</div>
-						<div class="swiper-pagination"></div>
-					</div>
-					<div class="swiper-button-next"></div>
-					<div class="swiper-button-prev"></div>
-				</div>
-				}
+					}
+				}		
 				
 				<section>
 					<p>@Model.Description</p>
@@ -175,7 +179,6 @@
 				</section>
 
 			</article>
-
 
 			</div>
 			<!-- Footer -->

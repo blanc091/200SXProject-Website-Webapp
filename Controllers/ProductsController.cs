@@ -63,16 +63,16 @@ namespace _200SXContact.Controllers
 		[Route("products/detailed-product-view")]
 		public async Task<IActionResult> DetailedProductView([FromQuery] int id)
 		{
-            await _loggerService.LogAsync("Products || Getting detailed product view", "Info", "");
-            var product = await _context.Products
-				.FirstOrDefaultAsync(b => b.Id == id);
-			if (product == null)
+			await _loggerService.LogAsync("Products || Getting detailed product view", "Info", "");
+			var query = new GetDetailedProductViewQuery(id);
+			var product = await _mediator.Send(query);
+			if (product.Id == 0)
 			{
-                await _loggerService.LogAsync("Products || No product found when trying to access detailed product view", "Error", "");
-                return NotFound();
+				await _loggerService.LogAsync("Products || No product found when trying to access detailed product view", "Error", "");
+				return NotFound();
 			}
-            await _loggerService.LogAsync("Products || Got detailed product view", "Info", "");
-            return View("~/Views/Marketplace/DetailedProductView.cshtml", product);
+			await _loggerService.LogAsync("Products || Got detailed product view", "Info", "");
+			return View("~/Views/Marketplace/DetailedProductView.cshtml", product);
 		}
 	}
 }
