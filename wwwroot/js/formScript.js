@@ -99,6 +99,13 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/account/delete-account-confirmation':
             scrollToElement("userProfileDashDelete");
             break;
+		case '/account/admin-dashboard':
+            scrollToElement("adminInterfaceHeader");
+            break;
+		case '/products/add-product-interface':
+            scrollToElement("addProduct");
+            break;	
+			
     }
     if ((isUserLoggedIn && !formSubmitted) ||
         (formSubmitted && formSuccess) ||
