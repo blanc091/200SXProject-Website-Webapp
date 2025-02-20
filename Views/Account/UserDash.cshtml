@@ -106,10 +106,10 @@
 							<span><strong>Email:</strong> @Model.Email</span>
 							</div>
 						<div class="userDashText">
-							<span><strong>Created At:</strong> @Model.CreatedAt.ToLocalTime()</span>
+						<span><strong>Created At:</strong> @Model.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss")</span>
 						</div>
 							<div class="userDashText">
-							<span><strong>Last Login:</strong> @Model.LastLogin?.ToLocalTime()</span>
+						<span><strong>Last Login:</strong> @Model.LastLogin?.ToString("dd-MM-yyyy HH:mm:ss")</span>
 						</div>
 					<div class="userDash">
 						<span><strong>Checkout your orders here:</strong> </span>

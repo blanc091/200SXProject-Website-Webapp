@@ -6,7 +6,8 @@
       "wwwroot/js/ScrollToTop.js",
       "wwwroot/js/formScript.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/floatLoginBtn.js"
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -17,7 +18,8 @@
     "outputFileName": "wwwroot/js/Areas/Home/Privacy/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/cookies.js",
-      "wwwroot/js/floatLoginBtn.js"
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -28,7 +30,8 @@
     "outputFileName": "wwwroot/js/Areas/Marketplace/AddProduct/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/formScript.js",
-      "wwwroot/js/logInlogOut.js"
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -41,7 +44,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/cartOps.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -54,7 +58,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/cartOps.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -68,7 +73,8 @@
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/cartOps.js",
       "wwwroot/js/floatLoginBtn.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -80,7 +86,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -92,7 +99,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -106,7 +114,8 @@
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/cartOps.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/floatLoginBtn.js"
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -118,7 +127,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -130,7 +140,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
-      "wwwroot/js/orderTracking.js"
+      "wwwroot/js/orderTracking.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -141,7 +152,8 @@
     "outputFileName": "wwwroot/js/Areas/Account/AdminDash/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/formScript.js",
-      "wwwroot/js/logInlogOut.js"
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -154,7 +166,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/dashboard.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -167,7 +180,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/userProfile.js"
+      "wwwroot/js/userProfile.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -178,7 +192,8 @@
     "outputFileName": "wwwroot/js/Areas/Account/ForgotPassReset/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/formScript.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -190,7 +205,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/checkForMobile.js"
+      "wwwroot/js/checkForMobile.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -201,7 +217,8 @@
     "outputFileName": "wwwroot/js/Areas/Account/Register/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/formScript.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -212,7 +229,8 @@
     "outputFileName": "wwwroot/js/Areas/Account/ResetPass/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/formScript.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -225,7 +243,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/userProfile.js"
+      "wwwroot/js/userProfile.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -236,7 +255,8 @@
     "outputFileName": "wwwroot/js/Areas/DetailedViews/SharedFiles/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/cookies.js",
-      "wwwroot/js/floatLoginBtn.js"
+      "wwwroot/js/floatLoginBtn.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -246,7 +266,8 @@
   {
     "outputFileName": "wwwroot/js/Areas/Newsletter/AccessDenied/bundle.min.js",
     "inputFiles": [
-      "wwwroot/js/formScript.js"
+      "wwwroot/js/formScript.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -257,7 +278,8 @@
     "outputFileName": "wwwroot/js/Areas/Newsletter/CreateNewsletter/bundle.min.js",
     "inputFiles": [
       "wwwroot/js/formScript.js",
-      "wwwroot/js/logInlogOut.js"
+      "wwwroot/js/logInlogOut.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -269,7 +291,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -283,7 +306,8 @@
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/floatLoginBtn.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/deleteComment.js"
+      "wwwroot/js/deleteComment.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,
@@ -296,7 +320,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/floatLoginBtn.js",
-      "wwwroot/js/cookies.js"
+      "wwwroot/js/cookies.js",
+      "wwwroot/js/getClientTime.js"
     ],
     "minify": {
       "enabled": true,

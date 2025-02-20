@@ -10,12 +10,10 @@ using Microsoft.AspNetCore.Identity;
 using _200SXContact.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Net;
 using Microsoft.Extensions.Options;
 using _200SXContact.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace _200SXContact.Controllers
 {
@@ -35,7 +33,7 @@ namespace _200SXContact.Controllers
 			_signInManager = signInManager;
 			_passwordHasher = new PasswordHasher<User>();
 			_loggerService = loggerService;
-			var emailSettings = appSettings.Value.EmailSettings;
+			EmailSettings emailSettings = appSettings.Value.EmailSettings;
 			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
 			_configuration = configuration;
 		}
@@ -45,9 +43,10 @@ namespace _200SXContact.Controllers
 		public IActionResult LoginMicrosoft()
 		{
             _loggerService.LogAsync("Login Register || Started Microsoft logging in process", "Info", "");
-            var redirectUri = Url.Action("SigninMicrosoft", "LoginRegister", null, Request.Scheme);
-			var properties = new AuthenticationProperties { RedirectUri = redirectUri };
+			string? redirectUri = Url.Action("SigninMicrosoft", "LoginRegister", null, Request.Scheme);
+			AuthenticationProperties properties = new AuthenticationProperties { RedirectUri = redirectUri };
 			_loggerService.LogAsync($"Login Register || Initiating Microsoft login, redirecting to: {redirectUri}", "Info", "");
+
 			return Challenge(properties, MicrosoftAccountDefaults.AuthenticationScheme);
 		}
 		[HttpGet]
@@ -55,22 +54,44 @@ namespace _200SXContact.Controllers
 		public async Task<IActionResult> SigninMicrosoft()
 		{
             await _loggerService.LogAsync("Login Register || Started Microsoft OAuth process", "Info", "");
-            var result = await HttpContext.AuthenticateAsync(MicrosoftAccountDefaults.AuthenticationScheme);
+			AuthenticateResult result = await HttpContext.AuthenticateAsync(MicrosoftAccountDefaults.AuthenticationScheme);
+
 			if (!result.Succeeded)
 			{
 				await _loggerService.LogAsync("Login Register || Microsoft login failed", "Error","");
 				return RedirectToAction("Login");
 			}
-			var emailClaim = result.Principal.FindFirst(ClaimTypes.Email);
-			var email = emailClaim?.Value;
-			var username = email.Split('@')[0];
+
+			Claim? emailClaim = result.Principal.FindFirst(ClaimTypes.Email);
+			string? email = emailClaim?.Value;
+			string username = email.Split('@')[0];
 			username = Regex.Replace(username, @"[^a-zA-Z0-9]", string.Empty);
+			string? timeZoneCookie = Request.Cookies["userTimeZone"];
+			TimeZoneInfo? userTimeZone = null;
+
+			if (!string.IsNullOrEmpty(timeZoneCookie))
+			{
+				try
+				{
+					userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneCookie);
+				}
+				catch (TimeZoneNotFoundException)
+				{
+					await _loggerService.LogAsync($"Invalid time zone received: {timeZoneCookie}", "Error", "");
+				}
+			}
+
+			DateTime nowUtc = DateTime.UtcNow;
+			DateTime nowLocal = userTimeZone != null ? TimeZoneInfo.ConvertTimeFromUtc(nowUtc, userTimeZone) : nowUtc;
+
 			if (string.IsNullOrEmpty(email))
 			{
 				await _loggerService.LogAsync("Login Register || Email claim not found in the authentication result", "Error", "");
 				return RedirectToAction("Login");
 			}
-			var user = await _userManager.FindByEmailAsync(email);
+
+			User? user = await _userManager.FindByEmailAsync(email);
+
 			if (user == null)
 			{
 				user = new User
@@ -78,24 +99,27 @@ namespace _200SXContact.Controllers
 					UserName = username,
 					Email = email,
 					EmailConfirmed = true,
-					CreatedAt = DateTime.UtcNow,
+					CreatedAt = nowLocal,
 					IsEmailVerified = true
 				};
-				var createUserResult = await _userManager.CreateAsync(user);
+				IdentityResult createUserResult = await _userManager.CreateAsync(user);
+
 				if (!createUserResult.Succeeded)
 				{
 					await _loggerService.LogAsync("Login Register || Failed to create user: {Errors}" + string.Join(", ", createUserResult.Errors.Select(e => e.Description)), "Error","");
 					return RedirectToAction("Login");
 				}
 			}
-			user.LastLogin = DateTime.UtcNow;
-			var updateResult = await _userManager.UpdateAsync(user);
+
+			user.LastLogin = nowLocal;
+			IdentityResult updateResult = await _userManager.UpdateAsync(user);
 			await _signInManager.SignInAsync(user, isPersistent: true);
 			TempData["IsUserLoggedIn"] = true;
 			ViewData["IsUserLoggedIn"] = true;
 			TempData["MicrosoftLogin"] = true;
 			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft !";
             await _loggerService.LogAsync("Login Register || Finished Microsoft logging in process", "Info", "");
+
             return RedirectToAction("Dashboard", "Dashboard");
 		}
 		[HttpGet]
@@ -104,20 +128,24 @@ namespace _200SXContact.Controllers
 		public IActionResult Login(string returnUrl = null)
 		{
             _loggerService.LogAsync("Login Register || Getting login page", "Info", "");
+
             if (returnUrl != null && !Url.IsLocalUrl(returnUrl))
 			{
                 _loggerService.LogAsync("Login Register || No return url when getting login page", "Error", "");
                 returnUrl = null;
 			}
+
 			if (!User.Identity.IsAuthenticated)
 			{
 				ViewData["ReturnUrl"] = returnUrl;
                 _loggerService.LogAsync("Login Register || Got login page", "Info", "");
+
                 return View("~/Views/Account/Login.cshtml");
 			}
 			else
 			{
                 _loggerService.LogAsync("Login Register || User is already logged in, redirecting to MaintenApp", "Info", "");
+
                 return RedirectToAction("Dashboard", "Dashboard");
 			}
 		}
@@ -128,12 +156,15 @@ namespace _200SXContact.Controllers
         {
             await _loggerService.LogAsync("Login Register || Starting login process", "Info", "");
             returnUrl = returnUrl ?? Url.Action("Dashboard", "Dashboard");
+
             if (!ModelState.IsValid)
             {
                 await _loggerService.LogAsync("Login Register || Model state invalid in login process", "Error", "");
                 return View("~/Views/Account/Login.cshtml", model);
             }
-            var user = await _userManager.FindByNameAsync(model.Username);
+
+			User? user = await _userManager.FindByNameAsync(model.Username);
+
             if (user != null)
             {
                 if (!user.IsEmailVerified)
@@ -144,28 +175,52 @@ namespace _200SXContact.Controllers
                     await _loggerService.LogAsync("Login Register || User email is not verified when trying to log in", "Error", "");
                     return View("~/Views/Account/Login.cshtml", model);
                 }
-                var passwordVerificationResult = await _userManager.CheckPasswordAsync(user, model.Password);
+
+				bool passwordVerificationResult = await _userManager.CheckPasswordAsync(user, model.Password);
+
                 if (passwordVerificationResult)
                 {
-                    var claims = new List<Claim>
+					List<Claim> claims = new List<Claim>
 						{
 							new Claim(ClaimTypes.Name, user.UserName),
 							new Claim(ClaimTypes.Email, user.Email),
 							new Claim(ClaimTypes.NameIdentifier, user.Id)
 						};
-                    var roles = await _userManager.GetRolesAsync(user);
+					IList<string> roles = await _userManager.GetRolesAsync(user);
+
                     foreach (var role in roles)
                     {
                         claims.Add(new Claim(ClaimTypes.Role, role));
                     }
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+					ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+					ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+					Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
+
                     if (result.Succeeded)
                     {
-                        user.LastLogin = DateTime.UtcNow;
-                        var updateResult = await _userManager.UpdateAsync(user);
+						string? userTimeZone = Request.Cookies["userTimeZone"];
+
+						if (!string.IsNullOrEmpty(userTimeZone))
+						{
+							try
+							{
+								TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(userTimeZone);
+								user.LastLogin = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+							}
+							catch (TimeZoneNotFoundException)
+							{
+								user.LastLogin = DateTime.UtcNow;
+							}
+						}
+						else
+						{
+							user.LastLogin = DateTime.UtcNow;
+						}
+
+						IdentityResult updateResult = await _userManager.UpdateAsync(user);
                         await _loggerService.LogAsync("Login Register || User logged in successfully", "Info", "");
+
                         return LocalRedirect(returnUrl);
                     }
                 }
@@ -175,13 +230,16 @@ namespace _200SXContact.Controllers
                     TempData["Message"] = "Invalid username or password !";
                     TempData["IsUserVerified"] = "no";
                     await _loggerService.LogAsync("Login Register || Invalid password attempt", "Error", "");
+
                     return View("~/Views/Account/Login.cshtml", model);
                 }
             }
+
             ModelState.AddModelError("", "Invalid username or password.");
             TempData["Message"] = "Invalid username or password !";
             TempData["IsUserVerified"] = "no";
             await _loggerService.LogAsync("Login Register || User not found", "Error", "");
+
             return View("~/Views/Account/Login.cshtml", model);
         }
         [HttpGet]
@@ -202,15 +260,18 @@ namespace _200SXContact.Controllers
 		public IActionResult Register()
 		{
             _loggerService.LogAsync("Login Register || Getting register account view", "Info", "");
+
             if (!User.Identity.IsAuthenticated)
 			{
                 _loggerService.LogAsync("Login Register || Got forgot pass view", "Info", "");
+
                 return View("~/Views/Account/Register.cshtml", new RegisterViewModel());
 			}
 			else
 			{
                 _loggerService.LogAsync("Login Register || User is already authenticated when trying to register new user, redirecting to MaintenApp", "Info", "");
-                return RedirectToAction("Dashboard", "Dashboard");
+                
+				return RedirectToAction("Dashboard", "Dashboard");
 			}
 		}
 		[HttpPost]
@@ -219,44 +280,71 @@ namespace _200SXContact.Controllers
 		public async Task<IActionResult> Register(RegisterViewModel model, string gRecaptchaResponseRegister)
 		{
             await _loggerService.LogAsync("Login Register || Starting new user registration process", "Info", "");
+
             if (User.Identity.IsAuthenticated)
 			{
                 await _loggerService.LogAsync("Login Register || User already logged in when trying to register account in post action", "Info", "");
+
                 return RedirectToAction("Dashboard", "Dashboard");
 			}
+
 			if (string.IsNullOrWhiteSpace(gRecaptchaResponseRegister) || !await VerifyRecaptchaAsync(gRecaptchaResponseRegister))
 			{
 				TempData["IsFormRegisterSuccess"] = "no";
 				TempData["Message"] = "Failed reCAPTCHA validation.";
+
 				return View("~/Views/Home/Index.cshtml");
 			}
+
 			ModelState.Remove(nameof(model.honeypotSpam));
+
 			if (!ModelState.IsValid)
 			{
 				return View("~/Views/Account/Register.cshtml", model);
 			}
+
 			if (!string.IsNullOrWhiteSpace(model.honeypotSpam))
 			{
 				return BadRequest("Spam detected");
 			}
-			var existingUser = await _userManager.FindByEmailAsync(model.Email)
-							   ?? await _userManager.FindByNameAsync(model.Username);
+
+			User? existingUser = await _userManager.FindByEmailAsync(model.Email) ?? await _userManager.FindByNameAsync(model.Username);
+
 			if (existingUser != null)
 			{
                 await _loggerService.LogAsync("User already exists when trying to register new user", "Error", "");
                 TempData["UserExists"] = "yes";
 				TempData["Message"] = "User already exists !";
+
 				return View("~/Views/Account/Register.cshtml", model);
 			}
-			var user = new User
+
+			string? userTimeZone = Request.Cookies["userTimeZone"];
+			DateTime createdAt = DateTime.UtcNow;
+
+			if (!string.IsNullOrEmpty(userTimeZone))
+			{
+				try
+				{
+					TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(userTimeZone);
+					createdAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+				}
+				catch (TimeZoneNotFoundException)
+				{
+					createdAt = DateTime.UtcNow;
+				}
+			}
+
+			User user = new User
 			{
 				UserName = model.Username,
 				Email = model.Email,
-				CreatedAt = DateTime.UtcNow,
+				CreatedAt = createdAt,
 				IsEmailVerified = false,
 				EmailVerificationToken = Guid.NewGuid().ToString()
 			};
-			var createResult = await _userManager.CreateAsync(user, model.Password);
+			IdentityResult createResult = await _userManager.CreateAsync(user, model.Password);
+
 			if (!createResult.Succeeded)
 			{                
                 foreach (var error in createResult.Errors)
@@ -264,18 +352,22 @@ namespace _200SXContact.Controllers
                     await _loggerService.LogAsync("Login Register || Error in user creation " + error.Description, "Error", "");
                     ModelState.AddModelError(string.Empty, error.Description);
 				}
+
 				return View("~/Views/Account/Register.cshtml", model);
             }
+
             if (model.SubscribeToNewsletter)
 			{
                 await _loggerService.LogAsync("Login Register || New user opted for newsletter registration", "Info", "");
                 await Subscribe(model.Email);
 			}
-			var verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
+
+			string? verificationUrl = Url.Action("VerifyEmail", "LoginRegister", new { token = user.EmailVerificationToken }, Request.Scheme);
 			await SendVerificationEmail(model.Email, verificationUrl);
 			TempData["IsFormRegisterSuccess"] = "yes";
 			TempData["Message"] = "Registration successful! Check your email for verification.";
             await _loggerService.LogAsync("Login Register || New user registered, redirecting to login page", "Info", "");
+
             return Redirect("/login-page");
 		}
 		private async Task<bool> VerifyRecaptchaAsync(string token)

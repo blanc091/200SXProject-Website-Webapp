@@ -368,6 +368,7 @@
     <Folder Include="wwwroot\js\Areas\Marketplace\ProductsDashboard\" />
     <Folder Include="wwwroot\js\Areas\Marketplace\PendingOrdersCustomer\" />
     <Folder Include="wwwroot\js\Areas\Marketplace\OrderPlaced\" />
+    <Folder Include="wwwroot\js\Areas\Shared\" />
     <Folder Include="wwwroot\js\Areas\Newsletter\AccessDenied\" />
     <Folder Include="wwwroot\js\Areas\Newsletter\CreateNewsletter\" />
     <Folder Include="wwwroot\js\Areas\UserContent\AddUserBuild\" />
@@ -390,6 +391,7 @@
     <Content Remove="wwwroot/js/scrollToTop.js" />
 	<Content Remove="wwwroot/js/swiperCarousel.js" />
     <Content Remove="wwwroot/js/userProfile.js" />
+	 <Content Remove="wwwroot/js/getClientTime.js" />
   </ItemGroup>
 
   <ItemGroup>
