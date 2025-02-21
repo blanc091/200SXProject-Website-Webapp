@@ -7,6 +7,7 @@ using _200SXContact.Models.DTOs.Areas.Products;
 using _200SXContact.Queries;
 using _200SXContact.Queries.Areas.Products;
 using _200SXContact.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Net.Mail;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace _200SXContact.Controllers
 {
@@ -52,12 +54,27 @@ namespace _200SXContact.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> AddProduct(ProductDto products, List<IFormFile> Images)
 		{
-			bool result = await _mediator.Send(new AddProductCommand(products, Images));
-			if (result)
+			try
 			{
-				return RedirectToAction("ProductsDashboard", "Products");
+				bool result = await _mediator.Send(new AddProductCommand(products, Images));
+
+				if (result)
+				{
+					return RedirectToAction("ProductsDashboard", "Products");
+				}
+
+				return View("AddProduct", products);
 			}
-			return View("AddProduct", products);
+			catch (ValidationException ex)
+			{
+
+				foreach (FluentValidation.Results.ValidationFailure? failure in ex.Errors)
+				{
+					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+				}
+
+				return View("AddProduct", products);
+			}
 		}
 		[HttpGet]
 		[Route("products/detailed-product-view")]
