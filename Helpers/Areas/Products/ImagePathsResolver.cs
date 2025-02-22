@@ -7,9 +7,12 @@ namespace _200SXContact.Helpers.Areas.Products
 {
     public class ImagePathsResolver : IValueResolver<ProductDto, Product, List<string>>
     {
-        public List<string> Resolve(ProductDto source, Product destination, List<string> destMember, ResolutionContext context)
-        {
-			return string.IsNullOrEmpty(source.ImagePaths) ? new List<string>() : source.ImagePaths.Split(',').ToList();
+		public List<string> Resolve(ProductDto source, Product destination, List<string> member, ResolutionContext context)
+		{
+			//if (string.IsNullOrEmpty(source.ImagePaths))
+			//	return new List<string>();
+
+			return source.ImagePaths;
 		}
-    }
+	}
 }

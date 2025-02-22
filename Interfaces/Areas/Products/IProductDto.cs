@@ -7,7 +7,7 @@
         string Category { get; set; }
         string Description { get; set; }
         decimal Price { get; set; }
-        string ImagePaths { get; set; }
+        List<string> ImagePaths { get; set; }
         string AddedDate { get; set; }
     }
 }

@@ -138,7 +138,7 @@
 							<div class="swiper-slide">
 								<div class="swiper-carousel-animate-opacity">
 									<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id">
-										<img src="@(product.ImagePaths?.Split(',').FirstOrDefault() ?? "/images/default-placeholder.png")" alt="@product.Name" />
+										<img src="@(product.ImagePaths != null && product.ImagePaths.Any() ? product.ImagePaths.FirstOrDefault() : "/images/default-placeholder.png")" alt="@product.Name" />
 									</a>
 									<div class="slide-content">
 										<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id">

@@ -137,31 +137,27 @@
 					<br>
 				</header>
 				<br>
-				@if (!string.IsNullOrEmpty(Model.ImagePaths))
+				@if (Model.ImagePaths != null && Model.ImagePaths.Any())
 				{
-					var imagePaths = Model.ImagePaths.Split(',', StringSplitOptions.RemoveEmptyEntries);
-					if (imagePaths.Any())
-					{
-						<div id="app">
-							<div class="swiper swiper-carousel">
-								<div class="swiper-wrapper">
-									@foreach (var imagePath in imagePaths)
-									{
-										<div class="swiper-slide">
-											<div class="swiper-carousel-animate-opacity">
-												<img src="@Url.Content(imagePath)" alt="Image for @Model.Name" />
-											</div>
+					<div id="app">
+						<div class="swiper swiper-carousel">
+							<div class="swiper-wrapper">
+								@foreach (var imagePath in Model.ImagePaths)
+								{
+									<div class="swiper-slide">
+										<div class="swiper-carousel-animate-opacity">
+											<img src="@Url.Content(imagePath)" alt="Image for @Model.Name" />
 										</div>
-									}
-								</div>
-								<div class="swiper-pagination"></div>
+									</div>
+								}
 							</div>
-							<div class="swiper-button-next"></div>
-							<div class="swiper-button-prev"></div>
+							<div class="swiper-pagination"></div>
 						</div>
-					}
-				}		
-				
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
+					</div>
+				}
+
 				<section>
 					<p>@Model.Description</p>
 				</section>

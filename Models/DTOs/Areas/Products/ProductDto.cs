@@ -9,7 +9,7 @@ namespace _200SXContact.Models.DTOs.Areas.Products
         public string Category { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string ImagePaths { get; set; }
-        public string AddedDate { get; set; }
+		public List<string> ImagePaths { get; set; }
+		public string AddedDate { get; set; }
     }
 }

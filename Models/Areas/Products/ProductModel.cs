@@ -14,7 +14,7 @@ namespace _200SXContact.Models.Areas.Products
 		public string Description { get; set; }
 		[Column(TypeName = "decimal(6,2)"), Range(0, 9999.99, ErrorMessage = "Price must be between 0 and 9999.99.")]
         public required decimal Price { get; set; }
-        public List<string> ImagePaths { get; set; } = new List<string>();
+        public List<string> ImagePaths { get; set; }
         public DateTime DateAdded { get; set; }
     }
 }

@@ -25,16 +25,17 @@ namespace _200SXContact.Commands
 			await _loggerService.LogAsync("Products || Adding new product admin", "Info", "");
 			Product product = _mapper.Map<Product>(request.Product);
 			product.DateAdded = DateTime.Now;
+			List<string> imagePaths = new List<string>();
 
 			if (request.Images != null && request.Images.Any())
 			{
 				string uniqueImagesFolder = Guid.NewGuid().ToString();
 				string productDirectory = Path.Combine(_environment.WebRootPath, "images/products", uniqueImagesFolder);
 				await _loggerService.LogAsync("Products || Starting handling the images", "Info", "");
+				
 				try
 				{
-					Directory.CreateDirectory(productDirectory);
-					List<string> imagePaths = new List<string>();
+					Directory.CreateDirectory(productDirectory);					
 
 					foreach (var image in request.Images)
 					{
@@ -58,7 +59,7 @@ namespace _200SXContact.Commands
 									await _loggerService.LogAsync("Products || Copying image to storage...", "Info", "");
 									await image.CopyToAsync(stream);
 								}
-								imagePaths.Add($"/images/products/{uniqueImagesFolder}/{image.FileName}");
+								imagePaths.Add($"images/products/{uniqueImagesFolder}/{image.FileName}");
 							}
 							catch (Exception ex)
 							{
@@ -74,6 +75,9 @@ namespace _200SXContact.Commands
 					throw new ValidationException("An error occurred while processing images");
 				}
 			}
+
+			product.ImagePaths = imagePaths;
+
 			try
 			{
 				await _context.Products.AddAsync(product, cancellationToken);

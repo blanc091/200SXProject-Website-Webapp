@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net.Mail;
 using static System.Net.Mime.MediaTypeNames;
@@ -46,7 +47,8 @@ namespace _200SXContact.Controllers
 		public async Task<IActionResult> ProductsDashboard()
 		{
 			List<ProductDto> products = await _mediator.Send(new GetProductsQuery());
-            return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
+			
+			return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
 		}
 		[HttpPost]
 		[Route("products/add-product-admin")]
