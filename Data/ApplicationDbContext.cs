@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Models;
+using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -20,8 +21,8 @@ namespace _200SXContact.Data
 		public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; }
 		public DbSet<BuildsCommentsModel> BuildComments { get; set; }
 		public DbSet<Product> Products { get; set; }
-		public DbSet<CartItem> CartItems { get; set; }
-		public DbSet<Order> Orders { get; set; }
+		public DbSet<CartItemModel> CartItems { get; set; }
+		public DbSet<OrderPlacement> Orders { get; set; }
 		public DbSet<OrderTracking> OrderTrackings { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,11 +34,11 @@ namespace _200SXContact.Data
 				.WithMany(u => u.Items)
 				.HasForeignKey(i => i.UserId)
 				.OnDelete(DeleteBehavior.Cascade);
-			modelBuilder.Entity<Order>()
-			    .HasMany(o => o.CartItems)
-			    .WithOne(ci => ci.Order)
-			    .HasForeignKey(ci => ci.OrderId)
-			    .OnDelete(DeleteBehavior.Cascade);
-		}
+			
+            modelBuilder.Entity<OrderPlacement>()
+				.HasOne(op => op.OrderTracking)
+				.WithOne(ot => ot.Order)
+				.HasForeignKey<OrderTracking>(ot => ot.OrderId);
+        }
 	}
 }

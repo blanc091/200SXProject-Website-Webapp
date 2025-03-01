@@ -1,10 +1,12 @@
 ﻿using _200SXContact.Models;
+using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace _200SXContact.Services
@@ -13,7 +15,7 @@ namespace _200SXContact.Services
 	{
 		Task SendDueDateReminder(string userEmail,string userName, Item item, int daysBeforeDue);
 		Task SendCommentNotification(string userEmail, BuildsCommentsModel comment);
-        Task SendOrderConfirmEmail(string email, Order order);
+        Task SendOrderConfirmEmail(string email, OrderPlacement order);
 	}
 	public class EmailService : IEmailService
 	{
@@ -27,7 +29,7 @@ namespace _200SXContact.Services
 			_loggerService = loggerService;
 			_configuration = configuration;
 		}
-		public async Task SendOrderConfirmEmail(string email, Order order)
+		public async Task SendOrderConfirmEmail(string email, OrderPlacement order)
 		{
             await _loggerService.LogAsync("Orders || Started sending email with order confirmation", "Info", "");
             var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
@@ -70,11 +72,12 @@ namespace _200SXContact.Services
 			sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Order Details:</p></h2>");
 			sb.AppendLine("        <table style='width:100%; border-collapse: collapse;'>");
 			sb.AppendLine("            <tr><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Item</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Quantity</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Price</p></th></tr>");
-			foreach (var item in order.CartItems)
+            List<CartItemModel> cartItems = JsonSerializer.Deserialize<List<CartItemModel>>(order.CartItemsJson) ?? new List<CartItemModel>();
+            foreach (var item in cartItems)
 			{
 				sb.AppendLine($"<tr><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.ProductName}<p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Quantity}</p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Price.ToString("F2")}</p></td></tr>");
 			}
-			decimal total = order.CartItems.Sum(item => item.Price * item.Quantity);
+			decimal total = cartItems.Sum(item => item.Price * item.Quantity);
 			sb.AppendLine($"<tr><td colspan='2' style='border: 1px solid #ece8ed !important; padding: 8px; text-align: right;'><strong><p>Total:</p></strong></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{total.ToString("F2")}</p></td></tr>");
 			sb.AppendLine("        </table>");
 			sb.AppendLine("        <p>Thank you !</p>");

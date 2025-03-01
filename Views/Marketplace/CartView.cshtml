@@ -1,5 +1,7 @@
-﻿@model IEnumerable<_200SXContact.Models.CartItem>
+﻿
 @using System.Security.Claims
+@using _200SXContact.Models.DTOs.Areas.Orders
+@model IEnumerable<CartItemDto>
 @{
 	var message = TempData["Message"] as string;
 }

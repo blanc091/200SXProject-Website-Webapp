@@ -1,22 +1,13 @@
-﻿using _200SXContact.Commands;
+﻿using _200SXContact.Commands.Areas.Products;
 using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Products;
 using _200SXContact.Models;
-using _200SXContact.Models.Areas.Products;
 using _200SXContact.Models.DTOs.Areas.Products;
-using _200SXContact.Queries;
 using _200SXContact.Queries.Areas.Products;
 using _200SXContact.Services;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using System.Globalization;
-using System.Net.Mail;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace _200SXContact.Controllers
 {
@@ -38,59 +29,62 @@ namespace _200SXContact.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> AddProduct()
 		{
-			var query = new GetAddProductInterfaceQuery();
-			ProductDto productDto = await _mediator.Send(query);
+			ProductDto productDto = await _mediator.Send(new GetAddProductInterfaceQuery());
+
 			return View("~/Views/Marketplace/AddProduct.cshtml", productDto);
 		}
 		[HttpGet]
 		[Route("products/view-products")]
 		public async Task<IActionResult> ProductsDashboard()
 		{
-			List<ProductDto> products = await _mediator.Send(new GetProductsQuery());
+			List<ProductDto?>? products = await _mediator.Send(new GetProductsQuery());
 			
+			if (products == null)
+			{
+                await _loggerService.LogAsync("Products || No products found currently", "Info", "");
+
+                TempData["Message"] = "No products added at this point.";
+			}
+
 			return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
 		}
 		[HttpPost]
 		[Route("products/add-product-admin")]
 		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> AddProduct(ProductDto products, List<IFormFile> Images)
-		{
-			try
-			{
-				bool result = await _mediator.Send(new AddProductCommand(products, Images));
+        public async Task<IActionResult> AddProduct(ProductDto products, List<IFormFile> Images)
+        {
+            try
+            {
+                bool result = await _mediator.Send(new AddProductCommand(products, Images));
 
-				if (result)
-				{
-					return RedirectToAction("ProductsDashboard", "Products");
-				}
+                if (result)
+                {
+                    return RedirectToAction("ProductsDashboard", "Products");
+                }
 
-				return View("AddProduct", products);
-			}
-			catch (ValidationException ex)
-			{
+                return View("AddProduct", products);
+            }
+            catch (Exception ex)
+            {
+                await _loggerService.LogAsync("Product || Error adding product: " + ex.Message, "Error", "");
 
-				foreach (FluentValidation.Results.ValidationFailure? failure in ex.Errors)
-				{
-					ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
-				}
-
-				return View("AddProduct", products);
-			}
-		}
-		[HttpGet]
+                return View("AddProduct", products);
+            }
+        }
+        [HttpGet]
 		[Route("products/detailed-product-view")]
 		public async Task<IActionResult> DetailedProductView([FromQuery] int id)
 		{
-			await _loggerService.LogAsync("Products || Getting detailed product view", "Info", "");
-			var query = new GetDetailedProductViewQuery(id);
-			var product = await _mediator.Send(query);
-			if (product.Id == 0)
-			{
-				await _loggerService.LogAsync("Products || No product found when trying to access detailed product view", "Error", "");
-				return NotFound();
-			}
-			await _loggerService.LogAsync("Products || Got detailed product view", "Info", "");
+            ProductDto? product = await _mediator.Send(new GetDetailedProductViewQuery(id));
+            
+			if (product == null)
+            {
+                await _loggerService.LogAsync("Products || No product found when trying to access detailed product view", "Error", "");
+
+				TempData["Message"] = "No product found when trying to get detailed view !";
+            }           
+
 			return View("~/Views/Marketplace/DetailedProductView.cshtml", product);
 		}
 	}

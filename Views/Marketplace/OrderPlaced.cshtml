@@ -1,4 +1,7 @@
-﻿@model _200SXContact.Models.Order
+﻿@using System.Text.Json
+@using _200SXContact.Models.Areas.Orders
+@using _200SXContact.Models.DTOs.Areas.Orders
+@model OrderUserDashDto
 @{
 	var nonce = Context.Items["CSPNonce"] as string;
 }
@@ -121,42 +124,74 @@
 			<article class="post featured">
 				<header class="major">
 					<br>
-					<h2 id="orderSuccess">Order placed !</h2>
+					<h2 id="orderSuccess">Order placed!</h2>
 					<span style="display: block; text-align: left;"><strong>Here is a summary of your order:</strong></span><br><br>
-					<span style="display: block; text-align: left;"><strong>Order ID:</strong> @Model.Id</span><br>
-					<span style="display: block; text-align: left;"><strong>Full name:</strong> @Model.FullName</span><br>
-					<span style="display: block; text-align: left;"><strong>Address:</strong> @Model.AddressLine1</span><br>
-					<span style="display: block; text-align: left;"><strong>Address extra:</strong> @Model.AddressLine2</span><br>
-					<span style="display: block; text-align: left;"><strong>City:</strong> @Model.City</span><br>
-					<span style="display: block; text-align: left;"><strong>County:</strong> @Model.County</span><br>
-					<span style="display: block; text-align: left;"><strong>Phone:</strong> @Model.PhoneNumber</span><br>
-					<span style="display: block; text-align: left;"><strong>Email:</strong> @Model.Email</span><br>
-					<span style="display: block; text-align: left;"><strong>Order notes:</strong> @Model.OrderNotes</span><br>
-					<span style="display: block; text-align: left;"><strong>Order date:</strong> @Model.OrderDate</span><br><br>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Quantity</th>
-								<th>Price</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model.CartItems)
-							{
-								<tr>
-									<td>@item.ProductName</td>
-									<td>@item.Quantity</td>
-									<td>@item.Price.ToString("C")</td>
-								</tr>
-							}
-						</tbody>
-					</table>
 
-					<span><strong>Total:</strong> @Model.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</span>
+					 @if (Model.OrderPlacements.Any() && Model.OrderTrackings.Any())
+					 {
+						var orderPlacement = Model.OrderPlacements.OrderByDescending(o => o.OrderDate).First();
+						var orderTracking = Model.OrderTrackings.OrderByDescending(t => t.StatusUpdatedAt).FirstOrDefault(t => t.Email == orderPlacement.Email);
+					
+						<span style="display: block; text-align: left;"><strong>Order ID:</strong> @orderTracking.OrderId</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Full name:</strong> @orderPlacement.FullName</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Address:</strong> @orderPlacement.AddressLine1</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Address extra:</strong> @orderPlacement.AddressLine2</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>City:</strong> @orderPlacement.City</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>County:</strong> @orderPlacement.County</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Phone:</strong> @orderPlacement.PhoneNumber</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Email:</strong> @orderPlacement.Email</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Order notes:</strong> @orderPlacement.OrderNotes</span>
+						<br>
+						<span style="display: block; text-align: left;"><strong>Order date:</strong> @orderPlacement.OrderDate</span>
+						<br><br>
+						<table>
+							<thead>
+								<tr>
+									<th>Item</th>
+									<th>Quantity</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (!string.IsNullOrEmpty(orderPlacement.CartItemsJson))
+								{
+									var cartItems = JsonSerializer.Deserialize<List<CartItemDto>>(orderPlacement.CartItemsJson);
+
+									@foreach (var item in cartItems)
+									{
+										<tr>
+											<td>@item.ProductName</td>
+											<td>@item.Quantity</td>
+											<td>@item.Price.ToString("C")</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+
+						@if (!string.IsNullOrEmpty(orderPlacement.CartItemsJson))
+						{
+							var cartItems = JsonSerializer.Deserialize<List<CartItemDto>>(orderPlacement.CartItemsJson);
+							<span><strong>Total:</strong> @cartItems.Sum(i => i.Price * i.Quantity).ToString("C")</span>
+						}
+					}
+					else
+					{
+						<p>No order details available.</p>
+					}
+
 					<br>
 					<!--<p>You can view the status of your order here:</p>-->
 				</header>
+
 			</article>
 			
 		</div>

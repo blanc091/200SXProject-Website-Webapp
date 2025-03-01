@@ -18,7 +18,8 @@ namespace _200SXContact.Queries.Areas.Products
         public async Task<ProductDto> Handle(GetAddProductInterfaceQuery request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Products || Getting admin add product interface", "Info", "");
-            var model = new Product
+
+            Product model = new Product
             {
                 Name = string.Empty,
                 Category = string.Empty,
@@ -27,7 +28,9 @@ namespace _200SXContact.Queries.Areas.Products
                 ImagePaths = new List<string>(),
                 DateAdded = DateTime.Now
             };
+
             await _loggerService.LogAsync("Products || Got admin add product interface", "Info", "");
+
             return _mapper.Map<ProductDto>(model);
         }
     }

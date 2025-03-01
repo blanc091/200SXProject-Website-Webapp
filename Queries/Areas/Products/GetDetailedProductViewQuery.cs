@@ -3,12 +3,8 @@ using MediatR;
 
 namespace _200SXContact.Queries.Areas.Products
 {
-	public class GetDetailedProductViewQuery : IRequest<ProductDto>
+	public class GetDetailedProductViewQuery(int id) : IRequest<ProductDto?>
 	{
-		public int Id { get; set; }
-		public GetDetailedProductViewQuery(int id)
-		{
-			Id = id;
-		}
-	}
+        public int Id { get; set; } = id;
+    }
 }

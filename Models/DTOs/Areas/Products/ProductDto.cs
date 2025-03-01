@@ -1,15 +1,20 @@
-﻿using _200SXContact.Interfaces.Areas.Products;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace _200SXContact.Models.DTOs.Areas.Products
 {
-    public class ProductDto : IProductDto
+    public class ProductDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
+        [Required]
+        public required string Name { get; set; }
+        [Required]
+        public required string Category { get; set; }
+        [Required]
+        public required string Description { get; set; }
+        [Required]
+        public required decimal Price { get; set; }
 		public List<string> ImagePaths { get; set; }
-		public string AddedDate { get; set; }
+        [Required]
+        public required string AddedDate { get; set; }
     }
 }

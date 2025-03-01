@@ -1,4 +1,6 @@
-﻿@model List<_200SXContact.Models.OrderTrackingViewModel>
+﻿@using System.Text.Json
+@using _200SXContact.Models.Areas.Orders
+@model List<_200SXContact.Models.DTOs.Areas.Orders.OrderUserDashDto>    
 @{
 	var nonce = Context.Items["CSPNonce"] as string;
 }
@@ -118,49 +120,65 @@
 				<header class="major">
 					<br>
 					<h2 id="customerOrders">Your orders</h2><br />
+					
 					<span style="display: block; text-align: left;"><strong>Here is a collection of your orders and their status:</strong></span><br><br>
 					@if (Model != null && Model.Any())
 					{
-						@foreach (var orderViewModel in Model)
+						@foreach (var orderUserDash in Model)
 						{
-							<section class="order-summary">
-								<h3>Order ID: @orderViewModel.Order.Id</h3>
-								<p><strong>Full Name:</strong> @orderViewModel.Order.FullName</p>
-								<p><strong>Address:</strong> @orderViewModel.Order.AddressLine1, @orderViewModel.Order.City, @orderViewModel.Order.County</p>
-								<p><strong>Phone:</strong> @orderViewModel.Order.PhoneNumber</p>
-								<p><strong>Email:</strong> @orderViewModel.Order.Email</p>
-								<p><strong>Order Notes:</strong> @orderViewModel.Order.OrderNotes</p>
-								<p><strong>Order Date:</strong> @orderViewModel.Order.OrderDate</p>
-								<p><strong>Updated At:</strong> @orderViewModel.OrderTracking?.StatusUpdatedAt.ToLocalTime()</p>
+							@foreach (var orderTracking in orderUserDash.OrderTrackings)
+							{
+								var orderPlacement = orderUserDash.OrderPlacements.FirstOrDefault(op => op.Email == orderTracking.Email);
+																
+								<section class="order-summary">
+									<h3>Order ID: @orderTracking.OrderId</h3>
+									<p><strong>Full Name:</strong> @orderPlacement?.FullName</p>
+									<p><strong>Address:</strong> @orderPlacement?.AddressLine1, @orderPlacement?.City, @orderPlacement?.County</p>
+									<p><strong>Phone:</strong> @orderPlacement?.PhoneNumber</p>
+									<p><strong>Email:</strong> @orderPlacement?.Email</p>
+									<p><strong>Order Notes:</strong> @orderPlacement?.OrderNotes</p>
+									<p><strong>Order Date:</strong> @orderPlacement?.OrderDate</p>
+									<p><strong>Updated At:</strong> @orderTracking.StatusUpdatedAt.ToLocalTime()</p>
 
-								<h4>Products</h4>
-								<table>
-									<thead>
-										<tr>
-											<th>Item</th>
-											<th>Quantity</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach (var item in orderViewModel.CartItems)
-										{
+									<h4>Products</h4>
+									<table>
+										<thead>
 											<tr>
-												<td>@item.ProductName</td>
-												<td>@item.Quantity</td>
-												<td>@item.Price.ToString("C")</td>
+												<th>Item</th>
+												<th>Quantity</th>
+												<th>Price</th>
 											</tr>
-										}
-									</tbody>
-								</table>
-								<p><strong>Total:</strong> @orderViewModel.CartItems.Sum(i => i.Price * i.Quantity).ToString("C")</p>
+										</thead>
+										<tbody>
+											@if (!string.IsNullOrEmpty(orderPlacement?.CartItemsJson))
+											{
+												var cartItems = System.Text.Json.JsonSerializer.Deserialize<List<CartItemModel>>(orderPlacement.CartItemsJson);
+												@foreach (var item in cartItems)
+												{
+													<tr>
+														<td>@item.ProductName</td>
+														<td>@item.Quantity</td>
+														<td>@item.Price.ToString("C")</td>
+													</tr>
+												}
+											}
+										</tbody>
+									</table>
+									<p>
+										<strong>Total:</strong> @(
+											!string.IsNullOrEmpty(orderPlacement?.CartItemsJson)
+											? System.Text.Json.JsonSerializer.Deserialize<List<CartItemModel>>(orderPlacement.CartItemsJson)?.Sum(i => i.Price * i.Quantity).ToString("C")
+											: "N/A"
+											)
+									</p>
 
-								<h4>Tracking Information</h4>
-								<p><strong>Status:</strong> @orderViewModel.OrderTracking?.Status</p>
-								<p><strong>Carrier:</strong> @orderViewModel.OrderTracking?.Carrier</p>
-								<p><strong>Tracking Number:</strong> @orderViewModel.OrderTracking?.TrackingNumber</p>
-							</section>
-							<hr />
+									<h4>Tracking Information</h4> <br />
+									<p><strong>Status:</strong> @orderTracking.Status</p>
+									<p><strong>Carrier:</strong> @orderTracking.Carrier</p>
+									<p><strong>Tracking Number:</strong> @orderTracking.TrackingNumber</p>
+								</section>
+								<hr />
+							}
 						}
 					}
 					else

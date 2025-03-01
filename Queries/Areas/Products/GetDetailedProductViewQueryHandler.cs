@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Queries.Areas.Products
 {
-	public class GetDetailedProductViewQueryHandler : IRequestHandler<GetDetailedProductViewQuery, ProductDto>
+	public class GetDetailedProductViewQueryHandler : IRequestHandler<GetDetailedProductViewQuery, ProductDto?>
 	{
 		private readonly ILoggerService _loggerService;
 		private readonly IMapper _mapper;
@@ -18,18 +18,21 @@ namespace _200SXContact.Queries.Areas.Products
 			_mapper = mapper;
 			_context = context;
 		}
-		public async Task<ProductDto> Handle(GetDetailedProductViewQuery request, CancellationToken cancellationToken)
+		public async Task<ProductDto?> Handle(GetDetailedProductViewQuery request, CancellationToken cancellationToken)
 		{
-			await _loggerService.LogAsync("Products || Getting detailed product view", "Info", "");
-			var product = await _context.Products
-				.FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
+			await _loggerService.LogAsync("Products || Getting detailed product view data", "Info", "");
+
+            Models.Areas.Products.Product? product = await _context.Products.FirstOrDefaultAsync(b => b.Id == request.Id, cancellationToken);
 
 			if (product == null)
 			{
 				await _loggerService.LogAsync("Products || No product found when trying to access detailed product view", "Error", "");
-				return new ProductDto { Id = 0 };
+
+				return null;
 			}
+
 			await _loggerService.LogAsync("Products || Got detailed product view", "Info", "");
+
 			return _mapper.Map<ProductDto>(product);
 		}
 	}

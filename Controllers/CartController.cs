@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using _200SXContact.Models;
 using _200SXContact.Data;
-using System.Net.Mail;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using _200SXContact.Services;
+using MediatR;
+using _200SXContact.Queries.Areas.Orders;
+using _200SXContact.Models.DTOs.Areas.Orders;
+using _200SXContact.Commands.Areas.Orders;
+using AutoMapper;
 
 namespace _200SXContact.Controllers
 {
@@ -13,109 +16,136 @@ namespace _200SXContact.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;
-		private readonly IEmailService _emailService;
 		private readonly ILoggerService _loggerService;
-		public CartController(ApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, ILoggerService loggerService)
+		private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+		public CartController(ApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMediator mediator, IMapper mapper)
 		{
 			_context = context;
 			_userManager = userManager;
-			_emailService = emailService;
 			_loggerService = loggerService;
+			_mediator = mediator;
+            _mapper = mapper;
 		}
-		[HttpGet]
-		[Route("cart/view-cart")]
-		public async Task<IActionResult> CartView()
-		{
+        [HttpGet]
+        [Route("cart/view-cart")]
+        public async Task<IActionResult> CartView()
+        {
             await _loggerService.LogAsync("Checkout || Getting cart view", "Info", "");
-            var cartItems = await _context.CartItems.ToListAsync();
+
+            User? user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                await _loggerService.LogAsync("Checkout || User is not logged in when viewing cart", "Error", "");
+
+                TempData["Message"] = "You need to be registered and logged in to view your cart !";
+
+                return Redirect("/login-page");
+            }
+
+            List<CartItemDto?>? cartItems = await _mediator.Send(new GetCartItemsCheckoutQuery(user.Id));
+
+            if (cartItems is null)
+            {
+                await _loggerService.LogAsync("Checkout || The cart is empty in checkout", "Info", "");
+
+                TempData["Message"] = "Cart is empty !";
+            }
+
             await _loggerService.LogAsync("Checkout || Got cart view", "Info", "");
+
             return View("~/Views/Marketplace/CartView.cshtml", cartItems);
-		}
-		[HttpPost]
+        }
+        [HttpPost]
 		[Route("cart/add-item")]
-		public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
-		{
-            await _loggerService.LogAsync("Checkout || Adding item to cart", "Info", "");
-            var product = await _context.Products.FindAsync(productId);
-			if (product == null)
-			{
-                await _loggerService.LogAsync("Checkout || Product is null when adding to cart", "Error", "");
-                return RedirectToAction("DetailedProductView", "Products", new { id = productId });
-            }				
-			var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
-                await _loggerService.LogAsync("Checkout || User is null or not logged in when adding to cart", "Error", "");
+        public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
+        {
+            User? user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                await _loggerService.LogAsync("Checkout || User is not logged in when adding to cart", "Error", "");
+
                 TempData["IsUserLoggedIn"] = "no";
-				TempData["Message"] = "You need to be registered and logged in to add products to your cart.";
-				return Redirect("/login-page");
-			}
-			var existingCartItem = await _context.CartItems
-				.FirstOrDefaultAsync(ci => ci.ProductId == productId && ci.UserId == user.Id);
-			if (existingCartItem != null)
-			{
-				existingCartItem.Quantity += quantity;
-			}
-			else
-			{
-				var primaryImagePath = product.ImagePaths?.FirstOrDefault() ?? "/images/default-placeholder.png";
-				var cartItem = new CartItem
-				{
-					ProductId = product.Id,
-					ProductName = product.Name,
-					Price = product.Price,
-					Quantity = quantity,
-					ImagePath = primaryImagePath,
-					UserId = user.Id
-				};
-				await _context.CartItems.AddAsync(cartItem);
-			}
-			await _context.SaveChangesAsync();
-			TempData["ItemAdded"] = "yes";
-			TempData["Message"] = "Item added to cart !";
-            await _loggerService.LogAsync("Checkout || Added item to cart", "Info", "");
+                TempData["Message"] = "You need to be registered and logged in to add products to your cart.";
+
+                return Redirect("/login-page");
+            }
+
+            CartItemDto cartItemDto = await _mediator.Send(new AddToCartCommand(productId, quantity, user.Id));
+
+            if (cartItemDto == null)
+            {
+                await _loggerService.LogAsync("Cart || Product not found or failed to add to cart", "Error", "");
+
+                TempData["Message"] = "Product not found or failed to add to cart.";
+            }
+            else
+            {
+                await _loggerService.LogAsync("Cart || Added item to cart", "Info", "");
+
+                TempData["ItemAdded"] = "yes";
+            }
+
             return RedirectToAction("ProductsDashboard", "Products");
-		}
-		[HttpGet]
+        }
+        [HttpGet]
 		[Route("cart/get-cart-items")]
-		public async Task<IActionResult> GetCartItemCount()
-		{
+        public async Task<IActionResult> GetCartItemCount()
+        {
             await _loggerService.LogAsync("Checkout || Getting cart items count", "Info", "");
-            var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
-                await _loggerService.LogAsync("Checkout || User is null when getting cart items", "Errors", "");
+
+            User? user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                await _loggerService.LogAsync("Checkout || User is null when getting cart items", "Error", "");
+
                 return Json(0);
-			}
-			var cartItemCount = await _context.CartItems
-				.Where(ci => ci.UserId == user.Id)
-				.SumAsync(ci => ci.Quantity);
-            await _loggerService.LogAsync("Checkout || Got cart items", "Info", "");
+            }
+
+            int cartItemCount = await _mediator.Send(new GetCartItemsCountQuery { UserId = user.Id });
+
+            if (cartItemCount == 0)
+            {
+                await _loggerService.LogAsync("Checkout || No cart items found to fetch for user " + user.Id.ToString(), "Error", "");
+
+                return Json(0);
+            }
+
             return Json(cartItemCount);
-		}
-		[HttpPost]
+        }
+        [HttpPost]
 		[Route("cart/remove-cart-item")]
-		public async Task<IActionResult> RemoveFromCart(int productId)
-		{
+        public async Task<IActionResult> RemoveFromCart(int productId)
+        {
             await _loggerService.LogAsync("Checkout || Removing cart item", "Info", "");
-            var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
+
+            User? user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
                 await _loggerService.LogAsync("Checkout || User is null when removing cart items", "Error", "");
+
                 return Json(0);
-			}
-			var cartItem = await _context.CartItems
-				.FirstOrDefaultAsync(ci => ci.ProductId == productId && ci.UserId == user.Id);
-			if (cartItem == null)
-			{
-				await _loggerService.LogAsync("Checkout || Cart item is null when removing cart items", "Error", "");
-				return NotFound();
-			}
-			_context.CartItems.Remove(cartItem);
-			await _context.SaveChangesAsync();
-			var cartItems = await _context.CartItems.ToListAsync();
+            }
+
+            bool success = await _mediator.Send(new RemoveFromCartCommand { ProductId = productId, UserId = user.Id });
+
+            if (!success)
+            {
+                await _loggerService.LogAsync("Checkout || Cart item not found when removing cart item", "Error", "");
+
+                return NotFound();
+            }
+
+            List<Models.Areas.Orders.CartItemModel> cartItems = await _context.CartItems.Where(ci => ci.UserId == user.Id).ToListAsync();
+
+            List<CartItemDto> cartItemDtos = _mapper.Map<List<CartItemDto>>(cartItems);
+
             await _loggerService.LogAsync("Checkout || Removed cart item", "Info", "");
-            return View("~/Views/Marketplace/CartView.cshtml", cartItems);
-		}
-	}
+
+            return View("~/Views/Marketplace/CartView.cshtml", cartItemDtos);
+        }
+    }
 }

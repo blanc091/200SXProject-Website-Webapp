@@ -1,4 +1,4 @@
-﻿@model List<_200SXContact.Models.OrderTrackingViewModel>
+﻿@model List<_200SXContact.Models.DTOs.Areas.Orders.OrderTrackingUpdateDto>
 @using System.Security.Claims
 @{
 	var message = TempData["Message"] as string;
@@ -130,23 +130,23 @@
 						</form>
 						@foreach (var item in Model)
 						{
-							<tr data-order-id="@item.Order.Id">
-								<td>@item.Order.Id</td>
-								<td>@item.Order.FullName</td>
+							<tr data-order-id="@item.OrderId">
+								<td>@item.OrderId</td>
+								<td>@item.Status</td>
 								<td>
-									<input type="text" class="status-input" value="@item.OrderTracking?.Status" />
+									<input type="text" class="status-input" value="@item.Status" />
 								</td>
 								<td>
-									<input type="text" class="carrier-input" value="@item.OrderTracking?.Carrier" />
+									<input type="text" class="carrier-input" value="@item.Carrier" />
 								</td>
 								<td>
-									<input type="text" class="tracking-number-input" value="@item.OrderTracking?.TrackingNumber" />
+									<input type="text" class="tracking-number-input" value="@item.TrackingNumber" />
 								</td>
 								<td>
 									<button class="save-btn">Save</button>
 								</td>
 								<td>
-									<button class="view-cart-btn" data-order-id="@item.Order.Id">View Cart Items</button>
+									<button class="view-cart-btn" data-order-id="@item.OrderId">View Cart Items</button>
 								</td>
 							</tr>
 						}
