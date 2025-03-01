@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Users
 {
 	public class CommentsController : Controller
 	{

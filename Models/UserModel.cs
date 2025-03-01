@@ -19,7 +19,7 @@ namespace _200SXContact.Models
 		public bool IsEmailVerified { get; set; }
 		public string? EmailVerificationToken { get; set; }
 		public string? PasswordResetToken { get; set; }
-		public virtual ICollection<Item>? Items { get; set; }
+		public virtual ICollection<ReminderItem>? Items { get; set; }
 	}
 }
 

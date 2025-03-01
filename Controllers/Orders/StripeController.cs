@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Orders
 {
 	public class StripeController : Controller
 	{

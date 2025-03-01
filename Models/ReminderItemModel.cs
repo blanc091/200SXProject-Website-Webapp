@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace _200SXContact.Models
+﻿namespace _200SXContact.Models
 {
-	public class Item
+	public class ReminderItem
 	{
 		public int Id { get; set; }
 		public string EntryItem { get; set; }
@@ -12,6 +10,6 @@ namespace _200SXContact.Models
 		public DateTime UpdatedAt { get; set; }
 		public string UserId { get; set; }
 		public virtual User User { get; set; }
-		public bool EmailSent { get; set; }  // Default to false
+		public bool EmailSent { get; set; }
 	}
 }

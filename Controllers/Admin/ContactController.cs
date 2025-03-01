@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using System.Net;
 using _200SXContact.Services;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Admin
 {
 	public class ContactController : Controller
 	{
@@ -110,7 +110,7 @@ namespace _200SXContact.Controllers
 					Host = "mail5019.site4now.net",
 					Port = 587,
 					EnableSsl = true,
-					Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
+					Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
 				})
 				{
 					using (var message = new MailMessage(fromAddress, toAddress)

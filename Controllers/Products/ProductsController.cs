@@ -9,18 +9,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Products
 {
     public class ProductsController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly UserManager<User> _userManager;
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-		public ProductsController(ApplicationDbContext context, ILoggerService loggerService, UserManager<User> userManager, IMediator mediator)
+		public ProductsController(ILoggerService loggerService, IMediator mediator)
 		{
-			_context = context;
-			_userManager = userManager;
 			_loggerService = loggerService;
 			_mediator = mediator;
 		}

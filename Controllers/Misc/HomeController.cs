@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.IO;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Misc
 {
     public class HomeController : Controller
     {

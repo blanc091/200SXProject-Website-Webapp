@@ -16,7 +16,7 @@ namespace _200SXContact.Data
 		public DbSet<EmailLog> EmailLogs { get; set; }
 		//public new DbSet<User> Users { get; set; }
 		public DbSet<LoggingModel> Logging { get; set; }
-		public DbSet<Item> Items { get; set; }
+		public DbSet<ReminderItem> Items { get; set; }
 		public DbSet<UserBuild> UserBuilds { get; set; }
 		public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; }
 		public DbSet<BuildsCommentsModel> BuildComments { get; set; }
@@ -29,7 +29,7 @@ namespace _200SXContact.Data
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Item>()
+			modelBuilder.Entity<ReminderItem>()
 				.HasOne(i => i.User)
 				.WithMany(u => u.Items)
 				.HasForeignKey(i => i.UserId)

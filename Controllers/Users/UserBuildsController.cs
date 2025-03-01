@@ -8,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Claims;
 using _200SXContact.Services;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Users
 {
 	public class UserBuildsController : Controller
 	{

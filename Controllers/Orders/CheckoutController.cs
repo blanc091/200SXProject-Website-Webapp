@@ -13,7 +13,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using System.Diagnostics;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Orders
 {
 	public class CheckoutController : Controller
 	{

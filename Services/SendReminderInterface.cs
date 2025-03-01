@@ -13,7 +13,7 @@ namespace _200SXContact.Services
 {
 	public interface IEmailService
 	{
-		Task SendDueDateReminder(string userEmail,string userName, Item item, int daysBeforeDue);
+		Task SendDueDateReminder(string userEmail,string userName, ReminderItem item, int daysBeforeDue);
 		Task SendCommentNotification(string userEmail, BuildsCommentsModel comment);
         Task SendOrderConfirmEmail(string email, OrderPlacement order);
 	}
@@ -232,7 +232,7 @@ namespace _200SXContact.Services
 			{
 			}
 		}
-		public async Task SendDueDateReminder(string userEmail, string userName, Item item, int daysBeforeDue)
+		public async Task SendDueDateReminder(string userEmail, string userName, ReminderItem item, int daysBeforeDue)
 		{
 			try
 			{

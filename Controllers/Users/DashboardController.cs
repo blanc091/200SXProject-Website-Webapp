@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Security.Claims;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Users
 {
 	public class DashboardController : Controller
 	{
@@ -43,7 +43,7 @@ namespace _200SXContact.Controllers
 			if (userWithItems == null || !userWithItems.Items.Any())
 			{
                 await _loggerService.LogAsync("MaintenApp || No items forund for the user in MaintenApp dash view", "Info", "");
-                return View("~/Views/Account/Dashboard.cshtml", new List<Item>()); 
+                return View("~/Views/Account/Dashboard.cshtml", new List<ReminderItem>()); 
 			}
 			var items = userWithItems.Items.ToList();
             await _loggerService.LogAsync("MaintenApp || Got MaintenApp dash view", "Info", "");
@@ -68,7 +68,7 @@ namespace _200SXContact.Controllers
                 return BadRequest("Invalid due date format");
 			}
 			TempData["IsUserLoggedIn"] = true;
-			var newItem = new Item
+			var newItem = new ReminderItem
 			{
 				EntryItem = entryTitle,
 				EntryDescription = entryDescription,
@@ -86,7 +86,7 @@ namespace _200SXContact.Controllers
 		}
 		[HttpPost]
 		[Route("update-entry")]
-		public JsonResult UpdateEntry([FromBody] Item updatedItem)
+		public JsonResult UpdateEntry([FromBody] ReminderItem updatedItem)
 		{
 			try
 			{

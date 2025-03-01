@@ -3,7 +3,7 @@ using _200SXContact.Services;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Climate;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Misc
 {
 	public class DetailedViewsController : Controller
 	{

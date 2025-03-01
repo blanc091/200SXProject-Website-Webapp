@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Web.WebPages;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Orders
 {
 	public class PendingOrdersController : Controller
 	{

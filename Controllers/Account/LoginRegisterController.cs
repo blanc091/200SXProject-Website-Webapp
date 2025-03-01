@@ -15,7 +15,7 @@ using System.Net;
 using Microsoft.Extensions.Options;
 using _200SXContact.Services;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Account
 {
 	public class LoginRegisterController : Controller
 	{
@@ -602,7 +602,7 @@ namespace _200SXContact.Controllers
 				Host = "mail5019.site4now.net",
 				Port = 587,
 				EnableSsl = true,
-				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
+				Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
 			})
 			{
 				using (var message = new MailMessage(fromAddress, toAddress)
@@ -714,7 +714,7 @@ namespace _200SXContact.Controllers
 				Host = "mail5019.site4now.net",
 				Port = 587,
 				EnableSsl = true,
-				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
+				Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
 			})
 			{
 				using (var message = new MailMessage(fromAddress, toAddress)

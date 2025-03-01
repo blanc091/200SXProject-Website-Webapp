@@ -12,7 +12,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Account
 {
 	public class AccountController : Controller
 	{
@@ -188,7 +188,7 @@ namespace _200SXContact.Controllers
 			var token = await _userManager.GenerateUserTokenAsync(userExists,
 								"Default", "DeleteAccountToken");
 			var resetUrl = Url.Action("DeleteAccount", "Account",
-								new { email = userEmail, token = token }, Request.Scheme);
+								new { email = userEmail, token }, Request.Scheme);
 			await SendUserDeleteEmail(userEmail, resetUrl);
 			TempData["Message"] = "Account deletion email sent.";
 			TempData["UserDeleteAccEmailSent"] = "yes";
@@ -292,7 +292,7 @@ namespace _200SXContact.Controllers
 				Host = "mail5019.site4now.net",
 				Port = 587,
 				EnableSsl = true,
-				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
+				Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
 			})
 			{
 				using (var message = new MailMessage(fromAddress, toAddress)

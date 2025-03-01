@@ -10,7 +10,7 @@ using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
 using _200SXContact.Services;
 
-namespace _200SXContact.Controllers
+namespace _200SXContact.Controllers.Admin
 {
 	public class NewsletterController : Controller
 	{
@@ -254,11 +254,11 @@ namespace _200SXContact.Controllers
 		private void SendEmailToSubscriber(string email, string subject, string body)
 		{
             _loggerService.LogAsync("Newsletter || Started sending newsletter email to subscriber admin", "Info", "");
-            body = body.Replace("{EMAIL}", System.Net.WebUtility.UrlEncode(email));
+            body = body.Replace("{EMAIL}", WebUtility.UrlEncode(email));
 			var smtpClient = new SmtpClient("mail5019.site4now.net")
 			{
 				Port = 587,
-				Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password),
+				Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password),
 				EnableSsl = true,
 			};
 			var mailMessage = new MailMessage
