@@ -1,6 +1,6 @@
 ﻿namespace _200SXContact.Models
 {
-	public class LoggingModel
+	public class Logging
 	{
 		public int Id { get; set; }
 		public DateTime Timestamp { get; set; }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Services;
 
-public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, List<CartItemModel>?>
+public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, List<CartItem>?>
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, List<
         _mapper = mapper;
         _loggerService = loggerService;
     }
-    public async Task<List<CartItemModel>?> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
+    public async Task<List<CartItem>?> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
     {
         await _loggerService.LogAsync("Cart || Getting cart items admin", "Info", "");
 
@@ -30,10 +30,10 @@ public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, List<
             return null;
         }
 
-        List<CartItemModel> cartItems = _mapper.Map<List<CartItemModel>>(JsonSerializer.Deserialize<List<CartItemModel>>(order));
+        List<CartItem> cartItems = _mapper.Map<List<CartItem>>(JsonSerializer.Deserialize<List<CartItem>>(order));
 
         await _loggerService.LogAsync("Cart || Got cart items admin", "Info", "");
 
-        return cartItems ?? new List<CartItemModel>();
+        return cartItems ?? new List<CartItem>();
     }
 }

@@ -16,6 +16,6 @@ namespace _200SXContact.Interfaces.Areas.Orders
         DateTime OrderDate { get; set; }
         string? UserId { get; set; }
         string CartItemsJson { get; set; }
-        List<CartItemModel> CartItems { get; set; }
+        List<CartItem> CartItems { get; set; }
     }
 }

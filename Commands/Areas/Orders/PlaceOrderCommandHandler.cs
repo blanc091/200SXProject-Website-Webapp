@@ -61,7 +61,7 @@ namespace _200SXContact.Commands.Areas.Orders
 
             await _loggerService.LogAsync("Orders || Fetching cart items from DB", "Info", "");
 
-            List<CartItemModel> cartItems = await _context.CartItems.Where(ci => ci.UserId == user.Id && ci.OrderId == null).ToListAsync(cancellationToken);
+            List<CartItem> cartItems = await _context.CartItems.Where(ci => ci.UserId == user.Id && ci.OrderId == null).ToListAsync(cancellationToken);
 
             if (!cartItems.Any())
             {
@@ -86,7 +86,7 @@ namespace _200SXContact.Commands.Areas.Orders
 
                     await _loggerService.LogAsync("Orders || Order saved successfully", "Info", "");
 
-                    foreach (CartItemModel? cartItem in cartItems)
+                    foreach (CartItem? cartItem in cartItems)
                     {
                         cartItem.OrderId = orderEntity.Id;
                         _context.Entry(cartItem).State = EntityState.Modified;
@@ -130,11 +130,11 @@ namespace _200SXContact.Commands.Areas.Orders
 
                     return orderEntity.Id;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     await transaction.RollbackAsync(cancellationToken);
 
-                    await _loggerService.LogAsync("Orders || Rolling back transaction", "Error", "");
+                    await _loggerService.LogAsync($"Orders || Rolling back transaction due to exception: {ex.Message}", "Error", "");
 
                     throw;
                 }

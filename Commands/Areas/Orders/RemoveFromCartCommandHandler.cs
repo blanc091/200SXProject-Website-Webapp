@@ -19,7 +19,7 @@ namespace _200SXContact.Commands.Areas.Orders
         {
             await _loggerService.LogAsync("Cart || Removing cart item", "Info", "");
 
-            CartItemModel? cartItem = await _context.CartItems.FirstOrDefaultAsync(ci => ci.ProductId == request.ProductId && ci.UserId == request.UserId, cancellationToken);
+            CartItem? cartItem = await _context.CartItems.FirstOrDefaultAsync(ci => ci.ProductId == request.ProductId && ci.UserId == request.UserId, cancellationToken);
 
             if (cartItem == null)
             {

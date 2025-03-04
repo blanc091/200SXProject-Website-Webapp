@@ -152,7 +152,7 @@
 										<tbody>
 											@if (!string.IsNullOrEmpty(orderPlacement?.CartItemsJson))
 											{
-												var cartItems = System.Text.Json.JsonSerializer.Deserialize<List<CartItemModel>>(orderPlacement.CartItemsJson);
+												var cartItems = System.Text.Json.JsonSerializer.Deserialize<List<CartItem>>(orderPlacement.CartItemsJson);
 												@foreach (var item in cartItems)
 												{
 													<tr>
@@ -167,7 +167,7 @@
 									<p>
 										<strong>Total:</strong> @(
 											!string.IsNullOrEmpty(orderPlacement?.CartItemsJson)
-											? System.Text.Json.JsonSerializer.Deserialize<List<CartItemModel>>(orderPlacement.CartItemsJson)?.Sum(i => i.Price * i.Quantity).ToString("C")
+											? System.Text.Json.JsonSerializer.Deserialize<List<CartItem>>(orderPlacement.CartItemsJson)?.Sum(i => i.Price * i.Quantity).ToString("C")
 											: "N/A"
 											)
 									</p>

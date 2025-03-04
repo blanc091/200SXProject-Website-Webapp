@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Data;
+using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace _200SXContact.Commands.Areas.Newsletter
                 throw new ArgumentException("Email is required.");
             }
 
-            Models.NewsletterSubscription? subscription = await _context.NewsletterSubscriptions.FirstOrDefaultAsync(sub => sub.Email == request.Email, cancellationToken);
+            NewsletterSubscription? subscription = await _context.NewsletterSubscriptions.FirstOrDefaultAsync(sub => sub.Email == request.Email, cancellationToken);
 
             if (subscription == null || !subscription.IsSubscribed)
             {

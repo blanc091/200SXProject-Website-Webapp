@@ -21,7 +21,7 @@ namespace _200SXContact.Services
         {
             using (var context = new ApplicationDbContext(_options))
             {
-                var logEntry = new LoggingModel
+                var logEntry = new Logging
                 {
                     Message = message,
                     Timestamp = DateTime.UtcNow,

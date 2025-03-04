@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using Microsoft.Extensions.Options;
 using _200SXContact.Services;
+using _200SXContact.Models.Areas.Newsletter;
 
 namespace _200SXContact.Controllers.Account
 {

@@ -35,7 +35,7 @@ namespace _200SXContact.Models.Areas.Orders
         public string? UserId { get; set; }
         public User? User { get; set; }
         public required string CartItemsJson { get; set; }
-        public required List<CartItemModel> CartItems { get; set; } = new();
+        public required List<CartItem> CartItems { get; set; } = new();
         public virtual OrderTracking? OrderTracking { get; set; }
     }
 }

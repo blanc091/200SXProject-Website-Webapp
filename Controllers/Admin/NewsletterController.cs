@@ -1,31 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Data;
-using _200SXContact.Models;
-using System.Net;
-using _200SXContact.Models.Configs;
-using Microsoft.Extensions.Options;
 using _200SXContact.Services;
 using _200SXContact.Queries.Areas.Newsletter;
 using MediatR;
 using _200SXContact.Commands.Areas.Newsletter;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using _200SXContact.Models.Areas.Newsletter;
+using _200SXContact.Models.DTOs.Areas.Newsletter;
 
 namespace _200SXContact.Controllers.Admin
 {
 	public class NewsletterController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly NetworkCredential _credentials;
-		private readonly IConfiguration _configuration;
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-		public NewsletterController(ApplicationDbContext context, IOptions<AppSettings> appSettings, IConfiguration configuration, ILoggerService loggerService, IMediator mediator)
+		public NewsletterController(ILoggerService loggerService, IMediator mediator)
 		{
-			_context = context;
-			var emailSettings = appSettings.Value.EmailSettings;
-			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
-			_configuration = configuration;
             _loggerService = loggerService;
 			_mediator = mediator;
         }
@@ -34,7 +23,7 @@ namespace _200SXContact.Controllers.Admin
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> CreateNewsletter()
 		{
-            NewsletterViewModel? model = await _mediator.Send(new GetCreateNewsletterViewQuery());
+            NewsletterDto? model = await _mediator.Send(new GetCreateNewsletterViewQuery());
             if (model is null)
 			{
                 await _loggerService.LogAsync("Newsletter || Could not get admin newsletter view", "Error", "");

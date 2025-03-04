@@ -1,6 +1,6 @@
 ﻿namespace _200SXContact.Models
 {
-	public class BuildsCommentsModel
+	public class BuildsComments
 	{
 		public int Id { get; set; }
 		public string Content { get; set; }

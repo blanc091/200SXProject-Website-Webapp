@@ -232,7 +232,7 @@ namespace _200SXContact.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.LoggingModel", b =>
+            modelBuilder.Entity("_200SXContact.Models.Logging", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

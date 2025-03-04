@@ -12,14 +12,12 @@ namespace _200SXContact.Commands.Areas.Newsletter
     public class SendNewsletterCommandHandler : IRequestHandler<SendNewsletterCommand, Unit>
     {
         private readonly ApplicationDbContext _context;
-        private readonly IEmailService _emailService;
         private readonly ILoggerService _loggerService;
         private readonly NetworkCredential _credentials;
 
-        public SendNewsletterCommandHandler(ApplicationDbContext context, IEmailService emailService, ILoggerService loggerService, IOptions<AppSettings> appSettings)
+        public SendNewsletterCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IOptions<AppSettings> appSettings)
         {
             _context = context;
-            _emailService = emailService;
             _loggerService = loggerService;
             EmailSettings emailSettings = appSettings.Value.EmailSettings;
             _credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);

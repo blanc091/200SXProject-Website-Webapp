@@ -1,6 +1,7 @@
 ﻿using _200SXContact.Data;
-using _200SXContact.Models;
+using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Services;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,14 @@ namespace _200SXContact.Commands.Areas.Newsletter
         private readonly ILoggerService _loggerService;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
-        public SubscribeToNewsletterCommandHandler(
-            ApplicationDbContext context,
-            ILoggerService loggerService,
-            IEmailService emailService,
-            IConfiguration configuration)
+        private readonly IMapper _mapper;
+        public SubscribeToNewsletterCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IEmailService emailService, IConfiguration configuration, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;
             _emailService = emailService;
             _configuration = configuration;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Handle(SubscribeToNewsletterCommand request, CancellationToken cancellationToken)
         {
@@ -68,13 +67,8 @@ namespace _200SXContact.Commands.Areas.Newsletter
                 return new RedirectToActionResult("Index", "Home", new { IsNewsletterError = "yes", Message = "Email already registered !" });
             }
 
-            NewsletterSubscription subscription = new NewsletterSubscription
-            {
-                Email = request.Email,
-                IsSubscribed = true,
-                SubscribedAt = DateTime.Now
-            };
-            await _context.NewsletterSubscriptions.AddAsync(subscription, cancellationToken);
+            NewsletterSubscription newsletter = _mapper.Map<NewsletterSubscription>(request);
+            await _context.NewsletterSubscriptions.AddAsync(newsletter, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
             await _loggerService.LogAsync("Finished adding newsletter subscription in the DB", "Info", "");

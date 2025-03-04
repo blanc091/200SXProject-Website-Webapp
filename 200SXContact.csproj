@@ -350,8 +350,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Areas\Newsletter\" />
-    <Folder Include="Models\DTOs\Areas\Newsletter\" />
     <Folder Include="wwwroot\images\uploads\" />
     <Folder Include="wwwroot\js\Areas\Account\AdminDash\" />
     <Folder Include="wwwroot\js\Areas\Account\Dashboard\" />

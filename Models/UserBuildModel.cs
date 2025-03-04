@@ -11,6 +11,6 @@
 		public string? UserName { get; set; }
 		public string? UserId { get; set; } 
 		public virtual User? User { get; set; }
-		public virtual ICollection<BuildsCommentsModel> Comments { get; set; } = new List<BuildsCommentsModel>();
+		public virtual ICollection<BuildsComments> Comments { get; set; } = new List<BuildsComments>();
 	}
 }

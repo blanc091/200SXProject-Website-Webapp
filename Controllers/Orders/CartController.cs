@@ -139,7 +139,7 @@ namespace _200SXContact.Controllers.Orders
                 return NotFound();
             }
 
-            List<Models.Areas.Orders.CartItemModel> cartItems = await _context.CartItems.Where(ci => ci.UserId == user.Id).ToListAsync();
+            List<Models.Areas.Orders.CartItem> cartItems = await _context.CartItems.Where(ci => ci.UserId == user.Id).ToListAsync();
 
             List<CartItemDto> cartItemDtos = _mapper.Map<List<CartItemDto>>(cartItems);
 

@@ -14,7 +14,7 @@ namespace _200SXContact.Services
 	public interface IEmailService
 	{
 		Task SendDueDateReminder(string userEmail,string userName, ReminderItem item, int daysBeforeDue);
-		Task SendCommentNotification(string userEmail, BuildsCommentsModel comment);
+		Task SendCommentNotification(string userEmail, BuildsComments comment);
         Task SendOrderConfirmEmail(string email, OrderPlacement order);
 	}
 	public class EmailService : IEmailService
@@ -72,7 +72,7 @@ namespace _200SXContact.Services
 			sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Order Details:</p></h2>");
 			sb.AppendLine("        <table style='width:100%; border-collapse: collapse;'>");
 			sb.AppendLine("            <tr><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Item</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Quantity</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Price</p></th></tr>");
-            List<CartItemModel> cartItems = JsonSerializer.Deserialize<List<CartItemModel>>(order.CartItemsJson) ?? new List<CartItemModel>();
+            List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson) ?? new List<CartItem>();
             foreach (var item in cartItems)
 			{
 				sb.AppendLine($"<tr><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.ProductName}<p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Quantity}</p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Price.ToString("F2")}</p></td></tr>");
@@ -110,7 +110,7 @@ namespace _200SXContact.Services
 				}
 			}
 		}
-		public async Task SendCommentNotification(string userEmail, BuildsCommentsModel comment)
+		public async Task SendCommentNotification(string userEmail, BuildsComments comment)
 		{
             await _loggerService.LogAsync($"Comments || Started sending comment notification for {comment.UserBuildId}", "Info", "");
             var baseUrl = _configuration["AppSettings:BaseUrl"];

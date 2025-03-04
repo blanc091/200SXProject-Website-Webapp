@@ -35,11 +35,11 @@ namespace _200SXContact.Commands.Areas.Orders
 
             await _loggerService.LogAsync("Cart || Getting cart items from DB", "Info", "");
 
-            CartItemModel? userCartItem = await _context.CartItems.FirstOrDefaultAsync(ci => ci.ProductId == request.ProductId && ci.UserId == request.UserId);
+            CartItem? userCartItem = await _context.CartItems.FirstOrDefaultAsync(ci => ci.ProductId == request.ProductId && ci.UserId == request.UserId);
 
             if (userCartItem != null)
             {
-                await _loggerService.LogAsync("Cart || No cart items found in DB for user " + request.UserId, "Error", "");
+                await _loggerService.LogAsync("Cart || Updated cart item for user " + request.UserId, "Info", "");
 
                 userCartItem.Quantity += request.Quantity;
             }
@@ -48,7 +48,7 @@ namespace _200SXContact.Commands.Areas.Orders
                 await _loggerService.LogAsync("Cart || Got cart items from DB", "Info", "");
 
                 string primaryImagePath = product.ImagePaths?.FirstOrDefault() ?? "/images/default-placeholder.png";
-                CartItemModel newCartItem = new CartItemModel
+                CartItem newCartItem = new CartItem
                 {
                     ProductId = product.Id,
                     ProductName = product.Name,

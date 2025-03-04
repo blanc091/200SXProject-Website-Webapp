@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Models;
+using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.Products;
 using Microsoft.AspNetCore.Identity;
@@ -15,13 +16,13 @@ namespace _200SXContact.Data
 		}
 		public DbSet<EmailLog> EmailLogs { get; set; }
 		//public new DbSet<User> Users { get; set; }
-		public DbSet<LoggingModel> Logging { get; set; }
+		public DbSet<Logging> Logging { get; set; }
 		public DbSet<ReminderItem> Items { get; set; }
 		public DbSet<UserBuild> UserBuilds { get; set; }
 		public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; }
-		public DbSet<BuildsCommentsModel> BuildComments { get; set; }
+		public DbSet<BuildsComments> BuildComments { get; set; }
 		public DbSet<Product> Products { get; set; }
-		public DbSet<CartItemModel> CartItems { get; set; }
+		public DbSet<CartItem> CartItems { get; set; }
 		public DbSet<OrderPlacement> Orders { get; set; }
 		public DbSet<OrderTracking> OrderTrackings { get; set; }
 

@@ -155,7 +155,7 @@ namespace _200SXContact.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.Areas.Orders.CartItemModel", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.Orders.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -334,7 +334,7 @@ namespace _200SXContact.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.BuildsCommentsModel", b =>
+            modelBuilder.Entity("_200SXContact.Models.BuildsComments", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -442,7 +442,7 @@ namespace _200SXContact.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.LoggingModel", b =>
+            modelBuilder.Entity("_200SXContact.Models.Logging", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -662,7 +662,7 @@ namespace _200SXContact.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.Areas.Orders.CartItemModel", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.Orders.CartItem", b =>
                 {
                     b.HasOne("_200SXContact.Models.Areas.Orders.OrderPlacement", "OrderPlacement")
                         .WithMany("CartItems")
@@ -691,7 +691,7 @@ namespace _200SXContact.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.BuildsCommentsModel", b =>
+            modelBuilder.Entity("_200SXContact.Models.BuildsComments", b =>
                 {
                     b.HasOne("_200SXContact.Models.UserBuild", "UserBuild")
                         .WithMany("Comments")

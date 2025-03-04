@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _200SXContact.Models.Areas.Orders
 {
-    public class CartItemModel : ICartItem
+    public class CartItem : ICartItem
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

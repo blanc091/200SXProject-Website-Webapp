@@ -22,7 +22,7 @@ namespace _200SXContact.Queries.Areas.Orders
         {
             await _loggerService.LogAsync("Checkout || Starting to get cart items for view in query", "Info", "");
 
-            List<Models.Areas.Orders.CartItemModel>? cartItems = await _context.CartItems.Where(ci => ci.UserId == request.UserId).ToListAsync(cancellationToken);
+            List<Models.Areas.Orders.CartItem>? cartItems = await _context.CartItems.Where(ci => ci.UserId == request.UserId).ToListAsync(cancellationToken);
             
             if (cartItems is null)
             {

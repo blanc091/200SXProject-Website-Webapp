@@ -37,15 +37,15 @@ public class OrdersMappingProfile : Profile
             .ForMember(dest => dest.CartItemsJson, opt => opt.MapFrom(src => src.CartItemsJson));
 
         CreateMap<OrderPlacement, OrderTrackingDto>()
-             .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.Id))
-             .ForMember(dest => dest.AddressLine, opt => opt.MapFrom<AddressResolver>())
-             .ForMember(dest => dest.Status, opt => opt.Ignore())
-             .ForMember(dest => dest.StatusUpdatedAt, opt => opt.MapFrom(src => src.OrderDate))
-             .ForMember(dest => dest.Carrier, opt => opt.MapFrom(src => src.OrderTracking != null ? src.OrderTracking.Carrier : null))
-             .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.OrderTracking != null ? src.OrderTracking.TrackingNumber : null))
-             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-             .ForMember(dest => dest.OrderNotes, opt => opt.MapFrom(src => src.OrderNotes))
-             .ForMember(dest => dest.CartItemsJson, opt => opt.MapFrom(src => src.CartItemsJson));
+            .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.AddressLine, opt => opt.MapFrom<AddressResolver>())
+            .ForMember(dest => dest.Status, opt => opt.Ignore())
+            .ForMember(dest => dest.StatusUpdatedAt, opt => opt.MapFrom(src => src.OrderDate))
+            .ForMember(dest => dest.Carrier, opt => opt.MapFrom(src => src.OrderTracking != null ? src.OrderTracking.Carrier : null))
+            .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.OrderTracking != null ? src.OrderTracking.TrackingNumber : null))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.OrderNotes, opt => opt.MapFrom(src => src.OrderNotes))
+            .ForMember(dest => dest.CartItemsJson, opt => opt.MapFrom(src => src.CartItemsJson));
 
         CreateMap<OrderTrackingDto, OrderPlacement>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.OrderId))
@@ -120,7 +120,7 @@ public class OrdersMappingProfile : Profile
             .ForMember(dest => dest.OrderPlacements, opt => opt.MapFrom(src => src.OrderPlacements))
             .ForMember(dest => dest.OrderTrackings, opt => opt.MapFrom(src => src.OrderTrackings));
 
-        CreateMap<CartItemModel, CartItemDto>()
+        CreateMap<CartItem, CartItemDto>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
@@ -129,7 +129,7 @@ public class OrdersMappingProfile : Profile
             .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
-        CreateMap<CartItemDto, CartItemModel>()
+        CreateMap<CartItemDto, CartItem>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))

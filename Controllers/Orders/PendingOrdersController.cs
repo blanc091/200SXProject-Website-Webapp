@@ -81,7 +81,7 @@ namespace _200SXContact.Controllers.Orders
         {
             try
             {
-                List<Models.Areas.Orders.CartItemModel>? cartItems = await _mediator.Send(new GetCartItemsQuery(orderId));
+                List<Models.Areas.Orders.CartItem>? cartItems = await _mediator.Send(new GetCartItemsQuery(orderId));
 
                 if (cartItems != null && cartItems.Count == 0)
                 {

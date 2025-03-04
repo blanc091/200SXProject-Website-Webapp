@@ -1,23 +1,27 @@
-﻿using _200SXContact.Models;
+﻿using _200SXContact.Models.Areas.Newsletter;
+using _200SXContact.Models.DTOs.Areas.Newsletter;
 using _200SXContact.Services;
+using AutoMapper;
 using MediatR;
 
 namespace _200SXContact.Queries.Areas.Newsletter
 {
-    public class GetCreateNewsletterViewQueryHandler : IRequestHandler<GetCreateNewsletterViewQuery, NewsletterViewModel>
+    public class GetCreateNewsletterViewQueryHandler : IRequestHandler<GetCreateNewsletterViewQuery, NewsletterDto>
     {
         private readonly ILoggerService _loggerService;
-
-        public GetCreateNewsletterViewQueryHandler(ILoggerService loggerService)
+        private readonly IMapper _mapper;
+        public GetCreateNewsletterViewQueryHandler(ILoggerService loggerService, IMapper mapper)
         {
             _loggerService = loggerService;
+            _mapper = mapper;
         }
-        public Task<NewsletterViewModel> Handle(GetCreateNewsletterViewQuery request, CancellationToken cancellationToken)
+        public Task<NewsletterDto> Handle(GetCreateNewsletterViewQuery request, CancellationToken cancellationToken)
         {
             _loggerService.LogAsync("Newsletter || Getting create newsletter admin page", "Info", "");
 
-            var model = new NewsletterViewModel
+            var model = new NewsletterDto
             {
+                Subject = "Insert Subject Here",
                 Body = @"<!DOCTYPE html>
                 <html lang='en'>
                 <head>
@@ -101,9 +105,11 @@ namespace _200SXContact.Queries.Areas.Newsletter
                 </html>"
             };
 
+            NewsletterDto dto = _mapper.Map<NewsletterDto>(model);
+
             _loggerService.LogAsync("Newsletter || Got create newsletter admin page", "Info", "");
 
-            return Task.FromResult(model);
+            return Task.FromResult(dto);
         }
     }
 }
