@@ -14,30 +14,15 @@ namespace _200SXContact.Commands.Areas.Products
 		private readonly ILoggerService _loggerService;
 		private readonly IWebHostEnvironment _environment;
 		private readonly IMapper _mapper;
-        private readonly IValidator<AddProductCommand> _validator;
-        public AddProductCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper, IValidator<AddProductCommand> validator)
+        public AddProductCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
 		{
 			_context = context;
 			_loggerService = loggerService;
 			_environment = environment;
 			_mapper = mapper;
-            _validator = validator;
         }
         public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
-            await _loggerService.LogAsync("Products || Validating added product admin", "Info", "");
-
-            FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-            await _loggerService.LogAsync("Products || Validated added product admin", "Info", "");
-
-            if (!validationResult.IsValid)
-            {
-                await _loggerService.LogAsync("Products || Error in validating added product admin", "Error", "");
-
-                throw new ValidationException(validationResult.Errors);
-            }
-
             await _loggerService.LogAsync("Products || Adding new product admin", "Info", "");
 
             ProductDto productDto = request.Product;

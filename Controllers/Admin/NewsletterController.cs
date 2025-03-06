@@ -6,6 +6,12 @@ using MediatR;
 using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
+using Microsoft.EntityFrameworkCore;
+using _200SXContact.Data;
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace _200SXContact.Controllers.Admin
 {
@@ -13,12 +19,16 @@ namespace _200SXContact.Controllers.Admin
 	{
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-		public NewsletterController(ILoggerService loggerService, IMediator mediator)
-		{
+        private readonly IConfiguration _configuration;
+        private readonly ApplicationDbContext _context;
+        public NewsletterController(ApplicationDbContext context, IConfiguration configuration, ILoggerService loggerService, IMediator mediator)
+        {
+            _context = context;
+            _configuration = configuration;
             _loggerService = loggerService;
-			_mediator = mediator;
+            _mediator = mediator;
         }
-		[HttpGet]
+        [HttpGet]
 		[Route("newsletter/create-newsletter-admin")]
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> CreateNewsletter()
@@ -33,27 +43,67 @@ namespace _200SXContact.Controllers.Admin
 
             return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}
+        
 		[HttpPost]
-		[Route("newsletter/subscribe")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Subscribe(string email, string honeypotSpam, string gRecaptchaResponseNewsletter)
-		{
-            IActionResult result = await _mediator.Send(new SubscribeToNewsletterCommand { Email = email, HoneypotSpam = honeypotSpam, RecaptchaResponse = gRecaptchaResponseNewsletter });
+        [Route("newsletter/subscribe")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Subscribe(string email, string honeypotSpam, string gRecaptchaResponseNewsletter)
+        {
+            IActionResult? result = await _mediator.Send(new SubscribeToNewsletterCommand
+            {
+                Email = email,
+                HoneypotSpam = honeypotSpam,
+                RecaptchaResponse = gRecaptchaResponseNewsletter
+            });
 
-			if (result is null)
-			{
+            if (result is RedirectToActionResult redirectResult)
+            {
+                if (redirectResult.RouteValues != null)
+                {
+                    if (redirectResult.RouteValues.TryGetValue("Message", out var message))
+                    {
+                        TempData["Message"] = message;                        
+                    }
+
+                    if (redirectResult.RouteValues.TryGetValue("IsNewsletterSubscribed", out var isSubscribed))
+                    {
+                        TempData["IsNewsletterSubscribed"] = isSubscribed;
+                    }
+
+                    if (redirectResult.RouteValues.TryGetValue("IsNewsletterError", out var isError))
+                    {
+                        TempData["IsNewsletterError"] = isError;
+                    }
+                }
+
+                return View("~/Views/Home/Index.cshtml");
+            }
+
+            if (result is BadRequestObjectResult badRequestResult)
+            {
+                await _loggerService.LogAsync("Could not subscribe to the newsletter " + badRequestResult.Value?.ToString(), "Error", "");
+
+                TempData["Message"] = badRequestResult.Value?.ToString();
+                TempData["IsNewsletterSubscribed"] = "no";
+                TempData["IsNewsletterError"] = "yes";
+
+                return View("~/Views/Home/Index.cshtml");
+            }
+
+            if (result is null)
+            {
                 await _loggerService.LogAsync("Could not subscribe to the newsletter", "Error", "");
 
                 TempData["IsNewsletterSubscribed"] = "no";
                 TempData["IsNewsletterError"] = "yes";
                 TempData["Message"] = "Failed to subscribe to newsletter !";
 
-				return BadRequest("Could not subscribe to newsletter.");
+                return BadRequest("Could not subscribe to newsletter.");
             }
 
             return View("~/Views/Home/Index.cshtml");
         }
-		[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Unsubscribe(string email)
         {
             if (string.IsNullOrEmpty(email))

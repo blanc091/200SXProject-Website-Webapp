@@ -192,7 +192,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("OrderPlacementId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.OrderPlacement", b =>
@@ -247,7 +247,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.OrderTracking", b =>
@@ -296,7 +296,7 @@ namespace _200SXContact.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("OrderTrackings");
+                    b.ToTable("OrderTrackings", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Products.Product", b =>
@@ -331,7 +331,7 @@ namespace _200SXContact.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.BuildsComments", b =>
@@ -365,7 +365,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserBuildId");
 
-                    b.ToTable("BuildComments");
+                    b.ToTable("BuildComments", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.EmailLog", b =>
@@ -400,7 +400,7 @@ namespace _200SXContact.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailLogs");
+                    b.ToTable("EmailLogs", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Item", b =>
@@ -439,7 +439,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Logging", b =>
@@ -467,7 +467,7 @@ namespace _200SXContact.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logging");
+                    b.ToTable("Logging", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.NewsletterSubscription", b =>
@@ -490,7 +490,7 @@ namespace _200SXContact.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NewsletterSubscriptions");
+                    b.ToTable("NewsletterSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("_200SXContact.Models.User", b =>
@@ -608,7 +608,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBuilds");
+                    b.ToTable("UserBuilds", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

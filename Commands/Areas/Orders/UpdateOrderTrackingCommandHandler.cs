@@ -1,7 +1,5 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Services;
-using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using _200SXContact.Models.Areas.Orders;
@@ -13,30 +11,17 @@ namespace _200SXContact.Commands.Areas.Orders
     public class UpdateOrderTrackingCommandHandler : IRequestHandler<UpdateOrderTrackingCommand, bool>
     {
         private readonly ApplicationDbContext _context;
-        private readonly IValidator<UpdateOrderTrackingCommand> _validator;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public UpdateOrderTrackingCommandHandler(ApplicationDbContext context, IValidator<UpdateOrderTrackingCommand> validator, ILoggerService loggerService, IMapper mapper)
+        public UpdateOrderTrackingCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
-            _validator = validator;
             _loggerService = loggerService;
             _mapper = mapper;
         }
         public async Task<bool> Handle(UpdateOrderTrackingCommand request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Orders || Updating order tracking admin","Info","");
-
-            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                await _loggerService.LogAsync("Orders || Error updating order tracking admin", "Error", "");
-
-                throw new ValidationException(validationResult.Errors);
-            }
-
-            await _loggerService.LogAsync("Orders || Matching Dto to model in order tracking", "Info", "");
 
             OrderTrackingUpdateDto updateDto = request.UpdateDto;
 

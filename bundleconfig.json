@@ -8,6 +8,7 @@
       "wwwroot/js/cookies.js",
       "wwwroot/js/floatLoginBtn.js",
       "wwwroot/js/getClientTime.js"
+      //"wwwroot/js/newsletterValidator.js"
     ],
     "minify": {
       "enabled": true,

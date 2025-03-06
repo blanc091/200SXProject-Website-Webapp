@@ -4,8 +4,6 @@ using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Configs;
 using _200SXContact.Services;
 using AutoMapper;
-using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +20,7 @@ namespace _200SXContact.Commands.Areas.Orders
         private readonly AdminSettings _adminSettings;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        private readonly IValidator<PlaceOrderCommand> _validator;
-        public PlaceOrderCommandHandler(ApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper, IValidator<PlaceOrderCommand> validator)
+        public PlaceOrderCommandHandler(ApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
@@ -31,21 +28,9 @@ namespace _200SXContact.Commands.Areas.Orders
             _adminSettings = adminSettings.Value;
             _loggerService = loggerService;
             _mapper = mapper;
-            _validator = validator;
         }
         public async Task<int> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
         {
-            await _loggerService.LogAsync("Orders || Starting fields validation", "Info", "");
-
-            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                await _loggerService.LogAsync("Orders || Validation error", "Error", "");
-
-                throw new ValidationException(validationResult.Errors);
-            }
-
             await _loggerService.LogAsync("Orders || Finished validation, getting user", "Info", "");
 
             User? user = await _userManager.GetUserAsync(request.User);

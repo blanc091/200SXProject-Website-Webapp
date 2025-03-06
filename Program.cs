@@ -13,15 +13,11 @@ using Microsoft.Extensions.Options;
 using Stripe;
 using _200SXContact.Interfaces;
 using _200SXContact.Queries.Areas.Products;
-using _200SXContact.Validators.Areas.Products;
 using MediatR;
 using FluentValidation;
 using _200SXContact.Commands.Areas.Products;
-using Microsoft.Extensions.DependencyInjection;
 using _200SXContact.Queries.Areas.Orders;
 using _200SXContact.Commands.Areas.Orders;
-using _200SXContact.Validators.Areas.Orders;
-using _200SXContact.Helpers.Areas.Orders;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
 	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -83,10 +79,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
-builder.Services.AddValidatorsFromAssemblyContaining<AddProductCommandValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<PlaceOrderCommandValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<UpdateOrderTrackingCommandValidator>();
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowSpecificOrigins", builder =>

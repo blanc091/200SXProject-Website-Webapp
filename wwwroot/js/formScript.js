@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         unsubscribed == "yes" ||
         userDeleted == 'yes' ||
         itemAddedToCart == "yes" ||
+		isNewsletterError == "yes" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {
             $('#messageModal').fadeOut(1250);
