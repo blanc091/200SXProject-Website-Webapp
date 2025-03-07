@@ -1,4 +1,4 @@
-﻿using _200SXContact.Interfaces;
+﻿using _200SXContact.Interfaces.Areas.Dashboard;
 using _200SXContact.Services;
 using Microsoft.AspNetCore.Mvc;
 

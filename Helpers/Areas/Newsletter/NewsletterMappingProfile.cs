@@ -12,11 +12,8 @@ namespace _200SXContact.Helpers.Areas.Newsletter
         {
             CreateMap<NewsletterViewModel, NewsletterDto>()
                 .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
-                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body));
-
-            CreateMap<NewsletterDto, NewsletterViewModel>()
-                .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
-                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body));
+                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
+                .ReverseMap();
 
             CreateMap<NewsletterSubscription, NewsletterSubscriptionDto>()
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

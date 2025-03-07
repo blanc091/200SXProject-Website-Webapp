@@ -350,6 +350,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Queries\Areas\Admin\" />
     <Folder Include="wwwroot\images\uploads\" />
     <Folder Include="wwwroot\js\Areas\Account\AdminDash\" />
     <Folder Include="wwwroot\js\Areas\Account\Dashboard\" />

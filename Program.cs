@@ -11,47 +11,53 @@ using System.Globalization;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
 using Stripe;
-using _200SXContact.Interfaces;
 using _200SXContact.Queries.Areas.Products;
-using MediatR;
-using FluentValidation;
 using _200SXContact.Commands.Areas.Products;
 using _200SXContact.Queries.Areas.Orders;
 using _200SXContact.Commands.Areas.Orders;
+using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Dashboard;
+using _200SXContact.Commands.Areas.Newsletter;
+using _200SXContact.Commands.Areas.Admin;
+using _200SXContact.Queries.Areas.Newsletter;
+using System.Net;
+using Ganss.Xss;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
-	var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-	var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+    RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    UserManager<User> userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 	string[] roleNames = { "Admin", "User" };
-	foreach (var roleName in roleNames)
+	foreach (string roleName in roleNames)
 	{
 		if (!await roleManager.RoleExistsAsync(roleName))
 		{
 			await roleManager.CreateAsync(new IdentityRole(roleName));
 		}
 	}
-	var appSettings = serviceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
-	var adminEmail = appSettings.AdminSettings.Email;
-	var adminPassword = appSettings.AdminSettings.Password;
-	var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    AppSettings appSettings = serviceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
+    string adminEmail = appSettings.AdminSettings.Email;
+    string adminPassword = appSettings.AdminSettings.Password;
+    User? adminUser = await userManager.FindByEmailAsync(adminEmail);
+
 	if (adminUser == null)
 	{
-		var admin = new User
+        User admin = new User
 		{
 			UserName = "blanc0",
 			Email = adminEmail,
 			EmailConfirmed = true,
 			CreatedAt = DateTime.Now,
 			IsEmailVerified = true
-		};				
-		var createAdminUserResult = await userManager.CreateAsync(admin, adminPassword);
+		};
+        IdentityResult createAdminUserResult = await userManager.CreateAsync(admin, adminPassword);
+
 		if (createAdminUserResult.Succeeded)
 		{
 			await userManager.AddToRoleAsync(admin, "Admin");
 		}
 		else
 		{
-			foreach (var error in createAdminUserResult.Errors)
+			foreach (IdentityError error in createAdminUserResult.Errors)
 			{
 				Console.WriteLine($"Error creating user: {error.Description}");
 			}
@@ -65,11 +71,11 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 		}
 	}
 }
-var builder = WebApplication.CreateBuilder(args);
-var cultureInfo = new CultureInfo("en-US"); 
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+CultureInfo cultureInfo = new CultureInfo("en-US"); 
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-var stripeSettingsSection = builder.Configuration.GetSection("Stripe");
+IConfigurationSection stripeSettingsSection = builder.Configuration.GetSection("Stripe");
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
 	options.DefaultRequestCulture = new RequestCulture(cultureInfo);
@@ -111,15 +117,18 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Pl
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<UpdateOrderTrackingCommandHandler>());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddToCartCommandHandler>());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<RemoveFromCartCommandHandler>());
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetCreateNewsletterViewQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<SendNewsletterCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<SubscribeToNewsletterCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<UnsubscribeFromNewsletterCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<SendEmailCommandHandler>());
 builder.Services.AddSession(options =>
 {
 	options.IdleTimeout = TimeSpan.FromMinutes(30);
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
 builder.Services.AddSingleton<DueDateReminderService>();
@@ -128,6 +137,15 @@ builder.Services.AddHostedService(sp => sp.GetRequiredService<DueDateReminderSer
 builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
+builder.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
+builder.Services.AddSingleton<NetworkCredential>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var username = configuration["EmailCredentials:UserName"];
+    var password = configuration["EmailCredentials:Password"];
+    return new NetworkCredential(username, password);
+});
+
 StripeConfiguration.ApiKey = stripeSettingsSection["SecretKey"];
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
@@ -152,7 +170,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
 	microsoftOptions.CallbackPath = "/sign-in-microsoft";	
 });
-var app = builder.Build();
+WebApplication app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
@@ -168,18 +186,18 @@ app.UseCors(builder =>
 );
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
+ILogger<Program> logger = app.Services.GetRequiredService<ILogger<Program>>();
 app.Use(async (context, next) =>
-{	
-	var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+{
+    ILogger<Program> logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 	logger.LogInformation($"Incoming request path: {context.Request.Path}");
 	await next();
 });
 app.Use(async (context, next) =>
 {
-	var nonce = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+    string nonce = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 	context.Items["CSPNonce"] = nonce;
-	var cspPolicy = $"default-src 'self'; " +
+    string cspPolicy = $"default-src 'self'; " +
 					$"script-src 'self' 'nonce-{nonce}' " +
 					"https://www.googletagmanager.com " +
 					"https://pagead2.googlesyndication.com " +
@@ -254,9 +272,9 @@ app.MapPost("/logout", async context =>
 	await context.SignOutAsync(MicrosoftAccountDefaults.AuthenticationScheme);
 	context.Response.Redirect("/");
 });
-using (var scope = app.Services.CreateScope())
+using (IServiceScope scope = app.Services.CreateScope())
 {
-	var services = scope.ServiceProvider;
+    IServiceProvider services = scope.ServiceProvider;
 	await CreateRoles(services);
 }
 app.Run();

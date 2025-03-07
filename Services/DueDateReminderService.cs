@@ -1,14 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using _200SXContact.Data;
-using _200SXContact.Models;
-using NETCore.MailKit.Core;
-using _200SXContact.Interfaces;
+using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Dashboard;
 
 namespace _200SXContact.Services
 {

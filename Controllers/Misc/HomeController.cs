@@ -1,8 +1,8 @@
 using _200SXContact.Models;
+using _200SXContact.Models.DTOs.Areas.Admin;
 using _200SXContact.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.IO;
 
 namespace _200SXContact.Controllers.Misc
 {
@@ -23,9 +23,10 @@ namespace _200SXContact.Controllers.Misc
 		[HttpGet]
 		[Route("")]
 		[Route("home/index")]
-		public IActionResult Index(ContactForm model = null)
+		public IActionResult Index(ContactFormDto model = null)
 		{
 			_loggerService.LogAsync("Home || Getting index page", "Info", "");
+
 			return View(model);
 		}
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

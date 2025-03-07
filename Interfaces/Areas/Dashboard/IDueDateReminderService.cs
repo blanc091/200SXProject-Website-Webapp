@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace _200SXContact.Interfaces
+﻿namespace _200SXContact.Interfaces.Areas.Dashboard
 {
     public interface IDueDateReminderService
     {

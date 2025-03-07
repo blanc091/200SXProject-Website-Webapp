@@ -6,12 +6,7 @@ using MediatR;
 using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
-using Microsoft.EntityFrameworkCore;
 using _200SXContact.Data;
-using _200SXContact.Models.Configs;
-using Microsoft.Extensions.Options;
-using System.Net;
-using System.Text.RegularExpressions;
 
 namespace _200SXContact.Controllers.Admin
 {
@@ -42,8 +37,7 @@ namespace _200SXContact.Controllers.Admin
 			}
 
             return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
-		}
-        
+		}        
 		[HttpPost]
         [Route("newsletter/subscribe")]
         [ValidateAntiForgeryToken]
