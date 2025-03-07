@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using _200SXContact.Services;
 using AutoMapper;
 using _200SXContact.Models.Areas.Products;
 using _200SXContact.Models.DTOs.Areas.Products;
+using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Queries.Areas.Products
 {

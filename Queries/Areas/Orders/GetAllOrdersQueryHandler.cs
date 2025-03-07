@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
-using _200SXContact.Services;
+using _200SXContact.Interfaces.Areas.Admin;
 
 public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, List<OrderTrackingUpdateDto>>
 {

@@ -1,10 +1,10 @@
 ﻿using _200SXContact.Data;
-using _200SXContact.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using AutoMapper;
+using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Commands.Areas.Orders
 {

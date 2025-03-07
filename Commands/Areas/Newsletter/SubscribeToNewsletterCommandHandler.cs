@@ -1,7 +1,7 @@
 ﻿using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Data;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.Newsletter;
-using _200SXContact.Services;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

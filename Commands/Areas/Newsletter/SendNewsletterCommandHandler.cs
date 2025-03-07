@@ -1,11 +1,11 @@
 ﻿using _200SXContact.Data;
-using _200SXContact.Services;
 using MediatR;
 using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
+using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Commands.Areas.Newsletter
 {

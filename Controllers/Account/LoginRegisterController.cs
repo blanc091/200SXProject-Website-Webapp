@@ -13,8 +13,8 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Net;
 using Microsoft.Extensions.Options;
-using _200SXContact.Services;
 using _200SXContact.Models.Areas.Newsletter;
+using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Controllers.Account
 {

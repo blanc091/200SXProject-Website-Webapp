@@ -4,7 +4,7 @@ using AutoMapper;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using _200SXContact.Models.Areas.Orders;
-using _200SXContact.Services;
+using _200SXContact.Interfaces.Areas.Admin;
 
 public class GetCartItemsQueryHandler : IRequestHandler<GetCartItemsQuery, List<CartItem>?>
 {

@@ -1,12 +1,9 @@
 ﻿using _200SXContact.Commands.Areas.Products;
-using _200SXContact.Data;
-using _200SXContact.Models;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Products;
 using _200SXContact.Queries.Areas.Products;
-using _200SXContact.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _200SXContact.Controllers.Products

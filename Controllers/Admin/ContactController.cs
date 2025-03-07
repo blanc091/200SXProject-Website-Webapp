@@ -2,15 +2,14 @@
 using _200SXContact.Models;
 using System.Net.Mail;
 using _200SXContact.Data;
-using Ganss.Xss;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
 using System.Net;
-using _200SXContact.Services;
-using _200SXContact.Models.Areas.Admin;
 using MediatR;
 using _200SXContact.Commands.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Helpers.Areas.Admin;
 
 namespace _200SXContact.Controllers.Admin
 {
@@ -35,6 +34,8 @@ namespace _200SXContact.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendEmail(ContactFormDto model, string viewName, string honeypotSpamContact, string gRecaptchaResponseContact)
         {
+            await _loggerService.LogAsync("Contact form || Starting sending email to admin", "Info", "");
+
             SendEmailCommand command = new SendEmailCommand
             {
                 Model = model,
@@ -43,30 +44,15 @@ namespace _200SXContact.Controllers.Admin
                 GRecaptchaResponseContact = gRecaptchaResponseContact
             };
 
-            var result = await _mediator.Send(command);
-
+            ContactResult result = await _mediator.Send(command);
+            await _loggerService.LogEmailAsync(model, "Sent");
             TempData["IsFormSubmitted"] = true;
             TempData["IsFormSuccess"] = result.IsSuccess;
             TempData["Message"] = result.Message;
 
+            await _loggerService.LogAsync("Contact form || Email sent to admin", "Info", "");
+
             return View($"~/Views/{result.ViewName}.cshtml", result.Model);
-        }       
-        private async Task LogEmail(ContactForm model, string status, string errorMessage = null)
-        {
-            await _loggerService.LogAsync($"Contact form || Logging email with status: {status}", "Info", "");
-            var emailLog = new EmailLog
-            {
-                Timestamp = DateTime.Now,
-                From = model.Email,
-                To = _credentials.UserName,
-                Subject = $"New Contact Form Submission from {model.Name}",
-                Body = model.Message,
-                Status = status,
-                ErrorMessage = errorMessage
-            };
-            await _context.EmailLogs.AddAsync(emailLog);
-            await _context.SaveChangesAsync();
-            await _loggerService.LogAsync($"Contact form || Email logged with status: {status}", "Info", "");
-        }        	
+        }	
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using _200SXContact.Data;
-using _200SXContact.Services;
+using _200SXContact.Interfaces.Areas.Admin;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
