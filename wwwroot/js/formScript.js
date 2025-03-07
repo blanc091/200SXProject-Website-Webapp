@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var commentSubmitted = document.body.getAttribute('data-is-comment-posted');
     var unsubscribed = document.body.getAttribute('data-unsubscribed'); 
     var userDeleted = document.body.getAttribute('data-is-user-deleted');
+	var isContactError = document.body.getAttribute('data-is-contact-error');
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/detailed-user-build')) {
@@ -104,11 +105,15 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
 		case '/products/add-product-interface':
             scrollToElement("addProduct");
-            break;	
+            break;
+		case '/contact/send-email':
+            scrollToElement("ContactForm");
+            break;				
 			
     }
     if ((isUserLoggedIn && !formSubmitted) ||
         (formSubmitted && formSuccess) ||
+		isContactError == "yes" ||
         isFormRegisterSuccess == "yes" ||
         isEmailVerifiedLogin == "yes" ||
         isUserVerified == 'no' ||

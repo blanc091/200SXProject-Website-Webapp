@@ -6,7 +6,7 @@ namespace _200SXContact.Helpers.Areas.Admin
     {
         public bool IsSuccess { get; }
         public string ViewName { get; }
-        public ContactForm? Model { get; }
+        public ContactForm Model { get; set; }
         public string Message { get; }
         private ContactResult(bool isSuccess, string viewName, ContactForm? model, string message)
         {

@@ -26,7 +26,7 @@
 		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 		
 	</head>
-<body class="is-preload" data-unsubscribed="@TempData["Unsubscribed"]" data-is-form-submitted="@TempData["IsFormSubmitted"]" data-is-form-success="@TempData["IsFormSuccess"]" data-is-newsletter-subbed="@TempData["IsNewsletterSubscribed"]" data-is-newsletter-error="@TempData["IsNewsletterError"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-user-deleted="@TempData["UserDeletedAcc"]">
+<body class="is-preload" data-is-contact-error="@TempData["ContactError"]" data-unsubscribed="@TempData["Unsubscribed"]" data-is-form-submitted="@TempData["IsFormSubmitted"]" data-is-form-success="@TempData["IsFormSuccess"]" data-is-newsletter-subbed="@TempData["IsNewsletterSubscribed"]" data-is-newsletter-error="@TempData["IsNewsletterError"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-user-deleted="@TempData["UserDeletedAcc"]">
 	<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
 
@@ -109,10 +109,8 @@
 			</ul>
 		</nav>
 
-
 			<!-- Main -->
 			<div id="main">
-
 				<!-- Featured Post -->
 				<article class="post featured">
 					<header class="major">
@@ -807,7 +805,7 @@
 						<div class="field">
 							<input type="hidden" name="ViewName" value="home/index" />
 						</div>
-						<div class="field">
+						<div class="field" id="ContactForm">
 							<label for="name">Name</label>
 							<input type="text" name="name" id="name" value="@Model?.Name" placeholder="Enter your name" />
 							@if (ViewData["IsFormSubmitted"] != null && (bool)ViewData["IsFormSubmitted"] && ViewData.ModelState["Name"]?.Errors.Count > 0)

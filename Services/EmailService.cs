@@ -6,6 +6,8 @@ using _200SXContact.Models;
 using System.Text;
 using _200SXContact.Interfaces.Areas.Admin;
 using System.Text.Json;
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
 
 namespace _200SXContact.Services
 {
@@ -14,37 +16,40 @@ namespace _200SXContact.Services
         private readonly ILoggerService _loggerService;
         private readonly NetworkCredential _credentials;
         private readonly IConfiguration _configuration;
-        public EmailService(ILoggerService loggerService, NetworkCredential credentials, IConfiguration configuration)
+        public EmailService(ILoggerService loggerService, IOptions<AppSettings> appSettings, NetworkCredential credentials, IConfiguration configuration)
         {
             _loggerService = loggerService;
-            _credentials = credentials;
             _configuration = configuration;
+            EmailSettings emailSettings = appSettings.Value.EmailSettings;
+            _credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
         }
         public async Task SendEmailToAdmin(ContactForm model)
         {
             try
             {
                 await _loggerService.LogAsync("Contact form || Started sending contact email to admin", "Info", "");
-                var fromAddress = new MailAddress(_credentials.UserName, model.Email);
-                var toAddress = new MailAddress(_credentials.UserName, "Admin");
+
+                MailAddress fromAddress = new MailAddress(_credentials.UserName, model.Email);
+                MailAddress toAddress = new MailAddress(_credentials.UserName, "Admin");
                 string subject = $"New Contact Form Submission from {model.Name}";
                 string body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}";
 
-                using (var smtpClient = new SmtpClient
+                using (SmtpClient smtpClient = new SmtpClient
                 {
                     Host = "mail5019.site4now.net",
                     Port = 587,
                     EnableSsl = true,
-                    Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
+                    Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
                 })
                 {
-                    using (var message = new MailMessage(fromAddress, toAddress)
+                    using (MailMessage message = new MailMessage(fromAddress, toAddress)
                     {
                         Subject = subject,
                         Body = body
                     })
                     {
                         await _loggerService.LogAsync("Contact form || Email built, sending", "Info", "");
+
                         await smtpClient.SendMailAsync(message);
                     }
                 }
@@ -53,26 +58,29 @@ namespace _200SXContact.Services
             }
             catch (SmtpException ex)
             {
-                var errorMessage = $"SMTP Error: {ex.Message}\n" +
+                string errorMessage = $"SMTP Error: {ex.Message}\n" +
                                    $"StatusCode: {ex.StatusCode}\n" +
                                    $"InnerException: {ex.InnerException?.Message}";
+
                 await _loggerService.LogAsync("Contact form || Failed to send email to the admin. Please try again later" + ex.Message, "Error", "");
+
                 throw new Exception("Failed to send email to the admin. Please try again later", ex);
             }
             catch (Exception ex)
             {
                 await _loggerService.LogAsync("Contact form || An unexpected error occurred while sending the email" + ex.Message, "Error", "");
+
                 throw new Exception("An unexpected error occurred while sending the email", ex);
             }
         }
         public async Task SendOrderConfirmEmail(string email, OrderPlacement order)
         {
             await _loggerService.LogAsync("Orders || Started sending email with order confirmation", "Info", "");
-            var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
-            var toAddress = new MailAddress(email);
-            string subject = "Import Garage || Your Order";
 
-            var sb = new StringBuilder();
+            MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+            MailAddress toAddress = new MailAddress(email);
+            string subject = "Import Garage || Your Order";
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("<!DOCTYPE html>");
             sb.AppendLine("<html lang='en'>");
             sb.AppendLine("<head>");
@@ -109,7 +117,7 @@ namespace _200SXContact.Services
             sb.AppendLine("        <table style='width:100%; border-collapse: collapse;'>");
             sb.AppendLine("            <tr><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Item</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Quantity</p></th><th style='border: 1px solid #ece8ed !important; padding: 8px;'><p>Price</p></th></tr>");
             List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(order.CartItemsJson) ?? new List<CartItem>();
-            foreach (var item in cartItems)
+            foreach (CartItem item in cartItems)
             {
                 sb.AppendLine($"<tr><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.ProductName}<p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Quantity}</p></td><td style='border: 1px solid #ece8ed !important; padding: 8px;'><p>{item.Price.ToString("F2")}</p></td></tr>");
             }
@@ -123,10 +131,8 @@ namespace _200SXContact.Services
             sb.AppendLine("    </div>");
             sb.AppendLine("</body>");
             sb.AppendLine("</html>");
-
             string body = sb.ToString();
-
-            using (var smtpClient = new SmtpClient
+            using (SmtpClient smtpClient = new SmtpClient
             {
                 Host = "mail5019.site4now.net",
                 Port = 587,
@@ -134,7 +140,7 @@ namespace _200SXContact.Services
                 Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
             })
             {
-                using (var message = new MailMessage(fromAddress, toAddress)
+                using (MailMessage message = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = subject,
                     Body = body,
@@ -142,6 +148,7 @@ namespace _200SXContact.Services
                 })
                 {
                     await smtpClient.SendMailAsync(message);
+
                     await _loggerService.LogAsync("Orders || Sent email with order confirmation", "Info", "");
                 }
             }
@@ -149,12 +156,13 @@ namespace _200SXContact.Services
         public async Task SendCommentNotification(string userEmail, BuildsComments comment)
         {
             await _loggerService.LogAsync($"Comments || Started sending comment notification for {comment.UserBuildId}", "Info", "");
-            var baseUrl = _configuration["AppSettings:BaseUrl"];
-            var link = $"{baseUrl}/detailed-user-build?id={comment.UserBuildId}";
+
+            string? baseUrl = _configuration["AppSettings:BaseUrl"];
+            string link = $"{baseUrl}/detailed-user-build?id={comment.UserBuildId}";
             try
             {
-                var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
-                var toAddress = new MailAddress(userEmail);
+                MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+                MailAddress toAddress = new MailAddress(userEmail);
                 string subject = "Import Garage || New comment added for your Build";
                 string body = $@"
     <!DOCTYPE html>
@@ -241,7 +249,7 @@ namespace _200SXContact.Services
         </div>
     </body>
     </html>";
-                using (var smtpClient = new SmtpClient
+                using (SmtpClient smtpClient = new SmtpClient
                 {
                     Host = "mail5019.site4now.net",
                     Port = 587,
@@ -249,7 +257,7 @@ namespace _200SXContact.Services
                     Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
                 })
                 {
-                    using (var message = new MailMessage(fromAddress, toAddress)
+                    using (MailMessage message = new MailMessage(fromAddress, toAddress)
                     {
                         Subject = subject,
                         Body = body,
@@ -257,6 +265,7 @@ namespace _200SXContact.Services
                     })
                     {
                         await smtpClient.SendMailAsync(message);
+
                         await _loggerService.LogAsync($"Comments || Sent comment notification for build {comment.UserBuildId}", "Info", "");
                     }
                 }
@@ -273,11 +282,11 @@ namespace _200SXContact.Services
             try
             {
                 await _loggerService.LogAsync($"Due Date Reminder || Started sending item due date notification for item {item}", "Info", "");
-                var fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
-                var toAddress = new MailAddress(userEmail);
-                string subject = $"Import Garage || Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days !";
 
-                var sb = new StringBuilder();
+                MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+                MailAddress toAddress = new MailAddress(userEmail);
+                string subject = $"Import Garage || Reminder: Your service item '{item.EntryItem}' is due in {daysBeforeDue} days !";
+                StringBuilder sb = new StringBuilder();
                 sb.AppendLine("<!DOCTYPE html>");
                 sb.AppendLine("<html lang='en'>");
                 sb.AppendLine("<head>");
@@ -309,10 +318,8 @@ namespace _200SXContact.Services
                 sb.AppendLine("    </div>");
                 sb.AppendLine("</body>");
                 sb.AppendLine("</html>");
-
                 string body = sb.ToString();
-
-                using (var smtpClient = new SmtpClient
+                using (SmtpClient smtpClient = new SmtpClient
                 {
                     Host = "mail5019.site4now.net",
                     Port = 587,
@@ -320,7 +327,7 @@ namespace _200SXContact.Services
                     Credentials = new System.Net.NetworkCredential(_credentials.UserName, _credentials.Password)
                 })
                 {
-                    using (var message = new MailMessage(fromAddress, toAddress)
+                    using (MailMessage message = new MailMessage(fromAddress, toAddress)
                     {
                         Subject = subject,
                         Body = body,
@@ -328,24 +335,27 @@ namespace _200SXContact.Services
                     })
                     {
                         await smtpClient.SendMailAsync(message);
+
                         await _loggerService.LogAsync($"Due Date Reminder || Sent item due date notification for item {item}", "Info", "");
                     }
                 }
             }
             catch (SmtpException ex)
             {
-                var errorMessage = $"SMTP Error: {ex.Message}\n" +
+                string errorMessage = $"SMTP Error: {ex.Message}\n" +
                                    $"StatusCode: {ex.StatusCode}\n" +
                                    $"InnerException: {ex.InnerException?.Message}";
+
                 await _loggerService.LogAsync($"Due Date Reminder || SMTP Error: {ex.Message}", "Error", ex.ToString());
+
                 throw new Exception("Failed to send email for due date reminder. Please try again later.", ex);
             }
             catch (Exception ex)
             {
                 await _loggerService.LogAsync($"Due Date Reminder || Unexpected Error: {ex.Message}", "Error", ex.ToString());
+
                 throw new Exception("An unexpected error occurred while sending the due date reminder email.", ex);
             }
         }
     }
-
 }

@@ -10,14 +10,12 @@ namespace _200SXContact.Services
 {    
     public class LoggerService : ILoggerService
     {
-        private readonly ILoggerService _loggerService;
         private readonly DbContextOptions<ApplicationDbContext> _options;
         private readonly ApplicationDbContext _context;
         private readonly NetworkCredential _credentials;
         private readonly IMapper _mapper;
-        public LoggerService(ILoggerService loggerService, IMapper mapper, DbContextOptions<ApplicationDbContext> options, ApplicationDbContext context, NetworkCredential credentials)
+        public LoggerService(IMapper mapper, DbContextOptions<ApplicationDbContext> options, ApplicationDbContext context, NetworkCredential credentials)
         {
-            _loggerService = loggerService;
             _options = options;
             _context = context;
             _credentials = credentials;
@@ -25,8 +23,6 @@ namespace _200SXContact.Services
         }
         public async Task LogEmailAsync(ContactFormDto model, string status, string errorMessage = null)
         {
-            await _loggerService.LogAsync($"Contact form || Logging email with status: {status}", "Info", "");
-
             EmailLogDto emailLogDto = new EmailLogDto
             {
                 Timestamp = DateTime.Now,
@@ -42,13 +38,9 @@ namespace _200SXContact.Services
 
             await _context.EmailLogs.AddAsync(emailLog);
             await _context.SaveChangesAsync();
-
-            await _loggerService.LogAsync($"Contact form || Email logged with status: {status}", "Info", "");
         }
         public async Task LogAsync(string message, string logLevel, string exception = "")
         {
-            await _loggerService.LogAsync("Contact form || Starting logging email to DB", "Info", "");
-
             using (ApplicationDbContext context = new ApplicationDbContext(_options))
             {
                 LoggingDto logEntryDto = new LoggingDto
@@ -63,8 +55,6 @@ namespace _200SXContact.Services
 
                 await context.Logging.AddAsync(logging);
                 await context.SaveChangesAsync();
-
-                await _loggerService.LogAsync("Contact form || Logged contact email to DB", "Info", "");
             }
         }
     }

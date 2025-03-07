@@ -4,8 +4,6 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Stripe;
 using Stripe.Checkout;
 
@@ -17,7 +15,6 @@ namespace _200SXContact.Services
 {
 	public class Program
 	{
-
 		public static void Main(string[] args)
 		{
 			WebHost.CreateDefaultBuilder(args)

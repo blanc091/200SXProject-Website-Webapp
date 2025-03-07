@@ -1,33 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Models;
-using System.Net.Mail;
 using _200SXContact.Data;
 using _200SXContact.Models.Configs;
 using Microsoft.Extensions.Options;
-using System.Net;
 using MediatR;
 using _200SXContact.Commands.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Helpers.Areas.Admin;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 
 namespace _200SXContact.Controllers.Admin
 {
 	public class ContactController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly NetworkCredential _credentials;
-		private readonly IConfiguration _configuration;
 		private readonly ILoggerService _loggerService;
         private readonly IMediator _mediator;
-		public ContactController(ApplicationDbContext context, IMediator mediator, IOptions<AppSettings> appSettings, IConfiguration configuration, ILoggerService loggerService)
+        private readonly IMapper _mapper;
+		public ContactController(ApplicationDbContext context, IMapper mapper, IMediator mediator, IOptions<AppSettings> appSettings, IConfiguration configuration, ILoggerService loggerService)
 		{
 			var emailSettings = appSettings.Value.EmailSettings;
-			_context = context;
-			_credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
-			_configuration = configuration;
 			_loggerService = loggerService;
             _mediator = mediator;
+            _mapper = mapper;
 		}
         [HttpPost]
         [Route("contact/send-email")]
@@ -45,6 +40,18 @@ namespace _200SXContact.Controllers.Admin
             };
 
             ContactResult result = await _mediator.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                TempData["IsFormSubmitted"] = false;
+                TempData["IsFormSuccess"] = result.IsSuccess;
+                TempData["Message"] = result.Message;
+                TempData["ContactError"] = "yes";
+
+                return View($"~/Views/{result.ViewName}.cshtml", model);
+            }
+
+            ContactFormDto contactFormDto = _mapper.Map<ContactFormDto>(result.Model);
             await _loggerService.LogEmailAsync(model, "Sent");
             TempData["IsFormSubmitted"] = true;
             TempData["IsFormSuccess"] = result.IsSuccess;
@@ -52,7 +59,7 @@ namespace _200SXContact.Controllers.Admin
 
             await _loggerService.LogAsync("Contact form || Email sent to admin", "Info", "");
 
-            return View($"~/Views/{result.ViewName}.cshtml", result.Model);
+            return View($"~/Views/{result.ViewName}.cshtml", contactFormDto);
         }	
 	}
 }
