@@ -3,6 +3,7 @@ using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Orders;
+using _200SXContact.Queries.Areas.Orders;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
