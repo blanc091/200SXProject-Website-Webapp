@@ -18,6 +18,7 @@ namespace _200SXContact.Controllers.Misc
 		public IActionResult Policy()
 		{
             _loggerService.LogAsync("Home || Getting policy page", "Info", "");
+
             return View("~/Views/Home/PrivacyPolicy.cshtml"); 
 		}
 		[HttpGet]
@@ -33,6 +34,7 @@ namespace _200SXContact.Controllers.Misc
         public IActionResult Error()
         {
             _loggerService.LogAsync("Home || Return if error view", "Info", "");
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 		[HttpGet]
@@ -40,6 +42,7 @@ namespace _200SXContact.Controllers.Misc
 		public IActionResult IsLoggedIn()
 		{
             _loggerService.LogAsync("Home || Getting IsLoggedIn JSON for api/is-logged-in", "Info", "");
+
             return Json(User.Identity.IsAuthenticated);
 		}
 	}

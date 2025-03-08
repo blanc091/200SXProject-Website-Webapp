@@ -1,0 +1,15 @@
+﻿using _200SXContact.Models;
+
+namespace _200SXContact.Interfaces.Areas.UserContent
+{
+	public interface IBuildsComments
+	{
+        int Id { get; set; }
+        string Content { get; set; }
+        DateTime CreatedAt { get; set; }
+        string UserId { get; set; }
+        string UserName { get; set; }
+        string UserBuildId { get; set; }
+        abstract UserBuild UserBuild { get; set; }
+    }
+}

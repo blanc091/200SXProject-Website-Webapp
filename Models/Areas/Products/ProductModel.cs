@@ -1,6 +1,4 @@
 ﻿using _200SXContact.Interfaces.Areas.Products;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _200SXContact.Models.Areas.Products
 {
