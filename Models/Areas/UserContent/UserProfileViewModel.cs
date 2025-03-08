@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace _200SXContact.Models
+﻿namespace _200SXContact.Models.Areas.UserContent
 {
 	public class UserProfileViewModel
 	{

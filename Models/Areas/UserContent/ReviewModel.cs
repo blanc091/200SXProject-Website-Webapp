@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using _200SXContact.Models.Areas.Products;
 
-namespace _200SXContact.Models
+namespace _200SXContact.Models.Areas.UserContent
 {
     public class Review
 	{

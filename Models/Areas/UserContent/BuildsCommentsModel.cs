@@ -2,7 +2,7 @@
 
 namespace _200SXContact.Models.Areas.UserContent
 {
-    public class BuildsCommentsModel : IBuildsComments
+    public class BuildsComments : IBuildsComments
     {
         public int Id { get; set; }
         public required string Content { get; set; }
@@ -10,6 +10,6 @@ namespace _200SXContact.Models.Areas.UserContent
         public required string UserId { get; set; }
         public required string UserName { get; set; }
         public required string UserBuildId { get; set; }
-        public required virtual UserBuild UserBuild { get; set; }       
+        public virtual UserBuild? UserBuild { get; set; }       
 	}
 }

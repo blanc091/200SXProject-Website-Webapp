@@ -3,6 +3,7 @@ using _200SXContact.Models.Areas.Admin;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.Products;
+using _200SXContact.Models.Areas.UserContent;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

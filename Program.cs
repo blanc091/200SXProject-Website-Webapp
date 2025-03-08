@@ -1,5 +1,4 @@
 using _200SXContact.Data;
-using _200SXContact.Models;
 using _200SXContact.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -22,6 +21,7 @@ using _200SXContact.Commands.Areas.Admin;
 using _200SXContact.Queries.Areas.Newsletter;
 using System.Net;
 using Ganss.Xss;
+using _200SXContact.Models.Areas.UserContent;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

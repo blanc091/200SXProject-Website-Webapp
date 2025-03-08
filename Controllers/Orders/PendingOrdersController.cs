@@ -1,7 +1,7 @@
 ﻿using _200SXContact.Commands.Areas.Orders;
 using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
-using _200SXContact.Models;
+using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using FluentValidation;
 using MediatR;

@@ -1,6 +1,7 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models;
+using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Services;
 using Microsoft.AspNetCore.Authorization;

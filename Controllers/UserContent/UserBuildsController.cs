@@ -1,10 +1,10 @@
-﻿using _200SXContact.Models;
-using _200SXContact.Data;
+﻿using _200SXContact.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Controllers.Users
 {

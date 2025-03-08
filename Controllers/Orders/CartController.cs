@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Models;
 using _200SXContact.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using _200SXContact.Models.DTOs.Areas.Orders;
 using _200SXContact.Commands.Areas.Orders;
 using AutoMapper;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Controllers.Orders
 {

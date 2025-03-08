@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Interfaces.Areas.Orders;
+using _200SXContact.Models.Areas.UserContent;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

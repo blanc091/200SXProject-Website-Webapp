@@ -1,11 +1,11 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Models.DTOs.Areas.Orders;
-using _200SXContact.Models;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Queries.Areas.Orders
 {

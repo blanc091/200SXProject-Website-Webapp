@@ -1,4 +1,4 @@
-﻿using _200SXContact.Models;
+﻿using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Interfaces.Areas.UserContent
 {

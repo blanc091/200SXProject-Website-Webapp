@@ -15,6 +15,7 @@ using System.Net;
 using Microsoft.Extensions.Options;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Controllers.Account
 {

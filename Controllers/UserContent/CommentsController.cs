@@ -1,7 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
-using _200SXContact.Models;
-using _200SXContact.Services;
+using _200SXContact.Models.Areas.UserContent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -30,7 +29,7 @@ namespace _200SXContact.Controllers.Users
                 await _loggerService.LogAsync("Comments || Submitted empty comment for " + userBuildId, "Error", "");
                 return BadRequest("Comment content cannot be empty.");
 			}
-			var comment = new BuildsComments
+            BuildsComments comment = new BuildsComments
 			{
 				Content = content,
 				CreatedAt = DateTime.UtcNow,

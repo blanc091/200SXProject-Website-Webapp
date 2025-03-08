@@ -1,6 +1,7 @@
 ﻿using _200SXContact.Models;
 using _200SXContact.Models.Areas.Admin;
 using _200SXContact.Models.Areas.Orders;
+using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Interfaces.Areas.Admin
 {

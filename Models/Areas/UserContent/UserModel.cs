@@ -1,11 +1,10 @@
-﻿using _200SXContact.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _200SXContact.Models
+namespace _200SXContact.Models.Areas.UserContent
 {
 	public class User : IdentityUser
 	{
