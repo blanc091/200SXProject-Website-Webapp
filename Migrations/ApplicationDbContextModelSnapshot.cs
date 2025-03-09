@@ -155,6 +155,96 @@ namespace _200SXContact.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("_200SXContact.Models.Areas.Admin.EmailLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailLogs");
+                });
+
+            modelBuilder.Entity("_200SXContact.Models.Areas.Admin.Logging", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Exception")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logging");
+                });
+
+            modelBuilder.Entity("_200SXContact.Models.Areas.Newsletter.NewsletterSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSubscribed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("SubscribedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NewsletterSubscriptions");
+                });
+
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.CartItem", b =>
                 {
                     b.Property<int>("Id")
@@ -192,7 +282,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("OrderPlacementId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.OrderPlacement", b =>
@@ -247,7 +337,7 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.OrderTracking", b =>
@@ -296,7 +386,7 @@ namespace _200SXContact.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("OrderTrackings", (string)null);
+                    b.ToTable("OrderTrackings");
                 });
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Products.Product", b =>
@@ -327,14 +417,14 @@ namespace _200SXContact.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(6,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.BuildsComments", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.BuildComment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -365,135 +455,10 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserBuildId");
 
-                    b.ToTable("BuildComments", (string)null);
+                    b.ToTable("BuildComments");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.EmailLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Body")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ErrorMessage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("From")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("To")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmailLogs", (string)null);
-                });
-
-            modelBuilder.Entity("_200SXContact.Models.Item", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("EmailSent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("EntryDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EntryItem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Items", (string)null);
-                });
-
-            modelBuilder.Entity("_200SXContact.Models.Logging", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Exception")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Logging", (string)null);
-                });
-
-            modelBuilder.Entity("_200SXContact.Models.NewsletterSubscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsSubscribed")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("SubscribedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NewsletterSubscriptions", (string)null);
-                });
-
-            modelBuilder.Entity("_200SXContact.Models.User", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -575,7 +540,7 @@ namespace _200SXContact.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.UserBuild", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.UserBuild", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -608,7 +573,46 @@ namespace _200SXContact.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBuilds", (string)null);
+                    b.ToTable("UserBuilds");
+                });
+
+            modelBuilder.Entity("_200SXContact.Models.ReminderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EmailSent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("EntryDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntryItem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -622,7 +626,7 @@ namespace _200SXContact.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("_200SXContact.Models.User", null)
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -631,7 +635,7 @@ namespace _200SXContact.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("_200SXContact.Models.User", null)
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -646,7 +650,7 @@ namespace _200SXContact.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("_200SXContact.Models.User", null)
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -655,7 +659,7 @@ namespace _200SXContact.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("_200SXContact.Models.User", null)
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -673,7 +677,7 @@ namespace _200SXContact.Migrations
 
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.OrderPlacement", b =>
                 {
-                    b.HasOne("_200SXContact.Models.User", "User")
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -691,9 +695,9 @@ namespace _200SXContact.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.BuildsComments", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.BuildComment", b =>
                 {
-                    b.HasOne("_200SXContact.Models.UserBuild", "UserBuild")
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.UserBuild", "UserBuild")
                         .WithMany("Comments")
                         .HasForeignKey("UserBuildId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -702,22 +706,23 @@ namespace _200SXContact.Migrations
                     b.Navigation("UserBuild");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.Item", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.UserBuild", b =>
                 {
-                    b.HasOne("_200SXContact.Models.User", "User")
-                        .WithMany("Items")
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", "User")
+                        .WithMany("UserBuilds")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.UserBuild", b =>
+            modelBuilder.Entity("_200SXContact.Models.ReminderItem", b =>
                 {
-                    b.HasOne("_200SXContact.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("_200SXContact.Models.Areas.UserContent.User", "User")
+                        .WithMany("Items")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -729,12 +734,14 @@ namespace _200SXContact.Migrations
                     b.Navigation("OrderTracking");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.User", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.User", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("UserBuilds");
                 });
 
-            modelBuilder.Entity("_200SXContact.Models.UserBuild", b =>
+            modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.UserBuild", b =>
                 {
                     b.Navigation("Comments");
                 });

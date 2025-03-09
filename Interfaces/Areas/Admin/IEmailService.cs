@@ -9,7 +9,7 @@ namespace _200SXContact.Interfaces.Areas.Admin
     {
         Task SendEmailToAdmin(ContactForm model);
         Task SendDueDateReminder(string userEmail, string userName, ReminderItem item, int daysBeforeDue);
-        Task SendCommentNotification(string userEmail, BuildsComments comment);
+        Task SendCommentNotification(string userEmail, BuildComment comment);
         Task SendOrderConfirmEmail(string email, OrderPlacement order);
     }
 }

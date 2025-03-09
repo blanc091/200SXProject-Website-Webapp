@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var unsubscribed = document.body.getAttribute('data-unsubscribed'); 
     var userDeleted = document.body.getAttribute('data-is-user-deleted');
 	var isContactError = document.body.getAttribute('data-is-contact-error');
+	var isCommentDeleted = document.body.getAttribute('data-is-comment-deleted');
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/detailed-user-build')) {
@@ -127,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
         unsubscribed == "yes" ||
         userDeleted == 'yes' ||
         itemAddedToCart == "yes" ||
+		isCommentDeleted == "yes" || isCommentDeleted == "no" ||
 		isNewsletterError == "yes" ||
         passResetEmailSent == "yes") {
         setTimeout(function () {

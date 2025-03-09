@@ -19,7 +19,8 @@ namespace _200SXContact.Models.Areas.UserContent
 		public string? EmailVerificationToken { get; set; }
 		public string? PasswordResetToken { get; set; }
 		public virtual ICollection<ReminderItem>? Items { get; set; }
-	}
+        public virtual ICollection<UserBuild> UserBuilds { get; set; } = new List<UserBuild>();
+    }
 }
 
 

@@ -146,7 +146,7 @@ namespace _200SXContact.Services
 
             await _loggerService.LogAsync("Orders || Sent email with order confirmation", "Info", "");
         }
-        public async Task SendCommentNotification(string userEmail, BuildsComments comment)
+        public async Task SendCommentNotification(string userEmail, BuildComment comment)
         {
             await _loggerService.LogAsync($"Comments || Started sending comment notification for {comment.UserBuildId}", "Info", "");
 

@@ -1,6 +1,6 @@
 ﻿@using System.Security.Claims
-@using _200SXContact.Models.Areas.UserContent
-@model UserBuild
+@using _200SXContact.Models.DTOs.Areas.UserContent
+@model UserBuildDto
 @{
 	var message = TempData["Message"] as string;
 }
@@ -26,7 +26,7 @@
 		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true"/></noscript>
 		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">		
 	</head>
-<body class="is-preload" data-is-comment-posted="@TempData["CommentPosted"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
+<body class="is-preload" data-is-comment-posted="@TempData["CommentPosted"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-comment-deleted = "@TempData["CommentDeleted"]">
 	<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
 

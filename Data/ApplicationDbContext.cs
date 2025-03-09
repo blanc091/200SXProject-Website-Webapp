@@ -21,7 +21,7 @@ namespace _200SXContact.Data
 		public DbSet<ReminderItem> Items { get; set; }
 		public DbSet<UserBuild> UserBuilds { get; set; }
 		public DbSet<NewsletterSubscription> NewsletterSubscriptions { get; set; }
-		public DbSet<BuildsComments> BuildComments { get; set; }
+		public DbSet<BuildComment> BuildComments { get; set; }
 		public DbSet<Product> Products { get; set; }
 		public DbSet<CartItem> CartItems { get; set; }
 		public DbSet<OrderPlacement> Orders { get; set; }
@@ -41,6 +41,28 @@ namespace _200SXContact.Data
 				.HasOne(op => op.OrderTracking)
 				.WithOne(ot => ot.Order)
 				.HasForeignKey<OrderTracking>(ot => ot.OrderId);
+
+            modelBuilder.Entity<BuildComment>()
+			    .HasOne(bc => bc.UserBuild)
+			    .WithMany(ub => ub.Comments)
+			    .HasForeignKey(bc => bc.UserBuildId)
+			    .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserBuild>()
+			    .HasMany(ub => ub.Comments)
+			    .WithOne(bc => bc.UserBuild)
+			    .HasForeignKey(bc => bc.UserBuildId)
+			    .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+				.HasMany(u => u.UserBuilds)
+				.WithOne(ub => ub.User)
+				.HasForeignKey(ub => ub.UserId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Product>()
+				.Property(p => p.Price)
+				.HasColumnType("decimal(18,2)");
         }
 	}
 }
