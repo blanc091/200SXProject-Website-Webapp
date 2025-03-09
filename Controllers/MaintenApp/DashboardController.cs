@@ -1,6 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
-using _200SXContact.Models;
+using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.Areas.UserContent;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Security.Claims;
 
-namespace _200SXContact.Controllers.Users
+namespace _200SXContact.Controllers.MaintenApp
 {
 	public class DashboardController : Controller
 	{

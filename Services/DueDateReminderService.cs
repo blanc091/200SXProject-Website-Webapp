@@ -2,6 +2,7 @@
 using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Dashboard;
+using _200SXContact.Models.Areas.MaintenApp;
 
 namespace _200SXContact.Services
 {
@@ -61,13 +62,13 @@ namespace _200SXContact.Services
             try
             {
                 await loggerService.LogAsync("Due Date Reminder || Started processing due dates", "Info", "");
-                List<Models.ReminderItem> dueItems = await context.Items.Where(i => (i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5)) || (i.DueDate.Date == DateTime.Now.AddDays(10).Date))
+                List<ReminderItem> dueItems = await context.Items.Where(i => (i.DueDate > DateTime.Now && i.DueDate <= DateTime.Now.AddDays(5)) || (i.DueDate.Date == DateTime.Now.AddDays(10).Date))
                     .Include(i => i.User)
                     .ToListAsync();
 
                 await loggerService.LogAsync($"Due Date Reminder || Found {dueItems.Count} due items", "Info", "");
 
-                foreach (Models.ReminderItem item in dueItems)
+                foreach (ReminderItem item in dueItems)
                 {
                     if (item.User == null || string.IsNullOrEmpty(item.User?.Email))
                     {

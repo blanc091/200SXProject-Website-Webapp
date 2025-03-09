@@ -1,8 +1,9 @@
-﻿using _200SXContact.Models.Areas.UserContent;
+﻿using _200SXContact.Interfaces.Areas.MaintenApp;
+using _200SXContact.Models.Areas.UserContent;
 
-namespace _200SXContact.Models
+namespace _200SXContact.Models.Areas.MaintenApp
 {
-	public class ReminderItem
+	public class ReminderItem : IReminderItem
 	{
 		public int Id { get; set; }
 		public string EntryItem { get; set; }
