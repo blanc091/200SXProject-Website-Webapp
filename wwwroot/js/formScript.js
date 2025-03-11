@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isUserVerified == 'no' ||
         isPassResetSuccess == "yes" ||
         isEntrySuccess == "yes" ||
+		isEntrySuccess == "no" ||
         userExists == "yes" ||
         isNiceTry == "yes" ||
         isNewsletterSubbed == "yes" ||

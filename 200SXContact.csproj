@@ -350,10 +350,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Areas\MaintenApp\" />
-    <Folder Include="Helpers\Areas\MaintenApp\" />
     <Folder Include="Queries\Areas\Admin\" />
-    <Folder Include="Queries\Areas\MaintenApp\" />
     <Folder Include="wwwroot\images\uploads\" />
     <Folder Include="wwwroot\js\Areas\Account\AdminDash\" />
     <Folder Include="wwwroot\js\Areas\Account\Dashboard\" />
