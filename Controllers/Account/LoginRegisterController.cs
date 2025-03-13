@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
-using _200SXContact.Models;
 using _200SXContact.Models.Configs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +15,7 @@ using Microsoft.Extensions.Options;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
+using _200SXContact.Models.Areas.Account;
 
 namespace _200SXContact.Controllers.Account
 {

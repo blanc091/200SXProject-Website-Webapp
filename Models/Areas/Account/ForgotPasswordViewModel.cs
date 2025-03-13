@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace _200SXContact.Models
+namespace _200SXContact.Models.Areas.Account
 {
 	public class ForgotPasswordViewModel
 	{
