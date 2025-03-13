@@ -7,12 +7,10 @@ using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
 using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
-using Ganss.Xss;
 using _200SXContact.Helpers;
 
 namespace _200SXContact.Controllers.Areas.Admin
 {
-    [Area("Admin")]
     [Route("newsletter")]
     public class NewsletterController : Controller
 	{

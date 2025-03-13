@@ -11,7 +11,7 @@ using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Controllers.Areas.Orders
 {
-	public class CheckoutController : Controller
+    public class CheckoutController : Controller
 	{
 		private readonly ILoggerService _loggerService;
         private readonly IMediator _mediator;

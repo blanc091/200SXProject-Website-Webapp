@@ -12,7 +12,7 @@ using _200SXContact.Models.Areas.UserContent;
 
 namespace _200SXContact.Controllers.Areas.Orders
 {
-	public class CartController : Controller
+    public class CartController : Controller
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;

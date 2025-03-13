@@ -15,33 +15,33 @@ namespace _200SXContact.Controllers.Areas.Misc
         }
         [HttpGet]
 		[Route("home/policy")]
-		public IActionResult Policy()
-		{
-            _loggerService.LogAsync("Home || Getting policy page", "Info", "");
+        public async Task<IActionResult> Policy()
+        {
+            await _loggerService.LogAsync("Home || Getting policy page", "Info", "");
 
             return View("~/Views/Home/PrivacyPolicy.cshtml"); 
 		}
 		[HttpGet]
 		[Route("")]
 		[Route("home/index")]
-		public IActionResult Index(ContactFormDto model = null)
+        public async Task<IActionResult> Index(ContactFormDto model = null)
 		{
-			_loggerService.LogAsync("Home || Getting index page", "Info", "");
+			await _loggerService.LogAsync("Home || Getting index page", "Info", "");
 
 			return View(model);
 		}
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Error()
         {
-            _loggerService.LogAsync("Home || Return if error view", "Info", "");
+            await _loggerService.LogAsync("Home || Return if error view", "Info", "");
 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 		[HttpGet]
 		[Route("api/is-logged-in")]
-		public IActionResult IsLoggedIn()
+        public async Task<IActionResult> IsLoggedIn()
 		{
-            _loggerService.LogAsync("Home || Getting IsLoggedIn JSON for api/is-logged-in", "Info", "");
+            await _loggerService.LogAsync("Home || Getting IsLoggedIn JSON for api/is-logged-in", "Info", "");
 
             return Json(User.Identity.IsAuthenticated);
 		}

@@ -5,7 +5,7 @@ using Stripe.Checkout;
 
 namespace _200SXContact.Controllers.Areas.Orders
 {
-	public class StripeController : Controller
+    public class StripeController : Controller
 	{
         private readonly ILoggerService _loggerService;
         public StripeController(ILoggerService loggerService) 

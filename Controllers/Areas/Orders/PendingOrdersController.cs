@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace _200SXContact.Controllers.Areas.Orders
 {
-	public class PendingOrdersController : Controller
+    public class PendingOrdersController : Controller
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;

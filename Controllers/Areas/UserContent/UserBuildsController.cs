@@ -1,6 +1,5 @@
 ﻿using _200SXContact.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using _200SXContact.Interfaces.Areas.Admin;
@@ -13,7 +12,7 @@ using _200SXContact.Queries.Areas.UserContent;
 
 namespace _200SXContact.Controllers.Areas.UserContent
 {
-	public class UserBuildsController : Controller
+    public class UserBuildsController : Controller
 	{
 		private readonly ApplicationDbContext _context;
         private readonly ILoggerService _loggerService;

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _200SXContact.Controllers.Areas.Misc
 {
-	public class DetailedViewsController : Controller
+    public class DetailedViewsController : Controller
 	{
 		private readonly ILoggerService _loggerService;
 		public DetailedViewsController(ILoggerService loggerService) 
@@ -12,18 +12,22 @@ namespace _200SXContact.Controllers.Areas.Misc
         }
 		[HttpGet]
 		[Route("detailed-view/{id}")]
-		public IActionResult DetailedView(string id)
+        public async Task<IActionResult> DetailedView(string id)
 		{
-            _loggerService.LogAsync("Home || Starting getting detailed index view", "Info", "");
+            await _loggerService.LogAsync("Home || Starting getting detailed index view", "Info", "");
+
             if (!string.IsNullOrEmpty(id))
 			{
-				var sanitizedId = id.Replace(" ", "-");
-                _loggerService.LogAsync("Home || Got detailed index view", "Info", "");
+                string sanitizedId = id.Replace(" ", "-");
+
+                await _loggerService.LogAsync("Home || Got detailed index view", "Info", "");
+
                 return View($"~/Views/DetailedViews/{sanitizedId}.cshtml");
 			}
 			else
 			{
-                _loggerService.LogAsync("Home || ID is empty when getting detailed index view", "Error", "");
+                await _loggerService.LogAsync("Home || ID is empty when getting detailed index view", "Error", "");
+
                 return RedirectToAction("Index", "Home"); 
 			}
 		}

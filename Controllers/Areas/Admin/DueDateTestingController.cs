@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _200SXContact.Controllers.Areas.Admin
 {
-	[Route("DueDateTesting")]
+    [Route("DueDateTesting")]
 	public class DueDateTestingController : Controller
 	{
         private readonly IDueDateReminderService _dueDateReminderService;

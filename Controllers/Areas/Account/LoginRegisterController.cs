@@ -19,7 +19,7 @@ using _200SXContact.Models.Areas.Account;
 
 namespace _200SXContact.Controllers.Areas.Account
 {
-	public class LoginRegisterController : Controller
+    public class LoginRegisterController : Controller
 	{
 		private readonly SignInManager<User> _signInManager;
 		private readonly ApplicationDbContext _context;

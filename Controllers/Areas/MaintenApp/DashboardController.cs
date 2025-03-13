@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace _200SXContact.Controllers.Areas.MaintenApp
 {
-	public class DashboardController : Controller
+    public class DashboardController : Controller
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;

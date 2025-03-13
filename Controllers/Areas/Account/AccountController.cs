@@ -1,14 +1,11 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
-using _200SXContact.Models;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
-using _200SXContact.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
@@ -16,7 +13,7 @@ using System.Security.Claims;
 
 namespace _200SXContact.Controllers.Areas.Account
 {
-	public class AccountController : Controller
+    public class AccountController : Controller
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly ApplicationDbContext _context;

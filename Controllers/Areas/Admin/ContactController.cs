@@ -8,11 +8,10 @@ using _200SXContact.Models.DTOs.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Helpers.Areas.Admin;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 
 namespace _200SXContact.Controllers.Areas.Admin
 {
-	public class ContactController : Controller
+    public class ContactController : Controller
 	{
 		private readonly ILoggerService _loggerService;
         private readonly IMediator _mediator;
