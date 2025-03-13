@@ -1,7 +1,7 @@
 ﻿using _200SXContact.Interfaces.Areas.Admin;
 using Microsoft.AspNetCore.Mvc;
 
-namespace _200SXContact.Controllers.Misc
+namespace _200SXContact.Controllers.Areas.Misc
 {
 	public class DetailedViewsController : Controller
 	{

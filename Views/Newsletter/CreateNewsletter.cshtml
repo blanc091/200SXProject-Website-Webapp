@@ -98,7 +98,7 @@
 					</div>
 					<div class="form-group">
 						<label for="body">Newsletter Body:</label>
-						<textarea name="Body" class="form-control" asp-for="Body" rows="10" required>@Html.Raw(Model.Body)</textarea>
+						<textarea name="Body" class="form-control" asp-for="Body" rows="10" required>@Model.Body</textarea>
 					</div>
 				<button type="submit" class="btn-add-entry">Send Newsletter</button>
 				</form>

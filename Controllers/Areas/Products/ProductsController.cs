@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace _200SXContact.Controllers.Products
+namespace _200SXContact.Controllers.Areas.Products
 {
     public class ProductsController : Controller
 	{

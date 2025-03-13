@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace _200SXContact.Controllers.MaintenApp
+namespace _200SXContact.Controllers.Areas.MaintenApp
 {
 	public class DashboardController : Controller
 	{

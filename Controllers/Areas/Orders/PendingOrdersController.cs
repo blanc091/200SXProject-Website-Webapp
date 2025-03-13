@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace _200SXContact.Controllers.Orders
+namespace _200SXContact.Controllers.Areas.Orders
 {
 	public class PendingOrdersController : Controller
 	{

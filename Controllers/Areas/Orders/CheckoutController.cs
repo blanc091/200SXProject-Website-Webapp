@@ -9,7 +9,7 @@ using FluentValidation.Results;
 using System.Diagnostics;
 using _200SXContact.Interfaces.Areas.Admin;
 
-namespace _200SXContact.Controllers.Orders
+namespace _200SXContact.Controllers.Areas.Orders
 {
 	public class CheckoutController : Controller
 	{

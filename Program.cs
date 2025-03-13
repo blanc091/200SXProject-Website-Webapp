@@ -266,6 +266,10 @@ app.MapControllerRoute(
 	name: "account",
 	pattern: "account/{action}/{id?}",
 	defaults: new { controller = "Account" });
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 app.MapPost("/logout", async context =>
 {
 	await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -10,7 +10,7 @@ using _200SXContact.Helpers.Areas.Admin;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 
-namespace _200SXContact.Controllers.Admin
+namespace _200SXContact.Controllers.Areas.Admin
 {
 	public class ContactController : Controller
 	{

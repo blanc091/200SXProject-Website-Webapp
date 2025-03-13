@@ -14,7 +14,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 
-namespace _200SXContact.Controllers.Account
+namespace _200SXContact.Controllers.Areas.Account
 {
 	public class AccountController : Controller
 	{

@@ -4,7 +4,7 @@ using _200SXContact.Models.DTOs.Areas.Admin;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace _200SXContact.Controllers.Misc
+namespace _200SXContact.Controllers.Areas.Misc
 {
     public class HomeController : Controller
     {

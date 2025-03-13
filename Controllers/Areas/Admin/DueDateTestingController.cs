@@ -2,7 +2,7 @@
 using _200SXContact.Interfaces.Areas.Dashboard;
 using Microsoft.AspNetCore.Mvc;
 
-namespace _200SXContact.Controllers.Admin
+namespace _200SXContact.Controllers.Areas.Admin
 {
 	[Route("DueDateTesting")]
 	public class DueDateTestingController : Controller

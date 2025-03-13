@@ -17,7 +17,7 @@ using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Areas.Account;
 
-namespace _200SXContact.Controllers.Account
+namespace _200SXContact.Controllers.Areas.Account
 {
 	public class LoginRegisterController : Controller
 	{

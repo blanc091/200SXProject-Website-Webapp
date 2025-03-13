@@ -11,7 +11,7 @@ using System.Security.Claims;
 using MediatR;
 using _200SXContact.Queries.Areas.UserContent;
 
-namespace _200SXContact.Controllers.Users
+namespace _200SXContact.Controllers.Areas.UserContent
 {
 	public class UserBuildsController : Controller
 	{

@@ -10,7 +10,7 @@ using AutoMapper;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 
-namespace _200SXContact.Controllers.Orders
+namespace _200SXContact.Controllers.Areas.Orders
 {
 	public class CartController : Controller
 	{

@@ -7,10 +7,14 @@ using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
 using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using Ganss.Xss;
+using _200SXContact.Helpers;
 
-namespace _200SXContact.Controllers.Admin
+namespace _200SXContact.Controllers.Areas.Admin
 {
-	public class NewsletterController : Controller
+    [Area("Admin")]
+    [Route("newsletter")]
+    public class NewsletterController : Controller
 	{
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
@@ -24,7 +28,7 @@ namespace _200SXContact.Controllers.Admin
             _mediator = mediator;
         }
         [HttpGet]
-		[Route("newsletter/create-newsletter-admin")]
+		[Route("create-newsletter-admin")]
 		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> CreateNewsletter()
 		{
@@ -39,7 +43,7 @@ namespace _200SXContact.Controllers.Admin
             return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);			
 		}        
 		[HttpPost]
-        [Route("newsletter/subscribe")]
+        [Route("subscribe")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Subscribe(string email, string honeypotSpam, string gRecaptchaResponseNewsletter)
         {
@@ -98,7 +102,8 @@ namespace _200SXContact.Controllers.Admin
             return View("~/Views/Home/Index.cshtml");
         }
         [HttpGet]
-        public async Task<IActionResult> Unsubscribe(string email)
+        [Route("unsubscribe")]
+        public async Task<IActionResult> Unsubscribe([FromQuery] string email)
         {
             if (string.IsNullOrEmpty(email))
             {
@@ -137,7 +142,7 @@ namespace _200SXContact.Controllers.Admin
             }
         }
 		[HttpPost]
-		[Route("newsletter/send-newsletter-admin")]
+		[Route("send-newsletter-admin")]
 		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
         public async Task<IActionResult> SendNewsletter(NewsletterViewModel model)
@@ -148,14 +153,19 @@ namespace _200SXContact.Controllers.Admin
             {
                 await _loggerService.LogAsync("Newsletter || Invalid model state when sending newsletter admin", "Error", "");
 
-                return View("~/Views/Newsletter/CreateNewsletter.cshtml", model);
-            }
-            
-            await _mediator.Send(new SendNewsletterCommand { Subject = model.Subject, Body = model.Body });
+                var sanitizedModel = new NewsletterViewModel
+                {
+                    Subject = model.Subject,
+                    Body = HtmlSanitizerHelper.Sanitize(model.Body) 
+                };
 
-            TempData["Message"] = "Newsletter sent successfully.";
+                return View("~/Views/Newsletter/CreateNewsletter.cshtml", sanitizedModel);
+            }
+
+            await _mediator.Send(new SendNewsletterCommand { Subject = model.Subject, Body = model.Body });
+            TempData["Message"] = "Newsletter sent successfully !";
 
             return RedirectToAction("CreateNewsletter", "Newsletter");
-        }        
-	}
+        }
+    }
 }
