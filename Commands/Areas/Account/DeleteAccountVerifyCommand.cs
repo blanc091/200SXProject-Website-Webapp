@@ -4,6 +4,8 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Net;
+using _200SXContact.Models.Configs;
+using Microsoft.Extensions.Options;
 
 namespace _200SXContact.Commands.Areas.Account
 {
@@ -17,13 +19,14 @@ namespace _200SXContact.Commands.Areas.Account
         private readonly ILoggerService _loggerService;
         private readonly IEmailService _emailService;
         private readonly UserManager<User> _userManager;
-        private readonly NetworkCredential _credentials;
-        public DeleteAccountVerifyCommandHandler(UserManager<User> userManager, ILoggerService loggerService, IEmailService emailService, NetworkCredential credentials)
+        private readonly NetworkCredential _credentials;        
+        public DeleteAccountVerifyCommandHandler(IOptions<AppSettings> appSettings, UserManager<User> userManager, ILoggerService loggerService, IEmailService emailService, NetworkCredential credentials)
         {
             _userManager = userManager;
             _loggerService = loggerService;
             _emailService = emailService;
-            _credentials = credentials;
+            EmailSettings emailSettings = appSettings.Value.EmailSettings;
+            _credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
         }
         public async Task<bool> Handle(DeleteAccountVerifyCommand request, CancellationToken cancellationToken)
         {
@@ -44,7 +47,6 @@ namespace _200SXContact.Commands.Areas.Account
 
             return true;
         }
-
         private async Task SendUserDeleteEmail(string email, string resetUrl)
         {
             await _loggerService.LogAsync("Account || Starting sending user delete email task", "Info", "");

@@ -4,10 +4,8 @@ using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using _200SXContact.Queries.Areas.Orders;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -15,18 +13,12 @@ namespace _200SXContact.Controllers.Areas.Orders
 {
     public class PendingOrdersController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly UserManager<User> _userManager;
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-        private readonly IValidator<UpdateOrderTrackingCommand> _validator;
-        public PendingOrdersController(ApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMediator mediator, IValidator<UpdateOrderTrackingCommand> validator)
+        public PendingOrdersController(ILoggerService loggerService, IMediator mediator)
 		{
-			_context = context;
-			_userManager = userManager;
 			_loggerService = loggerService;
 			_mediator = mediator;
-            _validator = validator;
         }
 		[HttpGet]
 		[Route("pendingorders/view-my-orders")]
