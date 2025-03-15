@@ -1,6 +1,4 @@
-﻿using _200SXContact.Models.Areas.UserContent;
-
-namespace _200SXContact.Models.DTOs.Areas.MaintenApp
+﻿namespace _200SXContact.Models.DTOs.Areas.MaintenApp
 {
     public class ReminderItemDto
     {
@@ -11,7 +9,7 @@ namespace _200SXContact.Models.DTOs.Areas.MaintenApp
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual Models.Areas.UserContent.User User { get; set; }
         public bool EmailSent { get; set; }
     }
 }

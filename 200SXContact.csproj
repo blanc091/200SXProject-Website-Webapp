@@ -350,12 +350,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Areas\Account\" />
-    <Folder Include="Helpers\Areas\Account\" />
-    <Folder Include="Interfaces\Areas\Account\" />
-    <Folder Include="Models\DTOs\Areas\Account\" />
     <Folder Include="Queries\Areas\Admin\" />
-    <Folder Include="Queries\Areas\Account\" />
     <Folder Include="wwwroot\images\uploads\" />
     <Folder Include="wwwroot\js\Areas\Account\AdminDash\" />
     <Folder Include="wwwroot\js\Areas\Account\Dashboard\" />

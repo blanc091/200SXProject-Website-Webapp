@@ -1,6 +1,4 @@
-﻿using _200SXContact.Models.Areas.UserContent;
-
-namespace _200SXContact.Models.DTOs.Areas.UserContent
+﻿namespace _200SXContact.Models.DTOs.Areas.UserContent
 {
     public class UserBuildDto
     {
@@ -12,7 +10,7 @@ namespace _200SXContact.Models.DTOs.Areas.UserContent
         public string? UserEmail { get; set; }
         public string? UserName { get; set; }
         public string? UserId { get; set; }
-        public virtual User? User { get; set; }
+        public virtual Models.Areas.UserContent.User? User { get; set; }
         public virtual ICollection<BuildCommentDto>? Comments { get; set; } = new List<BuildCommentDto>();
     }
 }
