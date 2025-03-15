@@ -1,5 +1,5 @@
 # 200SXProject Website - ASP.NET
-My website converted to ASP.NET MVC; DB inserts, services, form handlings and other.
+My website converted to ASP.NET MVC; DB operations, services, validations, user base, form handlings and others.
 
 Website has a user base functionality, wherein registered users are able to access an app where they can submit their own builds with pictures and description, and where other registered users can comment on; an email is sent to notify the build owner if there are new comments added. The comment owner can also delete his/her comment with a simple click.
 
