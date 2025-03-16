@@ -109,9 +109,13 @@
 					<a href="/newsletter/create-newsletter-admin" class="btn-save" role="button">Create Newsletter</a>
 					<br><br>
 					<a href="/pendingorders/get-all-orders-admin" class="btn-save" role="button">Orders</a>
+					<br><br>
+					<button id="togglePendingChats" class="btn-save" role="button">Pending Chats</button>
 				</header>				
 				<br>				
 			</article>
+			<div id="pendingChatsContainer" style="display: none;"></div>
+			<div id="chatSessionsContainer"></div>
 		</div>
 
 		<!-- Footer -->
@@ -133,6 +137,7 @@
 	<script src="~/assets/js/util.js" asp-append-version="true"></script>
 	<script src="~/assets/js/main.js" asp-append-version="true"></script>
 	<script src="~/assets/js/bootstrap.min.js" asp-append-version="true"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js" asp-append-version="true"></script>
 	<script src="~/js/Areas/Account/AdminDash/bundle.min.js" asp-append-version="true"></script>
 </body>
 </html>

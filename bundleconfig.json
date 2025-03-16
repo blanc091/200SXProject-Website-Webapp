@@ -7,7 +7,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/cookies.js",
       "wwwroot/js/floatLoginBtn.js",
-      "wwwroot/js/getClientTime.js"
+      "wwwroot/js/getClientTime.js",
+      "wwwroot/js/chatBox.js"
       //"wwwroot/js/newsletterValidator.js"
     ],
     "minify": {
@@ -154,7 +155,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
-      "wwwroot/js/getClientTime.js"
+      "wwwroot/js/getClientTime.js",
+      "wwwroot/js/adminChatBox.js"
     ],
     "minify": {
       "enabled": true,

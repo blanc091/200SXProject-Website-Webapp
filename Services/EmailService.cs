@@ -17,12 +17,120 @@ namespace _200SXContact.Services
         private readonly ILoggerService _loggerService;
         private readonly NetworkCredential _credentials;
         private readonly IConfiguration _configuration;
-        public EmailService(ILoggerService loggerService, IOptions<AppSettings> appSettings, NetworkCredential credentials, IConfiguration configuration)
+        private readonly AdminSettings _adminSettings;
+        public EmailService(ILoggerService loggerService, IOptions<AdminSettings> adminSettings, IOptions<AppSettings> appSettings, NetworkCredential credentials, IConfiguration configuration)
         {
             _loggerService = loggerService;
             _configuration = configuration;
             EmailSettings emailSettings = appSettings.Value.EmailSettings;
             _credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
+            _adminSettings = adminSettings.Value;
+        }
+        public async Task NotifyNewChatSessionAsync(string sessionId)
+        {
+            await _loggerService.LogAsync("Chat box || Sending chat notification to admin", "Info", "");
+
+            using SmtpClient smtpClient = new SmtpClient
+            {
+                Host = "mail5019.site4now.net",
+                Port = 587,
+                EnableSsl = true,
+                Credentials = _credentials
+            };
+            string body = $@"
+                <!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <style>
+                        body {{
+                            font-family: 'Helvetica', 'Roboto', sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #2c2c2c; 
+                            color: #ffffff; 
+                        }}
+                        .container {{
+                            width: 100%;
+                            max-width: 600px;
+                            margin: 0 auto;
+                            padding: 20px;
+                            background-color: #3c3c3c;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                        }}
+                        .header {{
+                            text-align: center;
+                        }}
+                        .header img {{
+                            max-width: 100%;
+                            height: auto;
+                            border-radius: 8px;
+                        }}
+                        h1 {{
+                            color: #f5f5f5;
+                            font-size: 24px;
+				            font-family: 'Helvetica', 'Roboto', sans-serif;
+				            margin: 20px 0;
+                        }}
+                        p {{
+                            line-height: 1.6;
+                            margin: 10px 0;
+				            color: #f5f5f5;
+				            font-family: 'Helvetica', 'Roboto', sans-serif;
+                        }}
+                        .button {{
+                            display: inline-block;
+                            padding: 10px 20px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            color: #ffffff;
+                            background-color: #d0bed1;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            transition: background-color 0.3s ease;
+                        }}
+                        .button:hover {{
+                            background-color: #966b91; 
+                        }}
+                        .footer {{
+                            text-align: center;
+                            margin-top: 20px;
+                            font-size: 12px;
+                            color: #b0b0b0; 
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <a href=""https://www.200sxproject.com"" target=""_blank"">
+					            <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				            </a>
+                        </div>
+                        <h1>New comment added</h1>
+                        <p>Hi there,</p>
+			            <p>A new chat has been initiated; log in to the admin dash and respond to the users.</p>                        
+                        <div class='footer'>
+                            <p>© 2024 200SX Project. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>";
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress(_credentials.UserName, "Admin"),
+                Subject = "New Chat Session Started",
+                Body = body,
+                IsBodyHtml = true
+            };
+
+            mailMessage.To.Add(_adminSettings.Email);
+
+            await smtpClient.SendMailAsync(mailMessage);
+
+            await _loggerService.LogAsync("Chat box || Sent chat notification to admin", "Info", "");
         }
         public async Task SendEmailToAdmin(ContactForm model)
         {

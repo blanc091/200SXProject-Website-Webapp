@@ -6,6 +6,120 @@
 	html5up.net | ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+/* The floating chat bubble */
+#chatBubble {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	background-color: #007bff;
+	color: #fff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+	z-index: 999;
+	font-weight: bold;
+}
+
+/* The main chat container (initially hidden) */
+#chatContainer {
+	position: fixed;
+	bottom: 80px;
+	padding: 0rem !important;
+	right: 20px;
+	width: 300px;
+	height: 400px;
+	background-color: #f1f1f1;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+	display: none; /* hidden until opened */
+	flex-direction: column; /* so header, messages, input stack vertically */
+	overflow: hidden;
+	z-index: 1000;
+	font-family: Arial, sans-serif;
+}
+
+/* Header at the top */
+#chatHeader {
+	background-color: #33343a;
+	color: white;
+	padding: 10px;
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* The close (X) button */
+#closeChat {
+	cursor: pointer;
+	font-size: 16px;
+}
+
+/* Messages area - takes remaining space */
+#chatMessages {
+	flex: 1; /* fill all available vertical space */
+	overflow-y: auto; /* scroll if too many messages */
+	background-color: #fff;
+	padding: 10px;
+}
+
+/* The actual messages list */
+#messagesList {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+	#messagesList li {
+		background: #e9ecef;
+		padding: 5px;
+		margin-bottom: 5px;
+		border-radius: 5px;
+		font-size: 14px;
+	}
+
+/* Input sections at the bottom */
+#nameInputSection,
+#messageInputSection {
+	display: flex;
+	flex-direction: row;
+	background: #f8f9fa;
+	border-top: 1px solid #ccc;
+	padding: 10px;
+	justify-content: space-between;
+}
+
+	#nameInputSection input,
+	#messageInputSection input {
+		flex: 1; /* stretch input to fill horizontal space */
+		margin-right: 6px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 6px;
+	}
+
+#saveNameButton,
+#sendButton {
+	background: #f9f9f9;
+	color: #fff;
+	border: none;
+	padding: 8px 12px;
+	cursor: pointer;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+	#saveNameButton:hover,
+	#sendButton:hover {
+		background: #4b494c;
+	}
+
 .userDash{
 	padding-top:15px;
 	padding-bottom:15px;

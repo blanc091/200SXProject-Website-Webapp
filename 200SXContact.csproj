@@ -337,6 +337,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
@@ -394,7 +395,11 @@
     <Content Remove="wwwroot/js/scrollToTop.js" />
 	<Content Remove="wwwroot/js/swiperCarousel.js" />
     <Content Remove="wwwroot/js/userProfile.js" />
-	 <Content Remove="wwwroot/js/getClientTime.js" />
+	<Content Remove="wwwroot/js/getClientTime.js" />
+	<Content Remove="wwwroot/js/chatBox.js" />
+	<Content Remove="wwwroot/js/adminChatBox.js" />
+	<Content Remove="wwwroot/js/return.js" />
+	<Content Remove="wwwroot/js/newsletterValidator.js" />
   </ItemGroup>
 
   <ItemGroup>

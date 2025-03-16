@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Models.Areas.Admin;
+using _200SXContact.Models.Areas.Chat;
 using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.Areas.Orders;
@@ -26,8 +27,8 @@ namespace _200SXContact.Data
 		public DbSet<CartItem> CartItems { get; set; }
 		public DbSet<OrderPlacement> Orders { get; set; }
 		public DbSet<OrderTracking> OrderTrackings { get; set; }
-
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 

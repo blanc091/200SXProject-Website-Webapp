@@ -157,7 +157,7 @@
 				</div>
 
 				</article>
-
+			@await Html.PartialAsync("_ChatBoxPartial")
 				<!-- Posts -->
 				<section class="posts" id="posts">
 				<article>
@@ -886,8 +886,9 @@
 		<script src="~/assets/js/breakpoints.min.js" asp-append-version="true"></script>
 		<script src="~/assets/js/util.js" asp-append-version="true"></script>
 		<script src="~/assets/js/main.js" asp-append-version="true"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js" asp-append-version="true"></script>
 		<script src="https://www.google.com/recaptcha/api.js" async defer asp-append-version="true"></script>
 		<script src="~/js/recaptcha.js" asp-append-version="true"></script>
-		<script src="~/js/Areas/Home/bundle.min.js" asp-append-version="true"></script>
+		<script src="~/js/Areas/Home/bundle.min.js" asp-append-version="true"></script>	
 </body>	
 </html>

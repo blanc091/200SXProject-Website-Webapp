@@ -22,6 +22,7 @@ using _200SXContact.Queries.Areas.Newsletter;
 using System.Net;
 using Ganss.Xss;
 using _200SXContact.Models.Areas.UserContent;
+using _200SXContact.Hubs;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -101,6 +102,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 	options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._ ";
 	options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetProductsQueryHandler>());
@@ -263,7 +265,7 @@ app.MapControllerRoute(
 	pattern: "pendingorders/{action}/{id?}",
 	defaults: new { controller = "PendingOrders" });
 app.MapControllerRoute(
-	name: "account",
+	name: "account", 
 	pattern: "account/{action}/{id?}",
 	defaults: new { controller = "Account" });
 app.MapControllerRoute(
@@ -276,6 +278,7 @@ app.MapPost("/logout", async context =>
 	await context.SignOutAsync(MicrosoftAccountDefaults.AuthenticationScheme);
 	context.Response.Redirect("/");
 });
+app.MapHub<ChatHub>("/livechat");
 using (IServiceScope scope = app.Services.CreateScope())
 {
     IServiceProvider services = scope.ServiceProvider;
