@@ -28,6 +28,7 @@ namespace _200SXContact.Data
 		public DbSet<OrderPlacement> Orders { get; set; }
 		public DbSet<OrderTracking> OrderTrackings { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<ChatSession> ChatSessions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
@@ -64,6 +65,11 @@ namespace _200SXContact.Data
             modelBuilder.Entity<Product>()
 				.Property(p => p.Price)
 				.HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<ChatMessage>()
+			    .HasOne(m => m.Session)
+			    .WithMany(s => s.Messages)
+			    .HasForeignKey(m => m.SessionId);
         }
 	}
 }

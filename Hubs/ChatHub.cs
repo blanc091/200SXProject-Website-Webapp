@@ -5,6 +5,7 @@ using _200SXContact.Models.DTOs.Areas.Chat;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace _200SXContact.Hubs
 {
@@ -25,7 +26,34 @@ namespace _200SXContact.Hubs
             string sessionId = Context.ConnectionId;
             ActiveSessions[sessionId] = null;
             await Groups.AddToGroupAsync(Context.ConnectionId, sessionId);
+
+            var isAuthenticated = Context.User?.Identity?.IsAuthenticated ?? false;
+            var userName = Context.User?.Identity?.Name ?? "Anonymous";
+            var inAdminRole = Context.User?.IsInRole("Admin") ?? false;
+            Debug.WriteLine($"Connection {sessionId}: Authenticated={isAuthenticated}, UserName={userName}, InAdminRole={inAdminRole}");
+
+            if (isAuthenticated && inAdminRole)
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, "AdminGroup");
+            }
+            else
+            {
+                Debug.WriteLine($"User {userName} not added to AdminGroup.");
+            }
+
+            ChatSession newSession = new ChatSession
+            {
+                SessionId = sessionId,
+                ConnectionId = sessionId,
+                UserName = null,
+                IsAnswered = false
+            };
+
+            _context.ChatSessions.Add(newSession);
+            await _context.SaveChangesAsync();
+
             await _emailService.NotifyNewChatSessionAsync(sessionId);
+            await Clients.Group("AdminGroup").SendAsync("NewChatSession", sessionId);
             await base.OnConnectedAsync();
         }
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -42,11 +70,17 @@ namespace _200SXContact.Hubs
         public async Task SetUserName(string userName)
         {
             string sessionId = Context.ConnectionId;
-
-            if (ActiveSessions.ContainsKey(sessionId))
+            ActiveSessions[sessionId] = userName;
+            ChatSession? session = await _context.ChatSessions.FirstOrDefaultAsync(s => s.SessionId == sessionId);
+            
+            if (session != null)
             {
-                ActiveSessions[sessionId] = userName;
+                session.UserName = userName;
+                session.LastUpdatedAt = DateTime.UtcNow;
+                await _context.SaveChangesAsync();
             }
+
+            await Clients.Group("AdminGroup").SendAsync("UpdateChatSession", sessionId, userName);
         }
         public async Task SendMessage(ChatMessageDto chatMessageDto)
         {

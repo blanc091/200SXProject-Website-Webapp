@@ -234,7 +234,7 @@ app.Use(async (context, next) =>
 					"https://www.googletagmanager.com https://*.paypal.com http://*.200sxproject.com " +
 					"https://region1.google-analytics.com https://*.adtrafficquality.google https://*.stripe.com https://*.hcaptcha.com " +
 					"https://*.google.com " +
-					"https://pagead2.googlesyndication.com ws://localhost:59950; " +
+                    "https://pagead2.googlesyndication.com ws://localhost:59950 http://localhost:50747 ws://localhost:50747 wss://localhost:44393;" +
 					$"frame-src 'self' https://pagead2.googlesyndication.com " +
 					"https://*.paypal.com " +
 					"https://*.stripe.com " +

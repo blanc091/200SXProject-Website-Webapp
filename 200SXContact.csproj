@@ -400,6 +400,7 @@
 	<Content Remove="wwwroot/js/adminChatBox.js" />
 	<Content Remove="wwwroot/js/return.js" />
 	<Content Remove="wwwroot/js/newsletterValidator.js" />
+	<Content Remove="wwwroot/js/adminChatBoxCheckUserName.js" />
   </ItemGroup>
 
   <ItemGroup>

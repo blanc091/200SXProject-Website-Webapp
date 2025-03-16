@@ -5,11 +5,14 @@ using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Account;
+using _200SXContact.Models.DTOs.Areas.Chat;
 using _200SXContact.Queries.Areas.Account;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
@@ -22,7 +25,8 @@ namespace _200SXContact.Controllers.Areas.Account
 		private readonly SignInManager<User> _signInManager;
 		private readonly ILoggerService _loggerService;		
 		private readonly IMediator _mediator;
-		public AccountController(IOptions<AppSettings> appSettings, IMediator mediator, ApplicationDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, ILoggerService loggerService)
+        private readonly IMapper _mapper;
+        public AccountController(IOptions<AppSettings> appSettings, IMapper mapper, IMediator mediator, ApplicationDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, ILoggerService loggerService)
 		{
 			_context = context;
 			_userManager = userManager;
@@ -30,6 +34,7 @@ namespace _200SXContact.Controllers.Areas.Account
 			_loggerService = loggerService;
             EmailSettings emailSettings = appSettings.Value.EmailSettings;
 			_mediator = mediator;
+            _mapper = mapper;
 		}
 		[HttpGet]
 		[Route("account/admin-dashboard")]
@@ -39,8 +44,21 @@ namespace _200SXContact.Controllers.Areas.Account
 			_loggerService.LogAsync("Account || Getting admin dash page", "Info", "");
 
 			return View("~/Views/Account/AdminDash.cshtml");
-		}		
-		[HttpGet]
+		}
+        [HttpGet]
+        public async Task<IActionResult> GetPendingChatSessions()
+        {
+            await _loggerService.LogAsync("Account || Getting chat sessions for admin dash page", "Info", "");
+
+            List<Models.Areas.Chat.ChatSession> pendingSessions = await _context.ChatSessions.Where(cs => cs.IsAnswered == false).ToListAsync();
+
+            List<ChatSessionDto> pendingSessionDtos = _mapper.Map<List<ChatSessionDto>>(pendingSessions);
+
+            await _loggerService.LogAsync("Account || Got chat sessions for admin dash page", "Info", "");
+
+            return Json(pendingSessionDtos);
+        }
+        [HttpGet]
 		[Route("account/access-denied-account")]
 		[AllowAnonymous]
 		public async Task<IActionResult> AccessDenied(string returnUrl = null)

@@ -1,11 +1,9 @@
-﻿using _200SXContact.Interfaces.Areas.Chat;
-using System.ComponentModel.DataAnnotations;
+﻿using _200SXContact.Models.Areas.Chat;
 
-namespace _200SXContact.Models.Areas.Chat
+namespace _200SXContact.Models.DTOs.Areas.Chat
 {
-    public class ChatSession : IChatSession
+    public class ChatSessionDto
     {
-        [Key]
         public required string SessionId { get; set; }
         public required string ConnectionId { get; set; }
         public string? UserName { get; set; }

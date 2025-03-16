@@ -156,7 +156,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/getClientTime.js",
-      "wwwroot/js/adminChatBox.js"
+      "wwwroot/js/adminChatBox.js",
+      "wwwroot/js/adminChatBoxCheckUserName.js"
     ],
     "minify": {
       "enabled": true,

@@ -6,26 +6,39 @@
 	html5up.net | ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
-/* The floating chat bubble */
+
 #chatBubble {
 	position: fixed;
-	bottom: 20px;
-	right: 20px;
+	bottom: 150px;
+	right: -20px;
 	width: 50px;
 	height: 50px;
-	background-color: #007bff;
-	color: #fff;
-	border-radius: 50%;
+	background-color: transparent;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
 	z-index: 999;
-	font-weight: bold;
+	border-top: solid 0px !important;
 }
 
-/* The main chat container (initially hidden) */
+@media (max-width: 768px) {
+	#chatBubble {
+		position: fixed;
+		bottom: 180px;
+		right: 15px;
+		width: 50px;
+		height: 50px;
+		background-color: transparent;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		z-index: 999;
+		border-top: solid 0px !important;
+	}
+}
+
 #chatContainer {
 	position: fixed;
 	bottom: 80px;
@@ -37,14 +50,13 @@
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-	display: none; /* hidden until opened */
-	flex-direction: column; /* so header, messages, input stack vertically */
+	display: none;
+	flex-direction: column;
 	overflow: hidden;
 	z-index: 1000;
 	font-family: Arial, sans-serif;
 }
 
-/* Header at the top */
 #chatHeader {
 	background-color: #33343a;
 	color: white;
@@ -55,21 +67,18 @@
 	align-items: center;
 }
 
-/* The close (X) button */
 #closeChat {
 	cursor: pointer;
 	font-size: 16px;
 }
 
-/* Messages area - takes remaining space */
 #chatMessages {
-	flex: 1; /* fill all available vertical space */
-	overflow-y: auto; /* scroll if too many messages */
+	flex: 1;
+	overflow-y: auto;
 	background-color: #fff;
 	padding: 10px;
 }
 
-/* The actual messages list */
 #messagesList {
 	list-style: none;
 	margin: 0;
@@ -84,7 +93,6 @@
 		font-size: 14px;
 	}
 
-/* Input sections at the bottom */
 #nameInputSection,
 #messageInputSection {
 	display: flex;
@@ -97,7 +105,7 @@
 
 	#nameInputSection input,
 	#messageInputSection input {
-		flex: 1; /* stretch input to fill horizontal space */
+		flex: 1;
 		margin-right: 6px;
 		border: 1px solid #ccc;
 		border-radius: 4px;

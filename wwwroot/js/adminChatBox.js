@@ -14,9 +14,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatSessionsContainer = document.getElementById("chatSessionsContainer");
 
     const sessions = {};
-	
+
+    fetch('/Admin/GetPendingChatSessions')
+        .then(response => response.json())
+        .then(pendingSessions => {
+            pendingSessions.forEach(session => {
+                sessions[session.sessionId] = session;
+            });
+            updatePendingChats();
+        })
+        .catch(error => console.error('Error fetching pending sessions:', error));
+
     connection.on("NewChatSession", function (sessionId) {
-        sessions[sessionId] = { sessionId: sessionId, userName: "Unknown" };
+        if (!sessions[sessionId]) {
+            sessions[sessionId] = { sessionId: sessionId, userName: "Unknown", isAnswered: false };
+        }
         updatePendingChats();
     });
 

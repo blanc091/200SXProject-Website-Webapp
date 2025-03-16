@@ -36,15 +36,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     saveNameButton.addEventListener("click", function () {
-        const inputVal = userNameInput.value.trim();
-        if (inputVal !== "") {
-            userName = inputVal;
-            localStorage.setItem("chatUserName", userName);
+    const inputVal = userNameInput.value.trim();
+    if (inputVal !== "") {
+        userName = inputVal;
 
-            nameInputSection.style.display = "none";
-            messageInputSection.style.display = "flex";
-        }
-    });
+        localStorage.setItem("chatUserName", userName);
+
+        connection.invoke("SetUserName", userName)
+            .catch(err => console.error(err.toString()));
+
+        nameInputSection.style.display = "none";
+        messageInputSection.style.display = "flex";
+    }
+	});
 
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("/livechat")
