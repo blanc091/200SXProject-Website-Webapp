@@ -1,16 +1,13 @@
-﻿@{
-    ViewData["Title"] = "Admin Chat Panel";
-}
-<div id="adminChatContainer">
-    <div id="adminChatHeader">
+﻿<div id="chatContainer">
+    <div id="chatHeader">
         Admin Chat Panel
-        <span id="adminCloseChat" title="Close">✖</span>
+        <span id="closeChat" title="Close">✖</span>
     </div>
-    <div id="adminChatMessages">
-        <ul id="adminMessagesList"></ul>
+    <div id="chatMessages">
+        <ul id="messagesList"></ul>
     </div>
-    <div id="adminChatInput">
-        <input type="text" id="adminMessageInput" placeholder="Your reply" />
-        <button id="adminSendButton">Send</button>
+    <div id="messageInputSection">
+        <input type="text" id="messageInput" placeholder="Your reply" />
+        <button id="sendButton">Send</button>
     </div>
 </div>

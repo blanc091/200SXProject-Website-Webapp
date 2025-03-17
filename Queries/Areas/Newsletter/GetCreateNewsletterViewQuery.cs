@@ -98,7 +98,7 @@ namespace _200SXContact.Queries.Areas.Newsletter
 							<a href='https://www.200sxproject.com/newsletter/unsubscribe?email={EMAIL}' class='unsubscribe'>Unsubscribe here</a>
 						</p>
                         <div class='footer'>
-                            <p>© 2024 200SX Project. All rights reserved.</p>
+                            <p>© 2025 200SX Project. All rights reserved.</p>
                         </div>
                     </div>
                 </body>

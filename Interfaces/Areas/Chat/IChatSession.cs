@@ -6,6 +6,7 @@
         string ConnectionId { get; set; }
         string? UserName { get; set; }
         bool IsAnswered { get; set; }
+        string UserId { get; set; }
         DateTime CreatedAt { get; set; }
         DateTime? LastUpdatedAt { get; set; }
     }

@@ -1,5 +1,5 @@
 ﻿using _200SXContact.Models.Areas.Chat;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace _200SXContact.Models.DTOs.Areas.Chat
 {
@@ -10,6 +10,7 @@ namespace _200SXContact.Models.DTOs.Areas.Chat
         public required string Message { get; set; }
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
         public string SessionId { get; set; } = null!;
+        [JsonIgnore]
         public virtual ChatSession? Session { get; set; }
     }
 }

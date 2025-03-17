@@ -135,7 +135,7 @@ namespace _200SXContact.Commands.Areas.Account
                 <p>If you did not request this, you can safely ignore this email.</p>
                 <p>Thank you !</p>
                 <div class='footer'>
-                    <p>© 2024 200SX Project. All rights reserved.</p>
+                    <p>© 2025 200SX Project. All rights reserved.</p>
                 </div>
             </div>
         </body>

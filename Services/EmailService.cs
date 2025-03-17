@@ -113,7 +113,7 @@ namespace _200SXContact.Services
                         <p>Hi there,</p>
 			            <p>A new chat has been initiated; log in to the admin dash and respond to the users.</p>                        
                         <div class='footer'>
-                            <p>© 2024 200SX Project. All rights reserved.</p>
+                            <p>© 2025 200SX Project. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
@@ -231,7 +231,7 @@ namespace _200SXContact.Services
             sb.AppendLine("        </table>");
             sb.AppendLine("        <p>Thank you !</p>");
             sb.AppendLine("        <div class='footer'>");
-            sb.AppendLine("            <p>© 2024 200SX Project. All rights reserved.</p>");
+            sb.AppendLine("            <p>© 2025 200SX Project. All rights reserved.</p>");
             sb.AppendLine("        </div>");
             sb.AppendLine("    </div>");
             sb.AppendLine("</body>");
@@ -345,7 +345,7 @@ namespace _200SXContact.Services
 				            <a href='{link}' target='_blank'>Click here to access your build page.</a>
 			            </p>
                         <div class='footer'>
-                            <p>© 2024 200SX Project. All rights reserved.</p>
+                            <p>© 2025 200SX Project. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
@@ -414,7 +414,7 @@ namespace _200SXContact.Services
                 sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Please make sure you take the necessary actions. Remember you can log into your profile and check your registered items in MaintenApp dashboard.</p></h2>");
                 sb.AppendLine("        <p>Thank you !</p>");
                 sb.AppendLine("        <div class='footer'>");
-                sb.AppendLine("            <p>© 2024 200SX Project. All rights reserved.</p>");
+                sb.AppendLine("            <p>© 2025 200SX Project. All rights reserved.</p>");
                 sb.AppendLine("        </div>");
                 sb.AppendLine("    </div>");
                 sb.AppendLine("</body>");

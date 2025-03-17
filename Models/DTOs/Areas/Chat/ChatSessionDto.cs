@@ -8,6 +8,7 @@ namespace _200SXContact.Models.DTOs.Areas.Chat
         public required string ConnectionId { get; set; }
         public string? UserName { get; set; }
         public bool IsAnswered { get; set; } = false;
+        public string? UserId { get; set; }
         public virtual ICollection<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? LastUpdatedAt { get; set; }

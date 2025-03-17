@@ -1,97 +1,79 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded.");
+
     const chatBubble = document.getElementById("chatBubble");
     const chatContainer = document.getElementById("chatContainer");
     const closeChat = document.getElementById("closeChat");
-
+    
     const nameInputSection = document.getElementById("nameInputSection");
-    const userNameInput = document.getElementById("userNameInput");
-    const saveNameButton = document.getElementById("saveNameButton");
-
+    if (nameInputSection) {
+        console.log("Hiding name input section.");
+        nameInputSection.style.display = "none";
+    }
+    
     const messageInputSection = document.getElementById("messageInputSection");
     const messageInput = document.getElementById("messageInput");
     const sendButton = document.getElementById("sendButton");
-
     const messagesList = document.getElementById("messagesList");
 
-    let userName = null;
-
-    const storedName = localStorage.getItem("chatUserName");
-    if (storedName && storedName.trim() !== "") {
-        userName = storedName.trim();
-        nameInputSection.style.display = "none";
-        messageInputSection.style.display = "flex";
-    } else {
-        nameInputSection.style.display = "flex";
-        messageInputSection.style.display = "none";
-    }
-
     chatBubble.addEventListener("click", function () {
+        console.log("Chat bubble clicked.");
         chatContainer.style.display = "flex";
         chatBubble.style.display = "none";
     });
 
     closeChat.addEventListener("click", function () {
+        console.log("Chat close clicked.");
         chatContainer.style.display = "none";
         chatBubble.style.display = "flex";
     });
-
-    saveNameButton.addEventListener("click", function () {
-    const inputVal = userNameInput.value.trim();
-    if (inputVal !== "") {
-        userName = inputVal;
-
-        localStorage.setItem("chatUserName", userName);
-
-        connection.invoke("SetUserName", userName)
-            .catch(err => console.error(err.toString()));
-
-        nameInputSection.style.display = "none";
-        messageInputSection.style.display = "flex";
-    }
-	});
 
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("/livechat")
         .build();
 
+    console.log("Starting connection...");
     connection.start()
         .then(() => {
+            console.log("SignalR connection started. Connection ID:", connection.connectionId);
             connection.invoke("LoadPreviousMessages")
-                .catch(err => console.error(err.toString()));
+                .then(() => console.log("LoadPreviousMessages invoked successfully."))
+                .catch(err => console.error("Error invoking LoadPreviousMessages:", err.toString()));
         })
-        .catch(err => console.error(err.toString()));
+        .catch(err => console.error("Error starting connection:", err.toString()));
 
     sendButton.addEventListener("click", function () {
-        if (!userName) {
-            alert("Please set your name first.");
+        const message = messageInput.value.trim();
+        if (message === "") {
+            console.log("Empty message; not sending.");
             return;
         }
-
-        const message = messageInput.value.trim();
-        if (message === "") return;
-
+        console.log("Sending message:", message);
         const chatMessageDto = {
-            userName: userName,
             message: message,
             sentAt: new Date().toISOString()
         };
 
         connection.invoke("SendMessage", chatMessageDto)
-            .catch(err => console.error(err.toString()));
+            .then(() => console.log("Message sent successfully."))
+            .catch(err => console.error("Error sending message:", err.toString()));
 
         messageInput.value = "";
     });
 
     connection.on("ReceiveMessage", function (chatMessageDto) {
+        console.log("ReceiveMessage event received:", chatMessageDto);
         addMessageToList(chatMessageDto);
     });
 
     connection.on("LoadMessages", function (messages) {
+        console.log("LoadMessages received:", messages);
         messagesList.innerHTML = "";
         messages.forEach(msg => addMessageToList(msg));
     });
 
     function addMessageToList(msg) {
+        console.log("Adding message:", msg);
         const item = document.createElement("li");
         const time = new Date(msg.sentAt).toLocaleTimeString();
         item.textContent = `[${time}] ${msg.userName}: ${msg.message}`;

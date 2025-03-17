@@ -42,15 +42,6 @@
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const documentHeight = document.documentElement.scrollHeight;
         const windowHeight = window.innerHeight;
-
-        console.log({
-            isMobile,
-            isWebView,
-            scrollTop,
-            documentHeight,
-            windowHeight,
-        });
-
         const shouldShowButton = scrollTop > (documentHeight - windowHeight) * 0.05;
         if (shouldShowButton) {
             if (button.style.visibility === 'hidden') {

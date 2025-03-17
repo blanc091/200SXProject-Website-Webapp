@@ -593,7 +593,7 @@ namespace _200SXContact.Controllers.Areas.Account
             <p>If you did not request this, you can safely ignore this email.</p>
             <p>Thank you !</p>
             <div class='footer'>
-                <p>© 2024 200SX Project. All rights reserved.</p>
+                <p>© 2025 200SX Project. All rights reserved.</p>
             </div>
         </div>
     </body>
@@ -706,7 +706,7 @@ namespace _200SXContact.Controllers.Areas.Account
             <p>If you did not sign up for this account, you can safely ignore this email.</p>
             <p>Thank you !</p>
             <div class='footer'>
-                <p>© 2024 200SX Project. All rights reserved.</p>
+                <p>© 2025 200SX Project. All rights reserved.</p>
             </div>
         </div>
     </body>

@@ -23,6 +23,8 @@ using System.Net;
 using Ganss.Xss;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Hubs;
+using _200SXContact.Helpers.Areas.Chat;
+using Microsoft.AspNetCore.SignalR;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -140,6 +142,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration);
 builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
 builder.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddSingleton<NetworkCredential>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
