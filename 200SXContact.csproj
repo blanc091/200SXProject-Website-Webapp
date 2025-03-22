@@ -323,6 +323,7 @@
     <None Include="wwwroot\images\vag-u5014-coils-and-custom-harness.jpg" />
     <None Include="wwwroot\images\xtreme-twin-clutch-kit.jpg" />
     <None Include="wwwroot\images\z32-300zx-gearbox.jpg" />
+    <None Include="wwwroot\Robots.txt" />
   </ItemGroup>
 
   <ItemGroup>
