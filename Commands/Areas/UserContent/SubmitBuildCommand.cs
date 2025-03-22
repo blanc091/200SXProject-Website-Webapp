@@ -102,6 +102,7 @@ namespace _200SXContact.Commands.Areas.UserContent
             await _context.SaveChangesAsync(cancellationToken);
 
             await _loggerService.LogAsync($"User builds || Submitted user build for {userBuild.UserId}", "Info", "");
+
             return SubmitBuildResult.Success;
         }
     }

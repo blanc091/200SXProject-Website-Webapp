@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\css\desktop.ini" />
     <Content Remove="wwwroot\favicon.png" />
   </ItemGroup>
 

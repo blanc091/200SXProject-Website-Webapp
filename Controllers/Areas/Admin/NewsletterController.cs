@@ -49,7 +49,8 @@ namespace _200SXContact.Controllers.Areas.Admin
             {
                 Email = email,
                 HoneypotSpam = honeypotSpam,
-                RecaptchaResponse = gRecaptchaResponseNewsletter
+                RecaptchaResponse = gRecaptchaResponseNewsletter,
+                IsCalledFromRegisterForm = false
             });
 
             if (result is RedirectToActionResult redirectResult)

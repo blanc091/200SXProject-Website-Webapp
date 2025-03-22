@@ -105,6 +105,10 @@
 				<!-- Register Form -->
 				<form id="registerForm" asp-controller="LoginRegister" asp-action="Register" method="post">
 					@Html.AntiForgeryToken()
+					<div style="display: none;">
+						<label for="honeypotSpam">Leave this field blank</label>
+						<input type="text" id="honeypotSpam" name="honeypotSpam" autocomplete="off" />
+					</div>
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div style="display: none;">
 						<label for="honeypotSpam">Leave this field blank</label>

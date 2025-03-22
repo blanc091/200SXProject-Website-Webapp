@@ -132,6 +132,349 @@ namespace _200SXContact.Services
 
             await _loggerService.LogAsync("Chat box || Sent chat notification to admin", "Info", "");
         }
+        public async Task SendUserDeleteEmail(string email, string resetUrl)
+        {
+            await _loggerService.LogAsync("Account || Starting sending user delete email task", "Info", "");
+
+            MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+            MailAddress toAddress = new MailAddress(email);
+            string subject = "Import Garage || Delete Your Account";
+            string body = @"
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <style>
+                body {
+                    font-family: 'Helvetica', 'Roboto', sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #2c2c2c; 
+                    color: #ffffff; 
+                }
+                .container {
+                    width: 100%;
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #3c3c3c;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                }
+                .header {
+                    text-align: center;
+                }
+                .header img {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                }
+                h1 {
+                    color: #f5f5f5;
+                    font-size: 24px;
+				    font-family: 'Helvetica', 'Roboto', sans-serif;
+				    margin: 20px 0;
+                }
+                p {
+                    line-height: 1.6;
+                    margin: 10px 0;
+				    color: #f5f5f5;
+				    font-family: 'Helvetica', 'Roboto', sans-serif;
+                }
+                .button {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #ffffff;
+                    background-color: #d0bed1;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                }
+                .button:hover {
+                    background-color: #966b91; 
+                }
+                .footer {
+                    text-align: center;
+                    margin-top: 20px;
+                    font-size: 12px;
+                    color: #b0b0b0; 
+                }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <a href=""https://www.200sxproject.com"" target=""_blank"">
+					    <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				    </a>
+                </div>
+                <h1>Account Deletion</h1>
+                <p>Hi there,</p>
+                <p>Click the link below to delete your account and all related info; this action cannot be undone:</p>
+                <p>
+                    <a href='" + resetUrl + @"' class='button'>Delete Your Account</a>
+                </p>
+                <p>If you did not request this, you can safely ignore this email.</p>
+                <p>Thank you !</p>
+                <div class='footer'>
+                    <p>© 2025 200SX Project. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>";
+
+            using (SmtpClient smtpClient = new SmtpClient
+            {
+                Host = "mail5019.site4now.net",
+                Port = 587,
+                EnableSsl = true,
+                Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
+            })
+            {
+                using (MailMessage message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                {
+                    await smtpClient.SendMailAsync(message);
+
+                    await _loggerService.LogAsync("Account || Finished sending user delete email task", "Info", "");
+                }
+            }
+        }
+        public async Task SendPasswordResetEmail(string email, string resetUrl)
+        {
+            await _loggerService.LogAsync("Login Register || Starting sending password reset email task", "Info", "");
+
+            MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+            MailAddress toAddress = new MailAddress(email);
+            string subject = "Import Garage || Reset Your Password";
+            string body = @"
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <style>
+            body {
+                font-family: 'Helvetica', 'Roboto', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #2c2c2c; 
+                color: #ffffff; 
+            }
+            .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #3c3c3c;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .header {
+                text-align: center;
+            }
+            .header img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+            h1 {
+                color: #f5f5f5;
+                font-size: 24px;
+				font-family: 'Helvetica', 'Roboto', sans-serif;
+				margin: 20px 0;
+            }
+            p {
+                line-height: 1.6;
+                margin: 10px 0;
+				color: #f5f5f5;
+				font-family: 'Helvetica', 'Roboto', sans-serif;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #ffffff;
+                background-color: #d0bed1;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+            .button:hover {
+                background-color: #966b91; 
+            }
+            .footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 12px;
+                color: #b0b0b0; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <a href=""https://www.200sxproject.com"" target=""_blank"">
+					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				</a>
+            </div>
+            <h1>Account Recovery</h1>
+            <p>Hi there,</p>
+            <p>Click the link below to reset and assign a new password for <b>MaintenApp</b>:</p>
+            <p>
+                <a href='" + resetUrl + @"' class='button'>Recover Your Account</a>
+            </p>
+            <p>If you did not request this, you can safely ignore this email.</p>
+            <p>Thank you !</p>
+            <div class='footer'>
+                <p>© 2025 200SX Project. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+            using (var smtpClient = new SmtpClient
+            {
+                Host = "mail5019.site4now.net",
+                Port = 587,
+                EnableSsl = true,
+                Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
+            })
+            {
+                using (MailMessage message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                {
+                    await smtpClient.SendMailAsync(message);
+
+                    await _loggerService.LogAsync("Login Register || Finished sending password reset email task", "Info", "");
+                }
+            }
+        }
+        public async Task SendVerificationEmail(string email, string verificationUrl)
+        {
+            await _loggerService.LogAsync("Login Register || Starting sending user verification email", "Info", "");
+
+            MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+            MailAddress toAddress = new MailAddress(email);
+            string subject = "Import Garage || Verify your email";
+            string body = @"
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <style>
+            body {
+                font-family: 'Helvetica', 'Roboto', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #2c2c2c; 
+                color: #ffffff; 
+            }
+            .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #3c3c3c;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .header {
+                text-align: center;
+            }
+            .header img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+            h1 {
+                color: #f5f5f5;
+                font-size: 24px;
+				font-family: 'Helvetica', 'Roboto', sans-serif;
+				margin: 20px 0;
+            }
+            p {
+                line-height: 1.6;
+                margin: 10px 0;
+				color: #f5f5f5;
+				font-family: 'Helvetica', 'Roboto', sans-serif;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #ffffff;
+                background-color: #d0bed1;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+            .button:hover {
+                background-color: #966b91; 
+            }
+            .footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 12px;
+                color: #b0b0b0; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <a href=""https://www.200sxproject.com"" target=""_blank"">
+					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+				</a>
+            </div>
+            <h1>Account Activation</h1>
+            <p>Hi there,</p>
+            <p>Thank you for registering your account for <b>MaintenApp</b> ! To activate your account, please click the button below:</p>
+            <p>
+                <a href='" + verificationUrl + @"' class='button'>Activate Your Account</a>
+            </p>
+            <p>If you did not sign up for this account, you can safely ignore this email.</p>
+            <p>Thank you !</p>
+            <div class='footer'>
+                <p>© 2025 200SX Project. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+            using (SmtpClient smtpClient = new SmtpClient
+            {
+                Host = "mail5019.site4now.net",
+                Port = 587,
+                EnableSsl = true,
+                Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
+            })
+            {
+                using (MailMessage message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                {
+                    await smtpClient.SendMailAsync(message);
+
+                    await _loggerService.LogAsync("Login Register || Finished sending user verification email", "Info", "");
+                }
+            }
+        }
         public async Task SendEmailToAdmin(ContactForm model)
         {
             try

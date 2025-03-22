@@ -12,5 +12,8 @@ namespace _200SXContact.Interfaces.Areas.Admin
         Task SendCommentNotification(string userEmail, BuildComment comment);
         Task SendOrderConfirmEmail(string email, OrderPlacement order);
         Task NotifyNewChatSessionAsync(string sessionId);
+        Task SendVerificationEmail(string email, string verificationUrl);
+        Task SendPasswordResetEmail(string email, string resetUrl);
+        Task SendUserDeleteEmail(string email, string resetUrl);
     }
 }

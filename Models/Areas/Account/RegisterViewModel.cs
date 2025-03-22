@@ -1,10 +1,12 @@
-﻿namespace _200SXContact.Models.Areas.Account
+﻿using _200SXContact.Interfaces.Areas.Account;
+
+namespace _200SXContact.Models.Areas.Account
 {
-	public class RegisterViewModel
+	public class RegisterViewModel : IRegister
 	{
-		public string Username { get; set; }
-		public string Password { get; set; }
-		public string Email { get; set; }
+		public required string Username { get; set; }
+		public required string Password { get; set; }
+		public required string Email { get; set; }
 		public bool SubscribeToNewsletter { get; set; }
 		public string honeypotSpam { get; set; }
 	}

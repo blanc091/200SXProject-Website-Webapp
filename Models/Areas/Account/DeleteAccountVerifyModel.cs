@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-public class DeleteAccountVerifyModel
+﻿using _200SXContact.Interfaces.Areas.Account;
+using System.ComponentModel.DataAnnotations;
+public class DeleteAccountVerifyModel : IDeleteAccountVerify
 {
 	[Required]
 	[EmailAddress]

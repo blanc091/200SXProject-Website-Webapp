@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using _200SXContact.Interfaces.Areas.Account;
+using System.ComponentModel.DataAnnotations;
 
 namespace _200SXContact.Models.Areas.Account
 {
-	public class ResetPasswordViewModel
+	public class ResetPasswordViewModel : IResetPassword
 	{
 		[Required(ErrorMessage = "Email is required.")]
 		[EmailAddress(ErrorMessage = "Invalid email address !")]

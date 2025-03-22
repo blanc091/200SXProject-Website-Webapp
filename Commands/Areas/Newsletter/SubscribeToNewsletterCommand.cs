@@ -14,6 +14,7 @@ namespace _200SXContact.Commands.Areas.Newsletter
         public required string Email { get; set; }
         public required string HoneypotSpam { get; set; }
         public required string RecaptchaResponse { get; set; }
+        public required bool IsCalledFromRegisterForm { get; set; }
     }
     public class SubscribeToNewsletterCommandHandler : IRequestHandler<SubscribeToNewsletterCommand, IActionResult>
     {
@@ -37,7 +38,7 @@ namespace _200SXContact.Commands.Areas.Newsletter
                 return new BadRequestObjectResult("Spam detected");
             }
 
-            if (string.IsNullOrWhiteSpace(request.RecaptchaResponse) || !await VerifyRecaptchaAsync(request.RecaptchaResponse))
+            if (!request.IsCalledFromRegisterForm && (string.IsNullOrWhiteSpace(request.RecaptchaResponse) || !await VerifyRecaptchaAsync(request.RecaptchaResponse)))
             {
                 return new RedirectToActionResult("Index", "Home", new { IsNewsletterError = "yes", Message = "Failed reCAPTCHA validation." });
             }

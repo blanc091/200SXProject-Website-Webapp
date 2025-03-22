@@ -25,6 +25,12 @@ using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Hubs;
 using _200SXContact.Helpers.Areas.Chat;
 using Microsoft.AspNetCore.SignalR;
+using _200SXContact.Commands.Areas.Account;
+using _200SXContact.Commands.Areas.MaintenApp;
+using _200SXContact.Queries.Areas.UserContent;
+using _200SXContact.Queries.Areas.MaintenApp;
+using _200SXContact.Commands.Areas.UserContent;
+using _200SXContact.Queries.Areas.Account;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -126,6 +132,22 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Se
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<SubscribeToNewsletterCommandHandler>());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<UnsubscribeFromNewsletterCommandHandler>());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<SendEmailCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<RegisterUserCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<DeleteAccountCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<DeleteAccountVerifyCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateTestUserCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateEntryCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<UpdateEntryCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserBuildsQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserBuildQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserDashboardQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<SubmitBuildCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<DeleteCommentCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddCommentCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserProfileQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<ForgotPasswordCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<ResetPasswordCommandHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<VerifyEmailCommandHandler>());
 builder.Services.AddSession(options =>
 {
 	options.IdleTimeout = TimeSpan.FromMinutes(30);

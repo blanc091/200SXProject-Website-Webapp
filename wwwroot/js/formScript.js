@@ -68,6 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/register-new-account':
             scrollToElement("registerFormSpan");
             break;
+		case '/register-an-account':
+            scrollToElement("registerFormSpan");
+            break;
         case '/newsletter/subscribe':
             scrollToElement("newsletterFormSpan");
             break;

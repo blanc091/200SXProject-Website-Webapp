@@ -12,12 +12,12 @@ namespace _200SXContact.Commands.Areas.UserContent
         public required string UserId { get; set; }
         public required string UserName { get; set; }
     }
-    public class AddCommentHandler : IRequestHandler<AddCommentCommand, int>
+    public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, int>
     {
         private readonly ApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IEmailService _emailService;
-        public AddCommentHandler(ApplicationDbContext context, ILoggerService loggerService, IEmailService emailService)
+        public AddCommentCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IEmailService emailService)
         {
             _context = context;
             _loggerService = loggerService;

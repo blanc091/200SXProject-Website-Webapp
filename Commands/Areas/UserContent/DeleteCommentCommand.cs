@@ -10,11 +10,11 @@ namespace _200SXContact.Commands.Areas.UserContent
         public required string UserId { get; set; }
         public required string UserBuildId { get; set; }
     }
-    public class DeleteCommentHandler : IRequestHandler<DeleteCommentCommand, bool>
+    public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, bool>
     {
         private readonly ApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
-        public DeleteCommentHandler(ApplicationDbContext context, ILoggerService loggerService)
+        public DeleteCommentCommandHandler(ApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;
