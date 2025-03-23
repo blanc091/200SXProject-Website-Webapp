@@ -1,6 +1,4 @@
 ﻿using _200SXContact.Commands.Areas.UserContent;
-using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +8,9 @@ namespace _200SXContact.Controllers.Areas.UserContent
 {
     public class CommentsController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly IEmailService _emailService;
-		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-		public CommentsController(ApplicationDbContext context, IMediator mediator, IEmailService emailService, ILoggerService loggerService)
+		public CommentsController(IMediator mediator)
 		{
-			_context = context;
-			_emailService = emailService;
-			_loggerService = loggerService;
 			_mediator = mediator;
 		}
 		[HttpPost]

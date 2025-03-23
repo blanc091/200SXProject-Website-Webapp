@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -17,9 +18,9 @@ namespace _200SXContact.Commands.Areas.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
-        public DeleteAccountCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext context, ILoggerService loggerService)
+        public DeleteAccountCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager, IApplicationDbContext context, ILoggerService loggerService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

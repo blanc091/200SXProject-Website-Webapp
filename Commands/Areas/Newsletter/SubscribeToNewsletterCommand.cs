@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Newsletter;
 using AutoMapper;
 using MediatR;
@@ -18,11 +19,11 @@ namespace _200SXContact.Commands.Areas.Newsletter
     }
     public class SubscribeToNewsletterCommandHandler : IRequestHandler<SubscribeToNewsletterCommand, IActionResult>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public SubscribeToNewsletterCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IMapper mapper, IConfiguration configuration)
+        public SubscribeToNewsletterCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _loggerService = loggerService;

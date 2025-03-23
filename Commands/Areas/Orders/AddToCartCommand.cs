@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.Products;
 using _200SXContact.Models.DTOs.Areas.Orders;
@@ -17,10 +18,10 @@ namespace _200SXContact.Commands.Areas.Orders
     }
     public class AddToCartCommandHandler : IRequestHandler<AddToCartCommand, CartItemDto?>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
-        public AddToCartCommandHandler(ApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
+        public AddToCartCommandHandler(IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
         {
             _context = context;
             _mapper = mapper;

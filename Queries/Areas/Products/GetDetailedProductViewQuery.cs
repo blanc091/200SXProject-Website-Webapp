@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.DTOs.Areas.Products;
 using AutoMapper;
 using MediatR;
@@ -15,8 +15,8 @@ namespace _200SXContact.Queries.Areas.Products
     {
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        private readonly ApplicationDbContext _context;
-        public GetDetailedProductViewQueryHandler(ILoggerService loggerService, IMapper mapper, ApplicationDbContext context)
+        private readonly IApplicationDbContext _context;
+        public GetDetailedProductViewQueryHandler(ILoggerService loggerService, IMapper mapper, IApplicationDbContext context)
         {
             _loggerService = loggerService;
             _mapper = mapper;

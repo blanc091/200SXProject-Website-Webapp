@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.DTOs.Areas.UserContent;
 using AutoMapper;
 using MediatR;
@@ -10,10 +10,10 @@ namespace _200SXContact.Queries.Areas.UserContent
     public class GetUserBuildsQuery : IRequest<List<UserBuildDto>> { }
     public class GetUserBuildsQueryHandler : IRequestHandler<GetUserBuildsQuery, List<UserBuildDto>>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
-        public GetUserBuildsQueryHandler(ApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
+        public GetUserBuildsQueryHandler(IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
         {
             _context = context;
             _mapper = mapper;

@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.DTOs.Areas.Products;
 using AutoMapper;
 using MediatR;
@@ -10,10 +10,10 @@ namespace _200SXContact.Queries.Areas.Products
     public class GetProductsQuery : IRequest<List<ProductDto?>?> {}
     public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<ProductDto?>?>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public GetProductsQueryHandler(ApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
+        public GetProductsQueryHandler(IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;

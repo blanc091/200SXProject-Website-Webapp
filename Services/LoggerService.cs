@@ -5,16 +5,17 @@ using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Admin;
 using _200SXContact.Models.Areas.Admin;
 using System.Net;
+using _200SXContact.Interfaces.Areas.Data;
 
 namespace _200SXContact.Services
 {    
     public class LoggerService : ILoggerService
     {
         private readonly DbContextOptions<ApplicationDbContext> _options;
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly NetworkCredential _credentials;
         private readonly IMapper _mapper;
-        public LoggerService(IMapper mapper, DbContextOptions<ApplicationDbContext> options, ApplicationDbContext context, NetworkCredential credentials)
+        public LoggerService(IMapper mapper, DbContextOptions<ApplicationDbContext> options, IApplicationDbContext context, NetworkCredential credentials)
         {
             _options = options;
             _context = context;

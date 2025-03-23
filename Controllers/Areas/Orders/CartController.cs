@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
@@ -9,17 +8,18 @@ using _200SXContact.Commands.Areas.Orders;
 using AutoMapper;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
+using _200SXContact.Interfaces.Areas.Data;
 
 namespace _200SXContact.Controllers.Areas.Orders
 {
     public class CartController : Controller
 	{
-		private readonly ApplicationDbContext _context;
+		private readonly IApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-		public CartController(ApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMediator mediator, IMapper mapper)
+		public CartController(IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMediator mediator, IMapper mapper)
 		{
 			_context = context;
 			_userManager = userManager;

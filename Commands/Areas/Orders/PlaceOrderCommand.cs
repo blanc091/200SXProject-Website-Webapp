@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
@@ -21,13 +22,13 @@ namespace _200SXContact.Commands.Areas.Orders
     }
     public class PlaceOrderCommandHandler : IRequestHandler<PlaceOrderCommand, int>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IEmailService _emailService;
         private readonly AdminSettings _adminSettings;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public PlaceOrderCommandHandler(ApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
+        public PlaceOrderCommandHandler(IApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;

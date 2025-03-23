@@ -5,6 +5,7 @@ using _200SXContact.Interfaces.Areas.Admin;
 using AutoMapper;
 using FluentValidation;
 using _200SXContact.Models.Areas.Products;
+using _200SXContact.Interfaces.Areas.Data;
 
 namespace _200SXContact.Commands.Areas.Products
 {
@@ -15,11 +16,11 @@ namespace _200SXContact.Commands.Areas.Products
     }
     public class AddProductCommandHandler : IRequestHandler<AddProductCommand, bool>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IWebHostEnvironment _environment;
         private readonly IMapper _mapper;
-        public AddProductCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
+        public AddProductCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;

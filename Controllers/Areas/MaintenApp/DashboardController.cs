@@ -1,12 +1,9 @@
 ﻿using _200SXContact.Commands.Areas.MaintenApp;
-using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.MaintenApp;
-using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
 using _200SXContact.Queries.Areas.MaintenApp;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -14,14 +11,10 @@ namespace _200SXContact.Controllers.Areas.MaintenApp
 {
     public class DashboardController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly UserManager<User> _userManager;
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-		public DashboardController(ApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMediator mediator)
+		public DashboardController(ILoggerService loggerService, IMediator mediator)
 		{
-			_context = context;
-			_userManager = userManager;
 			_loggerService = loggerService;
 			_mediator = mediator;
 		}

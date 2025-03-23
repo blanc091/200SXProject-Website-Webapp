@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
@@ -17,11 +18,11 @@ namespace _200SXContact.Commands.Areas.MaintenApp
     }
     public class CreateEntryCommandHandler : IRequestHandler<CreateEntryCommand, CreateEntryResult>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
 
-        public CreateEntryCommandHandler(ApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
+        public CreateEntryCommandHandler(IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
         {
             _context = context;
             _mapper = mapper;

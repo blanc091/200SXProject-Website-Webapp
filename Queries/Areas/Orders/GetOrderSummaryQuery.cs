@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using AutoMapper;
@@ -15,12 +15,12 @@ namespace _200SXContact.Queries.Areas.Orders
     }
     public class GetOrderSummaryQueryHandler : IRequestHandler<GetOrderSummaryQuery, OrderUserDashDto?>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public GetOrderSummaryQueryHandler(ApplicationDbContext context, IMapper mapper, ILoggerService loggerService, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public GetOrderSummaryQueryHandler(IApplicationDbContext context, IMapper mapper, ILoggerService loggerService, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;

@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.UserContent;
 using MediatR;
@@ -15,11 +16,11 @@ namespace _200SXContact.Commands.Areas.UserContent
     }
     public class SubmitBuildCommandHandler : IRequestHandler<SubmitBuildCommand, SubmitBuildResult>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ILoggerService _loggerService;
 
-        public SubmitBuildCommandHandler(ApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService)
+        public SubmitBuildCommandHandler(IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService)
         {
             _context = context;
             _userManager = userManager;

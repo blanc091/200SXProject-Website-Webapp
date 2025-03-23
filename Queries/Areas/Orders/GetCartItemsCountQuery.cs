@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +11,9 @@ namespace _200SXContact.Queries.Areas.Orders
     }
     public class GetCartItemsCountQueryHandler : IRequestHandler<GetCartItemsCountQuery, int>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
-        public GetCartItemsCountQueryHandler(ApplicationDbContext context, ILoggerService loggerService)
+        public GetCartItemsCountQueryHandler(IApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;

@@ -1,4 +1,5 @@
-﻿using _200SXContact.Models.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Data;
+using _200SXContact.Models.Areas.Admin;
 using _200SXContact.Models.Areas.Chat;
 using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.Areas.Newsletter;
@@ -10,14 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
-	{
+    public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
+    {
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)
 		{
 		}
 		public DbSet<EmailLog> EmailLogs { get; set; }
-		//public new DbSet<User> Users { get; set; }
 		public DbSet<Logging> Logging { get; set; }
 		public DbSet<ReminderItem> Items { get; set; }
 		public DbSet<UserBuild> UserBuilds { get; set; }

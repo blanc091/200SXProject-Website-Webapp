@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using AutoMapper;
 using MediatR;
@@ -13,10 +13,10 @@ namespace _200SXContact.Queries.Areas.Orders
     }
     public class GetCartItemsCheckoutQueryHandler : IRequestHandler<GetCartItemsCheckoutQuery, List<CartItemDto?>?>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
-        public GetCartItemsCheckoutQueryHandler(ApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
+        public GetCartItemsCheckoutQueryHandler(IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
         {
             _context = context;
             _mapper = mapper;

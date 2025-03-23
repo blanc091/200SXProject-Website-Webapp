@@ -5,7 +5,6 @@ using MediatR;
 using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
-using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Helpers;
 
@@ -16,12 +15,8 @@ namespace _200SXContact.Controllers.Areas.Admin
 	{
 		private readonly ILoggerService _loggerService;
 		private readonly IMediator _mediator;
-        private readonly IConfiguration _configuration;
-        private readonly ApplicationDbContext _context;
-        public NewsletterController(ApplicationDbContext context, IConfiguration configuration, ILoggerService loggerService, IMediator mediator)
+        public NewsletterController(ILoggerService loggerService, IMediator mediator)
         {
-            _context = context;
-            _configuration = configuration;
             _loggerService = loggerService;
             _mediator = mediator;
         }

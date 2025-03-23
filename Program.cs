@@ -31,6 +31,7 @@ using _200SXContact.Queries.Areas.UserContent;
 using _200SXContact.Queries.Areas.MaintenApp;
 using _200SXContact.Commands.Areas.UserContent;
 using _200SXContact.Queries.Areas.Account;
+using _200SXContact.Interfaces.Areas.Data;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -155,6 +156,7 @@ builder.Services.AddSession(options =>
 	options.Cookie.IsEssential = true;
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ILoggerService, LoggerService>();
 builder.Services.AddSingleton<DueDateReminderService>();

@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,10 @@ namespace _200SXContact.Commands.Areas.MaintenApp
     }
     public class UpdateEntryCommandHandler : IRequestHandler<UpdateEntryCommand, UpdateEntryResult>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
 
-        public UpdateEntryCommandHandler(ApplicationDbContext context, ILoggerService loggerService)
+        public UpdateEntryCommandHandler(IApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;

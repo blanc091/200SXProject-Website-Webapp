@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Newsletter;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,9 @@ namespace _200SXContact.Commands.Areas.Newsletter
     }
     public class UnsubscribeFromNewsletterCommandHandler : IRequestHandler<UnsubscribeFromNewsletterCommand>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
-        public UnsubscribeFromNewsletterCommandHandler(ApplicationDbContext context, ILoggerService loggerService)
+        public UnsubscribeFromNewsletterCommandHandler(IApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;

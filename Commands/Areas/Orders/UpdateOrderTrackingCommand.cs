@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using AutoMapper;
@@ -14,10 +15,10 @@ namespace _200SXContact.Commands.Areas.Orders
     }
     public class UpdateOrderTrackingCommandHandler : IRequestHandler<UpdateOrderTrackingCommand, bool>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public UpdateOrderTrackingCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
+        public UpdateOrderTrackingCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;

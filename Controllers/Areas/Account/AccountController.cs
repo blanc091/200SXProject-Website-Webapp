@@ -2,6 +2,7 @@
 using _200SXContact.Commands.Areas.Admin;
 using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Account;
@@ -21,12 +22,12 @@ namespace _200SXContact.Controllers.Areas.Account
     public class AccountController : Controller
 	{
 		private readonly UserManager<User> _userManager;
-		private readonly ApplicationDbContext _context;
+		private readonly IApplicationDbContext _context;
 		private readonly SignInManager<User> _signInManager;
 		private readonly ILoggerService _loggerService;		
 		private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        public AccountController(IOptions<AppSettings> appSettings, IMapper mapper, IMediator mediator, ApplicationDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, ILoggerService loggerService)
+        public AccountController(IOptions<AppSettings> appSettings, IMapper mapper, IMediator mediator, IApplicationDbContext context, UserManager<User> userManager, SignInManager<User> signInManager, ILoggerService loggerService)
 		{
 			_context = context;
 			_userManager = userManager;

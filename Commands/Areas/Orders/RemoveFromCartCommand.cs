@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,9 @@ namespace _200SXContact.Commands.Areas.Orders
     }
     public class RemoveFromCartCommandHandler : IRequestHandler<RemoveFromCartCommand, bool>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
-        public RemoveFromCartCommandHandler(ApplicationDbContext context, ILoggerService loggerService)
+        public RemoveFromCartCommandHandler(IApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;

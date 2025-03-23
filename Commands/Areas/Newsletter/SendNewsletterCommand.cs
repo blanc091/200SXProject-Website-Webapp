@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using _200SXContact.Interfaces.Areas.Data;
 
 namespace _200SXContact.Commands.Areas.Newsletter
 {
@@ -16,10 +17,10 @@ namespace _200SXContact.Commands.Areas.Newsletter
     }
     public class SendNewsletterCommandHandler : IRequestHandler<SendNewsletterCommand, Unit>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly NetworkCredential _credentials;
-        public SendNewsletterCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IOptions<AppSettings> appSettings)
+        public SendNewsletterCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IOptions<AppSettings> appSettings)
         {
             _context = context;
             _loggerService = loggerService;

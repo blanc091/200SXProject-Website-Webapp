@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using MediatR;
 
 namespace _200SXContact.Commands.Areas.UserContent
@@ -12,9 +13,9 @@ namespace _200SXContact.Commands.Areas.UserContent
     }
     public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, bool>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
-        public DeleteCommentCommandHandler(ApplicationDbContext context, ILoggerService loggerService)
+        public DeleteCommentCommandHandler(IApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;

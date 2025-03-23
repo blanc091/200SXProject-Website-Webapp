@@ -1,9 +1,8 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Chat;
 using _200SXContact.Models.DTOs.Areas.Chat;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -12,11 +11,11 @@ namespace _200SXContact.Hubs
 {
     public class ChatHub : Hub
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         public static Dictionary<string, string?> ActiveSessions = new Dictionary<string, string?>();
-        public ChatHub(ApplicationDbContext context, IMapper mapper, IEmailService emailService)
+        public ChatHub(IApplicationDbContext context, IMapper mapper, IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
@@ -25,27 +24,21 @@ namespace _200SXContact.Hubs
         public override async Task OnConnectedAsync()
         {
             string connectionId = Context.ConnectionId;
-            // Log connection for debugging
             var userName = Context.User?.Identity?.Name ?? "Unknown";
             Debug.WriteLine($"Connection {connectionId}: Authenticated user: {userName}");
 
-            // Ensure the user is authenticated
             if (string.IsNullOrEmpty(userName))
             {
-                // Optionally, disconnect or throw an error
                 throw new HubException("Unauthenticated users are not allowed to connect.");
             }
 
-            // Add connection to a group using the persistent identifier
             await Groups.AddToGroupAsync(connectionId, userName);
 
-            // For admin role, add to AdminGroup if needed
             if (Context.User.IsInRole("Admin"))
             {
                 await Groups.AddToGroupAsync(connectionId, "AdminGroup");
             }
 
-            // Create or update the chat session in the database using the authenticated user's ID
             var existingSession = await _context.ChatSessions.FirstOrDefaultAsync(cs => cs.UserId == userName);
             if (existingSession == null)
             {
@@ -54,7 +47,7 @@ namespace _200SXContact.Hubs
                     SessionId = userName,
                     ConnectionId = connectionId,
                     UserId = userName,
-                    UserName = null, // or set to userName if you prefer
+                    UserName = null,
                     IsAnswered = false,
                     CreatedAt = DateTime.UtcNow
                 };
@@ -67,7 +60,6 @@ namespace _200SXContact.Hubs
             }
             await _context.SaveChangesAsync();
 
-            // Optionally, send notifications to admin group
             await _emailService.NotifyNewChatSessionAsync(connectionId);
             await Clients.Group("AdminGroup").SendAsync("NewChatSession", connectionId);
 

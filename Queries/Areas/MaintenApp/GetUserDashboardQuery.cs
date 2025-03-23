@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
 using AutoMapper;
@@ -17,10 +17,10 @@ namespace _200SXContact.Queries.Areas.MaintenApp
     public class GetUserDashboardQueryHandler : IRequestHandler<GetUserDashboardQuery, (GetUserDashboardResult, List<ReminderItemDto>)>
     {
         private readonly UserManager<User> _userManager;
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public GetUserDashboardQueryHandler(UserManager<User> userManager, ApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
+        public GetUserDashboardQueryHandler(UserManager<User> userManager, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
         {
             _userManager = userManager;
             _context = context;

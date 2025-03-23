@@ -1,5 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.UserContent;
@@ -17,11 +17,11 @@ namespace _200SXContact.Queries.Areas.Account
     }
     public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, UserProfileDto?>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public GetUserProfileQueryHandler(ApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMapper mapper)
+        public GetUserProfileQueryHandler(IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;

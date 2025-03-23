@@ -1,5 +1,4 @@
-﻿using _200SXContact.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using _200SXContact.Interfaces.Areas.Admin;
@@ -14,13 +13,11 @@ namespace _200SXContact.Controllers.Areas.UserContent
 {
     public class UserBuildsController : Controller
 	{
-		private readonly ApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly UserManager<User> _userManager;
 		private readonly IMediator _mediator;
-		public UserBuildsController(ApplicationDbContext context, ILoggerService loggerService, UserManager<User> userManager, IMediator mediator)
+		public UserBuildsController(ILoggerService loggerService, UserManager<User> userManager, IMediator mediator)
 		{
-			_context = context;
 			_userManager = userManager;
 			_loggerService = loggerService;
 			_mediator = mediator;

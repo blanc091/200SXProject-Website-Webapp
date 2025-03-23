@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
+using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using MediatR;
 
@@ -14,10 +15,10 @@ namespace _200SXContact.Commands.Areas.UserContent
     }
     public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, int>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IEmailService _emailService;
-        public AddCommentCommandHandler(ApplicationDbContext context, ILoggerService loggerService, IEmailService emailService)
+        public AddCommentCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IEmailService emailService)
         {
             _context = context;
             _loggerService = loggerService;
