@@ -19,6 +19,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const buildUpdatesLink = document.querySelector('a[asp-controller="Home"][asp-action="Index"][asp-fragment="posts"]');
+    const targetPath = '/home/index';
+
+    if (buildUpdatesLink) {
+        buildUpdatesLink.addEventListener("click", function(e) {
+            if (window.location.pathname.toLowerCase() === targetPath.toLowerCase() || window.location.pathname === '/') {
+                e.preventDefault();
+                const postsSection = document.getElementById("posts");
+                if (postsSection) {
+                    postsSection.scrollIntoView({ behavior: "smooth" });
+                }
+            }
+        });
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     var itemAddedToCart = document.body.getAttribute('data-item-added');
     var isFormSubmitted = document.body.getAttribute('data-is-form-submitted');
@@ -82,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             scrollToElement("addBuild");
             break;
         case '/user-builds':
-            scrollToElement("userContentDash");
+            scrollToElement("userBuildsHeader");
             break;
         case '/products/view-products':
             scrollToElement("productsDash");

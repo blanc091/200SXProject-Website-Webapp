@@ -53,7 +53,7 @@
 		<nav id="nav">
 			<ul class="links">
 				<li>
-					<a asp-controller="Home" asp-action="Index">Build updates</a>
+					<a asp-controller="Home" asp-action="Index" asp-fragment="posts">Build updates</a>
 				</li>
 				<li>
 					<a href="#" id="contactLink">Contact</a>
@@ -118,7 +118,7 @@
 					<header class="major">
 						<span class="date"></span>
 						<br>
-						<h2>User Builds</h2>
+						<h2 id ="userBuildsHeader">User Builds</h2>
 						<p>You can find here all user builds submitted by registered users.</p>
 						@if (!User.Identity.IsAuthenticated)
 						{
