@@ -62,26 +62,40 @@ namespace _200SXContact.Controllers.Areas.UserContent
 
                     await _loggerService.LogAsync("User builds || User not found", "Error", "");
 
+                    TempData["IsBuildSubmitted"] = "no";
                     return Forbid();
                 case SubmitBuildResult.InvalidImage:
 
                     await _loggerService.LogAsync("User builds || Invalid image", "Error", "");
 
-                    ModelState.AddModelError("", "One or more images are invalid.");
+                    TempData["Message"] = "One or more images are invalid !";
+                    TempData["IsBuildSubmitted"] = "no";
+                    ModelState.AddModelError("Images", "One or more images are invalid !");
                     break;
                 case SubmitBuildResult.NoTitle:
 
                     await _loggerService.LogAsync("User builds || Invalid title", "Error", "");
 
-                    ModelState.AddModelError("", "Please enter a title for the build.");
+                    TempData["IsBuildSubmitted"] = "no";
+                    ModelState.AddModelError("Title", "Please enter a title for the build.");
                     break;
                 case SubmitBuildResult.NoDescription:
 
                     await _loggerService.LogAsync("User builds || Invalid description", "Error", "");
 
-                    ModelState.AddModelError("", "Please enter a description for the build.");
+                    TempData["IsBuildSubmitted"] = "no";
+                    ModelState.AddModelError("Description", "Please enter a description for the build.");
+                    break;
+                case SubmitBuildResult.TooManyImages:
+
+                    await _loggerService.LogAsync("User builds || Too many images added", "Error", "");
+
+                    TempData["Message"] = "Please add 10 or fewer images !";
+                    TempData["IsBuildSubmitted"] = "no";
+                    ModelState.AddModelError("Images", "Please add 10 or fewer images !");
                     break;
                 case SubmitBuildResult.Success:
+                    TempData["IsBuildSubmitted"] = "yes";
                     return RedirectToAction("UserContentDashboard", "UserBuilds");
             }
 

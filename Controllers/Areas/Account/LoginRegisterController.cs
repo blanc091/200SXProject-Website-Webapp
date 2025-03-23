@@ -300,6 +300,13 @@ namespace _200SXContact.Controllers.Areas.Account
 		[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string gRecaptchaResponseRegister)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["IsFormRegisterSuccess"] = "no";
+
+                return View("~/Views/Account/Register.cshtml", model);
+            }
+
             ExtendedRegisterDto extendedDto = new ExtendedRegisterDto
             {
                 Username = model.Username,

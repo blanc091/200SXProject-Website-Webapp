@@ -12,7 +12,7 @@ namespace _200SXContact.Commands.Areas.Account
         public required string Email { get; set; }
         public required string Password { get; set; }
         public bool SubscribeToNewsletter { get; set; }
-        public required string HoneypotSpam { get; set; }
+        public string? HoneypotSpam { get; set; }
         public required string RecaptchaResponse { get; set; }
         public required string TimeZoneCookie { get; set; }
         public required string VerificationUrl { get; set; }
@@ -64,7 +64,7 @@ namespace _200SXContact.Commands.Areas.Account
                 return new RegisterUserCommandResult
                 {
                     Succeeded = false,
-                    Errors = new[] { "User already exists." }
+                    Errors = new[] { "User already exists !" }
                 };
             }
 

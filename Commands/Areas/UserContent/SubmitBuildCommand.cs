@@ -54,6 +54,14 @@ namespace _200SXContact.Commands.Areas.UserContent
                 return SubmitBuildResult.NoDescription;
             }
 
+            if (request.Images != null && request.Images.Length > 10)
+            {
+                await _loggerService.LogAsync("User builds || Too many images uploaded for user build", "Error", "");
+
+                return SubmitBuildResult.TooManyImages;
+            }
+
+
             UserBuild userBuild = new UserBuild
             {
                 Id = Guid.NewGuid().ToString(),
@@ -113,6 +121,7 @@ namespace _200SXContact.Commands.Areas.UserContent
         UserNotFound,
         InvalidImage,
         NoTitle,
-        NoDescription
+        NoDescription,
+        TooManyImages
     }
 }

@@ -114,7 +114,7 @@
 					<input type="hidden" name="ReturnUrl" value="@ViewData["ReturnUrl"]" />
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<input type="hidden" name="FormType" value="LoginForm" />
-					<div class="form-group">
+					<div class="form-group" id="loginField">
 						<label asp-for="Username"></label>
 						<input asp-for="Username" class="form-control" />
 						<span asp-validation-for="Username" class="text-danger"></span>

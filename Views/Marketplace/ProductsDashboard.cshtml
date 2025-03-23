@@ -1,4 +1,5 @@
-﻿@using _200SXContact.Models.DTOs.Areas.Products
+﻿@using System.Diagnostics
+@using _200SXContact.Models.DTOs.Areas.Products
 @model IEnumerable<_200SXContact.Models.DTOs.Areas.Products.ProductDto>
 @{
 	var message = TempData["Message"] as string;
@@ -11,48 +12,48 @@
 @await Html.PartialAsync("_CookieModalPartial")
 <!DOCTYPE HTML>
 <!--
-	Massively by HTML5 UP
-	html5up.net | ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Massively by HTML5 UP
+html5up.net | ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-		<link rel="stylesheet" href="/src/styles/effect-carousel.min.css" />
-		<link rel="stylesheet" href="/src/styles/swiper.css" />
-		<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
-		<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<title>The Nissan 200SX Project || Import Garage || Products</title>
-		<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
-		<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
-		<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
-	</head>
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<link rel="stylesheet" href="/src/styles/effect-carousel.min.css" />
+	<link rel="stylesheet" href="/src/styles/swiper.css" />
+	<meta name="description" content="The Nissan 200SX Project by Import Garage; photos, updates, builds and more.">
+	<meta name="keywords" content="Nissan, build, car, diy, project, custom, enthusiast, 200sx, Silvia, S13">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<title>The Nissan 200SX Project || Import Garage || Products</title>
+	<link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+	<noscript><link rel="stylesheet" href="~/assets/css/noscript.css" asp-append-version="true" /></noscript>
+	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
+</head>
 
 <body class="is-preload" data-item-added="@TempData["ItemAdded"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
 	<!-- Wrapper -->
-		<div id="wrapper" class="fade-in">
+	<div id="wrapper" class="fade-in">
 
-			<!-- Intro -->
-			<div id="intro">
-				<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
-				<br>
-				<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
-				<h1>Nissan 200SX Project</h1>
-				<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
-				<br>
-				<ul class="actions">
-					<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-				</ul>
-			</div>
+		<!-- Intro -->
+		<div id="intro">
+			<img src="~/images/flag.png" alt="Swiss Flag" class="flag" title="Image by pngtree.com">
+			<br>
+			<img src="~/images/flagRo.png" alt="Romania Flag" class="flagRo" title="Image by pngtree.com">
+			<h1>Nissan 200SX Project</h1>
+			<p>The Nissan 200SX Project by <b>Import Garage</b>; photos, updates, builds and more.</p>
+			<br>
+			<ul class="actions">
+				<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+			</ul>
+		</div>
 
-			<!-- Header -->
-			<header id="header">
-				<a asp-controller="Home" asp-action="Index" class="logo">Import Garage || Jap works</a>
-			</header>
+		<!-- Header -->
+		<header id="header">
+			<a asp-controller="Home" asp-action="Index" class="logo">Import Garage || Jap works</a>
+		</header>
 
-			<!-- Nav -->
+		<!-- Nav -->
 		<nav id="nav">
 			<ul class="links">
 				<li>
@@ -117,24 +118,25 @@
 		</nav>
 
 
-			<!-- Main -->
-			<div id="main">
-			
-				<!-- Featured Post -->
-				<article class="post featured">
-					<header class="major">
-						<span class="date"></span>
-						<br>
-						<h2>Merchandise</h2>
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Featured Post -->
+			<article class="post featured">
+				<header class="major">
+					<span class="date"></span>
+					<br>
+					<h2>Merchandise</h2>
 					<p id="productsDash">You can find here all the merch available from our brand.</p>
 				</header>					
-				
-				</article>
-				<div id="app">
-					<div class="swiper swiper-carousel">
+
+			</article>
+			<div id="app">
+				<div class="swiper swiper-carousel">
 					<div class="swiper-wrapper">
 						@foreach (var product in Model)
 						{
+							Debug.WriteLine(product.Name.ToString() + "_" + string.Join(", ", product.ImagePaths));
 							<div class="swiper-slide">
 								<div class="swiper-carousel-animate-opacity">
 									<a asp-controller="Products" asp-action="DetailedProductView" asp-route-id="@product.Id">

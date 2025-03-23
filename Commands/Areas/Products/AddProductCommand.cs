@@ -72,7 +72,7 @@ namespace _200SXContact.Commands.Areas.Products
 
                                     await _loggerService.LogAsync($"Products || Copied {image.FileName} to storage", "Info", "");
                                 }
-                                imagePaths.Add($"images/products/{uniqueImagesFolder}/{image.FileName}");
+                                imagePaths.Add($"/images/products/{uniqueImagesFolder}/{image.FileName}");
                             }
                             catch (Exception ex)
                             {

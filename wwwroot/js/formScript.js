@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var userDeleted = document.body.getAttribute('data-is-user-deleted');
 	var isContactError = document.body.getAttribute('data-is-contact-error');
 	var isCommentDeleted = document.body.getAttribute('data-is-comment-deleted');
+	var isBuildSubmitted = document.body.getAttribute('data-is-build-submitted');
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/detailed-user-build')) {
@@ -70,6 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
             break;
 		case '/register-an-account':
             scrollToElement("registerFormSpan");
+            break;
+		case '/login':
+            scrollToElement("loginField");
             break;
         case '/newsletter/subscribe':
             scrollToElement("newsletterFormSpan");
@@ -107,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		case '/account/admin-dashboard':
             scrollToElement("adminInterfaceHeader");
             break;
+		case '/submit-build':
+            scrollToElement("Title");
+            break;
 		case '/products/add-product-interface':
             scrollToElement("addProduct");
             break;
@@ -131,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isUserLoggedIn == "no" ||
         unsubscribed == "yes" ||
         userDeleted == 'yes' ||
+		isBuildSubmitted == 'yes' || isBuildSubmitted == 'no' ||
         itemAddedToCart == "yes" ||
 		isCommentDeleted == "yes" || isCommentDeleted == "no" ||
 		isNewsletterError == "yes" ||
