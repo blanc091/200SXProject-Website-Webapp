@@ -26,9 +26,13 @@ namespace _200SXContact.Controllers.Areas.UserContent
 
             User? user = await _userManager.GetUserAsync(User);
             UserBuildDto model = new UserBuildDto
-			{
-				UserName = user.UserName
-			};
+            {
+                UserName = user.UserName,
+                DateCreated = DateTime.UtcNow,
+                Description = string.Empty,
+                Title = string.Empty,
+                Id = string.Empty
+            };
 
             await _loggerService.LogAsync("User builds || Got Add User Build Interface", "Info", "");
 

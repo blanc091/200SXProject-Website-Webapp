@@ -9,7 +9,7 @@ namespace _200SXContact.Interfaces.Areas.MaintenApp
         string EntryDescription { get; set; }
         DateTime DueDate { get; set; }
         DateTime CreatedAt { get; set; }
-        DateTime UpdatedAt { get; set; }
+        DateTime? UpdatedAt { get; set; }
         string UserId { get; set; }
         User User { get; set; }
         bool EmailSent { get; set; }

@@ -253,12 +253,18 @@ namespace _200SXContact.Controllers.Areas.Account
 		{
             await _loggerService.LogAsync("Login Register || Getting forgot pass view", "Info", "");
 
-            ForgotPasswordViewModel model = new ForgotPasswordViewModel();
+            ForgotPasswordViewModel model = new ForgotPasswordViewModel
+            {
+                Email = string.Empty
+            };
 
-			if (model == null)
+            if (model == null)
 			{
-				model = new ForgotPasswordViewModel();
-			}
+				model = new ForgotPasswordViewModel
+                {
+                    Email = string.Empty
+                };
+            }
 
             await _loggerService.LogAsync("Login Register || Got forgot pass view", "Info", "");
 
@@ -278,7 +284,8 @@ namespace _200SXContact.Controllers.Areas.Account
                 {
                     Username = string.Empty,
                     Password = string.Empty,
-                    Email = string.Empty
+                    Email = string.Empty,
+                    SubscribeToNewsletter = false
                 });
             }
 			else
@@ -351,6 +358,8 @@ namespace _200SXContact.Controllers.Areas.Account
 
             ResetPasswordViewModel model = new ResetPasswordViewModel
 			{
+                NewPassword = string.Empty,
+                ConfirmPassword = string.Empty,
 				Token = token,
 				Email = email
 			};

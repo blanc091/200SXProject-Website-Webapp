@@ -20,6 +20,7 @@ namespace _200SXContact.Queries.Areas.Products
 
             Product model = new Product
             {
+                Id = 0,
                 Name = string.Empty,
                 Category = string.Empty,
                 Description = string.Empty,

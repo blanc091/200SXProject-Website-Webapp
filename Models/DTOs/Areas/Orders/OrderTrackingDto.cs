@@ -2,11 +2,11 @@
 {
     public class OrderTrackingDto
     {
-        public int OrderId { get; set; }
+        public required int OrderId { get; set; }
         public required string Status { get; set; }
         public string? Carrier { get; set; }
         public string? TrackingNumber { get; set; }
-        public DateTime StatusUpdatedAt { get; set; }
+        public required DateTime StatusUpdatedAt { get; set; }
         public string? AddressLine { get; set; }
         public required string Email { get; set; }
         public string? OrderNotes { get; set; }

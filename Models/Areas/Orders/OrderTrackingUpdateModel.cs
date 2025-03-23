@@ -8,14 +8,10 @@ namespace _200SXContact.Models.Areas.Orders
     public class OrderTrackingUpdate : IOrderTrackingUpdate
     {
         [Key]
-        public int Id { get; set; }
-        [ForeignKey("Order")]
-        public int OrderId { get; set; }
-        [Required, StringLength(50)]
+        public required int Id { get; set; }
+        public required int OrderId { get; set; }
         public required string Status { get; set; }
-        [StringLength(50)]
         public string? Carrier { get; set; }
-        [StringLength(100)]
         public string? TrackingNumber { get; set; }
         public required DateTime StatusUpdatedAt { get; set; } = DateTime.UtcNow;
         public string? Email { get; set; }

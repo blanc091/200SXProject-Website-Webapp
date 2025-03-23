@@ -53,6 +53,7 @@ namespace _200SXContact.Commands.Areas.Orders
                 string primaryImagePath = product.ImagePaths?.FirstOrDefault() ?? "/images/default-placeholder.png";
                 CartItem newCartItem = new CartItem
                 {
+                    Id = 0,
                     ProductId = product.Id,
                     ProductName = product.Name,
                     Price = product.Price,

@@ -83,6 +83,7 @@ namespace _200SXContact.Commands.Areas.Orders
 
                     OrderTracking orderTracking = new OrderTracking
                     {
+                        Id = 0,
                         OrderId = orderEntity.Id,
                         Order = orderEntity,
                         Status = "Pending",

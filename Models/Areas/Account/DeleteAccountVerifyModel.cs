@@ -4,5 +4,5 @@ public class DeleteAccountVerifyModel : IDeleteAccountVerify
 {
 	[Required]
 	[EmailAddress]
-	public string UserEmail { get; set; }
+	public required string UserEmail { get; set; }
 }

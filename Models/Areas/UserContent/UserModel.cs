@@ -10,13 +10,13 @@ namespace _200SXContact.Models.Areas.UserContent
 		[Required(ErrorMessage = "Email is required.")]
 		[EmailAddress(ErrorMessage = "Invalid email address.")]		
 		public required override string? Email { get; set; }
-		public DateTime CreatedAt { get; set; }
+		public required DateTime CreatedAt { get; set; }
 		public DateTime? LastLogin { get; set; }
-		public bool IsEmailVerified { get; set; }
+		public required bool IsEmailVerified { get; set; }
 		public string? EmailVerificationToken { get; set; }
 		public string? PasswordResetToken { get; set; }
 		public virtual ICollection<ReminderItem>? Items { get; set; }
-        public virtual ICollection<UserBuild> UserBuilds { get; set; } = new List<UserBuild>();
+        public virtual ICollection<UserBuild>? UserBuilds { get; set; } = new List<UserBuild>();
     }
 }
 

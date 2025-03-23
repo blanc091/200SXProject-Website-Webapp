@@ -11,10 +11,10 @@ namespace _200SXContact.Models.Areas.UserContent
 		[ForeignKey("Product")]
 		public int ProductId { get; set; }  
 		[Required]
-		public string UserId { get; set; } 
+		public required string UserId { get; set; } 
 		[Required]
 		[StringLength(1000)]
-		public string Content { get; set; }  
+		public required string Content { get; set; }  
 		[Range(1, 5)]
 		public int Rating { get; set; } 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;	
