@@ -1,6 +1,5 @@
 ﻿using _200SXContact.Commands.Areas.Account;
 using _200SXContact.Commands.Areas.Admin;
-using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
@@ -8,14 +7,6 @@ using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.Chat;
 using _200SXContact.Queries.Areas.Account;
-using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System.Security.Claims;
 
 namespace _200SXContact.Controllers.Areas.Account
 {

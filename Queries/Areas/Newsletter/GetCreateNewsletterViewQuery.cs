@@ -1,7 +1,5 @@
 ﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
-using AutoMapper;
-using MediatR;
 
 namespace _200SXContact.Queries.Areas.Newsletter
 {

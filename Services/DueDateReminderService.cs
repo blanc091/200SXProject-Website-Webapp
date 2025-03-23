@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using _200SXContact.Data;
+﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Dashboard;
 using _200SXContact.Models.Areas.MaintenApp;

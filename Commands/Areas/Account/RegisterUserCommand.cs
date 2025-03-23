@@ -1,8 +1,6 @@
 ﻿using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace _200SXContact.Commands.Areas.Account
 {

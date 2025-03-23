@@ -5,7 +5,6 @@ using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.Products;
 using _200SXContact.Models.Areas.UserContent;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 

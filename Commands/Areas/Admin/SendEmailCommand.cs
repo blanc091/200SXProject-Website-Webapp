@@ -3,10 +3,7 @@ using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.Admin;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Admin;
-using AutoMapper;
 using Ganss.Xss;
-using MediatR;
-using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
 

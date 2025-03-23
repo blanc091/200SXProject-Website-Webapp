@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using _200SXContact.Data;
+﻿using _200SXContact.Data;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Admin;
 using _200SXContact.Models.Areas.Admin;

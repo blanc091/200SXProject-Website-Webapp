@@ -1,7 +1,5 @@
-﻿using _200SXContact.Interfaces.Areas.Products;
-using _200SXContact.Models.Areas.Products;
+﻿using _200SXContact.Models.Areas.Products;
 using _200SXContact.Models.DTOs.Areas.Products;
-using AutoMapper;
 
 namespace _200SXContact.Helpers.Areas.Products
 {

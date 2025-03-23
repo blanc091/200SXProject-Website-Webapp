@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Models.DTOs.Areas.Orders;
-using MediatR;
+﻿using _200SXContact.Models.DTOs.Areas.Orders;
 using _200SXContact.Commands.Areas.Orders;
 using _200SXContact.Queries.Areas.Orders;
 using FluentValidation;
 using FluentValidation.Results;
-using System.Diagnostics;
 using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Controllers.Areas.Orders
@@ -54,7 +50,6 @@ namespace _200SXContact.Controllers.Areas.Orders
                 foreach (ValidationFailure? error in validationResult.Errors)
                 {
                     ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                    Debug.WriteLine(error.ToString());
                 }
 
                 return View("~/Views/Marketplace/CheckoutView.cshtml", model);

@@ -1,8 +1,5 @@
-﻿using MediatR;
-using _200SXContact.Models.DTOs.Areas.Products;
-using _200SXContact.Data;
+﻿using _200SXContact.Models.DTOs.Areas.Products;
 using _200SXContact.Interfaces.Areas.Admin;
-using AutoMapper;
 using FluentValidation;
 using _200SXContact.Models.Areas.Products;
 using _200SXContact.Interfaces.Areas.Data;

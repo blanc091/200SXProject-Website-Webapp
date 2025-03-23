@@ -1,7 +1,5 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
-using MediatR;
 
 namespace _200SXContact.Commands.Areas.UserContent
 {

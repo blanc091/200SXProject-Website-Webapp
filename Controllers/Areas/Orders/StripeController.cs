@@ -1,6 +1,4 @@
 ﻿using _200SXContact.Interfaces.Areas.Admin;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 
 namespace _200SXContact.Controllers.Areas.Orders

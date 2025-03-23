@@ -1,7 +1,6 @@
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models;
 using _200SXContact.Models.DTOs.Areas.Admin;
-using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace _200SXContact.Controllers.Areas.Misc

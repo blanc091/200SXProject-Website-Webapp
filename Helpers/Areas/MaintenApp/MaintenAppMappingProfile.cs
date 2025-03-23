@@ -1,6 +1,5 @@
 ﻿using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
-using AutoMapper;
 
 namespace _200SXContact.Helpers.Areas.MaintenApp
 {

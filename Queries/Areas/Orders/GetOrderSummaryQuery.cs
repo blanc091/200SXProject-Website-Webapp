@@ -2,10 +2,6 @@
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Orders;
-using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Queries.Areas.Orders
 {

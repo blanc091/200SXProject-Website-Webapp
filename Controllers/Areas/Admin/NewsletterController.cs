@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Queries.Areas.Newsletter;
-using MediatR;
+﻿using _200SXContact.Queries.Areas.Newsletter;
 using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;

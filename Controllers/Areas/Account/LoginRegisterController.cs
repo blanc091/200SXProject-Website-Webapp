@@ -1,20 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using _200SXContact.Models.Configs;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Options;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Areas.Account;
 using _200SXContact.Commands.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.Account;
-using AutoMapper;
-using MediatR;
 
 namespace _200SXContact.Controllers.Areas.Account
 {

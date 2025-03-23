@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using _200SXContact.Models.Areas.Orders;
+﻿using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
-using System.Text.Json;
 using _200SXContact.Helpers.Areas.Orders;
 
 public class OrdersMappingProfile : Profile

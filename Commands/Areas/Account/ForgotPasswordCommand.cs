@@ -1,5 +1,4 @@
 ﻿using _200SXContact.Interfaces.Areas.Admin;
-using MediatR;
 
 namespace _200SXContact.Commands.Areas.Account
 {

@@ -1,7 +1,5 @@
 ﻿using _200SXContact.Models.Areas.Chat;
 using _200SXContact.Models.DTOs.Areas.Chat;
-using AutoMapper;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _200SXContact.Helpers.Areas.Chat
 {

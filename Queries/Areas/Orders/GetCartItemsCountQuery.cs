@@ -1,7 +1,5 @@
 ﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Queries.Areas.Orders
 {

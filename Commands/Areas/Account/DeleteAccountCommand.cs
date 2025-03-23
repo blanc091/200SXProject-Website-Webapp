@@ -1,10 +1,6 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Commands.Areas.Account
 {

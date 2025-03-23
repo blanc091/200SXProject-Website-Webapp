@@ -2,8 +2,6 @@
 using _200SXContact.Models.Areas.Newsletter;
 using _200SXContact.Models.DTOs.Areas.Newsletter;
 
-using AutoMapper;
-
 namespace _200SXContact.Helpers.Areas.Newsletter
 {
     public class NewsletterMappingProfile : Profile

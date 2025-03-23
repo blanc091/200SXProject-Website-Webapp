@@ -2,11 +2,6 @@
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
-using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace _200SXContact.Queries.Areas.MaintenApp
 {

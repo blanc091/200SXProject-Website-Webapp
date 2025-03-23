@@ -1,11 +1,6 @@
-﻿using _200SXContact.Data;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Newsletter;
-using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace _200SXContact.Commands.Areas.Newsletter

@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using _200SXContact.Data;
+﻿using _200SXContact.Data;
 using _200SXContact.Models.Configs;
-using Microsoft.Extensions.Options;
-using MediatR;
 using _200SXContact.Commands.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Helpers.Areas.Admin;
-using AutoMapper;
 
 namespace _200SXContact.Controllers.Areas.Admin
 {

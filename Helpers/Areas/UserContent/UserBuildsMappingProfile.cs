@@ -1,6 +1,5 @@
 ﻿using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.UserContent;
-using AutoMapper;
 
 namespace _200SXContact.Helpers.Areas.UserContent
 {

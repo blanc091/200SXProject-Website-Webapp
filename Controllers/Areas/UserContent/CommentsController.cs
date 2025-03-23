@@ -1,8 +1,4 @@
 ﻿using _200SXContact.Commands.Areas.UserContent;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace _200SXContact.Controllers.Areas.UserContent
 {

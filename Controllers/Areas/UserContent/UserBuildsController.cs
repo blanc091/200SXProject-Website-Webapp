@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.UserContent;
 using _200SXContact.Commands.Areas.UserContent;
-using System.Security.Claims;
-using MediatR;
 using _200SXContact.Queries.Areas.UserContent;
 
 namespace _200SXContact.Controllers.Areas.UserContent

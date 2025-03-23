@@ -2,9 +2,7 @@
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Chat;
 using _200SXContact.Models.DTOs.Areas.Chat;
-using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace _200SXContact.Hubs

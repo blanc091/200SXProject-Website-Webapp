@@ -3,11 +3,7 @@ using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.UserContent;
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace _200SXContact.Queries.Areas.Account
 {

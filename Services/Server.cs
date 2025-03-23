@@ -1,9 +1,4 @@
-using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
 

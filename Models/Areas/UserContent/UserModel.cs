@@ -1,5 +1,4 @@
 ﻿using _200SXContact.Models.Areas.MaintenApp;
-using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace _200SXContact.Models.Areas.UserContent

@@ -2,9 +2,6 @@
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.DTOs.Areas.Products;
 using _200SXContact.Queries.Areas.Products;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace _200SXContact.Controllers.Areas.Products
 {

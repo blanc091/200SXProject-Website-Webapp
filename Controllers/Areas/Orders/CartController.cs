@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-using _200SXContact.Queries.Areas.Orders;
+﻿using _200SXContact.Queries.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
 using _200SXContact.Commands.Areas.Orders;
-using AutoMapper;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Interfaces.Areas.Data;
