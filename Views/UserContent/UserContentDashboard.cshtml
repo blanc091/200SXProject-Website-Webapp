@@ -142,7 +142,7 @@
 				{
 					<article>
 						<header id="userContentDash">
-							<span class="date">@build.DateCreated</span>
+							<span class="date">@build.DateCreated.ToString("dd/MM/yyyy HH:mm:ss")</span>
 							<h2><a asp-controller="UserBuilds" asp-action="DetailedUserView" asp-route-id="@build.Id">@build.Title</a></h2>
 						</header>
 						<br>

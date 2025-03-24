@@ -8,6 +8,7 @@ using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Areas.Account;
 using _200SXContact.Commands.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.Account;
+using _200SXContact.Queries.Areas.Admin;
 
 namespace _200SXContact.Controllers.Areas.Account
 {
@@ -59,23 +60,8 @@ namespace _200SXContact.Controllers.Areas.Account
 			string? email = emailClaim?.Value;
 			string username = email.Split('@')[0];
 			username = Regex.Replace(username, @"[^a-zA-Z0-9]", string.Empty);
-			string? timeZoneCookie = Request.Cookies["userTimeZone"];
-			TimeZoneInfo? userTimeZone = null;
-
-			if (!string.IsNullOrEmpty(timeZoneCookie))
-			{
-				try
-				{
-					userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneCookie);
-				}
-				catch (TimeZoneNotFoundException)
-				{
-					await _loggerService.LogAsync($"Invalid time zone received: {timeZoneCookie}", "Error", "");
-				}
-			}
-
-			DateTime nowUtc = DateTime.UtcNow;
-			DateTime nowLocal = userTimeZone != null ? TimeZoneInfo.ConvertTimeFromUtc(nowUtc, userTimeZone) : nowUtc;
+            GetClientTime clientTimeService = new GetClientTime();
+            DateTime nowLocal = clientTimeService.GetClientTimeHandler(Request);
 
 			if (string.IsNullOrEmpty(email))
 			{
@@ -201,26 +187,9 @@ namespace _200SXContact.Controllers.Areas.Account
 
                     if (result.Succeeded)
                     {
-						string? userTimeZone = Request.Cookies["userTimeZone"];
-
-						if (!string.IsNullOrEmpty(userTimeZone))
-						{
-							try
-							{
-								TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(userTimeZone);
-								user.LastLogin = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
-							}
-							catch (TimeZoneNotFoundException)
-							{
-								user.LastLogin = DateTime.UtcNow;
-							}
-						}
-						else
-						{
-							user.LastLogin = DateTime.UtcNow;
-						}
-
-						IdentityResult updateResult = await _userManager.UpdateAsync(user);
+                        GetClientTime clientTimeService = new GetClientTime();
+                        user.LastLogin = clientTimeService.GetClientTimeHandler(Request);
+                        IdentityResult updateResult = await _userManager.UpdateAsync(user);
 
                         await _loggerService.LogAsync("Login Register || User logged in successfully", "Info", "");
 

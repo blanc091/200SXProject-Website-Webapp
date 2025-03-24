@@ -7,8 +7,8 @@ namespace _200SXContact.Commands.Areas.MaintenApp
     public class UpdateEntryCommand : IRequest<UpdateEntryResult>
     {
         public int Id { get; set; }
-        public string EntryItem { get; set; }
-        public string EntryDescription { get; set; }
+        public required string EntryItem { get; set; }
+        public string? EntryDescription { get; set; }
         public DateTime DueDate { get; set; }
     }
     public class UpdateEntryCommandHandler : IRequestHandler<UpdateEntryCommand, UpdateEntryResult>

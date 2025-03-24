@@ -82,7 +82,8 @@ namespace _200SXContact.Controllers.Areas.MaintenApp
         }
 		[HttpPost]
 		[Route("update-entry")]
-        public async Task<JsonResult> UpdateEntry([FromBody] ReminderItem updatedItem)
+        [Consumes("application/json")]
+        public async Task<JsonResult> UpdateEntry([FromBody] ReminderItemDto updatedItem)
         {
             try
             {
