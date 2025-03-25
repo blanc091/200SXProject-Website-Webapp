@@ -3,6 +3,8 @@ using _200SXContact.Interfaces.Areas.Admin;
 using FluentValidation;
 using _200SXContact.Models.Areas.Products;
 using _200SXContact.Interfaces.Areas.Data;
+using _200SXContact.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Products
 {
@@ -17,19 +19,23 @@ namespace _200SXContact.Commands.Areas.Products
         private readonly ILoggerService _loggerService;
         private readonly IWebHostEnvironment _environment;
         private readonly IMapper _mapper;
-        public AddProductCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AddProductCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;
             _environment = environment;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Products || Adding new product admin", "Info", "");
 
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+
             ProductDto productDto = request.Product;
-            productDto.AddedDate = DateTime.Now.ToString();
+            productDto.AddedDate = clientTime.ToString();
             List<string> imagePaths = new List<string>();
 
             if (request.Images != null && request.Images.Any())

@@ -1,5 +1,7 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Admin
 {
@@ -12,10 +14,12 @@ namespace _200SXContact.Commands.Areas.Admin
     {
         private readonly UserManager<User> _userManager;
         private readonly ILoggerService _loggerService;
-        public CreateTestUserCommandHandler(UserManager<User> userManager, ILoggerService loggerService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CreateTestUserCommandHandler(UserManager<User> userManager, ILoggerService loggerService, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _loggerService = loggerService;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<bool> Handle(CreateTestUserCommand request, CancellationToken cancellationToken)
         {
@@ -26,9 +30,10 @@ namespace _200SXContact.Commands.Areas.Admin
             if (existingUser != null)
             {
                 await _loggerService.LogAsync($"Account || Test user '{request.UserName}' already exists", "Error", "");
-
                 return false;
             }
+
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
 
             User testUser = new User
             {
@@ -36,7 +41,7 @@ namespace _200SXContact.Commands.Areas.Admin
                 Email = $"{request.UserName}@example.com",
                 EmailConfirmed = true,
                 LockoutEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = clientTime,
                 LastLogin = null,
                 IsEmailVerified = true
             };

@@ -1,7 +1,9 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Orders
 {
@@ -14,11 +16,13 @@ namespace _200SXContact.Commands.Areas.Orders
         private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public UpdateOrderTrackingCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UpdateOrderTrackingCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<bool> Handle(UpdateOrderTrackingCommand request, CancellationToken cancellationToken)
         {
@@ -38,9 +42,11 @@ namespace _200SXContact.Commands.Areas.Orders
             }
 
             await _loggerService.LogAsync("Orders || Mapping Dto to model in order tracking", "Info", "");
-
             _mapper.Map(request.UpdateDto, orderTracking);
-            orderTracking.StatusUpdatedAt = DateTime.UtcNow;
+
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+
+            orderTracking.StatusUpdatedAt = clientTime;
             await _context.SaveChangesAsync(cancellationToken);
 
             await _loggerService.LogAsync("Orders || Mapped Dto to model in order tracking", "Info", "");

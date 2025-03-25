@@ -164,6 +164,7 @@ builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("Admi
 builder.Services.Configure<StripeSettings>(stripeSettingsSection);
 builder.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<NetworkCredential>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();

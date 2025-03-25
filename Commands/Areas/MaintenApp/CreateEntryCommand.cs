@@ -1,8 +1,11 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
+using _200SXContact.Queries.Areas.Admin;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.MaintenApp
 {
@@ -16,12 +19,14 @@ namespace _200SXContact.Commands.Areas.MaintenApp
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CreateEntryCommandHandler(IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
+        public CreateEntryCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
         {
             _context = context;
             _mapper = mapper;
             _loggerService = loggerService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<CreateEntryResult> Handle(CreateEntryCommand request, CancellationToken cancellationToken)
@@ -47,8 +52,10 @@ namespace _200SXContact.Commands.Areas.MaintenApp
 
             ReminderItem newItem = _mapper.Map<ReminderItem>(request.EntryDto);
             newItem.DueDate = request.EntryDto.DueDate;
-            newItem.CreatedAt = DateTime.Now;
-            newItem.UpdatedAt = DateTime.Now;
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+
+            newItem.CreatedAt = clientTime;
+            newItem.UpdatedAt = clientTime;
             newItem.UserId = user.Id;
 
             await _context.Items.AddAsync(newItem, cancellationToken);

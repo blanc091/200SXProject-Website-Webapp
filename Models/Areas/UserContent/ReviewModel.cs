@@ -17,7 +17,7 @@ namespace _200SXContact.Models.Areas.UserContent
 		public required string Content { get; set; }  
 		[Range(1, 5)]
 		public int Rating { get; set; } 
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;	
+		public DateTime CreatedAt { get; set; }
 		public virtual Product Product { get; set; } 
 		public virtual User User { get; set; } 
 	}

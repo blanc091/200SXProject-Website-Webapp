@@ -1,6 +1,8 @@
 ﻿using _200SXContact.Commands.Areas.Newsletter;
+using _200SXContact.Helpers;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Account
 {
@@ -23,13 +25,15 @@ namespace _200SXContact.Commands.Areas.Account
         private readonly IEmailService _emailService;
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        public RegisterUserCommandHandler(UserManager<User> userManager, ILoggerService loggerService, IEmailService emailService, IMediator mediator, IConfiguration configuration)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public RegisterUserCommandHandler(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, ILoggerService loggerService, IEmailService emailService, IMediator mediator, IConfiguration configuration)
         {
             _userManager = userManager;
             _loggerService = loggerService;
             _emailService = emailService;
             _mediator = mediator;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<RegisterUserCommandResult> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
@@ -66,20 +70,9 @@ namespace _200SXContact.Commands.Areas.Account
                 };
             }
 
-            DateTime createdAt = DateTime.UtcNow;
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
 
-            if (!string.IsNullOrEmpty(command.TimeZoneCookie))
-            {
-                try
-                {
-                    TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(command.TimeZoneCookie);
-                    createdAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-                }
-                catch (TimeZoneNotFoundException)
-                {
-                    createdAt = DateTime.UtcNow;
-                }
-            }
+            DateTime createdAt = clientTime;
 
             User user = new User
             {

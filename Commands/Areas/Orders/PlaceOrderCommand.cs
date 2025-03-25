@@ -1,9 +1,11 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Orders;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Orders
 {
@@ -20,7 +22,8 @@ namespace _200SXContact.Commands.Areas.Orders
         private readonly AdminSettings _adminSettings;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        public PlaceOrderCommandHandler(IApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public PlaceOrderCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
@@ -28,6 +31,7 @@ namespace _200SXContact.Commands.Areas.Orders
             _adminSettings = adminSettings.Value;
             _loggerService = loggerService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<int> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
         {
@@ -63,7 +67,9 @@ namespace _200SXContact.Commands.Areas.Orders
             {
                 try
                 {
-                    request.Model.OrderDate = DateTime.UtcNow;
+                    DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+
+                    request.Model.OrderDate = clientTime;
 
                     OrderPlacement orderEntity = _mapper.Map<OrderPlacement>(request.Model);
                     await _context.Orders.AddAsync(orderEntity, cancellationToken);
@@ -87,7 +93,7 @@ namespace _200SXContact.Commands.Areas.Orders
                         OrderId = orderEntity.Id,
                         Order = orderEntity,
                         Status = "Pending",
-                        StatusUpdatedAt = DateTime.UtcNow,
+                        StatusUpdatedAt = clientTime,
                         Email = orderEntity.Email,
                         AddressLine = orderEntity.AddressLine1,
                         OrderNotes = orderEntity.OrderNotes,

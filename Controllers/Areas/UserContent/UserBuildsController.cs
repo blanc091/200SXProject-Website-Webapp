@@ -3,6 +3,8 @@ using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.UserContent;
 using _200SXContact.Commands.Areas.UserContent;
 using _200SXContact.Queries.Areas.UserContent;
+using _200SXContact.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Controllers.Areas.UserContent
 {
@@ -11,11 +13,13 @@ namespace _200SXContact.Controllers.Areas.UserContent
         private readonly ILoggerService _loggerService;
         private readonly UserManager<User> _userManager;
 		private readonly IMediator _mediator;
-		public UserBuildsController(ILoggerService loggerService, UserManager<User> userManager, IMediator mediator)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserBuildsController(IHttpContextAccessor httpContextAccessor, ILoggerService loggerService, UserManager<User> userManager, IMediator mediator)
 		{
 			_userManager = userManager;
 			_loggerService = loggerService;
 			_mediator = mediator;
+            _httpContextAccessor = httpContextAccessor;
 		}
 		[HttpGet]
 		[Route("add-new-build")]
@@ -25,10 +29,11 @@ namespace _200SXContact.Controllers.Areas.UserContent
 			await _loggerService.LogAsync("User builds || Getting Add User Build Interface", "Info", "");
 
             User? user = await _userManager.GetUserAsync(User);
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
             UserBuildDto model = new UserBuildDto
             {
                 UserName = user.UserName,
-                DateCreated = DateTime.UtcNow,
+                DateCreated = clientTime,
                 Description = string.Empty,
                 Title = string.Empty,
                 Id = string.Empty

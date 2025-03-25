@@ -13,6 +13,6 @@ namespace _200SXContact.Models.Areas.Chat
         public virtual ChatSession? Session { get; set; }
         public string? UserName { get; set; }
         public required string Message { get; set; }
-        public DateTime SentAt { get; set; } = DateTime.UtcNow;
+        public DateTime SentAt { get; set; }
     }
 }

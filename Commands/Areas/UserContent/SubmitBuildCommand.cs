@@ -1,7 +1,9 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.UserContent;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.UserContent
 {
@@ -16,12 +18,13 @@ namespace _200SXContact.Commands.Areas.UserContent
         private readonly IApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ILoggerService _loggerService;
-
-        public SubmitBuildCommandHandler(IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SubmitBuildCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService)
         {
             _context = context;
             _userManager = userManager;
             _loggerService = loggerService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<SubmitBuildResult> Handle(SubmitBuildCommand request, CancellationToken cancellationToken)
@@ -54,17 +57,17 @@ namespace _200SXContact.Commands.Areas.UserContent
             if (request.Images != null && request.Images.Length > 10)
             {
                 await _loggerService.LogAsync("User builds || Too many images uploaded for user build", "Error", "");
-
                 return SubmitBuildResult.TooManyImages;
             }
 
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
 
             UserBuild userBuild = new UserBuild
             {
                 Id = Guid.NewGuid().ToString(),
                 Title = request.Model.Title,
                 Description = request.Model.Description,
-                DateCreated = DateTime.UtcNow,
+                DateCreated = clientTime,
                 UserEmail = user.Email,
                 UserName = user.UserName,
                 UserId = user.Id

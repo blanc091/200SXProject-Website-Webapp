@@ -1,6 +1,8 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
+using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.MaintenApp
 {
@@ -15,11 +17,13 @@ namespace _200SXContact.Commands.Areas.MaintenApp
     {
         private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UpdateEntryCommandHandler(IApplicationDbContext context, ILoggerService loggerService)
+        public UpdateEntryCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService)
         {
             _context = context;
             _loggerService = loggerService;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<UpdateEntryResult> Handle(UpdateEntryCommand request, CancellationToken cancellationToken)
         {
@@ -32,14 +36,15 @@ namespace _200SXContact.Commands.Areas.MaintenApp
                 if (existingItem == null)
                 {
                     await _loggerService.LogAsync("MaintenApp || Item not found when updating entry", "Error", "");
-
                     return UpdateEntryResult.ItemNotFound;
                 }
+
+                DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
 
                 existingItem.EntryItem = request.EntryItem;
                 existingItem.EntryDescription = request.EntryDescription;
                 existingItem.DueDate = request.DueDate;
-                existingItem.UpdatedAt = DateTime.Now;
+                existingItem.UpdatedAt = clientTime;
 
                 await _context.SaveChangesAsync(cancellationToken);
 

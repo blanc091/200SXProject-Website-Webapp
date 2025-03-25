@@ -10,7 +10,7 @@ namespace _200SXContact.Models.Areas.MaintenApp
 		public required string EntryDescription { get; set; }
 		public required DateTime DueDate { get; set; }
 		public required DateTime CreatedAt { get; set; }
-		public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
+		public DateTime? UpdatedAt { get; set; }
 		public required string UserId { get; set; }
 		public virtual User? User { get; set; }
 		public bool EmailSent { get; set; }

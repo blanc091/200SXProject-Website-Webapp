@@ -12,7 +12,7 @@ namespace _200SXContact.Models.Areas.Chat
         public string? UserId { get; set; }
         public bool IsAnswered { get; set; } = false;
         public virtual ICollection<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
     }
 }

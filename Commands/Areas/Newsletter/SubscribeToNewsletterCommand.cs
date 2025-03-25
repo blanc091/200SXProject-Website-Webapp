@@ -1,6 +1,8 @@
-﻿using _200SXContact.Interfaces.Areas.Admin;
+﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Newsletter;
+using Microsoft.AspNetCore.Http;
 using System.Text.RegularExpressions;
 
 namespace _200SXContact.Commands.Areas.Newsletter
@@ -18,12 +20,14 @@ namespace _200SXContact.Commands.Areas.Newsletter
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public SubscribeToNewsletterCommandHandler(IApplicationDbContext context, ILoggerService loggerService, IMapper mapper, IConfiguration configuration)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SubscribeToNewsletterCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _loggerService = loggerService;
             _mapper = mapper;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Handle(SubscribeToNewsletterCommand request, CancellationToken cancellationToken)
         {
@@ -49,13 +53,14 @@ namespace _200SXContact.Commands.Areas.Newsletter
             }
 
             NewsletterSubscription? existingSubscription = await _context.NewsletterSubscriptions.FirstOrDefaultAsync(sub => sub.Email == request.Email, cancellationToken);
+            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
 
             if (existingSubscription != null)
             {
                 if (!existingSubscription.IsSubscribed)
                 {
                     existingSubscription.IsSubscribed = true;
-                    existingSubscription.SubscribedAt = DateTime.Now;
+                    existingSubscription.SubscribedAt = clientTime;
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _loggerService.LogAsync("Newsletter || Resubscribed for newsletter for " + request.Email, "Info", "");
@@ -67,7 +72,7 @@ namespace _200SXContact.Commands.Areas.Newsletter
             }
 
             NewsletterSubscription subscription = _mapper.Map<NewsletterSubscription>(request);
-            subscription.SubscribedAt = DateTime.Now;
+            subscription.SubscribedAt = clientTime;
             await _context.NewsletterSubscriptions.AddAsync(subscription, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 

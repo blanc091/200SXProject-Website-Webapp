@@ -13,7 +13,7 @@ namespace _200SXContact.Models.Areas.Orders
         public required string Status { get; set; }
         public string? Carrier { get; set; }
         public string? TrackingNumber { get; set; }
-        public required DateTime StatusUpdatedAt { get; set; } = DateTime.UtcNow;
+        public required DateTime StatusUpdatedAt { get; set; }
         public string? Email { get; set; }
         public string? AddressLine { get; set; }
         public string? OrderNotes { get; set; }
