@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using Microsoft.AspNetCore.Http;
@@ -14,12 +15,12 @@ namespace _200SXContact.Commands.Areas.Admin
     {
         private readonly UserManager<User> _userManager;
         private readonly ILoggerService _loggerService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public CreateTestUserCommandHandler(UserManager<User> userManager, ILoggerService loggerService, IHttpContextAccessor httpContextAccessor)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public CreateTestUserCommandHandler(IClientTimeProvider clientTimeProvider, UserManager<User> userManager, ILoggerService loggerService, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _loggerService = loggerService;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<bool> Handle(CreateTestUserCommand request, CancellationToken cancellationToken)
         {
@@ -33,7 +34,7 @@ namespace _200SXContact.Commands.Areas.Admin
                 return false;
             }
 
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             User testUser = new User
             {

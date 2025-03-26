@@ -8,7 +8,7 @@ namespace _200SXContact.Helpers.Areas.Newsletter
 {
     public class NewsletterMappingProfile : Profile
     {
-        public NewsletterMappingProfile(IHttpContextAccessor httpContextAccessor)
+        public NewsletterMappingProfile()
         {
             CreateMap<NewsletterViewModel, NewsletterDto>()
                 .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
@@ -24,7 +24,7 @@ namespace _200SXContact.Helpers.Areas.Newsletter
             CreateMap<SubscribeToNewsletterCommand, NewsletterSubscription>()
                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                .ForMember(dest => dest.IsSubscribed, opt => opt.MapFrom(src => true))
-               .ForMember(dest => dest.SubscribedAt, opt => opt.MapFrom(src => ClientTimeHelper.GetCurrentClientTime(httpContextAccessor)));            
+               .ForMember(dest => dest.SubscribedAt, opt => opt.MapFrom<ClientTimeResolver<SubscribeToNewsletterCommand, NewsletterSubscription>>());
         }
     }
 }

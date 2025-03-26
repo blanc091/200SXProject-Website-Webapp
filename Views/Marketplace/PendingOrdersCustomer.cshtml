@@ -137,8 +137,8 @@
 									<p><strong>Phone:</strong> @orderPlacement?.PhoneNumber</p>
 									<p><strong>Email:</strong> @orderPlacement?.Email</p>
 									<p><strong>Order Notes:</strong> @orderPlacement?.OrderNotes</p>
-									<p><strong>Order Date:</strong> @orderPlacement?.OrderDate</p>
-									<p><strong>Updated At:</strong> @orderTracking.StatusUpdatedAt.ToLocalTime()</p>
+									<p><strong>Order Date:</strong> @orderPlacement?.OrderDate.ToString("dd/MM/yyyy HH:mm:ss")</p>
+									<p><strong>Updated At:</strong> @orderTracking.StatusUpdatedAt.ToString("dd/MM/yyyy HH:mm:ss")</p>
 
 									<h4>Products</h4>
 									<table>

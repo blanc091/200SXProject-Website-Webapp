@@ -1,11 +1,10 @@
-﻿using _200SXContact.Helpers;
+﻿using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Orders;
-using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Orders
 {
@@ -22,8 +21,8 @@ namespace _200SXContact.Commands.Areas.Orders
         private readonly AdminSettings _adminSettings;
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public PlaceOrderCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public PlaceOrderCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, UserManager<User> userManager, IEmailService emailService, IOptions<AdminSettings> adminSettings, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
@@ -31,7 +30,7 @@ namespace _200SXContact.Commands.Areas.Orders
             _adminSettings = adminSettings.Value;
             _loggerService = loggerService;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<int> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
         {
@@ -67,7 +66,7 @@ namespace _200SXContact.Commands.Areas.Orders
             {
                 try
                 {
-                    DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+                    DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
                     request.Model.OrderDate = clientTime;
 

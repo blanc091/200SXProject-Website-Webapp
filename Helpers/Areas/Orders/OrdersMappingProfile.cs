@@ -5,7 +5,7 @@ using _200SXContact.Helpers;
 
 public class OrdersMappingProfile : Profile
 {
-    public OrdersMappingProfile(IHttpContextAccessor httpContextAccessor)
+    public OrdersMappingProfile()
     {
         CreateMap<OrderPlacementDto, OrderPlacement>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -46,7 +46,7 @@ public class OrdersMappingProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.Carrier, opt => opt.MapFrom(src => src.Carrier))
             .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber))
-            .ForMember(dest => dest.StatusUpdatedAt, opt => opt.MapFrom(src => ClientTimeHelper.GetCurrentClientTime(httpContextAccessor)));
+            .ForMember(dest => dest.StatusUpdatedAt, opt => opt.MapFrom<ClientTimeResolver<OrderTrackingUpdateDto, OrderTracking>>());
 
         CreateMap<OrderTracking, OrderTrackingUpdateDto>()
             .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.OrderId))

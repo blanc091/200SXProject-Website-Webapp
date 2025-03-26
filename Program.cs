@@ -29,6 +29,8 @@ using _200SXContact.Queries.Areas.MaintenApp;
 using _200SXContact.Commands.Areas.UserContent;
 using _200SXContact.Queries.Areas.Account;
 using _200SXContact.Interfaces.Areas.Data;
+using _200SXContact.Interfaces;
+using _200SXContact.Helpers;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -165,6 +167,8 @@ builder.Services.Configure<StripeSettings>(stripeSettingsSection);
 builder.Services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IClientTimeProvider, ClientTimeProvider>();
+builder.Services.AddTransient(typeof(ClientTimeResolver<,>));
 builder.Services.AddSingleton<NetworkCredential>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();

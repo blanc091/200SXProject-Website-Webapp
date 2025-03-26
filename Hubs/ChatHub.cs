@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Chat;
@@ -15,14 +16,14 @@ namespace _200SXContact.Hubs
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IClientTimeProvider _clientTimeProvider;
         public static Dictionary<string, string?> ActiveSessions = new Dictionary<string, string?>();
-        public ChatHub(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, IMapper mapper, IEmailService emailService)
+        public ChatHub(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, IMapper mapper, IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
             _emailService = emailService;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider; ;
         }
         public override async Task OnConnectedAsync()
         {
@@ -41,8 +42,8 @@ namespace _200SXContact.Hubs
             {
                 await Groups.AddToGroupAsync(connectionId, "AdminGroup");
             }
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
-            var existingSession = await _context.ChatSessions.FirstOrDefaultAsync(cs => cs.UserId == userName);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
+            ChatSession? existingSession = await _context.ChatSessions.FirstOrDefaultAsync(cs => cs.UserId == userName);
             if (existingSession == null)
             {  
                 ChatSession newSession = new ChatSession
@@ -84,7 +85,7 @@ namespace _200SXContact.Hubs
             string sessionId = Context.ConnectionId;
             ActiveSessions[sessionId] = userName;
             ChatSession? session = await _context.ChatSessions.FirstOrDefaultAsync(s => s.SessionId == sessionId);
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             if (session != null)
             {
@@ -97,7 +98,7 @@ namespace _200SXContact.Hubs
         }
         public async Task SendMessage(ChatMessageDto chatMessageDto)
         {
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
             string persistentId = Context.User?.Identity?.Name;
             if (string.IsNullOrEmpty(persistentId))
             {
@@ -114,7 +115,7 @@ namespace _200SXContact.Hubs
         }
         public async Task AdminSendMessageToSession(string sessionId, string message)
         {
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             ChatMessageDto chatMessageDto = new ChatMessageDto
             {

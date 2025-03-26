@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
         commentSubmitted == "yes" ||
         isUserLoggedIn == "no" ||
         unsubscribed == "yes" ||
-        userDeleted == 'yes' ||
+		userDeleted == 'yes' || userDeleted == 'no' ||
 		isBuildSubmitted == 'yes' || isBuildSubmitted == 'no' ||
         itemAddedToCart == "yes" ||
 		isCommentDeleted == "yes" || isCommentDeleted == "no" ||

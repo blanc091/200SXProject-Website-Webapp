@@ -1,10 +1,8 @@
 ﻿using _200SXContact.Models.DTOs.Areas.Products;
 using _200SXContact.Interfaces.Areas.Admin;
-using FluentValidation;
 using _200SXContact.Models.Areas.Products;
 using _200SXContact.Interfaces.Areas.Data;
-using _200SXContact.Helpers;
-using Microsoft.AspNetCore.Http;
+using _200SXContact.Interfaces;
 
 namespace _200SXContact.Commands.Areas.Products
 {
@@ -19,20 +17,20 @@ namespace _200SXContact.Commands.Areas.Products
         private readonly ILoggerService _loggerService;
         private readonly IWebHostEnvironment _environment;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public AddProductCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public AddProductCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, ILoggerService loggerService, IWebHostEnvironment environment, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;
             _environment = environment;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Products || Adding new product admin", "Info", "");
 
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             ProductDto productDto = request.Product;
             productDto.AddedDate = clientTime.ToString();
@@ -81,7 +79,7 @@ namespace _200SXContact.Commands.Areas.Products
                             {
                                 await _loggerService.LogAsync("Products || Error while creating image folder. Please check your permissions" + ex.ToString(), "Error", "");
 
-                                throw new ValidationException("Error while creating image folder. Please check your permissions.");
+                                return false;
                             }
                         }
                     }
@@ -90,7 +88,7 @@ namespace _200SXContact.Commands.Areas.Products
                 {
                     await _loggerService.LogAsync("Products || Error when adding product" + ex.ToString(), "Error", "");
 
-                    throw new ValidationException("An error occurred while processing images.");
+                    return false;
                 }
             }
 
@@ -111,7 +109,7 @@ namespace _200SXContact.Commands.Areas.Products
             {
                 await _loggerService.LogAsync("Products || Error when adding product" + ex.ToString(), "Error", "");
 
-                throw new ValidationException("An error occurred while saving the product, please try again.");
+                return false;
             }
         }
     }

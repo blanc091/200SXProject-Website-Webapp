@@ -69,6 +69,17 @@ namespace _200SXContact.Data
 			    .HasOne(m => m.Session)
 			    .WithMany(s => s.Messages)
 			    .HasForeignKey(m => m.SessionId);
+
+            modelBuilder.Entity<OrderPlacement>()
+				.HasOne(o => o.User)
+				.WithMany(u => u.Orders)
+				.HasForeignKey(o => o.UserId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CartItem>()
+				.Property(ci => ci.Price)
+				.HasColumnType("decimal(18,2)");
+
         }
-	}
+    }
 }

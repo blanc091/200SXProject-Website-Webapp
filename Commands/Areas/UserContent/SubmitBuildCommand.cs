@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
@@ -18,13 +19,13 @@ namespace _200SXContact.Commands.Areas.UserContent
         private readonly IApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ILoggerService _loggerService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public SubmitBuildCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public SubmitBuildCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, UserManager<User> userManager, ILoggerService loggerService)
         {
             _context = context;
             _userManager = userManager;
             _loggerService = loggerService;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
 
         public async Task<SubmitBuildResult> Handle(SubmitBuildCommand request, CancellationToken cancellationToken)
@@ -60,7 +61,7 @@ namespace _200SXContact.Commands.Areas.UserContent
                 return SubmitBuildResult.TooManyImages;
             }
 
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             UserBuild userBuild = new UserBuild
             {

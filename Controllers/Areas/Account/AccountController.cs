@@ -7,6 +7,7 @@ using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.Chat;
 using _200SXContact.Queries.Areas.Account;
+using System.Net;
 
 namespace _200SXContact.Controllers.Areas.Account
 {
@@ -142,7 +143,8 @@ namespace _200SXContact.Controllers.Areas.Account
             }
 
             string token = await _userManager.GenerateUserTokenAsync(user, "Default", "DeleteAccountToken");
-            string? resetUrl = Url.Action("DeleteAccount", "Account", new { email = userEmail, token = token }, Request.Scheme);
+            string encodedToken = WebUtility.UrlEncode(token);
+            string? resetUrl = Url.Action("DeleteAccount", "Account", new { email = userEmail, token = encodedToken }, Request.Scheme);
 
             bool success = await _mediator.Send(new DeleteAccountVerifyCommand { UserEmail = userEmail, ResetUrl = resetUrl });
 

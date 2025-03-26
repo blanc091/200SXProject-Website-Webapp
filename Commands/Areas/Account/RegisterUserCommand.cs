@@ -1,5 +1,6 @@
 ﻿using _200SXContact.Commands.Areas.Newsletter;
 using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
 using Microsoft.AspNetCore.Http;
@@ -25,15 +26,15 @@ namespace _200SXContact.Commands.Areas.Account
         private readonly IEmailService _emailService;
         private readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public RegisterUserCommandHandler(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, ILoggerService loggerService, IEmailService emailService, IMediator mediator, IConfiguration configuration)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public RegisterUserCommandHandler(IClientTimeProvider clientTimeProvider, UserManager<User> userManager, ILoggerService loggerService, IEmailService emailService, IMediator mediator, IConfiguration configuration)
         {
             _userManager = userManager;
             _loggerService = loggerService;
             _emailService = emailService;
             _mediator = mediator;
             _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<RegisterUserCommandResult> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
@@ -70,7 +71,7 @@ namespace _200SXContact.Commands.Areas.Account
                 };
             }
 
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             DateTime createdAt = clientTime;
 

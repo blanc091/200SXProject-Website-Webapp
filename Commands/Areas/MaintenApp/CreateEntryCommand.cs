@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
@@ -19,14 +20,14 @@ namespace _200SXContact.Commands.Areas.MaintenApp
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IClientTimeProvider _clientTimeProvider;
 
-        public CreateEntryCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
+        public CreateEntryCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, IMapper mapper, ILoggerService loggerService)
         {
             _context = context;
             _mapper = mapper;
             _loggerService = loggerService;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
 
         public async Task<CreateEntryResult> Handle(CreateEntryCommand request, CancellationToken cancellationToken)
@@ -52,7 +53,7 @@ namespace _200SXContact.Commands.Areas.MaintenApp
 
             ReminderItem newItem = _mapper.Map<ReminderItem>(request.EntryDto);
             newItem.DueDate = request.EntryDto.DueDate;
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             newItem.CreatedAt = clientTime;
             newItem.UpdatedAt = clientTime;

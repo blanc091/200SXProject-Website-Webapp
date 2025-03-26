@@ -1,6 +1,7 @@
 ﻿using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
+using System.Net;
 
 namespace _200SXContact.Commands.Areas.Account
 {
@@ -36,7 +37,8 @@ namespace _200SXContact.Commands.Areas.Account
                 return false;
             }
 
-            bool isTokenValid = await _userManager.VerifyUserTokenAsync(user, "Default", "DeleteAccountToken", request.Token);
+            string decodedToken = WebUtility.UrlDecode(request.Token);
+            bool isTokenValid = await _userManager.VerifyUserTokenAsync(user, "Default", "DeleteAccountToken", decodedToken);
 
             if (!isTokenValid)
             {
@@ -45,7 +47,7 @@ namespace _200SXContact.Commands.Areas.Account
                 return false;
             }
 
-            List<UserBuild> userBuilds = await _context.UserBuilds.Where(ub => ub.UserId == request.UserId).ToListAsync(cancellationToken);
+           /* List<UserBuild> userBuilds = await _context.UserBuilds.Where(ub => ub.UserId == request.UserId).ToListAsync(cancellationToken);
 
             if (userBuilds.Any())
             {
@@ -56,7 +58,7 @@ namespace _200SXContact.Commands.Areas.Account
 
                 await _loggerService.LogAsync("Account || Deleted user builds", "Info", "");
             }
-
+           */
             IdentityResult deleteResult = await _userManager.DeleteAsync(user);
 
             if (!deleteResult.Succeeded)

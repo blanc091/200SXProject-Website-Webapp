@@ -4,6 +4,7 @@ using _200SXContact.Models.Areas.Products;
 using _200SXContact.Queries.Areas.Admin;
 using _200SXContact.Helpers;
 using Microsoft.AspNetCore.Http;
+using _200SXContact.Interfaces;
 
 namespace _200SXContact.Queries.Areas.Products
 {
@@ -12,18 +13,18 @@ namespace _200SXContact.Queries.Areas.Products
     {
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public GetAddProductInterfaceQueryHandler(IHttpContextAccessor httpContextAccessor, ILoggerService loggerService, IMapper mapper)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public GetAddProductInterfaceQueryHandler(IClientTimeProvider clientTimeProvider, ILoggerService loggerService, IMapper mapper)
         {
             _loggerService = loggerService;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<ProductDto> Handle(GetAddProductInterfaceQuery request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Products || Getting admin add product interface", "Info", "");
 
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             Product model = new Product
             {

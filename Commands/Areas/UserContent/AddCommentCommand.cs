@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.UserContent;
@@ -18,13 +19,13 @@ namespace _200SXContact.Commands.Areas.UserContent
         private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
         private readonly IEmailService _emailService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public AddCommentCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService, IEmailService emailService)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public AddCommentCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, ILoggerService loggerService, IEmailService emailService)
         {
             _context = context;
             _loggerService = loggerService;
             _emailService = emailService;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<int> Handle(AddCommentCommand request, CancellationToken cancellationToken)
         {
@@ -36,7 +37,7 @@ namespace _200SXContact.Commands.Areas.UserContent
                 return 0;
             }
 
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             BuildComment comment = new BuildComment
             {

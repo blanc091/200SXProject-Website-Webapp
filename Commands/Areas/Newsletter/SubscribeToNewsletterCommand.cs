@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Helpers;
+using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Newsletter;
@@ -20,14 +21,14 @@ namespace _200SXContact.Commands.Areas.Newsletter
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public SubscribeToNewsletterCommandHandler(IHttpContextAccessor httpContextAccessor, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper, IConfiguration configuration)
+        private readonly IClientTimeProvider _clientTimeProvider;
+        public SubscribeToNewsletterCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _loggerService = loggerService;
             _mapper = mapper;
             _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
+            _clientTimeProvider = clientTimeProvider;
         }
         public async Task<IActionResult> Handle(SubscribeToNewsletterCommand request, CancellationToken cancellationToken)
         {
@@ -53,7 +54,7 @@ namespace _200SXContact.Commands.Areas.Newsletter
             }
 
             NewsletterSubscription? existingSubscription = await _context.NewsletterSubscriptions.FirstOrDefaultAsync(sub => sub.Email == request.Email, cancellationToken);
-            DateTime clientTime = ClientTimeHelper.GetCurrentClientTime(_httpContextAccessor);
+            DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
 
             if (existingSubscription != null)
             {

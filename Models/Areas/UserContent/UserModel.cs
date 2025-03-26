@@ -1,4 +1,5 @@
 ﻿using _200SXContact.Models.Areas.MaintenApp;
+using _200SXContact.Models.Areas.Orders;
 using System.ComponentModel.DataAnnotations;
 
 namespace _200SXContact.Models.Areas.UserContent
@@ -16,6 +17,7 @@ namespace _200SXContact.Models.Areas.UserContent
 		public string? EmailVerificationToken { get; set; }
 		public string? PasswordResetToken { get; set; }
 		public virtual ICollection<ReminderItem>? Items { get; set; }
+        public ICollection<OrderPlacement> Orders { get; set; } = new List<OrderPlacement>();
         public virtual ICollection<UserBuild>? UserBuilds { get; set; } = new List<UserBuild>();
     }
 }

@@ -1,8 +1,6 @@
 ﻿using _200SXContact.Models.DTOs.Areas.Orders;
 using _200SXContact.Commands.Areas.Orders;
 using _200SXContact.Queries.Areas.Orders;
-using FluentValidation;
-using FluentValidation.Results;
 using _200SXContact.Interfaces.Areas.Admin;
 
 namespace _200SXContact.Controllers.Areas.Orders
@@ -11,12 +9,10 @@ namespace _200SXContact.Controllers.Areas.Orders
 	{
 		private readonly ILoggerService _loggerService;
         private readonly IMediator _mediator;
-        private readonly IValidator<PlaceOrderCommand> _validator;
-        public CheckoutController(ILoggerService loggerService, IMediator mediator, IValidator<PlaceOrderCommand> validator)
+        public CheckoutController(ILoggerService loggerService, IMediator mediator)
 		{
 			_loggerService = loggerService;
             _mediator = mediator;
-            _validator = validator;
         }
 		[HttpGet]
 		[Route("checkout/view-checkout")]
@@ -41,20 +37,6 @@ namespace _200SXContact.Controllers.Areas.Orders
 
             await _loggerService.LogAsync("Orders || Removed initial model states", "Info", "");
 
-            ValidationResult validationResult = await _validator.ValidateAsync(new PlaceOrderCommand(model, User));
-
-            if (!validationResult.IsValid)
-            {
-                await _loggerService.LogAsync("Orders || Model state is invalid", "Error", "");
-
-                foreach (ValidationFailure? error in validationResult.Errors)
-                {
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                }
-
-                return View("~/Views/Marketplace/CheckoutView.cshtml", model);
-            }
-
             if (!ModelState.IsValid)
             {
                 await _loggerService.LogAsync("Orders || Model state is invalid", "Error", "");
@@ -65,7 +47,7 @@ namespace _200SXContact.Controllers.Areas.Orders
             try
             {
                 int orderId = await _mediator.Send(new PlaceOrderCommand(model, User));
-               
+
                 return RedirectToAction("OrderSummary", new { orderId });
             }
             catch (UnauthorizedAccessException)

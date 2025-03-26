@@ -305,7 +305,7 @@ namespace _200SXContact.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
@@ -446,12 +446,10 @@ namespace _200SXContact.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddressLine")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Carrier")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CartItemsJson")
                         .HasColumnType("nvarchar(max)");
@@ -468,15 +466,13 @@ namespace _200SXContact.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StatusUpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TrackingNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -506,7 +502,6 @@ namespace _200SXContact.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagePaths")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -658,12 +653,15 @@ namespace _200SXContact.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -758,8 +756,9 @@ namespace _200SXContact.Migrations
             modelBuilder.Entity("_200SXContact.Models.Areas.Orders.OrderPlacement", b =>
                 {
                     b.HasOne("_200SXContact.Models.Areas.UserContent.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -791,7 +790,8 @@ namespace _200SXContact.Migrations
                     b.HasOne("_200SXContact.Models.Areas.UserContent.User", "User")
                         .WithMany("UserBuilds")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -811,6 +811,8 @@ namespace _200SXContact.Migrations
             modelBuilder.Entity("_200SXContact.Models.Areas.UserContent.User", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("UserBuilds");
                 });

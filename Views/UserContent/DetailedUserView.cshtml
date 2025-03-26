@@ -165,7 +165,7 @@
 							<p>@comment.Content</p>
 							<p style="display: flex; align-items: center;">
 								<small>
-									Posted by @comment.UserName on @comment.CreatedAt
+									Posted by @comment.UserName on @comment.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")
 								</small>
 								@if (User.Identity.IsAuthenticated && comment.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
 								{
