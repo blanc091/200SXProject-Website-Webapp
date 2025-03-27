@@ -105,7 +105,7 @@
 				<header class="major">
 					<span class="date"></span>
 					<h7 id="maintenApp">MaintenApp</h7>
-					<br>
+					<br><br />
 					<p>Use the below form to reset your password for your account.</p>
 				</header>
 				<h2>Forgot Password</h2>
@@ -116,6 +116,7 @@
 						<input asp-for="Email" class="form-control" />
 						<span asp-validation-for="Email" class="text-danger"></span>
 					</div>
+					<br />
 					<button type="submit" class="btn-add-entry">Send Password Reset Link</button>
 				</form>
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>

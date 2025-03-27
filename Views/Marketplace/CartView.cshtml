@@ -107,6 +107,12 @@
 		<div id="main">
 			<article class="post featured">
 				<br>
+				<div class="merchandise">
+					<a asp-controller="Products" asp-action="ProductsDashboard">
+						<span class="date flashy-text" id="merchandiseSpan"><i><strong>To return to the Products section, click here !</strong></i></span>
+					</a>
+				</div>
+				<br />
 				<h2 id="cartView">Your Cart</h2>
 				@if (Model.Any())
 				{
@@ -145,15 +151,7 @@
 				}
 				else
 				{
-					<span class="date">Your cart is empty.</span>
-					<br>
-					<br>
-					<div class="merchandise">
-						<a asp-controller="Products" asp-action="ProductsDashboard">
-							<span class="date flashy-text" id="merchandiseSpan"><i><strong>Click here to go to the products page.</strong></i></span>
-						</a>
-						<br><br>
-					</div>
+					<span class="date">Your cart is empty.</span>					
 				}
 			</article>
 		</div>

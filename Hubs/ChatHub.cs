@@ -64,7 +64,7 @@ namespace _200SXContact.Hubs
             }
             await _context.SaveChangesAsync();
 
-            await _emailService.NotifyNewChatSessionAsync(connectionId);
+            //await _emailService.NotifyNewChatSessionAsync(connectionId);
             await Clients.Group("AdminGroup").SendAsync("NewChatSession", connectionId);
 
             await base.OnConnectedAsync();

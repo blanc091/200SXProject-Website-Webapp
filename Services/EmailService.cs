@@ -16,6 +16,71 @@ namespace _200SXContact.Services
         private readonly NetworkCredential _credentials;
         private readonly IConfiguration _configuration;
         private readonly AdminSettings _adminSettings;
+        public const string EmailHead = @"
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c2c2c; 
+            color: #ffffff; 
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #3c3c3c;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            text-align: center;
+        }
+        .header img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #f5f5f5;
+            font-size: 24px;
+            font-family: 'Helvetica', 'Roboto', sans-serif;
+            margin: 20px 0;
+        }
+        p {
+            line-height: 1.6;
+            margin: 10px 0;
+            color: #f5f5f5;
+            font-family: 'Helvetica', 'Roboto', sans-serif;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #d0bed1;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #966b91; 
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #b0b0b0; 
+        }
+    </style>
+</head>";
         public EmailService(ILoggerService loggerService, IOptions<AdminSettings> adminSettings, IOptions<AppSettings> appSettings, NetworkCredential credentials, IConfiguration configuration)
         {
             _loggerService = loggerService;
@@ -35,87 +100,23 @@ namespace _200SXContact.Services
                 EnableSsl = true,
                 Credentials = _credentials
             };
-            string body = $@"
-                <!DOCTYPE html>
-                <html lang='en'>
-                <head>
-                    <meta charset='UTF-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <style>
-                        body {{
-                            font-family: 'Helvetica', 'Roboto', sans-serif;
-                            margin: 0;
-                            padding: 0;
-                            background-color: #2c2c2c; 
-                            color: #ffffff; 
-                        }}
-                        .container {{
-                            width: 100%;
-                            max-width: 600px;
-                            margin: 0 auto;
-                            padding: 20px;
-                            background-color: #3c3c3c;
-                            border-radius: 8px;
-                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-                        }}
-                        .header {{
-                            text-align: center;
-                        }}
-                        .header img {{
-                            max-width: 100%;
-                            height: auto;
-                            border-radius: 8px;
-                        }}
-                        h1 {{
-                            color: #f5f5f5;
-                            font-size: 24px;
-				            font-family: 'Helvetica', 'Roboto', sans-serif;
-				            margin: 20px 0;
-                        }}
-                        p {{
-                            line-height: 1.6;
-                            margin: 10px 0;
-				            color: #f5f5f5;
-				            font-family: 'Helvetica', 'Roboto', sans-serif;
-                        }}
-                        .button {{
-                            display: inline-block;
-                            padding: 10px 20px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            color: #ffffff;
-                            background-color: #d0bed1;
-                            text-decoration: none;
-                            border-radius: 5px;
-                            transition: background-color 0.3s ease;
-                        }}
-                        .button:hover {{
-                            background-color: #966b91; 
-                        }}
-                        .footer {{
-                            text-align: center;
-                            margin-top: 20px;
-                            font-size: 12px;
-                            color: #b0b0b0; 
-                        }}
-                    </style>
-                </head>
-                <body>
-                    <div class='container'>
-                        <div class='header'>
-                            <a href=""https://www.200sxproject.com"" target=""_blank"">
-					            <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
-				            </a>
-                        </div>
-                        <h1>New comment added</h1>
-                        <p>Hi there,</p>
-			            <p>A new chat has been initiated; log in to the admin dash and respond to the users.</p>                        
-                        <div class='footer'>
-                            <p>© 2025 200SX Project. All rights reserved.</p>
-                        </div>
+            string body = EmailHead + $@"
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <a href=""https://www.200sxproject.com"" target=""_blank"">
+                            <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+                        </a>
                     </div>
-                </body>
-                </html>";
+                    <h1>New comment added</h1>
+                    <p>Hi there,</p>
+                    <p>A new chat has been initiated; log in to the admin dash and respond to the users.</p>
+                    <div class='footer'>
+                        <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>
+                    </div>
+                </div>
+            </body>
+            </html>";
             MailMessage mailMessage = new MailMessage
             {
                 From = new MailAddress(_credentials.UserName, "Admin"),
@@ -126,7 +127,7 @@ namespace _200SXContact.Services
 
             mailMessage.To.Add(_adminSettings.Email);
 
-            await smtpClient.SendMailAsync(mailMessage);
+            //await smtpClient.SendMailAsync(mailMessage);
 
             await _loggerService.LogAsync("Chat box || Sent chat notification to admin", "Info", "");
         }
@@ -137,93 +138,28 @@ namespace _200SXContact.Services
             MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
             MailAddress toAddress = new MailAddress(email);
             string subject = "Import Garage || Delete Your Account";
-            string body = @"
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <style>
-                body {
-                    font-family: 'Helvetica', 'Roboto', sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    background-color: #2c2c2c; 
-                    color: #ffffff; 
-                }
-                .container {
-                    width: 100%;
-                    max-width: 600px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    background-color: #3c3c3c;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-                }
-                .header {
-                    text-align: center;
-                }
-                .header img {
-                    max-width: 100%;
-                    height: auto;
-                    border-radius: 8px;
-                }
-                h1 {
-                    color: #f5f5f5;
-                    font-size: 24px;
-				    font-family: 'Helvetica', 'Roboto', sans-serif;
-				    margin: 20px 0;
-                }
-                p {
-                    line-height: 1.6;
-                    margin: 10px 0;
-				    color: #f5f5f5;
-				    font-family: 'Helvetica', 'Roboto', sans-serif;
-                }
-                .button {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    color: #ffffff;
-                    background-color: #d0bed1;
-                    text-decoration: none;
-                    border-radius: 5px;
-                    transition: background-color 0.3s ease;
-                }
-                .button:hover {
-                    background-color: #966b91; 
-                }
-                .footer {
-                    text-align: center;
-                    margin-top: 20px;
-                    font-size: 12px;
-                    color: #b0b0b0; 
-                }
-            </style>
-        </head>
-        <body>
-            <div class='container'>
-                <div class='header'>
-                    <a href=""https://www.200sxproject.com"" target=""_blank"">
-					    <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
-				    </a>
+            string body = EmailHead + $@"
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <a href=""https://www.200sxproject.com"" target=""_blank"">
+                            <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+                        </a>
+                    </div>
+                    <h1>Account Deletion</h1>
+                    <p>Hi there,</p>
+                    <p>Click the link below to delete your account and all related info; this action cannot be undone:</p>
+                    <p>
+                        <a href='{resetUrl}' class='button'>Delete Your Account</a>
+                    </p>
+                    <p>If you did not request this, you can safely ignore this email.</p>
+                    <p>Thank you!</p>
+                    <div class='footer'>
+                        <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>
+                    </div>
                 </div>
-                <h1>Account Deletion</h1>
-                <p>Hi there,</p>
-                <p>Click the link below to delete your account and all related info; this action cannot be undone:</p>
-                <p>
-                    <a href='" + resetUrl + @"' class='button'>Delete Your Account</a>
-                </p>
-                <p>If you did not request this, you can safely ignore this email.</p>
-                <p>Thank you !</p>
-                <div class='footer'>
-                    <p>© 2025 200SX Project. All rights reserved.</p>
-                </div>
-            </div>
-        </body>
-        </html>";
-
+            </body>
+            </html>";
             using (SmtpClient smtpClient = new SmtpClient
             {
                 Host = "mail5019.site4now.net",
@@ -252,92 +188,28 @@ namespace _200SXContact.Services
             MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
             MailAddress toAddress = new MailAddress(email);
             string subject = "Import Garage || Reset Your Password";
-            string body = @"
-    <!DOCTYPE html>
-    <html lang='en'>
-    <head>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <style>
-            body {
-                font-family: 'Helvetica', 'Roboto', sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #2c2c2c; 
-                color: #ffffff; 
-            }
-            .container {
-                width: 100%;
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #3c3c3c;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            }
-            .header {
-                text-align: center;
-            }
-            .header img {
-                max-width: 100%;
-                height: auto;
-                border-radius: 8px;
-            }
-            h1 {
-                color: #f5f5f5;
-                font-size: 24px;
-				font-family: 'Helvetica', 'Roboto', sans-serif;
-				margin: 20px 0;
-            }
-            p {
-                line-height: 1.6;
-                margin: 10px 0;
-				color: #f5f5f5;
-				font-family: 'Helvetica', 'Roboto', sans-serif;
-            }
-            .button {
-                display: inline-block;
-                padding: 10px 20px;
-                font-size: 16px;
-                font-weight: bold;
-                color: #ffffff;
-                background-color: #d0bed1;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-            }
-            .button:hover {
-                background-color: #966b91; 
-            }
-            .footer {
-                text-align: center;
-                margin-top: 20px;
-                font-size: 12px;
-                color: #b0b0b0; 
-            }
-        </style>
-    </head>
-    <body>
-        <div class='container'>
-            <div class='header'>
-                <a href=""https://www.200sxproject.com"" target=""_blank"">
-					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
-				</a>
+            string body = EmailHead + $@"
+            <body>
+            <div class='container'>
+                <div class='header'>
+                    <a href=""https://www.200sxproject.com"" target=""_blank"">
+                        <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+                    </a>
+                </div>
+                <h1>Account Recovery</h1>
+                <p>Hi there,</p>
+                <p>Click the link below to reset and assign a new password for <b>MaintenApp</b>:</p>
+                <p>
+                    <a href='{resetUrl}' class='button'>Recover Your Account</a>
+                </p>
+                <p>If you did not request this, you can safely ignore this email.</p>
+                <p>Thank you !</p>
+                <div class='footer'>
+                    <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>
+                </div>
             </div>
-            <h1>Account Recovery</h1>
-            <p>Hi there,</p>
-            <p>Click the link below to reset and assign a new password for <b>MaintenApp</b>:</p>
-            <p>
-                <a href='" + resetUrl + @"' class='button'>Recover Your Account</a>
-            </p>
-            <p>If you did not request this, you can safely ignore this email.</p>
-            <p>Thank you !</p>
-            <div class='footer'>
-                <p>© 2025 200SX Project. All rights reserved.</p>
-            </div>
-        </div>
-    </body>
-    </html>";
+            </body>
+            </html>";
             using (var smtpClient = new SmtpClient
             {
                 Host = "mail5019.site4now.net",
@@ -366,92 +238,28 @@ namespace _200SXContact.Services
             MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
             MailAddress toAddress = new MailAddress(email);
             string subject = "Import Garage || Verify your email";
-            string body = @"
-    <!DOCTYPE html>
-    <html lang='en'>
-    <head>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <style>
-            body {
-                font-family: 'Helvetica', 'Roboto', sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #2c2c2c; 
-                color: #ffffff; 
-            }
-            .container {
-                width: 100%;
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #3c3c3c;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            }
-            .header {
-                text-align: center;
-            }
-            .header img {
-                max-width: 100%;
-                height: auto;
-                border-radius: 8px;
-            }
-            h1 {
-                color: #f5f5f5;
-                font-size: 24px;
-				font-family: 'Helvetica', 'Roboto', sans-serif;
-				margin: 20px 0;
-            }
-            p {
-                line-height: 1.6;
-                margin: 10px 0;
-				color: #f5f5f5;
-				font-family: 'Helvetica', 'Roboto', sans-serif;
-            }
-            .button {
-                display: inline-block;
-                padding: 10px 20px;
-                font-size: 16px;
-                font-weight: bold;
-                color: #ffffff;
-                background-color: #d0bed1;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-            }
-            .button:hover {
-                background-color: #966b91; 
-            }
-            .footer {
-                text-align: center;
-                margin-top: 20px;
-                font-size: 12px;
-                color: #b0b0b0; 
-            }
-        </style>
-    </head>
-    <body>
-        <div class='container'>
-            <div class='header'>
-                <a href=""https://www.200sxproject.com"" target=""_blank"">
-					<img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
-				</a>
+            string body = EmailHead + $@"
+            <body>
+            <div class='container'>
+                <div class='header'>
+                    <a href=""https://www.200sxproject.com"" target=""_blank"">
+                        <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+                    </a>
+                </div>
+                <h1>Account Activation</h1>
+                <p>Hi there,</p>
+                <p>Thank you for registering your account for <b>MaintenApp</b>! To activate your account, please click the button below:</p>
+                <p>
+                    <a href='{verificationUrl}' class='button'>Activate Your Account</a>
+                </p>
+                <p>If you did not sign up for this account, you can safely ignore this email.</p>
+                <p>Thank you!</p>
+                <div class='footer'>
+                    <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>
+                </div>
             </div>
-            <h1>Account Activation</h1>
-            <p>Hi there,</p>
-            <p>Thank you for registering your account for <b>MaintenApp</b> ! To activate your account, please click the button below:</p>
-            <p>
-                <a href='" + verificationUrl + @"' class='button'>Activate Your Account</a>
-            </p>
-            <p>If you did not sign up for this account, you can safely ignore this email.</p>
-            <p>Thank you !</p>
-            <div class='footer'>
-                <p>© 2025 200SX Project. All rights reserved.</p>
-            </div>
-        </div>
-    </body>
-    </html>";
+            </body>
+            </html>";
             using (SmtpClient smtpClient = new SmtpClient
             {
                 Host = "mail5019.site4now.net",
@@ -525,7 +333,17 @@ namespace _200SXContact.Services
 
             MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
             MailAddress toAddress = new MailAddress(email);
-            string subject = "Import Garage || Your Order";
+            string subject = string.Empty;
+
+            if (email == _adminSettings.Email)
+            {
+                subject = "Import Garage || A new order has been placed !";
+            }
+            else
+            {
+                subject = "Import Garage || Your Order";
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<!DOCTYPE html>");
             sb.AppendLine("<html lang='en'>");
@@ -548,8 +366,13 @@ namespace _200SXContact.Services
             sb.AppendLine("            <a href=\"https://www.200sxproject.com\" target=\"_blank\">\r\n    <img src=\"https://200sxproject.com/images/verifHeader.JPG\" alt=\"200SX Project\" />\r\n</a>");
             sb.AppendLine("        </div>");
             sb.AppendLine("        <h1>Order Confirmation</h1>");
-            sb.AppendLine("        <p>Hi " + order.FullName + ",</p>");
-            if (email == _credentials.UserName)
+
+            if (email != _adminSettings.Email)
+            {
+                sb.AppendLine("        <p>Hi " + order.FullName + ",</p>");
+            }
+
+            if (email == _adminSettings.Email)
             {
                 sb.AppendLine("        <p>A new order is registered !</p>");
             }
@@ -557,6 +380,7 @@ namespace _200SXContact.Services
             {
                 sb.AppendLine("        <p>Your order has been confirmed !</p>");
             }
+
             sb.AppendLine("        <p><strong>Order ID:</strong> " + order.Id + "</p>");
             sb.AppendLine("        <p><strong>Order Date:</strong> " + order.OrderDate.ToString("f") + "</p>");
             sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Order Details:</p></h2>");
@@ -572,7 +396,7 @@ namespace _200SXContact.Services
             sb.AppendLine("        </table>");
             sb.AppendLine("        <p>Thank you !</p>");
             sb.AppendLine("        <div class='footer'>");
-            sb.AppendLine("            <p>© 2025 200SX Project. All rights reserved.</p>");
+            sb.AppendLine($"            <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>");
             sb.AppendLine("        </div>");
             sb.AppendLine("    </div>");
             sb.AppendLine("</body>");
@@ -606,71 +430,7 @@ namespace _200SXContact.Services
                 MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
                 MailAddress toAddress = new MailAddress(userEmail);
                 string subject = "Import Garage || New comment added for your Build";
-                string body = $@"
-                <!DOCTYPE html>
-                <html lang='en'>
-                <head>
-                    <meta charset='UTF-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <style>
-                        body {{
-                            font-family: 'Helvetica', 'Roboto', sans-serif;
-                            margin: 0;
-                            padding: 0;
-                            background-color: #2c2c2c; 
-                            color: #ffffff; 
-                        }}
-                        .container {{
-                            width: 100%;
-                            max-width: 600px;
-                            margin: 0 auto;
-                            padding: 20px;
-                            background-color: #3c3c3c;
-                            border-radius: 8px;
-                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-                        }}
-                        .header {{
-                            text-align: center;
-                        }}
-                        .header img {{
-                            max-width: 100%;
-                            height: auto;
-                            border-radius: 8px;
-                        }}
-                        h1 {{
-                            color: #f5f5f5;
-                            font-size: 24px;
-				            font-family: 'Helvetica', 'Roboto', sans-serif;
-				            margin: 20px 0;
-                        }}
-                        p {{
-                            line-height: 1.6;
-                            margin: 10px 0;
-				            color: #f5f5f5;
-				            font-family: 'Helvetica', 'Roboto', sans-serif;
-                        }}
-                        .button {{
-                            display: inline-block;
-                            padding: 10px 20px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            color: #ffffff;
-                            background-color: #d0bed1;
-                            text-decoration: none;
-                            border-radius: 5px;
-                            transition: background-color 0.3s ease;
-                        }}
-                        .button:hover {{
-                            background-color: #966b91; 
-                        }}
-                        .footer {{
-                            text-align: center;
-                            margin-top: 20px;
-                            font-size: 12px;
-                            color: #b0b0b0; 
-                        }}
-                    </style>
-                </head>
+                string body = EmailHead + $@"                
                 <body>
                     <div class='container'>
                         <div class='header'>
@@ -686,7 +446,7 @@ namespace _200SXContact.Services
 				            <a href='{link}' target='_blank'>Click here to access your build page.</a>
 			            </p>
                         <div class='footer'>
-                            <p>© 2025 200SX Project. All rights reserved.</p>
+                            <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
@@ -755,7 +515,7 @@ namespace _200SXContact.Services
                 sb.AppendLine("        <h2 style=\"color: #ece8ed; !important\"><p>Please make sure you take the necessary actions. Remember you can log into your profile and check your registered items in MaintenApp dashboard.</p></h2>");
                 sb.AppendLine("        <p>Thank you !</p>");
                 sb.AppendLine("        <div class='footer'>");
-                sb.AppendLine("            <p>© 2025 200SX Project. All rights reserved.</p>");
+                sb.AppendLine($"            <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>");
                 sb.AppendLine("        </div>");
                 sb.AppendLine("    </div>");
                 sb.AppendLine("</body>");
