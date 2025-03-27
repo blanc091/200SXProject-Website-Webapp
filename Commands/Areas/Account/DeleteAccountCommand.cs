@@ -47,18 +47,6 @@ namespace _200SXContact.Commands.Areas.Account
                 return false;
             }
 
-           /* List<UserBuild> userBuilds = await _context.UserBuilds.Where(ub => ub.UserId == request.UserId).ToListAsync(cancellationToken);
-
-            if (userBuilds.Any())
-            {
-                await _loggerService.LogAsync($"Account || Found {userBuilds.Count} user build(s) for deletion", "Info", "");
-
-                _context.UserBuilds.RemoveRange(userBuilds);
-                await _context.SaveChangesAsync(cancellationToken);
-
-                await _loggerService.LogAsync("Account || Deleted user builds", "Info", "");
-            }
-           */
             IdentityResult deleteResult = await _userManager.DeleteAsync(user);
 
             if (!deleteResult.Succeeded)
@@ -71,6 +59,22 @@ namespace _200SXContact.Commands.Areas.Account
                 }
 
                 return false;
+            }
+
+            string userMediaFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "uploads", user.Id);
+
+            if (Directory.Exists(userMediaFolder))
+            {
+                try
+                {
+                    Directory.Delete(userMediaFolder, recursive: true);
+
+                    await _loggerService.LogAsync("Account || Deleted user's media files", "Info", "");
+                }
+                catch (Exception ex)
+                {
+                    await _loggerService.LogAsync("Account || Failed to delete user's media files: " + ex.ToString(), "Error", "");
+                }
             }
 
             await _signInManager.SignOutAsync();

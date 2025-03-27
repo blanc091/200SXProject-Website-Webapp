@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
         itemAddedToCart == "yes" ||
 		isCommentDeleted == "yes" || isCommentDeleted == "no" ||
 		isNewsletterError == "yes" ||
-        passResetEmailSent == "yes") {
+        passResetEmailSent == "yes" || passResetEmailSent == "no") {
         setTimeout(function () {
             $('#messageModal').fadeOut(1250);
         }, 3000);

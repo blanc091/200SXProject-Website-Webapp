@@ -133,16 +133,25 @@ namespace _200SXContact.Controllers.Areas.Account
 		[Route("account/delete-account-verify")]
 		public async Task<IActionResult> DeleteAccountVerify(string userEmail)
         {
-            User? user = await _userManager.FindByEmailAsync(userEmail);
+            User? loggedInUser = await _userManager.GetUserAsync(User);
 
-            if (user == null)
+            if (loggedInUser == null)
             {
-                TempData["Message"] = "User does not exist !";
+                TempData["Message"] = "User is not logged in or doesn't exist !";
+                TempData["UserDeleteAccEmailSent"] = "no";
 
                 return RedirectToAction("DeleteAccountConfirmation", "Account");
             }
 
-            string token = await _userManager.GenerateUserTokenAsync(user, "Default", "DeleteAccountToken");
+            if (!string.Equals(loggedInUser.Email, userEmail, StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["Message"] = "That is not your email address !";
+                TempData["UserDeleteAccEmailSent"] = "no";
+
+                return RedirectToAction("DeleteAccountConfirmation", "Account");
+            }
+           
+            string token = await _userManager.GenerateUserTokenAsync(loggedInUser, "Default", "DeleteAccountToken");
             string encodedToken = WebUtility.UrlEncode(token);
             string? resetUrl = Url.Action("DeleteAccount", "Account", new { email = userEmail, token = encodedToken }, Request.Scheme);
 
@@ -155,7 +164,8 @@ namespace _200SXContact.Controllers.Areas.Account
             }
             else
             {
-                TempData["Message"] = "User does not exist !";
+                TempData["Message"] = "Account deletion failed ! Please contact us.";
+                TempData["UserDeleteAccEmailSent"] = "no";
             }
 
             return RedirectToAction("DeleteAccountConfirmation", "Account");
