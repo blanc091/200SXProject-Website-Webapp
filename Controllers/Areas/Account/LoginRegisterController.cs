@@ -218,32 +218,33 @@ namespace _200SXContact.Controllers.Areas.Account
         }
         [HttpGet]
 		[Route("forgot-my-password")]
-		public async Task<IActionResult> ForgotPassReset()
-		{
-            await _loggerService.LogAsync("Login Register || Getting forgot pass view", "Info", "");
+		public async Task<IActionResult> ForgotPassReset(string? message)
+        {
+            await _loggerService.LogAsync("Login Register || Getting forgot pass view", "Info", "");            
 
-            ForgotPasswordViewModel model = new ForgotPasswordViewModel
+            if (!string.IsNullOrEmpty(message))
             {
-                Email = string.Empty
-            };
-
-            if (model == null)
-			{
-				model = new ForgotPasswordViewModel
-                {
-                    Email = string.Empty
-                };
+                TempData["Message"] = message;
+                TempData["PassResetLinkEmailed"] = "yes";
             }
+
+            ForgotPasswordViewModel model = new ForgotPasswordViewModel { Email = string.Empty } ?? new ForgotPasswordViewModel { Email = string.Empty };
 
             await _loggerService.LogAsync("Login Register || Got forgot pass view", "Info", "");
 
             return View("~/Views/Account/ForgotPassReset.cshtml", model);
 		}
 		[HttpGet]
-		[Route("register-new-account")]
-		public async Task<IActionResult> Register()
+		[Route("register-new-account", Name = "RegisterView")]
+        public async Task<IActionResult> Register(string? message)
 		{
             await _loggerService.LogAsync("Login Register || Getting register account view", "Info", "");
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                TempData["Message"] = message;
+                TempData["IsFormRegisterSuccess"] = "yes";
+            }
 
             if (!User.Identity.IsAuthenticated)
 			{
@@ -265,11 +266,22 @@ namespace _200SXContact.Controllers.Areas.Account
 			}
 		}
 		[HttpPost]
-		[Route("register-an-account")]
+		[Route("register-an-account", Name = "RegisterSubmit")]
 		[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string gRecaptchaResponseRegister)
         {
-            if (!ModelState.IsValid)
+            bool isAjax = string.Equals(Request.Headers["X-Requested-With"], "XMLHttpRequest", StringComparison.OrdinalIgnoreCase);
+            string postedEmail = Request.Form["Email"];
+            string postedRecaptchaResponse = Request.Form["gRecaptchaResponseRegister"];
+
+            if (isAjax)
+            {
+                ModelState.Remove("gRecaptchaResponseRegister");
+                model.Email = postedEmail;
+                gRecaptchaResponseRegister = postedRecaptchaResponse;
+            }
+
+            if (!ModelState.IsValid && !isAjax)
             {
                 TempData["IsFormRegisterSuccess"] = "no";
 
@@ -285,7 +297,7 @@ namespace _200SXContact.Controllers.Areas.Account
                 honeypotSpam = model.honeypotSpam,
                 RecaptchaResponse = gRecaptchaResponseRegister,
                 TimeZoneCookie = Request.Cookies["userTimeZone"],
-                IsCalledFromRegisterForm = true
+                IsCalledFromRegisterForm = !isAjax
             };
 
             RegisterUserCommand command = _mapper.Map<RegisterUserCommand>(extendedDto);
@@ -310,7 +322,7 @@ namespace _200SXContact.Controllers.Areas.Account
             TempData["IsFormRegisterSuccess"] = "yes";
             TempData["Message"] = "Registration successful ! Check your email for verification.";
 
-            return Redirect("/login-page");
+            return Redirect("/register-new-account");
         }
 		[HttpGet]
 		[Route("reset-my-password")]
@@ -338,7 +350,8 @@ namespace _200SXContact.Controllers.Areas.Account
             return View("~/Views/Account/ResetPass.cshtml", model);
 		}
 		[HttpPost]
-		[Route("forgot-password")]
+        [Route("forgot-password", Name = "ForgotPasswordRoute")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             await _loggerService.LogAsync("Login Register || Starting the forgot password process", "Info", "");
@@ -357,8 +370,9 @@ namespace _200SXContact.Controllers.Areas.Account
                 await _loggerService.LogAsync("Login Register || User is null when trying to reset password", "Error", "");
 
                 TempData["Message"] = "If that email is associated with an account, you will receive a password reset link.";
+                TempData["PassResetLinkEmailed"] = "no";
 
-                return RedirectToAction("ForgotPassword");
+                return RedirectToAction("ForgotPassReset");
             }
 
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -375,10 +389,11 @@ namespace _200SXContact.Controllers.Areas.Account
             if (!result.Succeeded)
             {
                 TempData["Message"] = "There was an error processing your request.";
+                TempData["PassResetLinkEmailed"] = "no";
 
                 await _loggerService.LogAsync("Login Register || Error processing the request when trying to reset password", "Error", "");
 
-                return RedirectToAction("ForgotPassword");
+                return RedirectToAction("ForgotPassReset");
             }
 
             TempData["PassResetLinkEmailed"] = "yes";
@@ -386,7 +401,7 @@ namespace _200SXContact.Controllers.Areas.Account
 
             await _loggerService.LogAsync("Login Register || Finished the reset password process", "Info", "");
 
-            return Redirect("/login-page");
+            return RedirectToAction("ForgotPassReset");
         }
         [HttpPost]
 		[Route("reset-password")]

@@ -1,9 +1,7 @@
 ﻿using _200SXContact.Commands.Areas.Newsletter;
-using _200SXContact.Helpers;
 using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.UserContent;
-using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.Account
 {
@@ -18,6 +16,7 @@ namespace _200SXContact.Commands.Areas.Account
         public required string TimeZoneCookie { get; set; }
         public required string VerificationUrl { get; set; }
         public required string VerificationToken { get; set; }
+        public required bool IsCalledFromRegisterForm { get; set; }
     }
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResult>
     {
@@ -45,7 +44,7 @@ namespace _200SXContact.Commands.Areas.Account
                 return new RegisterUserCommandResult
                 {
                     Succeeded = false,
-                    Errors = new[] { "Spam detected." }
+                    Errors = ["Spam detected."]
                 };
             }
 
@@ -54,7 +53,7 @@ namespace _200SXContact.Commands.Areas.Account
                 return new RegisterUserCommandResult
                 {
                     Succeeded = false,
-                    Errors = new[] { "Failed reCAPTCHA validation." }
+                    Errors = ["Failed reCAPTCHA validation."]
                 };
             }
 
@@ -62,20 +61,41 @@ namespace _200SXContact.Commands.Areas.Account
 
             if (existingUser != null)
             {
-                await _loggerService.LogAsync("User already exists when trying to register new user", "Error", "");
-
-                return new RegisterUserCommandResult
+                if (command.IsCalledFromRegisterForm)
                 {
-                    Succeeded = false,
-                    Errors = new[] { "User already exists !" }
-                };
+                    await _loggerService.LogAsync("User already exists when trying to register new user", "Error", "");
+
+                    return new RegisterUserCommandResult
+                    {
+                        Succeeded = false,
+                        Errors = ["User already exists!"]
+                    };
+                }
+                else
+                {
+                    if (existingUser.IsEmailVerified)
+                    {
+                        return new RegisterUserCommandResult
+                        {
+                            Succeeded = false,
+                            Errors = ["User already activated."]
+                        };
+                    }
+                    else
+                    {
+                        existingUser.EmailVerificationToken = command.VerificationToken;
+                        await _userManager.UpdateAsync(existingUser);
+                        await _emailService.SendVerificationEmail(existingUser.Email, command.VerificationUrl);
+
+                        return new RegisterUserCommandResult { Succeeded = true, Errors = [] };
+                    }
+                }
             }
 
             DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
-
             DateTime createdAt = clientTime;
 
-            User user = new User
+            User user = new()
             {
                 UserName = command.Username,
                 Email = command.Email,
@@ -94,11 +114,7 @@ namespace _200SXContact.Commands.Areas.Account
                     await _loggerService.LogAsync($"Login Register || Error in user creation: {error}", "Error", "");
                 }
 
-                return new RegisterUserCommandResult
-                {
-                    Succeeded = false,
-                    Errors = errors
-                };
+                return new RegisterUserCommandResult { Succeeded = false, Errors = errors };
             }
 
             if (command.SubscribeToNewsletter)
@@ -120,11 +136,7 @@ namespace _200SXContact.Commands.Areas.Account
 
             await _loggerService.LogAsync("Login Register || New user registered, redirecting to login page", "Info", "");
 
-            return new RegisterUserCommandResult
-            {
-                Succeeded = true,
-                Errors = Array.Empty<string>()
-            };
+            return new RegisterUserCommandResult { Succeeded = true, Errors = [] };
         }
         private async Task<bool> VerifyRecaptchaAsync(string token)
         {

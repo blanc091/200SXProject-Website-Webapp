@@ -25,6 +25,7 @@
         console.error('reCAPTCHA library not loaded.');
     }
 };
+
 document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll('.g-recaptcha');
     buttons.forEach(button => {
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 window.onSubmitWithEvent = function (token, event) {
     console.log("ReCAPTCHA token received:", token);
     if (!event) {
@@ -65,6 +67,12 @@ window.onSubmitWithEvent = function (token, event) {
         return;
     }
     recaptchaResponse.value = token;
+    
+    if (formId === "registerForm") {
+        sessionStorage.setItem("registerRecaptcha", token);
+        console.log("Stored registerRecaptcha token in sessionStorage.");
+    }
+    
     console.log("Submitting form with ID:", formId);
     form.submit();
 };

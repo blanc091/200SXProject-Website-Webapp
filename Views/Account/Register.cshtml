@@ -1,7 +1,7 @@
 ﻿@using _200SXContact.Models.Areas.Account
 @model RegisterViewModel
 @{
-	var message = TempData["Message"] as string;
+	var message = TempData["Message"] as string ?? ViewContext.HttpContext.Request.Query["message"];
 }
 @if (!string.IsNullOrEmpty(message))
 {
@@ -37,7 +37,7 @@
 			}
 	</style>
 </head>
-<body class="is-preload" data-user-exists="@TempData["UserExists"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
+<body class="is-preload" data-user-exists="@TempData["UserExists"]" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-form-register-success="@TempData["IsFormRegisterSuccess"]">
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -95,6 +95,7 @@
 		<!-- Main -->
 		<div id="main">
 			<!-- Featured Post -->
+			@Html.AntiForgeryToken()
 			<article class="post featured">
 				<header class="major">
 					<span class="date"></span>
@@ -145,6 +146,11 @@
 						Create Account
 					</button>
 				</form>
+				<br />
+				<span id="register-resend-link" class="date flashy-text" style="display: none; cursor: pointer; color: dimgrey; text-decoration: underline;">Didn't work ? Click here to resend the activation email</span>
+				<br>
+				<div id="register-url" data-register-url="@Url.RouteUrl("RegisterView")" style="display:none;"></div>
+				<div id="register-post-url" data-register-post-url="@Url.RouteUrl("RegisterSubmit")" style="display:none;"></div>
 				<br>				
 			</article>
 		</div>

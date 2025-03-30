@@ -197,7 +197,8 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/getClientTime.js"
+      "wwwroot/js/getClientTime.js",
+      "wwwroot/js/resendPassReset.js"
     ],
     "minify": {
       "enabled": true,
@@ -222,7 +223,9 @@
     "inputFiles": [
       "wwwroot/js/formScript.js",
       "wwwroot/js/cookies.js",
-      "wwwroot/js/getClientTime.js"
+      "wwwroot/js/getClientTime.js",
+      "wwwroot/js/registerStoreSession.js",
+      "wwwroot/js/resendRegisterEmail.js"
     ],
     "minify": {
       "enabled": true,

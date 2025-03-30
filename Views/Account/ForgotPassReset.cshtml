@@ -1,7 +1,7 @@
 ﻿@using _200SXContact.Models.Areas.Account
 @model ForgotPasswordViewModel
 @{
-	var message = TempData["Message"] as string;
+	var message = TempData["Message"] as string ?? ViewContext.HttpContext.Request.Query["message"];
 }
 @if (!string.IsNullOrEmpty(message))
 {
@@ -38,7 +38,7 @@
 			}
 	</style>
 </head>
-<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
+<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-pass-reset-email-sent="@TempData["PassResetLinkEmailed"]">
 
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
@@ -99,7 +99,7 @@
 
 		<!-- Main -->
 		<div id="main">
-
+			@Html.AntiForgeryToken()
 			<!-- Featured Post -->
 			<article class="post featured">
 				<header class="major">
@@ -109,7 +109,7 @@
 					<p>Use the below form to reset your password for your account.</p>
 				</header>
 				<h2>Forgot Password</h2>
-				<form asp-action="ForgotPassword" method="post">
+				<form asp-action="ForgotPassword" method="post" id="forgotPasswordForm">
 					@Html.AntiForgeryToken()
 					<div class="form-group">
 						<label asp-for="Email"></label>
@@ -120,15 +120,11 @@
 					<button type="submit" class="btn-add-entry">Send Password Reset Link</button>
 				</form>
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div>
-					@if (TempData["Message"] != null)
-					{
-						<div class="alert alert-info">@TempData["Message"]</div>
-					}
-				</div>
-				
+				<br />
+				<span id="resend-link" class="date flashy-text" style="display: none; cursor: pointer; color: dimgrey; text-decoration: underline;">Didn't work ? Click here to resend the reset link.</span>
 				<br>
-				
+				<div id="forgot-pass-reset-url" data-forgot-reset-url="@Url.Action("ForgotPassReset", "LoginRegister")" style="display:none;"></div>
+				<div id="forgot-password-url" data-forgot-password-url="@Url.Action("ForgotPassword", "LoginRegister")" style="display:none;"></div>
 			</article>
 		</div>
 
