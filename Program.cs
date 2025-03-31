@@ -31,6 +31,7 @@ using _200SXContact.Queries.Areas.Account;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Interfaces;
 using _200SXContact.Helpers;
+using System.Threading.RateLimiting;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -176,7 +177,23 @@ builder.Services.AddSingleton<NetworkCredential>(sp =>
     var password = configuration["EmailCredentials:Password"];
     return new NetworkCredential(username, password);
 });
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+    {
+        var clientIp = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
 
+        return RateLimitPartition.GetFixedWindowLimiter(clientIp, partition =>
+            new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 5,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+            });
+    });
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
 StripeConfiguration.ApiKey = stripeSettingsSection["SecretKey"];
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>

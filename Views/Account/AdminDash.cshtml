@@ -104,18 +104,35 @@
 					<br><br>
 					<span>Use this Admin dashboard to add new products into the database - which will reflect in the products carousel, create and send a newsletter to subscribers, or view customers' pending orders.</span>
 					<br><br><br>
-					<a href="/products/add-product-interface" class="btn-save" role="button">Add Product</a>
+					<button class="btn-save" data-href="/products/add-product-interface">Add Product</button>
 					<br><br>
-					<a href="/newsletter/create-newsletter-admin" class="btn-save" role="button">Create Newsletter</a>
+					<button class="btn-save" data-href="/newsletter/create-newsletter-admin">Create Newsletter</button>
 					<br><br>
-					<a href="/pendingorders/get-all-orders-admin" class="btn-save" role="button">Orders</a>
+					<button class="btn-save" data-href="/pendingorders/get-all-orders-admin">Orders</button>
 					<br><br>
 					<button id="togglePendingChats" class="btn-save" role="button">Pending Chats</button>
+					<br><br>
+					<button id="openProductModal" class="btn-save">Delete Products</button>
 				</header>				
 				<br>				
 			</article>
+
 			<div id="pendingChatsContainer" style="display: none;"></div>
 			<div id="chatSessionsContainer"></div>
+
+			<div id="productModal" style="display:none; position:fixed; top:10%; left:10%; width:70%; height:80%; background:white; border:1px solid #ccc; z-index:9999; overflow:auto; padding:10px;">
+				<div id="modalHeader" style="padding-bottom:5px; margin-bottom:10px;">
+					<h3>Delete Product</h3>
+					<button id="closeProductModal" class="btn-save" style="float:right;">Close</button>
+				</div>
+				<div id="productListContainer">
+					<p>Loading products…</p>
+				</div>
+			</div>
+
+			<div id="products-api-url" data-products-api-url="@Url.Action("GetProductsAdmin", "Products", new { area = "" })" style="display:none;"></div>
+			<div id="product-delete-url" data-product-delete-url="@Url.Action("DeleteProductAdmin", "Products", new { area = "" })" style="display:none;"></div>
+
 		</div>
 
 		<!-- Footer -->

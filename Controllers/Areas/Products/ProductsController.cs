@@ -38,7 +38,48 @@ namespace _200SXContact.Controllers.Areas.Products
 
 			return View("~/Views/Marketplace/ProductsDashboard.cshtml", products); 
 		}
-		[HttpPost]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetProductsAdmin()
+        {
+            List<ProductDto?>? products = await _mediator.Send(new GetProductsQuery());
+
+            if (products == null || products.Count == 0)
+            {
+                await _loggerService.LogAsync("Products || No products found currently", "Info", "");
+
+                return NotFound(new { message = "No products added at this point." });
+            }
+
+            return Ok(products);
+        }
+        [HttpPost]
+        [Route("products/delete-product-admin")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteProductAdmin(int productId)
+        {
+            try
+            {
+                bool result = await _mediator.Send(new DeleteProductCommand(productId));
+
+                if (result)
+                {
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false, errors = new[] { "Product deletion failed." } });
+                }
+            }
+            catch (Exception ex)
+            {
+                await _loggerService.LogAsync("Product || Error deleting product: " + ex.Message, "Error", "");
+
+                return Json(new { success = false, errors = new[] { "Error deleting product." } });
+            }
+        }
+        [HttpPost]
 		[Route("products/add-product-admin")]
 		[Authorize(Roles = "Admin")]
 		[ValidateAntiForgeryToken]
