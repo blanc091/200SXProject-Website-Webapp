@@ -6,5 +6,6 @@
         public required string Status { get; set; }
         public string? Carrier { get; set; }
         public string? TrackingNumber { get; set; }
+        public string? Email { get; set; }
     }
 }

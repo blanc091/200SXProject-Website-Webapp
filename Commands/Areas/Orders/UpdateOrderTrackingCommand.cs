@@ -1,10 +1,10 @@
-﻿using _200SXContact.Helpers;
-using _200SXContact.Interfaces;
+﻿using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.DTOs.Areas.Orders;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace _200SXContact.Commands.Areas.Orders
 {
@@ -18,12 +18,18 @@ namespace _200SXContact.Commands.Areas.Orders
         private readonly ILoggerService _loggerService;
         private readonly IMapper _mapper;
         private readonly IClientTimeProvider _clientTimeProvider;
-        public UpdateOrderTrackingCommandHandler(IClientTimeProvider clientTimeProvider, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
+        private readonly IEmailService _emailService;
+        private readonly IUrlHelper _urlHelper;
+        private readonly IActionContextAccessor _actionContextAccessor;
+        public UpdateOrderTrackingCommandHandler(IActionContextAccessor actionContextAccessor, IEmailService emailService, IUrlHelperFactory urlHelperFactory, IClientTimeProvider clientTimeProvider, IApplicationDbContext context, ILoggerService loggerService, IMapper mapper)
         {
             _context = context;
             _loggerService = loggerService;
             _mapper = mapper;
             _clientTimeProvider = clientTimeProvider;
+            _emailService = emailService;
+            _actionContextAccessor = actionContextAccessor;
+            _urlHelper = urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext);
         }
         public async Task<bool> Handle(UpdateOrderTrackingCommand request, CancellationToken cancellationToken)
         {
@@ -33,7 +39,7 @@ namespace _200SXContact.Commands.Areas.Orders
 
             await _loggerService.LogAsync("Orders || Getting order trackings in order tracking admin", "Info", "");
 
-            OrderTracking? orderTracking = await _context.OrderTrackings.FirstOrDefaultAsync(ot => ot.OrderId == updateDto.OrderId, cancellationToken);
+            OrderTracking? orderTracking = await _context.OrderTrackings.Include(ot => ot.Order).FirstOrDefaultAsync(ot => ot.OrderId == updateDto.OrderId, cancellationToken);
 
             if (orderTracking == null)
             {
@@ -43,6 +49,7 @@ namespace _200SXContact.Commands.Areas.Orders
             }
 
             await _loggerService.LogAsync("Orders || Mapping Dto to model in order tracking", "Info", "");
+
             _mapper.Map(request.UpdateDto, orderTracking);
 
             DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
@@ -50,7 +57,19 @@ namespace _200SXContact.Commands.Areas.Orders
             orderTracking.StatusUpdatedAt = clientTime;
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _loggerService.LogAsync("Orders || Mapped Dto to model in order tracking", "Info", "");
+            string? userId = orderTracking.Order?.UserId;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                await _loggerService.LogAsync("Orders || User ID not found on associated Order", "Error", "");
+
+                return false;
+            }
+
+            string orderUpdateUrl = _urlHelper.Action("UserOrders", "PendingOrders", new { userId }, "https");
+            await _emailService.SendOrderUpdateEmail(orderTracking.Email, orderUpdateUrl);
+
+            await _loggerService.LogAsync("Orders || Finished order status update", "Info", "");
 
             return true;
         }

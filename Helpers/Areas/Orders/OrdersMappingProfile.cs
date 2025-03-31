@@ -46,13 +46,15 @@ public class OrdersMappingProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.Carrier, opt => opt.MapFrom(src => src.Carrier))
             .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.StatusUpdatedAt, opt => opt.MapFrom<ClientTimeResolver<OrderTrackingUpdateDto, OrderTracking>>());
 
         CreateMap<OrderTracking, OrderTrackingUpdateDto>()
             .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.OrderId))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.Carrier, opt => opt.MapFrom(src => src.Carrier))
-            .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber));
+            .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
 
         CreateMap<OrderTrackingDto, OrderTracking>()
             .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.OrderId))
@@ -98,6 +100,7 @@ public class OrdersMappingProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.Carrier, opt => opt.MapFrom(src => src.Carrier))
             .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ReverseMap();
     }
 }

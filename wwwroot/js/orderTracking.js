@@ -10,6 +10,7 @@
             const orderId = row.dataset.orderId;
             const status = row.querySelector('.status-input').value;
             const carrier = row.querySelector('.carrier-input').value;
+			const email = row.querySelector('.email-cell') ? row.querySelector('.email-cell').textContent.trim() : "";
             const trackingNumber = row.querySelector('.tracking-number-input').value;
 
             fetch('/pendingorders/update-order-tracking', {
@@ -20,8 +21,9 @@
                 },
                 body: JSON.stringify({
                     orderId: orderId,
+					email: email,
                     status: status,
-                    carrier: carrier,
+                    carrier: carrier,					
                     trackingNumber: trackingNumber
                 })
             })

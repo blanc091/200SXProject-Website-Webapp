@@ -131,7 +131,56 @@ namespace _200SXContact.Services
 
             await _loggerService.LogAsync("Chat box || Sent chat notification to admin", "Info", "");
         }
-        public async Task SendUserDeleteEmail(string email, string resetUrl)
+        public async Task SendOrderUpdateEmail(string email, string orderUpdateUrl)
+        {
+            await _loggerService.LogAsync("Orders || Starting sending order update email task", "Info", "");
+
+            MailAddress fromAddress = new MailAddress(_credentials.UserName, "Import Garage");
+            MailAddress toAddress = new MailAddress(email);
+            string subject = "Import Garage || Order updated";
+            string body = EmailHead + $@"
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <a href=""https://www.200sxproject.com"" target=""_blank"">
+                            <img src=""https://200sxproject.com/images/verifHeader.JPG"" alt=""200SX Project"" />
+                        </a>
+                    </div>
+                    <h1>Order update</h1>
+                    <p>Hi there,</p>
+                    <p>Your order has been updated; click the link below to go to your Orders page:</p>
+                    <p>
+                        <a href='{orderUpdateUrl}' class='button'>My orders</a>
+                    </p>
+                    <p>Thank you!</p>
+                    <div class='footer'>
+                        <p>© {DateTime.Now.Year} 200SX Project. All rights reserved.</p>
+                    </div>
+                </div>
+            </body>
+            </html>";
+            using (SmtpClient smtpClient = new SmtpClient
+            {
+                Host = "mail5019.site4now.net",
+                Port = 587,
+                EnableSsl = true,
+                Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password)
+            })
+            {
+                using (MailMessage message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                {
+                    await smtpClient.SendMailAsync(message);
+
+                    await _loggerService.LogAsync("Orders || Finished sending order update email task", "Info", "");
+                }
+            }
+        }
+        public async Task SendUserDeleteEmail(string email, string userDeleteUrl)
         {
             await _loggerService.LogAsync("Account || Starting sending user delete email task", "Info", "");
 
@@ -150,7 +199,7 @@ namespace _200SXContact.Services
                     <p>Hi there,</p>
                     <p>Click the link below to delete your account and all related info; this action cannot be undone:</p>
                     <p>
-                        <a href='{resetUrl}' class='button'>Delete Your Account</a>
+                        <a href='{userDeleteUrl}' class='button'>Delete Your Account</a>
                     </p>
                     <p>If you did not request this, you can safely ignore this email.</p>
                     <p>Thank you!</p>
@@ -472,11 +521,11 @@ namespace _200SXContact.Services
             }
             catch (SmtpException ex)
             {
-                await _loggerService.LogAsync($"Due Date Reminder || SMTP error: {ex.ToString()}", "Error", "");
+                await _loggerService.LogAsync($"Comments || SMTP error: {ex.ToString()}", "Error", "");
             }
             catch (Exception ex)
             {
-                await _loggerService.LogAsync($"Due Date Reminder || SMTP error: {ex.ToString()}", "Error", "");
+                await _loggerService.LogAsync($"Comments || SMTP error: {ex.ToString()}", "Error", "");
             }
         }
         public async Task SendDueDateReminder(string userEmail, string userName, ReminderItem item, int daysBeforeDue)

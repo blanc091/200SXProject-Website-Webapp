@@ -14,6 +14,7 @@ namespace _200SXContact.Interfaces.Areas.Admin
         Task NotifyNewChatSessionAsync(string sessionId);
         Task SendVerificationEmail(string email, string verificationUrl);
         Task SendPasswordResetEmail(string email, string resetUrl);
-        Task SendUserDeleteEmail(string email, string resetUrl);
+        Task SendUserDeleteEmail(string email, string userDeleteUrl);
+        Task SendOrderUpdateEmail(string email, string orderUpdateUrl);
     }
 }

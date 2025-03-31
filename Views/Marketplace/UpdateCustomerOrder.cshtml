@@ -111,13 +111,12 @@
 
 		<!-- Main -->
 		<div id="main">
-			<article class="post featured">
 				<h2 id="ordersAll">Orders</h2>
 				<table id="orderTable">
 					<thead>
 						<tr>
 							<th>Order ID</th>
-							<th>Customer Name</th>
+							<th>Email</th>
 							<th>Status</th>
 							<th>Carrier</th>
 							<th>Tracking Number</th>
@@ -132,7 +131,7 @@
 						{
 							<tr data-order-id="@item.OrderId">
 								<td>@item.OrderId</td>
-								<td>@item.Status</td>
+								<td class="email-cell">@item.Email</td>
 								<td>
 									<input type="text" class="status-input" value="@item.Status" />
 								</td>
@@ -171,10 +170,7 @@
 						</div>
 					</div>
 				</div>
-
-			</article>
 		</div>
-
 
 		<!-- Footer -->
 		<footer id="footer">

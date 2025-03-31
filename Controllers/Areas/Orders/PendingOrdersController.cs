@@ -17,17 +17,20 @@ namespace _200SXContact.Controllers.Areas.Orders
 		[HttpGet]
 		[Route("pendingorders/view-my-orders")]
 		[Authorize]
-		public async Task<IActionResult> UserOrders()
+		public async Task<IActionResult> UserOrders(string? userId)
 		{
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             if (string.IsNullOrEmpty(userId))
             {
-                await _loggerService.LogAsync("Orders || User ID not found", "Warning", "");
+                userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                TempData["Message"] = "Please log in to view your orders.";
+                if (string.IsNullOrEmpty(userId))
+                {
+                    await _loggerService.LogAsync("Orders || User ID not found", "Warning", "");
 
-                return Redirect("/login-page");
+                    TempData["Message"] = "Please log in to view your orders.";
+
+                    return Redirect("/login-page");
+                }
             }
 
             List<OrderUserDashDto>? orders = await _mediator.Send(new GetUserOrdersQuery(userId));
@@ -110,7 +113,7 @@ namespace _200SXContact.Controllers.Areas.Orders
                 return NotFound("Order tracking record not found.");
             }
 
-            return Ok(new { message = "Order tracking updated successfully!" });
+            return Ok(new { message = "Order tracking updated successfully !" });
         }
     }
 }

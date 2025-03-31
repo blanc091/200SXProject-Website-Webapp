@@ -32,6 +32,7 @@ using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Interfaces;
 using _200SXContact.Helpers;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 async Task CreateRoles(IServiceProvider serviceProvider)
 {
     RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -177,6 +178,7 @@ builder.Services.AddSingleton<NetworkCredential>(sp =>
     var password = configuration["EmailCredentials:Password"];
     return new NetworkCredential(username, password);
 });
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddRateLimiter(options =>
 {
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
@@ -186,9 +188,9 @@ builder.Services.AddRateLimiter(options =>
         return RateLimitPartition.GetFixedWindowLimiter(clientIp, partition =>
             new FixedWindowRateLimiterOptions
             {
-                PermitLimit = 5,
+                PermitLimit = 6,
                 Window = TimeSpan.FromMinutes(1),
-                QueueLimit = 5,
+                QueueLimit = 6,
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst
             });
     });
