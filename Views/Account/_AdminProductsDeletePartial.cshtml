@@ -1,0 +1,15 @@
+﻿<div id="productModal" style="display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:70%; height:80%; background:white; border:1px solid #ccc; z-index:9999; overflow:auto; padding:10px;">
+    <div id="modalHeader" style="padding-bottom:5px; margin-bottom:10px;">
+        <br />
+        <h3 style="float:left; margin:0;">Delete Product</h3>
+        <button id="closeProductModal" class="btn-save" style="float:right;">Close</button>       
+        <div style="clear:both;"></div>
+    </div>
+    <br />
+    <div id="productListContainer">
+        <p>Loading products…</p>
+    </div>
+</div>
+
+<div id="products-api-url" data-products-api-url='@Url.Action("GetProductsAdmin", "Products", new { area = "" })' style="display:none;"></div>
+<div id="product-delete-url" data-product-delete-url='@Url.Action("DeleteProductAdmin", "Products", new { area = "" })' style="display:none;"></div>
