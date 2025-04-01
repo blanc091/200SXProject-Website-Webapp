@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var registerWidgetId;
     grecaptcha.ready(function () {
         registerWidgetId = grecaptcha.render('g-recaptcha-register', {
-            'sitekey': '6LdVNIgqAAAAAGdAW2AVoZGG3uoSYm0LgW-se5OH',
+            'sitekey': '6LfHIYgqAAAAALHD85A5uSVmIOeCS4Q458X6_LIv',
             'size': 'invisible',
             'callback': function (token) {
                 console.log("Registration token received (via callback):", token);
