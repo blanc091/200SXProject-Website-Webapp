@@ -337,9 +337,11 @@ namespace _200SXContact.Services
                 await _loggerService.LogAsync("Contact form || Started sending contact email to admin", "Info", "");
 
                 MailAddress fromAddress = new MailAddress(_credentials.UserName, model.Email);
-                MailAddress toAddress = new MailAddress(_credentials.UserName, "Admin");
+                MailAddress toAddress = new MailAddress(_adminSettings.Email, "Admin");
                 string subject = $"New Contact Form Submission from {model.Name}";
                 string body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}";
+
+                
 
                 using (SmtpClient smtpClient = new SmtpClient
                 {
@@ -354,6 +356,8 @@ namespace _200SXContact.Services
                         Subject = subject,
                         Body = body
                     };
+                    message.ReplyToList.Add(new MailAddress(model.Email));
+
                     await _loggerService.LogAsync("Contact form || Email built, sending", "Info", "");
 
                     await smtpClient.SendMailAsync(message);
@@ -423,7 +427,7 @@ namespace _200SXContact.Services
 
             if (email == _adminSettings.Email)
             {
-                sb.AppendLine("        <p>A new order is registered !</p>");
+                sb.AppendLine("        <p>A new order is registered, please log into the admin console and check out the details.</p>");
             }
             else
             {

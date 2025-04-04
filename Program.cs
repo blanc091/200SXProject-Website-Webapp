@@ -173,9 +173,10 @@ builder.Services.AddTransient<IClientTimeProvider, ClientTimeProvider>();
 builder.Services.AddTransient(typeof(ClientTimeResolver<,>));
 builder.Services.AddSingleton<NetworkCredential>(sp =>
 {
-    var configuration = sp.GetRequiredService<IConfiguration>();
-    var username = configuration["EmailCredentials:UserName"];
-    var password = configuration["EmailCredentials:Password"];
+    IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+    string? username = configuration["EmailCredentials:UserName"];
+    string? password = configuration["EmailCredentials:Password"];
+
     return new NetworkCredential(username, password);
 });
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -183,7 +184,7 @@ builder.Services.AddRateLimiter(options =>
 {
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
     {
-        var clientIp = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        string clientIp = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
 
         return RateLimitPartition.GetFixedWindowLimiter(clientIp, partition =>
             new FixedWindowRateLimiterOptions

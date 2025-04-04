@@ -4,9 +4,10 @@ using _200SXContact.Models.DTOs.Areas.Orders;
 
 namespace _200SXContact.Queries.Areas.Orders
 {
-    public class GetUserOrdersQuery(string userId) : IRequest<List<OrderUserDashDto>?>
+    public class GetUserOrdersQuery(string userId, int? orderId = null) : IRequest<List<OrderUserDashDto>?>
     {
         public string UserId { get; set; } = userId;
+        public int? OrderId { get; set; } = orderId;
     }
     public class GetUserOrdersQueryHandler : IRequestHandler<GetUserOrdersQuery, List<OrderUserDashDto>?>
     {
@@ -23,9 +24,18 @@ namespace _200SXContact.Queries.Areas.Orders
         {
             await _loggerService.LogAsync("Orders || Getting user orders query", "Info", "");
 
-            List<_200SXContact.Models.Areas.Orders.OrderPlacement> orders = await _context.Orders.Include(o => o.OrderTracking).Where(o => o.UserId == request.UserId).ToListAsync(cancellationToken);
+            List<Models.Areas.Orders.OrderPlacement> orders;
 
-            if (orders == null)
+            if (request.OrderId.HasValue)
+            {
+                orders = await _context.Orders.Include(o => o.OrderTracking).Where(o => o.Id == request.OrderId.Value).ToListAsync(cancellationToken);
+            }
+            else
+            {
+                orders = await _context.Orders.Include(o => o.OrderTracking).Where(o => o.UserId == request.UserId).ToListAsync(cancellationToken);
+            }
+
+            if (orders == null || orders.Count == 0)
             {
                 await _loggerService.LogAsync("Orders || Error when getting user orders query", "Error", "");
 

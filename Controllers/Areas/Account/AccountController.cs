@@ -6,7 +6,9 @@ using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.Chat;
+using _200SXContact.Models.DTOs.Areas.Orders;
 using _200SXContact.Queries.Areas.Account;
+using _200SXContact.Queries.Areas.Orders;
 using System.Net;
 
 namespace _200SXContact.Controllers.Areas.Account
@@ -32,11 +34,18 @@ namespace _200SXContact.Controllers.Areas.Account
 		[HttpGet]
 		[Route("account/admin-dashboard")]
 		[Authorize(Roles = "Admin")]
-		public IActionResult AdminDash()
+		public async Task<IActionResult> AdminDash()
 		{
-			_loggerService.LogAsync("Account || Getting admin dash page", "Info", "");
+            List<OrderTrackingUpdateDto> orders = await _mediator.Send(new GetAllOrdersQuery());
 
-			return View("~/Views/Account/AdminDash.cshtml");
+            if (orders is null)
+            {
+                await _loggerService.LogAsync("Admin Dash || No orders found at all", "Error", "");
+            }
+
+            await _loggerService.LogAsync("Account || Getting admin dash page", "Info", "");
+
+			return View("~/Views/Account/AdminDash.cshtml", orders);
 		}
         [HttpGet]
         public async Task<IActionResult> GetPendingChatSessions()

@@ -7,8 +7,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/cookies.js",
       "wwwroot/js/floatLoginBtn.js",
-      "wwwroot/js/getClientTime.js",
-      "wwwroot/js/chatBox.js"
+      "wwwroot/js/getClientTime.js"
+      //"wwwroot/js/chatBox.js"
       //"wwwroot/js/newsletterValidator.js"
     ],
     "minify": {
@@ -156,8 +156,8 @@
       "wwwroot/js/formScript.js",
       "wwwroot/js/logInlogOut.js",
       "wwwroot/js/getClientTime.js",
-      "wwwroot/js/adminLinks.js",
-      "wwwroot/js/deleteProduct.js"
+      "wwwroot/js/deleteProduct.js",
+      "wwwroot/js/adminPendingOrders.js"
     ],
     "minify": {
       "enabled": true,

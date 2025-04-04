@@ -35,7 +35,7 @@ namespace _200SXContact.Controllers.Areas.Orders
 
             List<OrderUserDashDto>? orders = await _mediator.Send(new GetUserOrdersQuery(userId));
 
-            if (orders == null)
+            if (orders == null || orders.Count == 0)
             {
                 await _loggerService.LogAsync("Orders || No orders found for user id " + userId, "Warning", "");
 
@@ -44,21 +44,44 @@ namespace _200SXContact.Controllers.Areas.Orders
 
             return View("~/Views/Marketplace/PendingOrdersCustomer.cshtml", orders);
         }
-		[HttpGet]
-		[Route("pendingorders/get-all-orders-admin")]
-		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> GetAllOrders()
-		{
-            List<OrderTrackingUpdateDto> orders = await _mediator.Send(new GetAllOrdersQuery());
+        [HttpGet]
+        [Route("pendingorders/get-user-orders-json")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUserOrdersJson(string? orderId)
+        {
+            int? parsedOrderId = null;
 
-            if (orders is null)
+            if (!string.IsNullOrEmpty(orderId) && int.TryParse(orderId, out int id))
             {
-                await _loggerService.LogAsync("Orders || No orders found at all", "Error", "");
-
-                TempData["Message"] = "No orders found at all !";   
+                parsedOrderId = id;
             }
 
-            return View("~/Views/Marketplace/UpdateCustomerOrder.cshtml", orders);
+            List<OrderUserDashDto>? orders = await _mediator.Send(new GetUserOrdersQuery("", parsedOrderId));
+
+            if (orders == null || orders.Count == 0)
+            {
+                await _loggerService.LogAsync("Orders || No order details found for order id " + orderId, "Warning", "");
+
+                return NotFound("No orders found for user.");
+            }
+
+            return Ok(orders);
+        }
+        [HttpGet]
+        [Route("pendingorders/get-all-orders-admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            List<OrderTrackingUpdateDto> orders = await _mediator.Send(new GetAllOrdersQuery());
+
+            if (orders == null || orders.Count == 0)
+            {
+                await _loggerService.LogAsync("Orders || No orders found at all", "Error", "");
+                // Optionally, you could also return NotFound or a custom message.
+                return Ok(new List<OrderTrackingUpdateDto>());
+            }
+
+            return Ok(orders);
         }
         [HttpGet]
         [Route("pendingorders/get-cart-items")]

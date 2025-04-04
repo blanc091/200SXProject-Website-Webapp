@@ -1,5 +1,4 @@
-﻿@model List<_200SXContact.Models.DTOs.Areas.Orders.OrderTrackingUpdateDto>
-@using System.Security.Claims
+﻿@using System.Security.Claims
 @{
 	var message = TempData["Message"] as string;
 }
@@ -111,65 +110,6 @@
 
 		<!-- Main -->
 		<div id="main">
-				<h2 id="ordersAll">Orders</h2>
-				<table id="orderTable">
-					<thead>
-						<tr>
-							<th>Order ID</th>
-							<th>Email</th>
-							<th>Status</th>
-							<th>Carrier</th>
-							<th>Tracking Number</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<form id="order-tracking-form">
-							@Html.AntiForgeryToken()
-						</form>
-						@foreach (var item in Model)
-						{
-							<tr data-order-id="@item.OrderId">
-								<td>@item.OrderId</td>
-								<td class="email-cell">@item.Email</td>
-								<td>
-									<input type="text" class="status-input" value="@item.Status" />
-								</td>
-								<td>
-									<input type="text" class="carrier-input" value="@item.Carrier" />
-								</td>
-								<td>
-									<input type="text" class="tracking-number-input" value="@item.TrackingNumber" />
-								</td>
-								<td>
-									<button class="save-btn">Save</button>
-								</td>
-								<td>
-									<button class="view-cart-btn" data-order-id="@item.OrderId">View Cart Items</button>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-				<div id="cartItemsPopup" class="popup hidden">
-					<div class="popup-content">						
-						<h3>Cart Items</h3>
-						<table>
-							<thead>
-								<tr>
-									<th>Product Name</th>
-									<th>Quantity</th>
-									<th>Price</th>
-								</tr>
-							</thead>
-							<tbody id="cartItemsTable">
-							</tbody>
-						</table>
-						<div class="popup-footer">
-							<button class="save-btn" id="closePopup">Close</button>
-						</div>
-					</div>
-				</div>
 		</div>
 
 		<!-- Footer -->

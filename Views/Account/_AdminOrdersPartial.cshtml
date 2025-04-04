@@ -1,0 +1,92 @@
+﻿<div id="ordersModal" style="display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); width:80%; height:80%; background:white; border:1px solid #ccc; z-index:9999; overflow:auto; padding:10px;">
+    <div id="ordersModalHeader" style="padding-bottom:5px; margin-bottom:10px;">
+        <br />
+        <h3 style="float:left; margin:0;">Orders</h3>
+        <button id="closeOrdersModal" class="btn-save" style="float:right;">Close</button>
+        <div style="clear:both;"></div>
+    </div>
+    <br />
+    <div id="ordersContent">
+        <table id="orderTable">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Carrier</th>
+                    <th>Tracking Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form id="order-tracking-form">
+                    @Html.AntiForgeryToken()
+                </form>
+                @foreach (var item in Model)
+                {
+                    <tr data-order-id="@item.OrderId">
+                        <td>@item.OrderId</td>
+                        <td class="email-cell">@item.Email</td>
+                        <td>
+                            <input type="text" class="status-input" value="@item.Status" />
+                        </td>
+                        <td>
+                            <input type="text" class="carrier-input" value="@item.Carrier" />
+                        </td>
+                        <td>
+                            <input type="text" class="tracking-number-input" value="@item.TrackingNumber" />
+                        </td>
+                        <td>
+                            <button class="save-btn">Save</button>
+                        </td>
+                        <td>
+                            <button class="view-cart-btn" data-order-id="@item.OrderId">Cart Items</button>
+                        </td>
+                        <td>
+                            <button class="view-details-btn" data-order-id="@item.OrderId">Order Details</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="cartItemsPopup" class="popup hidden"style="position: fixed; z-index: 99999;">
+    <div class="popup-content">
+        <h3 style="text-align: center;">Cart Items</h3>
+        <br />
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="cartItemsTable">
+            </tbody>
+        </table>
+        <div class="popup-footer">
+            <button class="save-btn" id="closePopup">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="orderDetailsPopup" class="popup hidden" style="position: fixed; z-index: 102000;">
+    <div class="popup-content">
+        <h3 style="text-align: center;">Order Details</h3>
+        <br />
+        <div id="orderDetailsContent">
+        </div>
+        <br />
+        <div class="popup-footer">
+            <button id="closeOrderDetailsPopup">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="orders-api-url" data-orders-api-url='@Url.Action("GetAllOrders", "PendingOrders", new { area = "" })' style="display:none;"></div>
+
+<script src="~/js/Areas/Marketplace/PendingOrdersCustomer/bundle.min.js" asp-append-version="true"></script>
+<script src="~/js/orderTracking.js" asp-append-version="true"></script>

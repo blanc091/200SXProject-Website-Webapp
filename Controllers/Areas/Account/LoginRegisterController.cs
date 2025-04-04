@@ -34,8 +34,8 @@ namespace _200SXContact.Controllers.Areas.Account
 		{
             await _loggerService.LogAsync("Login Register || Started Microsoft logging in process", "Info", "");
 
-			string? redirectUri = Url.Action("SigninMicrosoft", "LoginRegister", null, Request.Scheme);
-			AuthenticationProperties properties = new AuthenticationProperties { RedirectUri = redirectUri };
+            string? redirectUri = Url.Action("SigninMicrosoft", "LoginRegister", null, Request.Scheme);
+            AuthenticationProperties properties = new AuthenticationProperties { RedirectUri = redirectUri };
 
             await _loggerService.LogAsync($"Login Register || Initiating Microsoft login, redirecting to: {redirectUri}", "Info", "");
 

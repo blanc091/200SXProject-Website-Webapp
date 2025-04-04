@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('Found buttons:', buttons);
 
   buttons.forEach(function(button) {
-    if (button.id === 'openProductModal' || button.id === 'togglePendingChats') {
+    if (button.id === 'togglePendingChats') {
       console.log('Skipping button:', button.id);
       return;
     }
