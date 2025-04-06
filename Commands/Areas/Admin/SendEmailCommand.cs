@@ -3,6 +3,7 @@ using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Models.Areas.Admin;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Admin;
+using Ardalis.GuardClauses;
 using Ganss.Xss;
 using System.Net;
 using System.Net.Mail;
@@ -43,10 +44,14 @@ namespace _200SXContact.Commands.Areas.Admin
                 await _loggerService.LogAsync("Contact form || Started sending contact email", "Info", "");
 
                 if (!string.IsNullOrWhiteSpace(request.HoneypotSpamContact))
+                {
                     return ContactResult.Failure(viewName, model, "Spam detected");
+                }
 
                 if (string.IsNullOrWhiteSpace(request.GRecaptchaResponseContact) || !await VerifyRecaptchaAsync(request.GRecaptchaResponseContact))
+                { 
                     return ContactResult.Failure(viewName, model, "Failed reCAPTCHA validation.");
+                }
 
                 ContactResult? validationResult = await IsValidModel(model, viewName);
 
@@ -101,60 +106,41 @@ namespace _200SXContact.Commands.Areas.Admin
         }
         private async Task<ContactResult?> IsValidModel(ContactForm model, string viewName)
         {
-            if (string.IsNullOrWhiteSpace(model.Name))
-            {
-                await _loggerService.LogAsync("Contact form || Name required", "Info", "");
-
-                return ContactResult.Failure(viewName, model, "Name is required !");
-            }
-
-            if (model.Name.Length > 150)
-            {
-                await _loggerService.LogAsync("Contact form || Name too long", "Info", "");
-
-                return ContactResult.Failure(viewName, model, "Name cannot be longer than 150 characters !");
-            }
-
-            if (string.IsNullOrWhiteSpace(model.Email))
-            {
-                await _loggerService.LogAsync("Contact form || Email is required", "Info", "");
-
-                return ContactResult.Failure(viewName, model, "Email is required !");
-            }
-
             try
             {
-                MailAddress mailAddress = new MailAddress(model.Email);
+                Guard.Against.NullOrWhiteSpace(model.Name, nameof(model.Name), "Name is required !");
 
-                if (mailAddress.Address != model.Email)
-                {
-                    await _loggerService.LogAsync("Contact form || Invalid email format", "Info", "");
-
-                    return ContactResult.Failure(viewName, model, "Please enter a valid email address !");
+                if (model.Name.Length > 150)
+                { 
+                    throw new ArgumentException("Name cannot be longer than 150 characters !");
                 }
+
+                Guard.Against.NullOrWhiteSpace(model.Email, nameof(model.Email), "Email is required !");
+
+                try
+                {
+                    var mailAddress = new MailAddress(model.Email);
+                }
+                catch (FormatException)
+                {
+                    throw new ArgumentException("Please enter a valid email address !");
+                }
+
+                Guard.Against.NullOrWhiteSpace(model.Message, nameof(model.Message), "Message is required !");
+
+                if (model.Message.Length > 10000)
+                { 
+                    throw new ArgumentException("Message cannot be longer than 10,000 characters !");
+                }
+
+                return null;
             }
-            catch (FormatException)
+            catch (Exception ex)
             {
-                await _loggerService.LogAsync("Contact form || Invalid email format", "Info", "");
+                await _loggerService.LogAsync($"Contact form || Validation failed: {ex.Message}", "Error", "");
 
-                return ContactResult.Failure(viewName, model, "Please enter a valid email address !");
+                return ContactResult.Failure(viewName, model, ex.Message);
             }
-
-            if (string.IsNullOrWhiteSpace(model.Message))
-            {
-                await _loggerService.LogAsync("Contact form || Message is required", "Info", "");
-
-                return ContactResult.Failure(viewName, model, "Message required !");
-            }
-
-            if (model.Message.Length > 10000)
-            {
-                await _loggerService.LogAsync("Contact form || Message is too long", "Info", "");
-
-                return ContactResult.Failure(viewName, model, "Message cannot be longer than 10,000 characters.");
-            }
-
-            return null;
         }
     }
 }

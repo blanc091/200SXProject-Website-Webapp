@@ -341,8 +341,6 @@ namespace _200SXContact.Services
                 string subject = $"New Contact Form Submission from {model.Name}";
                 string body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}";
 
-                
-
                 using (SmtpClient smtpClient = new SmtpClient
                 {
                     Host = "mail5019.site4now.net",
