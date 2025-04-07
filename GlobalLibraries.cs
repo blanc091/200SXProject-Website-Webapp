@@ -7,3 +7,4 @@ global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using System.Security.Claims;
 global using Microsoft.Extensions.Options;
+global using FluentValidation;

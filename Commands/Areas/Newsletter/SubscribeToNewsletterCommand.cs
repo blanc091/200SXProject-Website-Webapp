@@ -1,10 +1,8 @@
-﻿using _200SXContact.Helpers;
-using _200SXContact.Interfaces;
+﻿using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.Newsletter;
-using Microsoft.AspNetCore.Http;
-using System.Text.RegularExpressions;
+using FluentValidation.Results;
 
 namespace _200SXContact.Commands.Areas.Newsletter
 {
@@ -44,13 +42,16 @@ namespace _200SXContact.Commands.Areas.Newsletter
                 return new RedirectToActionResult("Index", "Home", new { IsNewsletterError = "yes", Message = "Failed reCAPTCHA validation." });
             }
 
-            string emailRegex = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            SubscribeNewsletterCommandValidator validator = new SubscribeNewsletterCommandValidator();
+            ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-            if (string.IsNullOrEmpty(request.Email) || !Regex.IsMatch(request.Email, emailRegex))
+            if (!validationResult.IsValid)
             {
-                await _loggerService.LogAsync("Newsletter || Invalid email format for " + request.Email, "Error", "");
+                string errorMessage = validationResult.Errors.First().ErrorMessage;
 
-                return new RedirectToActionResult("Index", "Home", new { IsNewsletterError = "yes", Message = "Please enter a valid email address !" });
+                await _loggerService.LogAsync("Newsletter || " + errorMessage, "Error", "");
+
+                return new RedirectToActionResult("Index", "Home", new { IsNewsletterError = "yes", Message = errorMessage });
             }
 
             NewsletterSubscription? existingSubscription = await _context.NewsletterSubscriptions.FirstOrDefaultAsync(sub => sub.Email == request.Email, cancellationToken);
@@ -81,7 +82,13 @@ namespace _200SXContact.Commands.Areas.Newsletter
 
             return new RedirectToActionResult("Index", "Home", new { IsNewsletterSubscribed = "yes", IsNewsletterError = "no", Message = "Subscribed successfully !" });
         }
-
+        public class SubscribeNewsletterCommandValidator : AbstractValidator<SubscribeToNewsletterCommand>
+        {
+            public SubscribeNewsletterCommandValidator()
+            {
+                RuleFor(x => x.Email).NotEmpty().WithMessage("Please enter a valid email address !").Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").WithMessage("Please enter a valid email address !").MaximumLength(50).WithMessage("Email cannot exceed 50 characters !");
+            }
+        }
         private async Task<bool> VerifyRecaptchaAsync(string token)
         {
             string? secretKey = _configuration["Recaptcha:SecretKey"];

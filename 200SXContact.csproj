@@ -331,6 +331,7 @@
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Azure.Identity" Version="1.13.2" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="HtmlSanitizer" Version="9.0.876" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
