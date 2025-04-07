@@ -32,6 +32,14 @@ namespace _200SXContact.Controllers.Areas.UserContent
                 return RedirectToAction("DetailedUserView", "UserBuilds", new { id = userBuildId });
             }
 
+            if (commentId == -1)
+            {
+                TempData["CommentPosted"] = "no";
+                TempData["Message"] = "Comment posted is too long, please limit it to under 10000 characters !";
+
+                return RedirectToAction("DetailedUserView", "UserBuilds", new { id = userBuildId });
+            }
+
             TempData["CommentPosted"] = "yes";
             TempData["Message"] = "Comment posted successfully !";
 

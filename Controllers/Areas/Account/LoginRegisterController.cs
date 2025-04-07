@@ -9,29 +9,30 @@ using _200SXContact.Models.Areas.Account;
 using _200SXContact.Commands.Areas.Account;
 using _200SXContact.Models.DTOs.Areas.Account;
 using _200SXContact.Queries.Areas.Admin;
+using Ardalis.GuardClauses;
 
 namespace _200SXContact.Controllers.Areas.Account
 {
     public class LoginRegisterController : Controller
-	{
-		private readonly SignInManager<User> _signInManager;
-		private readonly ILoggerService _loggerService;
-		private readonly UserManager<User> _userManager;
+    {
+        private readonly SignInManager<User> _signInManager;
+        private readonly ILoggerService _loggerService;
+        private readonly UserManager<User> _userManager;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         public LoginRegisterController(IOptions<AppSettings> appSettings, ILoggerService loggerService, SignInManager<User> signInManager, UserManager<User> userManager, IMediator mediator, IMapper mapper)
-		{
-			_userManager = userManager;
-			_signInManager = signInManager;
-			_loggerService = loggerService;
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _loggerService = loggerService;
             _mapper = mapper;
             _mediator = mediator;
-		}
-		[HttpGet]
-		[Route("login-with-microsoft")]
-		[AllowAnonymous]
-		public async Task<IActionResult> LoginMicrosoft()
-		{
+        }
+        [HttpGet]
+        [Route("login-with-microsoft")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginMicrosoft()
+        {
             await _loggerService.LogAsync("Login Register || Started Microsoft logging in process", "Info", "");
 
             string? redirectUri = Url.Action("SigninMicrosoft", "LoginRegister", null, Request.Scheme);
@@ -39,100 +40,100 @@ namespace _200SXContact.Controllers.Areas.Account
 
             await _loggerService.LogAsync($"Login Register || Initiating Microsoft login, redirecting to: {redirectUri}", "Info", "");
 
-			return Challenge(properties, MicrosoftAccountDefaults.AuthenticationScheme);
-		}
-		[HttpGet]
-		[AllowAnonymous]
-		public async Task<IActionResult> SigninMicrosoft()
-		{
+            return Challenge(properties, MicrosoftAccountDefaults.AuthenticationScheme);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> SigninMicrosoft()
+        {
             await _loggerService.LogAsync("Login Register || Started Microsoft OAuth process", "Info", "");
 
-			AuthenticateResult result = await HttpContext.AuthenticateAsync(MicrosoftAccountDefaults.AuthenticationScheme);
+            AuthenticateResult result = await HttpContext.AuthenticateAsync(MicrosoftAccountDefaults.AuthenticationScheme);
 
-			if (!result.Succeeded)
-			{
-				await _loggerService.LogAsync("Login Register || Microsoft login failed", "Error","");
+            if (!result.Succeeded)
+            {
+                await _loggerService.LogAsync("Login Register || Microsoft login failed", "Error", "");
 
-				return RedirectToAction("Login");
-			}
+                return RedirectToAction("Login");
+            }
 
-			Claim? emailClaim = result.Principal.FindFirst(ClaimTypes.Email);
-			string? email = emailClaim?.Value;
-			string username = email.Split('@')[0];
-			username = Regex.Replace(username, @"[^a-zA-Z0-9]", string.Empty);
+            Claim? emailClaim = result.Principal.FindFirst(ClaimTypes.Email);
+            string? email = emailClaim?.Value;
+            string username = email.Split('@')[0];
+            username = Regex.Replace(username, @"[^a-zA-Z0-9]", string.Empty);
             GetClientTime clientTimeService = new GetClientTime();
             DateTime nowLocal = clientTimeService.GetClientTimeHandler(Request);
 
-			if (string.IsNullOrEmpty(email))
-			{
-				await _loggerService.LogAsync("Login Register || Email claim not found in the authentication result", "Error", "");
+            if (string.IsNullOrEmpty(email))
+            {
+                await _loggerService.LogAsync("Login Register || Email claim not found in the authentication result", "Error", "");
 
-				return RedirectToAction("Login");
-			}
+                return RedirectToAction("Login");
+            }
 
-			User? user = await _userManager.FindByEmailAsync(email);
+            User? user = await _userManager.FindByEmailAsync(email);
 
-			if (user == null)
-			{
-				user = new User
-				{
-					UserName = username,
-					Email = email,
-					EmailConfirmed = true,
-					CreatedAt = nowLocal,
-					IsEmailVerified = true
-				};
-				IdentityResult createUserResult = await _userManager.CreateAsync(user);
+            if (user == null)
+            {
+                user = new User
+                {
+                    UserName = username,
+                    Email = email,
+                    EmailConfirmed = true,
+                    CreatedAt = nowLocal,
+                    IsEmailVerified = true
+                };
+                IdentityResult createUserResult = await _userManager.CreateAsync(user);
 
-				if (!createUserResult.Succeeded)
-				{
-					await _loggerService.LogAsync("Login Register || Failed to create user: {Errors}" + string.Join(", ", createUserResult.Errors.Select(e => e.Description)), "Error","");
+                if (!createUserResult.Succeeded)
+                {
+                    await _loggerService.LogAsync("Login Register || Failed to create user: {Errors}" + string.Join(", ", createUserResult.Errors.Select(e => e.Description)), "Error", "");
 
-					return RedirectToAction("Login");
-				}
-			}
+                    return RedirectToAction("Login");
+                }
+            }
 
-			user.LastLogin = nowLocal;
-			IdentityResult updateResult = await _userManager.UpdateAsync(user);
-			await _signInManager.SignInAsync(user, isPersistent: true);
-			TempData["IsUserLoggedIn"] = true;
-			ViewData["IsUserLoggedIn"] = true;
-			TempData["MicrosoftLogin"] = true;
-			ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft !";
+            user.LastLogin = nowLocal;
+            IdentityResult updateResult = await _userManager.UpdateAsync(user);
+            await _signInManager.SignInAsync(user, isPersistent: true);
+            TempData["IsUserLoggedIn"] = true;
+            ViewData["IsUserLoggedIn"] = true;
+            TempData["MicrosoftLogin"] = true;
+            ViewData["MessageLoginMicrosoft"] = "Logged in successfully with Microsoft !";
 
             await _loggerService.LogAsync("Login Register || Finished Microsoft logging in process", "Info", "");
 
             return RedirectToAction("Dashboard", "Dashboard");
-		}
-		[HttpGet]
-		[Route("login-page")]
-		[AllowAnonymous]
-		public async Task<IActionResult> Login(string returnUrl = null)
-		{
+        }
+        [HttpGet]
+        [Route("login-page")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string returnUrl = null)
+        {
             await _loggerService.LogAsync("Login Register || Getting login page", "Info", "");
 
             if (returnUrl != null && !Url.IsLocalUrl(returnUrl))
-			{
+            {
                 await _loggerService.LogAsync("Login Register || No return url when getting login page", "Error", "");
 
                 returnUrl = null;
-			}
+            }
 
-			if (!User.Identity.IsAuthenticated)
-			{
-				ViewData["ReturnUrl"] = returnUrl;
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewData["ReturnUrl"] = returnUrl;
 
                 await _loggerService.LogAsync("Login Register || Got login page", "Info", "");
 
                 return View("~/Views/Account/Login.cshtml");
-			}
-			else
-			{
+            }
+            else
+            {
                 await _loggerService.LogAsync("Login Register || User is already logged in, redirecting to MaintenApp", "Info", "");
 
                 return RedirectToAction("Dashboard", "Dashboard");
-			}
-		}
+            }
+        }
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
@@ -141,6 +142,21 @@ namespace _200SXContact.Controllers.Areas.Account
             await _loggerService.LogAsync("Login Register || Starting login process", "Info", "");
 
             returnUrl = returnUrl ?? Url.Action("Dashboard", "Dashboard");
+
+            try
+            {
+                Guard.Against.OutOfRange(model.Username.Length, nameof(model.Username), 0, 50);
+                Guard.Against.OutOfRange(model.Password.Length, nameof(model.Password), 0, 50);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                TempData["Message"] = "Username or password exceeding 50 characters !";
+                TempData["IsUserVerified"] = "no";
+
+                await _loggerService.LogAsync("Login Register || Username or password exceeding 50 characters", "Error", "");
+
+                return View("~/Views/Account/Login.cshtml", model);
+            }
 
             if (!ModelState.IsValid)
             {

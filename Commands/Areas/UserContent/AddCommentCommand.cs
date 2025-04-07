@@ -34,7 +34,15 @@ namespace _200SXContact.Commands.Areas.UserContent
             if (string.IsNullOrWhiteSpace(request.Content))
             {
                 await _loggerService.LogAsync($"Comments || Submitted empty comment for {request.UserBuildId}", "Error", "");
+
                 return 0;
+            }
+
+            if (request.Content.Length > 10000)
+            {
+                await _loggerService.LogAsync($"Comments || Comment is over 10000 characters !", "Error", "");
+
+                return -1;
             }
 
             DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
