@@ -51,7 +51,10 @@ namespace _200SXContact.Controllers.Areas.MaintenApp
             {
                 await _loggerService.LogAsync("MaintenApp || Could not parse datetime format when creating user entry in MaintenApp dash view", "Error", "");
 
-                return BadRequest("Invalid due date format");
+                TempData["Message"] = "Could not parse datetime format !";
+                TempData["IsEntrySuccess"] = "no";
+
+                return RedirectToAction("Dashboard", "Dashboard");
             }
 
             ReminderItemDto remindersDto = new ReminderItemDto
@@ -61,24 +64,20 @@ namespace _200SXContact.Controllers.Areas.MaintenApp
                 DueDate = parsedDueDate
             };
 
-            CreateEntryResult result = await _mediator.Send(new CreateEntryCommand(User, remindersDto));
+            CreateEntryCommandHandler.CreateEntryCommandResult result = await _mediator.Send(new CreateEntryCommand(User, remindersDto));
 
-            switch (result)
+            if (!result.Succeeded)
             {
-                case CreateEntryResult.UserNotFound:
+                TempData["Message"] = string.Join("; ", result.Errors.SelectMany(e => e.Value));
+                TempData["IsEntrySuccess"] = "no";
 
-                    return NotFound("User not found");
-                case CreateEntryResult.InvalidDueDate:
-
-                    return BadRequest("Invalid due date format");
-                case CreateEntryResult.Success:
-                    TempData["Message"] = "Entry created successfully!";
-                    TempData["IsEntrySuccess"] = "yes";
-
-                    return RedirectToAction("Dashboard", "Dashboard");
-                default:
-                    return StatusCode(500, "An unexpected error occurred.");
+                return RedirectToAction("Dashboard", "Dashboard");
             }
+
+            TempData["Message"] = "Entry created successfully !";
+            TempData["IsEntrySuccess"] = "yes";
+
+            return RedirectToAction("Dashboard", "Dashboard");
         }
 		[HttpPost]
 		[Route("update-entry")]
@@ -97,26 +96,28 @@ namespace _200SXContact.Controllers.Areas.MaintenApp
                     DueDate = updatedItem.DueDate
                 };
 
-                UpdateEntryResult result = await _mediator.Send(command);
+                UpdateEntryCommandHandler.UpdateEntryCommandResult result = await _mediator.Send(command);
 
-                if (result == UpdateEntryResult.Success)
+                if (result.Succeeded)
                 {
                     return Json(new { success = true });
                 }
                 else
                 {
-                    TempData["Message"] = "Failed to update entry, please contact us !";
+                    string errorMsg = string.Join("; ", result.Errors.SelectMany(e => e.Value));
+                    TempData["Message"] = errorMsg;
                     TempData["IsEntrySuccess"] = "no";
 
-                    return Json(new { success = false, message = "Item not found or update failed" });
+                    return Json(new { success = false, message = errorMsg });
                 }
             }
             catch (Exception ex)
             {
                 await _loggerService.LogAsync($"MaintenApp || Exception: {ex.Message}", "Error", "");
+                TempData["IsEntrySuccess"] = "no";
 
                 return Json(new { success = false, message = ex.Message });
             }
-        }		
-	}
+        }
+    }
 }

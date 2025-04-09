@@ -30,13 +30,13 @@ $(document).ready(function () {
             data: JSON.stringify(updatedData),
             success: function (response) {
                 if (response.success) {
-                    $('#successMessage').fadeIn().delay(2000).fadeOut();
+                    $('#successMessage').text("Item updated successfully !").fadeIn().delay(2000).fadeOut();
                 } else {
-                    $('#errorMessage').fadeIn().delay(2000).fadeOut();
+                    $('#errorMessage').text(response.message).fadeIn().delay(2000).fadeOut();
                 }
             },
             error: function () {
-                $('#errorMessage').fadeIn().delay(2000).fadeOut();
+                $('#errorMessage').text("An unexpected error occurred.").fadeIn().delay(2000).fadeOut();
             }
         });
     });

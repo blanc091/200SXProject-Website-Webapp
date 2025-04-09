@@ -2,17 +2,18 @@
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
+using static _200SXContact.Commands.Areas.MaintenApp.UpdateEntryCommandHandler;
 
 namespace _200SXContact.Commands.Areas.MaintenApp
 {
-    public class UpdateEntryCommand : IRequest<UpdateEntryResult>
+    public class UpdateEntryCommand : IRequest<UpdateEntryCommandResult>
     {
         public int Id { get; set; }
         public required string EntryItem { get; set; }
         public string? EntryDescription { get; set; }
         public DateTime DueDate { get; set; }
     }
-    public class UpdateEntryCommandHandler : IRequestHandler<UpdateEntryCommand, UpdateEntryResult>
+    public class UpdateEntryCommandHandler : IRequestHandler<UpdateEntryCommand, UpdateEntryCommandResult>
     {
         private readonly IApplicationDbContext _context;
         private readonly ILoggerService _loggerService;
@@ -23,16 +24,22 @@ namespace _200SXContact.Commands.Areas.MaintenApp
             _loggerService = loggerService;
             _clientTimeProvider = clientTimeProvider;
         }
-        public async Task<UpdateEntryResult> Handle(UpdateEntryCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateEntryCommandResult> Handle(UpdateEntryCommand request, CancellationToken cancellationToken)
         {
             UpdateEntryCommandValidator validator = new UpdateEntryCommandValidator();
             ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)
             {
-                await _loggerService.LogAsync("MaintenApp || Validation error(s): " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), "Error", "");
+                Dictionary<string, string[]> errorDictionary = validationResult.Errors.GroupBy(e => e.PropertyName).ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
 
-                return UpdateEntryResult.Failure;
+                await _loggerService.LogAsync("MaintenApp || Validation error(s): " + string.Join(", ", validationResult.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}")), "Error", "");
+
+                return new UpdateEntryCommandResult
+                {
+                    Succeeded = false,
+                    Errors = errorDictionary
+                };
             }
 
             try
@@ -45,11 +52,17 @@ namespace _200SXContact.Commands.Areas.MaintenApp
                 {
                     await _loggerService.LogAsync("MaintenApp || Item not found when updating entry", "Error", "");
 
-                    return UpdateEntryResult.ItemNotFound;
+                    return new UpdateEntryCommandResult
+                    {
+                        Succeeded = false,
+                        Errors = new Dictionary<string, string[]>
+                        {
+                            { "Item", new[] { "Item not found." } }
+                        }
+                    };
                 }
 
                 DateTime clientTime = _clientTimeProvider.GetCurrentClientTime();
-
                 existingItem.EntryItem = request.EntryItem;
                 existingItem.EntryDescription = request.EntryDescription;
                 existingItem.DueDate = request.DueDate;
@@ -59,13 +72,20 @@ namespace _200SXContact.Commands.Areas.MaintenApp
 
                 await _loggerService.LogAsync("MaintenApp || Finished updating entry", "Info", "");
 
-                return UpdateEntryResult.Success;
+                return new UpdateEntryCommandResult { Succeeded = true };
             }
             catch (Exception ex)
             {
                 await _loggerService.LogAsync($"MaintenApp || Unknown exception when updating entry: {ex.Message}", "Error", "");
 
-                return UpdateEntryResult.Failure;
+                return new UpdateEntryCommandResult
+                {
+                    Succeeded = false,
+                    Errors = new Dictionary<string, string[]>
+                    {
+                        { "Exception", new[] { ex.Message } }
+                    }
+                };
             }
         }
         public class UpdateEntryCommandValidator : AbstractValidator<UpdateEntryCommand>
@@ -79,11 +99,10 @@ namespace _200SXContact.Commands.Areas.MaintenApp
                 RuleFor(x => x.DueDate).NotEqual(default(DateTime)).WithMessage("A valid due date is required !");
             }
         }
-    }
-    public enum UpdateEntryResult
-    {
-        Success,
-        ItemNotFound,
-        Failure
-    }
+        public class UpdateEntryCommandResult
+        {
+            public bool Succeeded { get; set; }
+            public IDictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
+        }
+    }   
 }

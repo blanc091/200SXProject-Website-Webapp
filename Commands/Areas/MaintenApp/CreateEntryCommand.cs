@@ -4,15 +4,16 @@ using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.DTOs.Areas.MaintenApp;
+using static _200SXContact.Commands.Areas.MaintenApp.CreateEntryCommandHandler;
 
 namespace _200SXContact.Commands.Areas.MaintenApp
 {
-    public class CreateEntryCommand(ClaimsPrincipal user, ReminderItemDto entryDto) : IRequest<CreateEntryResult>
+    public class CreateEntryCommand(ClaimsPrincipal user, ReminderItemDto entryDto) : IRequest<CreateEntryCommandResult>
     {
         public ClaimsPrincipal User { get; } = user;
         public ReminderItemDto EntryDto { get; } = entryDto;
     }
-    public class CreateEntryCommandHandler : IRequestHandler<CreateEntryCommand, CreateEntryResult>
+    public class CreateEntryCommandHandler : IRequestHandler<CreateEntryCommand, CreateEntryCommandResult>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -25,7 +26,7 @@ namespace _200SXContact.Commands.Areas.MaintenApp
             _loggerService = loggerService;
             _clientTimeProvider = clientTimeProvider;
         }
-        public async Task<CreateEntryResult> Handle(CreateEntryCommand request, CancellationToken cancellationToken)
+        public async Task<CreateEntryCommandResult> Handle(CreateEntryCommand request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("MaintenApp || Started adding entry in MaintenApp dash view", "Info", "");
 
@@ -34,16 +35,12 @@ namespace _200SXContact.Commands.Areas.MaintenApp
 
             if (!validationResult.IsValid)
             {
-                if (validationResult.Errors.Any(e => e.PropertyName.Contains("DueDate")))
-                {
-                    await _loggerService.LogAsync("MaintenApp || Due date is invalid when creating entry", "Error", "");
+                CreateEntryCommandResult result = new CreateEntryCommandResult { Succeeded = false };
+                result.Errors = validationResult.Errors.GroupBy(e => e.PropertyName).ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
 
-                    return CreateEntryResult.InvalidDueDate;
-                }
+                await _loggerService.LogAsync("MaintenApp || Validation errors: " + string.Join("; ", validationResult.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}")), "Error", "");
 
-                await _loggerService.LogAsync("MaintenApp || Validation error(s): " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), "Error", "");
-
-                return CreateEntryResult.InvalidDueDate;
+                return result;
             }
 
             string? userEmail = request.User.FindFirstValue(ClaimTypes.Email);
@@ -53,7 +50,11 @@ namespace _200SXContact.Commands.Areas.MaintenApp
             {
                 await _loggerService.LogAsync("MaintenApp || User is null when creating entry in MaintenApp dash view", "Error", "");
 
-                return CreateEntryResult.UserNotFound;
+                return new CreateEntryCommandResult
+                {
+                    Succeeded = false,
+                    Errors = new Dictionary<string, string[]> {{ "User", new[] { "User not found." } }}
+                };
             }
 
             ReminderItem newItem = _mapper.Map<ReminderItem>(request.EntryDto);
@@ -69,7 +70,11 @@ namespace _200SXContact.Commands.Areas.MaintenApp
 
             await _loggerService.LogAsync("MaintenApp || Finished adding entry in MaintenApp dash view", "Info", "");
 
-            return CreateEntryResult.Success;
+            return new CreateEntryCommandResult
+            {
+                Succeeded = true,
+                Errors = new Dictionary<string, string[]>()
+            };
         }
         public class CreateEntryCommandValidator : AbstractValidator<CreateEntryCommand>
         {
@@ -89,11 +94,10 @@ namespace _200SXContact.Commands.Areas.MaintenApp
                 RuleFor(x => x.DueDate).NotEqual(default(DateTime)).WithMessage("A valid due date is required !");
             }
         }
-    }
-    public enum CreateEntryResult
-    {
-        Success,
-        UserNotFound,
-        InvalidDueDate
-    }
+        public class CreateEntryCommandResult
+        {
+            public bool Succeeded { get; set; }
+            public IDictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
+        }
+    }   
 }
