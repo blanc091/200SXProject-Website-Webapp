@@ -89,6 +89,37 @@ namespace _200SXContact.Services
             _credentials = new NetworkCredential(emailSettings.UserName, emailSettings.Password);
             _adminSettings = adminSettings.Value;
         }
+        [Authorize(Roles = "Admin")]
+        public async Task SendEmailToSubscriber(string email, string subject, string body)
+        {
+            await _loggerService.LogAsync("Newsletter || Started sending newsletter email to subscriber admin", "Info", "");
+
+            body = body.Replace("{EMAIL}", WebUtility.UrlEncode(email));
+            SmtpClient smtpClient = new SmtpClient("mail5019.site4now.net")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(_credentials.UserName, _credentials.Password),
+                EnableSsl = true,
+            };
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress(_credentials.UserName),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
+            try
+            {
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                await _loggerService.LogAsync($"Newsletter || Failed to send email to {email}: {ex.Message}", "Error", "");
+            }
+
+            await _loggerService.LogAsync("Newsletter || Finished sending newsletter email to subscriber admin", "Info", "");
+        }
         public async Task NotifyNewChatSessionAsync(string sessionId)
         {
             await _loggerService.LogAsync("Chat box || Sending chat notification to admin", "Info", "");

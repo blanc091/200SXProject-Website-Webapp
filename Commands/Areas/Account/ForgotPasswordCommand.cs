@@ -47,11 +47,6 @@ namespace _200SXContact.Commands.Areas.Account
             };
         }
     }
-    public class ForgotPasswordCommandResult
-    {
-        public bool Succeeded { get; set; }
-        public IEnumerable<string>? Errors { get; set; }
-    }
     public class ForgotPasswordCommandValidator : AbstractValidator<ForgotPasswordCommand>
     {
         public ForgotPasswordCommandValidator()
@@ -59,4 +54,9 @@ namespace _200SXContact.Commands.Areas.Account
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required !").EmailAddress().WithMessage("Please enter a valid email address !").MaximumLength(50).WithMessage("Email cannot exceed 50 characters !");
         }
     }
+    public class ForgotPasswordCommandResult
+    {
+        public bool Succeeded { get; set; }
+        public IEnumerable<string>? Errors { get; set; }
+    }    
 }

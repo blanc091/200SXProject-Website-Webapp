@@ -78,11 +78,6 @@ namespace _200SXContact.Commands.Areas.Account
             };
         }
     }
-    public class ResetPasswordCommandResult
-    {
-        public bool Succeeded { get; set; }
-        public IEnumerable<string> Errors { get; set; } = Array.Empty<string>();
-    }
     public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
     {
         public ResetPasswordCommandValidator()
@@ -94,4 +89,9 @@ namespace _200SXContact.Commands.Areas.Account
             RuleFor(x => x.NewPassword).NotEmpty().WithMessage("New password is required !").MaximumLength(50).WithMessage("New password must be 50 characters or less !");
         }
     }
+    public class ResetPasswordCommandResult
+    {
+        public bool Succeeded { get; set; }
+        public IEnumerable<string> Errors { get; set; } = Array.Empty<string>();
+    }    
 }

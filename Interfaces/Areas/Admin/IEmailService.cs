@@ -16,5 +16,6 @@ namespace _200SXContact.Interfaces.Areas.Admin
         Task SendPasswordResetEmail(string email, string resetUrl);
         Task SendUserDeleteEmail(string email, string userDeleteUrl);
         Task SendOrderUpdateEmail(string email, string orderUpdateUrl);
+        Task SendEmailToSubscriber(string email, string subject, string body);
     }
 }
