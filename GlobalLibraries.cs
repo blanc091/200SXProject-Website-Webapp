@@ -8,3 +8,4 @@ global using Microsoft.AspNetCore.Identity;
 global using System.Security.Claims;
 global using Microsoft.Extensions.Options;
 global using FluentValidation;
+global using FluentValidation.Results;
