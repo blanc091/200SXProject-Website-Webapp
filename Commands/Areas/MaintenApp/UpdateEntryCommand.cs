@@ -1,9 +1,7 @@
-﻿using _200SXContact.Helpers;
-using _200SXContact.Interfaces;
+﻿using _200SXContact.Interfaces;
 using _200SXContact.Interfaces.Areas.Admin;
 using _200SXContact.Interfaces.Areas.Data;
 using _200SXContact.Models.Areas.MaintenApp;
-using Microsoft.AspNetCore.Http;
 
 namespace _200SXContact.Commands.Areas.MaintenApp
 {
@@ -27,6 +25,16 @@ namespace _200SXContact.Commands.Areas.MaintenApp
         }
         public async Task<UpdateEntryResult> Handle(UpdateEntryCommand request, CancellationToken cancellationToken)
         {
+            UpdateEntryCommandValidator validator = new UpdateEntryCommandValidator();
+            ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+            if (!validationResult.IsValid)
+            {
+                await _loggerService.LogAsync("MaintenApp || Validation error(s): " + string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), "Error", "");
+
+                return UpdateEntryResult.Failure;
+            }
+
             try
             {
                 await _loggerService.LogAsync("MaintenApp || Started updating entry in MaintenApp dash view", "Info", "");
@@ -36,6 +44,7 @@ namespace _200SXContact.Commands.Areas.MaintenApp
                 if (existingItem == null)
                 {
                     await _loggerService.LogAsync("MaintenApp || Item not found when updating entry", "Error", "");
+
                     return UpdateEntryResult.ItemNotFound;
                 }
 
@@ -57,6 +66,17 @@ namespace _200SXContact.Commands.Areas.MaintenApp
                 await _loggerService.LogAsync($"MaintenApp || Unknown exception when updating entry: {ex.Message}", "Error", "");
 
                 return UpdateEntryResult.Failure;
+            }
+        }
+        public class UpdateEntryCommandValidator : AbstractValidator<UpdateEntryCommand>
+        {
+            public UpdateEntryCommandValidator()
+            {
+                RuleFor(x => x.EntryItem).NotEmpty().WithMessage("Entry item is required !").MaximumLength(100).WithMessage("Entry item cannot exceed 100 characters !");
+
+                RuleFor(x => x.EntryDescription).MaximumLength(1000).WithMessage("Entry description cannot exceed 1000 characters !");
+
+                RuleFor(x => x.DueDate).NotEqual(default(DateTime)).WithMessage("A valid due date is required !");
             }
         }
     }
