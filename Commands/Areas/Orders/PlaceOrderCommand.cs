@@ -5,15 +5,16 @@ using _200SXContact.Models.Areas.Orders;
 using _200SXContact.Models.Areas.UserContent;
 using _200SXContact.Models.Configs;
 using _200SXContact.Models.DTOs.Areas.Orders;
+using static _200SXContact.Commands.Areas.Orders.PlaceOrderCommandHandler;
 
 namespace _200SXContact.Commands.Areas.Orders
 {
-    public class PlaceOrderCommand(OrderPlacementDto model, ClaimsPrincipal user) : IRequest<int>
+    public class PlaceOrderCommand(OrderPlacementDto model, ClaimsPrincipal user) : IRequest<PlaceOrderCommandResult>
     {
         public OrderPlacementDto Model { get; } = model;
         public ClaimsPrincipal User { get; } = user;
     }
-    public class PlaceOrderCommandHandler : IRequestHandler<PlaceOrderCommand, int>
+    public class PlaceOrderCommandHandler : IRequestHandler<PlaceOrderCommand, PlaceOrderCommandResult>
     {
         private readonly IApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
@@ -32,10 +33,24 @@ namespace _200SXContact.Commands.Areas.Orders
             _mapper = mapper;
             _clientTimeProvider = clientTimeProvider;
         }
-        public async Task<int> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
+        public async Task<PlaceOrderCommandResult> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
         {
             await _loggerService.LogAsync("Orders || Finished validation, getting user", "Info", "");
 
+            PlaceOrderCommandResult result = new PlaceOrderCommandResult();
+            PlaceOrderCommandValidator validator = new PlaceOrderCommandValidator();
+            ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+            if (!validationResult.IsValid)
+            {
+                result.Errors = validationResult.Errors.GroupBy(e => e.PropertyName).ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+                result.Succeeded = false;
+
+                await _loggerService.LogAsync("Orders || Validation error(s): " + string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage)), "Error", "");
+
+                return result;
+            }
+           
             User? user = await _userManager.GetUserAsync(request.User);
 
             if (user == null)
@@ -119,7 +134,10 @@ namespace _200SXContact.Commands.Areas.Orders
 
                     await _loggerService.LogAsync("Orders || Committed transaction", "Info", "");
 
-                    return orderEntity.Id;
+                    result.Succeeded = true;
+                    result.OrderId = orderEntity.Id;
+
+                    return result;
                 }
                 catch (Exception ex)
                 {
@@ -127,9 +145,41 @@ namespace _200SXContact.Commands.Areas.Orders
 
                     await _loggerService.LogAsync($"Orders || Rolling back transaction due to exception: {ex.Message}", "Error", "");
 
-                    throw;
+                    result.Succeeded = false;
+                    result.Errors.Add("Exception", new[] { ex.Message });
+
+                    return result;
                 }
             }
+        }
+        public class PlaceOrderCommandValidator : AbstractValidator<PlaceOrderCommand>
+        {
+            public PlaceOrderCommandValidator()
+            {
+                RuleFor(x => x.Model).NotNull().WithMessage("Order data is required !");
+
+                RuleFor(x => x.Model.County).NotEmpty().WithMessage("County is required !").MaximumLength(200).WithMessage("County field cannot exceed 200 characters !");
+
+                RuleFor(x => x.Model.PhoneNumber).NotEmpty().WithMessage("Phone number is required !").MaximumLength(50).WithMessage("Phone number field cannot exceed 50 characters !");
+
+                RuleFor(x => x.Model.FullName).NotEmpty().WithMessage("Full name is required !").MaximumLength(100).WithMessage("Full name field cannot exceed 100 characters !");
+
+                RuleFor(x => x.Model.AddressLine1).NotEmpty().WithMessage("Order date is required !").MaximumLength(500).WithMessage("First address line cannot exceed 500 characters !");
+
+                RuleFor(x => x.Model.AddressLine2).MaximumLength(500).WithMessage("Second address line cannot exceed 500 characters !");
+
+                RuleFor(x => x.Model.Email).NotEmpty().WithMessage("Email cannot be empty !").EmailAddress().WithMessage("Please enter a valid email address !");
+
+                RuleFor(x => x.Model.City).NotNull().WithMessage("Order data is required.").MaximumLength(50).WithMessage("City field cannot exceed 50 characters !");
+
+                RuleFor(x => x.Model.OrderNotes).NotNull().WithMessage("Order data is required.").MaximumLength(1000).WithMessage("Order notes field cannot exceed 1000 characters !");
+            }
+        }
+        public class PlaceOrderCommandResult
+        {
+            public bool Succeeded { get; set; }
+            public int? OrderId { get; set; }
+            public IDictionary<string, string[]> Errors { get; set; } = new Dictionary<string, string[]>();
         }
     }
 }

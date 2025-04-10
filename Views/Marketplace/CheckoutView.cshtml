@@ -35,7 +35,7 @@
 	<link rel="icon" href="~/images/favicon.png" type="image/x-icon" asp-append-version="true">
 
 </head>
-<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()">
+<body class="is-preload" data-is-authenticated="@User.Identity.IsAuthenticated.ToString().ToLower()" data-is-checkout-validated="@TempData["CheckoutValidated"]">
 	<!-- Wrapper -->
 	<div id="wrapper" class="fade-in">
 

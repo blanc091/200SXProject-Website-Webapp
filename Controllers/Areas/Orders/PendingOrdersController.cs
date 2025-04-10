@@ -124,19 +124,21 @@ namespace _200SXContact.Controllers.Areas.Orders
             {
                 await _loggerService.LogAsync("Orders || Invalid data received in admin interface for order tracking update AJAX", "Error", "");
 
-                return BadRequest("Invalid data received.");
+                return BadRequest(new { success = false, message = "Invalid data received !" });
             }
 
-            bool success = await _mediator.Send(new UpdateOrderTrackingCommand(updateDto));
+            UpdateOrderTrackingCommandHandler.UpdateOrderTrackingCommandResult result = await _mediator.Send(new UpdateOrderTrackingCommand(updateDto));
 
-            if (!success)
+            if (!result.Succeeded)
             {
-                await _loggerService.LogAsync($"Orders || Order tracking not found for {updateDto.OrderId}", "Error", "");
+                string errorMessages = string.Join("; ", result.Errors.SelectMany(e => e.Value));
 
-                return NotFound("Order tracking record not found.");
+                await _loggerService.LogAsync($"Orders || Error updating order tracking for {updateDto.OrderId}: {errorMessages}", "Error", "");
+
+                return BadRequest(errorMessages);
             }
 
-            return Ok(new { message = "Order tracking updated successfully !" });
+            return Ok(new { success = true, message = "Order tracking updated successfully !" });
         }
     }
 }

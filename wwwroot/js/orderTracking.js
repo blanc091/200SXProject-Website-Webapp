@@ -43,7 +43,7 @@
                 }
             })
             .catch(error => {
-                alert('Error updating order tracking: ' + error.message);
+                alert(error.message);
             });
     }
 

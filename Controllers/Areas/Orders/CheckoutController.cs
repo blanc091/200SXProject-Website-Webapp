@@ -40,26 +40,38 @@ namespace _200SXContact.Controllers.Areas.Orders
             if (!ModelState.IsValid)
             {
                 await _loggerService.LogAsync("Orders || Model state is invalid", "Error", "");
+                TempData["CheckoutValidated"] = "no";
 
                 return View("~/Views/Marketplace/CheckoutView.cshtml", model);
             }
 
             try
             {
-                int orderId = await _mediator.Send(new PlaceOrderCommand(model, User));
+                PlaceOrderCommandHandler.PlaceOrderCommandResult result = await _mediator.Send(new PlaceOrderCommand(model, User));
 
-                return RedirectToAction("OrderSummary", new { orderId });
+                if (!result.Succeeded)
+                {
+                    string errorMsg = string.Join("; ", result.Errors.SelectMany(e => e.Value));
+                    TempData["Message"] = errorMsg;
+                    TempData["CheckoutValidated"] = "no";
+
+                    return View("~/Views/Marketplace/CheckoutView.cshtml", model);
+                }
+                TempData["CheckoutValidated"] = "yes";
+
+                return RedirectToAction("OrderSummary", new { orderId = result.OrderId });
             }
             catch (UnauthorizedAccessException)
             {
                 TempData["IsUserLoggedIn"] = "no";
-                TempData["Message"] = "You need to be registered and logged in to checkout";
+                TempData["Message"] = "You need to be registered and logged in to checkout !";
 
                 return Redirect("/login-page");
             }
             catch (InvalidOperationException ex)
             {
                 TempData["Message"] = ex.Message;
+                TempData["CheckoutValidated"] = "no";
 
                 return View("~/Views/Marketplace/CheckoutView.cshtml", model);
             }
@@ -67,6 +79,7 @@ namespace _200SXContact.Controllers.Areas.Orders
             {
                 await _loggerService.LogAsync("Orders || Error in checkout: " + ex.Message, "Error", "");
 
+                TempData["CheckoutValidated"] = "no";
                 TempData["Message"] = "An error occurred while placing your order. Please try again.";
 
                 return RedirectToAction("Checkout");
@@ -77,7 +90,7 @@ namespace _200SXContact.Controllers.Areas.Orders
         [Authorize]
         public async Task<IActionResult> OrderSummary(int orderId)
         {
-            var orderUserDashDto = await _mediator.Send(new GetOrderSummaryQuery(orderId));
+            OrderUserDashDto? orderUserDashDto = await _mediator.Send(new GetOrderSummaryQuery(orderId));
 
             if (orderUserDashDto == null)
             {

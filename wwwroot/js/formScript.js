@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	var isContactError = document.body.getAttribute('data-is-contact-error');
 	var isCommentDeleted = document.body.getAttribute('data-is-comment-deleted');
 	var isBuildSubmitted = document.body.getAttribute('data-is-build-submitted');
+	var isCheckoutValid = document.body.getAttribute('data-is-checkout-validated');
 
     console.log("Current Pathname:", window.location.pathname);
     if (window.location.pathname.startsWith('/detailed-user-build')) {
@@ -111,6 +112,9 @@ document.addEventListener("DOMContentLoaded", function () {
         case '/checkout/view-checkout':
             scrollToElement("checkoutView");
             break;
+		case '/checkout/place-order':
+            scrollToElement("checkoutView");
+            break;
         case '/pendingorders/get-all-orders-admin':
             scrollToElement("ordersAll");
             break;
@@ -145,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		isContactError == "yes" ||
         isFormRegisterSuccess == "yes" ||
         isEmailVerifiedLogin == "yes" ||
-        isUserVerified == 'no' ||
+        isUserVerified == "no" ||
         isPassResetSuccess == "yes" ||
         isEntrySuccess == "yes" ||
 		isEntrySuccess == "no" ||
@@ -155,8 +159,9 @@ document.addEventListener("DOMContentLoaded", function () {
         commentSubmitted == "yes" ||
         isUserLoggedIn == "no" ||
         unsubscribed == "yes" ||
-		userDeleted == 'yes' || userDeleted == 'no' ||
-		isBuildSubmitted == 'yes' || isBuildSubmitted == 'no' ||
+		isCheckoutValid == "yes" || isCheckoutValid == "no" || 
+		userDeleted == "yes" || userDeleted == "no" ||
+		isBuildSubmitted == "yes" || isBuildSubmitted == "no" ||
         itemAddedToCart == "yes" ||
 		isCommentDeleted == "yes" || isCommentDeleted == "no" ||
 		isNewsletterError == "yes" ||
