@@ -62,7 +62,7 @@ namespace _200SXContact.Commands.Areas.UserContent
             if (userBuild != null)
             {
                 string? userEmail = userBuild.UserEmail;
-                await _emailService.SendCommentNotification(userEmail, comment);
+                await _emailService.SendCommentNotificationAsync(userEmail, comment);
             }
 
             await _context.SaveChangesAsync(cancellationToken);

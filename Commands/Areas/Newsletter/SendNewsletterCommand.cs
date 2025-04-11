@@ -50,7 +50,7 @@ namespace _200SXContact.Commands.Areas.Newsletter
 
             foreach (string email in subscribers)
             {
-                await _emailService.SendEmailToSubscriber(email, request.Subject, request.Body);
+                await _emailService.SendEmailToSubscriberAsync(email, request.Subject, request.Body);
             }
 
             await _loggerService.LogAsync("Newsletter || Finished sending newsletter", "Info", "");

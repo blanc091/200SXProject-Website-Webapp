@@ -95,7 +95,7 @@ namespace _200SXContact.Commands.Areas.Orders
             }
 
             string orderUpdateUrl = _urlHelper.Action("UserOrders", "PendingOrders", new { userId }, "https");
-            await _emailService.SendOrderUpdateEmail(orderTracking.Email, orderUpdateUrl);
+            await _emailService.SendOrderUpdateEmailAsync(orderTracking.Email, orderUpdateUrl);
 
             await _loggerService.LogAsync("Orders || Finished order status update", "Info", "");
 

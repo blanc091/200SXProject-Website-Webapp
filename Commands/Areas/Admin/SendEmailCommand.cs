@@ -64,7 +64,7 @@ namespace _200SXContact.Commands.Areas.Admin
 
                 model.Message = _htmlSanitizer.Sanitize(model.Message);
 
-                await _emailService.SendEmailToAdmin(model);
+                await _emailService.SendEmailToAdminAsync(model);
 
                 await _loggerService.LogAsync("Contact form || Email sent to admin", "Info", "");
 

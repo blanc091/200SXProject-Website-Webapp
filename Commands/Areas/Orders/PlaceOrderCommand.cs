@@ -120,8 +120,8 @@ namespace _200SXContact.Commands.Areas.Orders
                     await _loggerService.LogAsync("Orders || Order tracking saved successfully", "Info", "");
                     await _loggerService.LogAsync("Orders || Starting sending order emails", "Info", "");
 
-                    await _emailService.SendOrderConfirmEmail(orderEntity.Email, orderEntity);
-                    await _emailService.SendOrderConfirmEmail(_adminSettings.Email, orderEntity);
+                    await _emailService.SendOrderConfirmEmailAsync(orderEntity.Email, orderEntity);
+                    await _emailService.SendOrderConfirmEmailAsync(_adminSettings.Email, orderEntity);
 
                     await _loggerService.LogAsync("Orders || Sent order emails", "Info", "");
 

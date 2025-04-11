@@ -32,7 +32,7 @@ namespace _200SXContact.Commands.Areas.Account
                 return false;
             }
 
-            await _emailService.SendUserDeleteEmail(request.UserEmail, request.ResetUrl);
+            await _emailService.SendUserDeleteEmailAsync(request.UserEmail, request.ResetUrl);
 
             await _loggerService.LogAsync($"Account || Deletion email sent to {request.UserEmail}", "Info", "");
 

@@ -90,7 +90,7 @@ namespace _200SXContact.Services
             _adminSettings = adminSettings.Value;
         }
         [Authorize(Roles = "Admin")]
-        public async Task SendEmailToSubscriber(string email, string subject, string body)
+        public async Task SendEmailToSubscriberAsync(string email, string subject, string body)
         {
             await _loggerService.LogAsync("Newsletter || Started sending newsletter email to subscriber admin", "Info", "");
 
@@ -162,7 +162,7 @@ namespace _200SXContact.Services
 
             await _loggerService.LogAsync("Chat box || Sent chat notification to admin", "Info", "");
         }
-        public async Task SendOrderUpdateEmail(string email, string orderUpdateUrl)
+        public async Task SendOrderUpdateEmailAsync(string email, string orderUpdateUrl)
         {
             await _loggerService.LogAsync("Orders || Starting sending order update email task", "Info", "");
 
@@ -211,7 +211,7 @@ namespace _200SXContact.Services
                 }
             }
         }
-        public async Task SendUserDeleteEmail(string email, string userDeleteUrl)
+        public async Task SendUserDeleteEmailAsync(string email, string userDeleteUrl)
         {
             await _loggerService.LogAsync("Account || Starting sending user delete email task", "Info", "");
 
@@ -261,7 +261,7 @@ namespace _200SXContact.Services
                 }
             }
         }
-        public async Task SendPasswordResetEmail(string email, string resetUrl)
+        public async Task SendPasswordResetEmailAsync(string email, string resetUrl)
         {
             await _loggerService.LogAsync("Login Register || Starting sending password reset email task", "Info", "");
 
@@ -311,7 +311,7 @@ namespace _200SXContact.Services
                 }
             }
         }
-        public async Task SendVerificationEmail(string email, string verificationUrl)
+        public async Task SendVerificationEmailAsync(string email, string verificationUrl)
         {
             await _loggerService.LogAsync("Login Register || Starting sending user verification email", "Info", "");
 
@@ -361,7 +361,7 @@ namespace _200SXContact.Services
                 }
             }
         }
-        public async Task SendEmailToAdmin(ContactForm model)
+        public async Task SendEmailToAdminAsync(ContactForm model)
         {
             try
             {
@@ -409,7 +409,7 @@ namespace _200SXContact.Services
                 throw new Exception("An unexpected error occurred while sending the email", ex);
             }
         }
-        public async Task SendOrderConfirmEmail(string email, OrderPlacement order)
+        public async Task SendOrderConfirmEmailAsync(string email, OrderPlacement order)
         {
             await _loggerService.LogAsync("Orders || Started sending email with order confirmation", "Info", "");
 
@@ -501,7 +501,7 @@ namespace _200SXContact.Services
 
             await _loggerService.LogAsync("Orders || Sent email with order confirmation", "Info", "");
         }
-        public async Task SendCommentNotification(string userEmail, BuildComment comment)
+        public async Task SendCommentNotificationAsync(string userEmail, BuildComment comment)
         {
             await _loggerService.LogAsync($"Comments || Started sending comment notification for {comment.UserBuildId}", "Info", "");
 
@@ -561,7 +561,7 @@ namespace _200SXContact.Services
                 await _loggerService.LogAsync($"Comments || SMTP error: {ex.ToString()}", "Error", "");
             }
         }
-        public async Task SendDueDateReminder(string userEmail, string userName, ReminderItem item, int daysBeforeDue)
+        public async Task SendDueDateReminderAsync(string userEmail, string userName, ReminderItem item, int daysBeforeDue)
         {
             try
             {

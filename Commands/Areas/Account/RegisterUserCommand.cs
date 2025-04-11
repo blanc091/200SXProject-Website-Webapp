@@ -85,7 +85,7 @@ namespace _200SXContact.Commands.Areas.Account
                     {
                         existingUser.EmailVerificationToken = command.VerificationToken;
                         await _userManager.UpdateAsync(existingUser);
-                        await _emailService.SendVerificationEmail(existingUser.Email, command.VerificationUrl);
+                        await _emailService.SendVerificationEmailAsync(existingUser.Email, command.VerificationUrl);
 
                         return new RegisterUserCommandResult { Succeeded = true, Errors = [] };
                     }
@@ -132,7 +132,7 @@ namespace _200SXContact.Commands.Areas.Account
                 await _mediator.Send(subscribeCommand);
             }
 
-            await _emailService.SendVerificationEmail(command.Email, command.VerificationUrl);
+            await _emailService.SendVerificationEmailAsync(command.Email, command.VerificationUrl);
 
             await _loggerService.LogAsync("Login Register || New user registered, redirecting to login page", "Info", "");
 

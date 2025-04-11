@@ -7,15 +7,15 @@ namespace _200SXContact.Interfaces.Areas.Admin
 {
     public interface IEmailService
     {
-        Task SendEmailToAdmin(ContactForm model);
-        Task SendDueDateReminder(string userEmail, string userName, ReminderItem item, int daysBeforeDue);
-        Task SendCommentNotification(string userEmail, BuildComment comment);
-        Task SendOrderConfirmEmail(string email, OrderPlacement order);
+        Task SendEmailToAdminAsync(ContactForm model);
+        Task SendDueDateReminderAsync(string userEmail, string userName, ReminderItem item, int daysBeforeDue);
+        Task SendCommentNotificationAsync(string userEmail, BuildComment comment);
+        Task SendOrderConfirmEmailAsync(string email, OrderPlacement order);
         Task NotifyNewChatSessionAsync(string sessionId);
-        Task SendVerificationEmail(string email, string verificationUrl);
-        Task SendPasswordResetEmail(string email, string resetUrl);
-        Task SendUserDeleteEmail(string email, string userDeleteUrl);
-        Task SendOrderUpdateEmail(string email, string orderUpdateUrl);
-        Task SendEmailToSubscriber(string email, string subject, string body);
+        Task SendVerificationEmailAsync(string email, string verificationUrl);
+        Task SendPasswordResetEmailAsync(string email, string resetUrl);
+        Task SendUserDeleteEmailAsync(string email, string userDeleteUrl);
+        Task SendOrderUpdateEmailAsync(string email, string orderUpdateUrl);
+        Task SendEmailToSubscriberAsync(string email, string subject, string body);
     }
 }

@@ -36,7 +36,7 @@ namespace _200SXContact.Commands.Areas.Account
                 };
             }
 
-            await _emailService.SendPasswordResetEmail(command.Email, command.ResetUrl);
+            await _emailService.SendPasswordResetEmailAsync(command.Email, command.ResetUrl);
 
             await _loggerService.LogAsync($"ForgotPassword || Sent reset link to {command.Email}", "Info", "");
 
